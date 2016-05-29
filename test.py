@@ -4,12 +4,77 @@ from PIL import Image, ImageOps
 import time
 import sys
 
-
 Image.LANCZOS = Image.ANTIALIAS
 
 
-def blur(im, *args):
-    return im._new(ImageOps.gaussian_blur(im, *args))
+class TestCase(object):
+    def __init__(self, runner, *args, **kwargs):
+        self.runner = staticmethod(runner)
+        self.args = args
+        if 'desc' in kwargs:
+            self.desc = kwargs['desc']
+
+    def prepare(self, im):
+        im.load()
+        return im
+
+    def run(self, im):
+        start = time.time()
+        self._result = None
+        self._result = self.runner(im, *self.args)
+        return time.time() - start
+
+    @property
+    def result(self):
+        return self._result
+
+    def cleanup(self):
+        self._result = None
+
+
+class ResizeCase(TestCase):
+    runner = staticmethod(Image.Image.resize)
+
+    def __init__(self, size, flt):
+        self.args = (size, flt)
+
+    @property
+    def desc(self):
+        flt = {
+            1: 'bil', 2: 'bic', 3: 'lzs',
+        }.get(self.args[1], self.args[1])
+        return "{size[0]}x{size[1]} {flt}".format(size=self.args[0], flt=flt)
+
+
+class BlurCase(TestCase):
+    def __init__(self, radius):
+        self.args = (radius,)
+
+    def runner(self, im, radius):
+        return im._new(ImageOps.gaussian_blur(im, radius))
+
+    @property
+    def desc(self):
+        return "blur {radius}px".format(radius=self.args[0])
+
+
+test_cases = [
+    ResizeCase((16, 16), Image.BILINEAR),
+    ResizeCase((16, 16), Image.BICUBIC),
+    ResizeCase((16, 16), Image.LANCZOS),
+    ResizeCase((320, 180), Image.BILINEAR),
+    ResizeCase((320, 180), Image.BICUBIC),
+    ResizeCase((320, 180), Image.LANCZOS),
+    ResizeCase((1920, 1200), Image.BILINEAR),
+    ResizeCase((1920, 1200), Image.BICUBIC),
+    ResizeCase((1920, 1200), Image.LANCZOS),
+    ResizeCase((7712, 4352), Image.BILINEAR),
+    ResizeCase((7712, 4352), Image.BICUBIC),
+    ResizeCase((7712, 4352), Image.LANCZOS),
+    # BlurCase(1),
+    # BlurCase(10),
+    # BlurCase(100),
+]
 
 
 def split(im):
@@ -21,54 +86,26 @@ def merge(im):
     return Image.merge(im.mode, im._splitted)
 
 
-def resize(im, size, method):
-    return im._new(im.im.stretch(size, method))
+for case in test_cases:
+    im = case.prepare(Image.open(sys.argv[1]))
 
-
-im = Image.open(sys.argv[1])
-im.load()
-
-for method, args, desc in [
-    (Image.Image.resize, ((16, 16), Image.BILINEAR), '16x16 bil'),
-    (Image.Image.resize, ((16, 16), Image.BICUBIC),  '16x16 bic'),
-    (Image.Image.resize, ((16, 16), Image.LANCZOS),  '16x16 lzs'),
-    (Image.Image.resize, ((320, 180), Image.BILINEAR), '320x180 bil'),
-    (Image.Image.resize, ((320, 180), Image.BICUBIC),  '320x180 bic'),
-    (Image.Image.resize, ((320, 180), Image.LANCZOS),  '320x180 lzs'),
-    (Image.Image.resize, ((1920, 1200), Image.BILINEAR), '1920x1200 bil'),
-    (Image.Image.resize, ((1920, 1200), Image.BICUBIC),  '1920x1200 bic'),
-    (Image.Image.resize, ((1920, 1200), Image.LANCZOS),  '1920x1200 lzs'),
-    (Image.Image.resize, ((7712, 4352), Image.BILINEAR), '7712x4352 bil'),
-    (Image.Image.resize, ((7712, 4352), Image.BICUBIC),  '7712x4352 bic'),
-    (Image.Image.resize, ((7712, 4352), Image.LANCZOS),  '7712x4352 lzs'),
-    (blur, (1,), 'blur 1px'),
-    (blur, (10,), 'blur 10px'),
-    (blur, (100,), 'blur 100px'),
-]:
     times = []
-    for _ in range(22):
-        start = time.time()
-        method(im, *args)
-        times.append(time.time() - start)
-
+    for _ in range(11):
+        times.append(case.run(im))
         sys.stdout.write('.')
         sys.stdout.flush()
-
-    try:
-        method(im, *args).save('_pil ' + desc + '.png', compress_level=1)
-    except Exception:
-        method(im, *args).convert('RGBA').save('_res ' + desc + '.png', compress_level=1)
-        pass
-
     times.sort()
     median_duration = times[len(times) // 2]
     min_duration = times[0]
     pixels = im.size[0] * im.size[1]
     print '\r>>> {:14} {:8.5f} s {:8.2f} Mpx/s {:8.2f} Mpx/s'.format(
-        desc,
+        case.desc,
         median_duration, pixels / median_duration / 1000 / 1000,
         pixels / min_duration / 1000 / 1000,
     )
 
-im = None
+    im = None
+    case.result.save('_pil ' + case.desc + '.png', compress_level=1)
+    case.cleanup()
+
 # time.sleep(10)

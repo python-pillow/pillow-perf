@@ -8,6 +8,10 @@ from PIL import Image, ImageOps
 
 
 Image.LANCZOS = Image.ANTIALIAS
+_filters = {
+    0: '0ner', 1: '6lzs', 2: '2bil', 3: '4bic',
+    4: '1box', 5: '3hmn', 6: '5mtc',
+}
 
 
 class BaseTestCase(object):
@@ -15,6 +19,7 @@ class BaseTestCase(object):
 
     def __init__(self, *args, **kwargs):
         self.args = args
+        self.kwargs = kwargs
         if 'desc' in kwargs:
             self.desc = kwargs['desc']
 
@@ -48,11 +53,18 @@ class TestCase(BaseTestCase):
 class ResizeCase(BaseTestCase):
     runner = staticmethod(Image.Image.resize)
 
+    def prepare(self, im):
+        im.load()
+        size = self.args[0]
+        if not self.kwargs.pop('hpass', True):
+            size = [im.size[0], size[1]]
+        if not self.kwargs.pop('vpass', True):
+            size = [size[0], im.size[1]]
+        return im
+
     @property
     def desc(self):
-        flt = {
-            0: 'ner', 1: 'lzs', 2: 'bil', 3: 'bic',
-        }.get(self.args[1], self.args[1])
+        flt = _filters.get(self.args[1], self.args[1])
         return "{size[0]}x{size[1]} {flt}".format(size=self.args[0], flt=flt)
 
 
@@ -91,9 +103,7 @@ class RotateCase(BaseTestCase):
 
     @property
     def desc(self):
-        flt = {
-            0: 'ner', 1: 'lzs', 2: 'bil', 3: 'bic',
-        }.get(self.args[1], self.args[1])
+        flt = _filters.get(self.args[1], self.args[1])
         return "rotate {mode} {flt} ".format(mode=self.args[0], flt=flt) + (
             'ex' if self.args[2] else '  ')
 
@@ -104,9 +114,7 @@ class TransformCase(BaseTestCase):
 
     @property
     def desc(self):
-        flt = {
-            0: 'ner', 1: 'lzs', 2: 'bil', 3: 'bic',
-        }.get(self.args[2], self.args[2])
+        flt = _filters.get(self.args[2], self.args[2])
         return "transform {flt}".format(flt=flt)
 
 
@@ -140,6 +148,52 @@ class CompositeCase(BaseTestCase):
         return "composite"
 
 
+class BlendCase(BaseTestCase):
+
+    def prepare(self, im):
+        im.load()
+        self.im2 = Image.open('../pillow-perf/2k-2.jpg')
+        self.im2.load()
+        return im
+
+    def runner(self, im, *args):
+        return Image.blend(im, self.im2, args[0])
+
+    @property
+    def desc(self):
+        return "blend {}".format(self.args[0])
+
+
+class PasteCase(BaseTestCase):
+    desc = "paste"
+
+    def prepare(self, im):
+        im.load()
+        self.im2 = Image.open('../pillow-perf/2k.jpg')
+        self.im2.load()
+        return im
+
+    def runner(self, im, *args):
+        dst = self.im2.copy();
+        dst.paste(im, (0, 0), mask=im)
+        return dst
+
+
+class PasteMaskCase(BaseTestCase):
+    desc = "paste mask"
+
+    def prepare(self, im):
+        im.load()
+        self.im2 = Image.open('../pillow-perf/2k.jpg')
+        self.im2.load()
+        return im
+
+    def runner(self, im, *args):
+        dst = self.im2.copy();
+        dst.paste(im, (0, 0), mask=im._new(im.im.getband(3)))
+        return dst
+
+
 perspective_transform_data = [
     0.53009, -0.47993, 79,
     -0.31048, 0.50159, 59,
@@ -153,19 +207,25 @@ affine_transform_data = [
 
 
 test_cases = [
-#     ResizeCase(size, flt)
-#     for size in [
-#         (16, 16),
-#         (320, 180),
-#         (1920, 1200),
-#         (7712, 4352),
-#     ] for flt in [
-#         # Image.NEAREST,
-#         Image.BILINEAR,
-#         Image.BICUBIC,
-#         Image.LANCZOS,
-#     ]
-# ] + [
+    ResizeCase(size, flt, vpass=vpass, hpass=hpass)
+    for vpass, hpass in [
+        (True, False),
+        (False, True),
+        (True, True),
+    ] for size in [
+        (150, 150),
+        (280, 280),
+        (720, 720),
+        (1350, 1350),
+    ] for flt in [
+        # Image.NEAREST,
+        # Image.BOX,
+        Image.BILINEAR,
+        # Image.HAMMING,
+        Image.BICUBIC,
+        Image.LANCZOS,
+    ]
+] + [
 #     RotateCase(deg, flt, expand)
 #     for deg in [
 #         10,
@@ -199,14 +259,19 @@ test_cases = [
     # CreateCase('RGB', (2560, 2560)),
     # CreateCase('RGB', (81920, 80)),
     # CreateCase('RGB', (80, 81920)),
-    CompositeCase(),
+    # CompositeCase(),
+    # PasteCase(),
+    # PasteMaskCase(),
+    # BlendCase(3),
+    # BlendCase(0.3),
+    # BlendCase(-2),
 ]
 
 
 
-def run_cases(test_cases, times, save=False):
+def run_cases(test_cases, source, times, save=False):
     for case in test_cases:
-        im = case.prepare(Image.open(sys.argv[1]))
+        im = case.prepare(Image.open(source))
         pixels = case.processed_pixels(im)
 
         runs = []
@@ -225,10 +290,21 @@ def run_cases(test_cases, times, save=False):
 
         im = None
         if save:
-            case.result.save('_pil ' + case.desc + '.png', compress_level=1)
+            case.result.save('_pil ' + case.desc + '.jpg', quality=100,
+                compress_level=1, subsampling=0)
         case.cleanup()
 
 
 if __name__ == '__main__':
-    run_cases(test_cases, 11, save='--save' in sys.argv)
-    # time.sleep(10)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('source')
+    parser.add_argument('--runs', '-n', type=int, default=11)
+    parser.add_argument('--save', action='store_true')
+    parser.add_argument('--sleep', action='store_true')
+    args = parser.parse_args()
+
+    run_cases(test_cases, args.source, args.runs, save=args.save)
+
+    if args.sleep:
+        time.sleep(10)

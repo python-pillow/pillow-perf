@@ -18,8 +18,9 @@ class BaseTestCase(object):
     runner = None
 
     def __init__(self, *args, **kwargs):
-        self.args = args
+        self.args = list(args)
         self.kwargs = kwargs
+        self.repeat = kwargs.get('repeat', 1)
         if 'desc' in kwargs:
             self.desc = kwargs['desc']
 
@@ -30,8 +31,9 @@ class BaseTestCase(object):
     def run(self, im):
         start = time.time()
         self._result = None
-        self._result = self.runner(im, *self.args)
-        return time.time() - start
+        for _ in range(self.repeat):
+            self._result = self.runner(im, *self.args)
+        return (time.time() - start) / self.repeat
 
     @property
     def result(self):
@@ -51,21 +53,23 @@ class TestCase(BaseTestCase):
 
 
 class ResizeCase(BaseTestCase):
-    runner = staticmethod(Image.Image.resize)
-
-    def prepare(self, im):
-        im.load()
-        size = self.args[0]
-        if not self.kwargs.pop('hpass', True):
+    def runner(self, im, size, *args):
+        if not self.kwargs.get('hpass', True):
             size = [im.size[0], size[1]]
-        if not self.kwargs.pop('vpass', True):
+        if not self.kwargs.get('vpass', True):
             size = [size[0], im.size[1]]
-        return im
+        return Image.Image.resize(im, size, *args)
 
     @property
     def desc(self):
         flt = _filters.get(self.args[1], self.args[1])
-        return "{size[0]}x{size[1]} {flt}".format(size=self.args[0], flt=flt)
+        add = ''
+        if self.kwargs.get('hpass', True):
+            add += 'h'
+        if self.kwargs.get('vpass', True):
+            add += 'v'
+        return "{size[0]}x{size[1]}{add} {flt}".format(
+            size=self.args[0], add=add, flt=flt)
 
 
 class BlurCase(BaseTestCase):
@@ -207,16 +211,20 @@ affine_transform_data = [
 
 
 test_cases = [
-    ResizeCase(size, flt, vpass=vpass, hpass=hpass)
-    for vpass, hpass in [
+    ResizeCase(size, flt, hpass=hpass, vpass=vpass, repeat=1)
+    for hpass, vpass in [
         (True, False),
         (False, True),
         (True, True),
     ] for size in [
-        (150, 150),
-        (280, 280),
-        (720, 720),
-        (1350, 1350),
+        # (150, 150),
+        # (280, 280),
+        # (720, 720),
+        # (1350, 1350),
+        (16, 16),
+        (320, 180),
+        (1920, 1200),
+        (7712, 4352),
     ] for flt in [
         # Image.NEAREST,
         # Image.BOX,

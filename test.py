@@ -213,8 +213,8 @@ affine_transform_data = [
 test_cases = [
     ResizeCase(size, flt, hpass=hpass, vpass=vpass, repeat=1)
     for hpass, vpass in [
-        (True, False),
-        (False, True),
+        # (True, False),
+        # (False, True),
         (True, True),
     ] for size in [
         # (150, 150),

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import time
 import sys
 import argparse
@@ -290,11 +292,11 @@ def run_cases(test_cases, source, times, save=False):
         runs.sort()
         median_duration = runs[times // 2]
         min_duration = runs[0]
-        print '\r>>> {:20} {:8.5f} s {:8.2f} Mpx/s {:8.2f} Mpx/s'.format(
+        print('\r>>> {:20} {:8.5f} s {:8.2f} Mpx/s {:8.2f} Mpx/s'.format(
             case.desc,
             median_duration, pixels / median_duration / 1000 / 1000,
             pixels / min_duration / 1000 / 1000,
-        )
+        ))
 
         im = None
         if save:

@@ -54,6 +54,18 @@ class TestCase(BaseTestCase):
         super(TestCase, self).__init__(*args, **kwargs)
 
 
+class LoadCase(BaseTestCase):
+    desc = 'load'
+
+    def prepare(self, im):
+        return im
+
+    def runner(self, im):
+        im = Image.open(im.filename)
+        im.draft(None, (200, 200))
+        im.load()
+        return im
+
 class ResizeCase(BaseTestCase):
     def runner(self, im, size, *args):
         if not self.kwargs.get('hpass', True):
@@ -275,6 +287,7 @@ test_cases = [
     # BlendCase(3),
     # BlendCase(0.3),
     # BlendCase(-2),
+    LoadCase(),
 ]
 
 

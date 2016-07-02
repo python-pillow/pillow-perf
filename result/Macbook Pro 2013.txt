@@ -27,18 +27,18 @@ Pillow 3.2.0
 
 Pillow 3.3.0
 ------------
->>> 16x16 bil       0.01221 s   335.44 Mpx/s   362.77 Mpx/s
->>> 16x16 bic       0.02295 s   178.51 Mpx/s   191.97 Mpx/s
->>> 16x16 lzs       0.03596 s   113.91 Mpx/s   127.72 Mpx/s
->>> 320x180 bil     0.02034 s   201.39 Mpx/s   211.95 Mpx/s
->>> 320x180 bic     0.03354 s   122.12 Mpx/s   129.52 Mpx/s
->>> 320x180 lzs     0.05070 s    80.78 Mpx/s    82.29 Mpx/s
->>> 1920x1200 bil   0.07441 s    55.04 Mpx/s    56.89 Mpx/s
->>> 1920x1200 bic   0.09512 s    43.06 Mpx/s    44.02 Mpx/s
->>> 1920x1200 lzs   0.12038 s    34.02 Mpx/s    34.43 Mpx/s
->>> 7712x4352 bil   0.62156 s     6.59 Mpx/s     6.71 Mpx/s
->>> 7712x4352 bic   0.73837 s     5.55 Mpx/s     5.61 Mpx/s
->>> 7712x4352 lzs   0.88686 s     4.62 Mpx/s     4.66 Mpx/s
+>>> 16x16 bil       0.01215 s   337.12 Mpx/s   363.19 Mpx/s
+>>> 16x16 bic       0.02205 s   185.79 Mpx/s   193.76 Mpx/s
+>>> 16x16 lzs       0.03616 s   113.27 Mpx/s   129.33 Mpx/s
+>>> 320x180 bil     0.01959 s   209.06 Mpx/s   220.60 Mpx/s
+>>> 320x180 bic     0.03292 s   124.43 Mpx/s   129.79 Mpx/s
+>>> 320x180 lzs     0.04980 s    82.25 Mpx/s    85.54 Mpx/s
+>>> 1920x1200 bil   0.07332 s    55.87 Mpx/s    56.57 Mpx/s
+>>> 1920x1200 bic   0.09387 s    43.64 Mpx/s    44.09 Mpx/s
+>>> 1920x1200 lzs   0.11868 s    34.51 Mpx/s    35.15 Mpx/s
+>>> 7712x4352 bil   0.61001 s     6.71 Mpx/s     6.75 Mpx/s
+>>> 7712x4352 bic   0.74344 s     5.51 Mpx/s     5.61 Mpx/s
+>>> 7712x4352 lzs   0.88627 s     4.62 Mpx/s     4.67 Mpx/s
 
 
 Pillow-SIMD 3.2.0.post1
@@ -75,38 +75,38 @@ AVX2
 >>> 7712x4352 lzs   0.52902 s     7.74 Mpx/s     8.10 Mpx/s
 
 
-Pillow-SIMD 3.3.0.post0, preliminary
+Pillow-SIMD 3.3.0.post0
 -----------------------
 
 SSE4 (default)
 ~~~~~~~~~~~~~~
->>> 16x16 bil       0.00687 s   595.86 Mpx/s   599.79 Mpx/s
->>> 16x16 bic       0.01300 s   315.17 Mpx/s   322.32 Mpx/s
->>> 16x16 lzs       0.01998 s   205.04 Mpx/s   211.86 Mpx/s
->>> 320x180 bil     0.00955 s   428.90 Mpx/s   431.34 Mpx/s
->>> 320x180 bic     0.01763 s   232.40 Mpx/s   236.44 Mpx/s
->>> 320x180 lzs     0.02657 s   154.15 Mpx/s   154.73 Mpx/s
->>> 1920x1200 bil   0.03199 s   128.04 Mpx/s   135.48 Mpx/s
->>> 1920x1200 bic   0.04542 s    90.18 Mpx/s    93.24 Mpx/s
->>> 1920x1200 lzs   0.05708 s    71.76 Mpx/s    73.31 Mpx/s
->>> 7712x4352 bil   0.24890 s    16.46 Mpx/s    16.79 Mpx/s
->>> 7712x4352 bic   0.31922 s    12.83 Mpx/s    13.01 Mpx/s
->>> 7712x4352 lzs   0.41594 s     9.85 Mpx/s    10.02 Mpx/s
+>>> 16x16 bil       0.00716 s   571.67 Mpx/s   581.58 Mpx/s
+>>> 16x16 bic       0.01340 s   305.72 Mpx/s   318.85 Mpx/s
+>>> 16x16 lzs       0.02165 s   189.19 Mpx/s   210.58 Mpx/s
+>>> 320x180 bil     0.01118 s   366.33 Mpx/s   422.70 Mpx/s
+>>> 320x180 bic     0.01821 s   224.91 Mpx/s   237.04 Mpx/s
+>>> 320x180 lzs     0.02675 s   153.10 Mpx/s   158.98 Mpx/s
+>>> 1920x1200 bil   0.03120 s   131.27 Mpx/s   140.47 Mpx/s
+>>> 1920x1200 bic   0.04541 s    90.20 Mpx/s    94.55 Mpx/s
+>>> 1920x1200 lzs   0.05646 s    72.55 Mpx/s    74.08 Mpx/s
+>>> 7712x4352 bil   0.25503 s    16.06 Mpx/s    16.26 Mpx/s
+>>> 7712x4352 bic   0.32377 s    12.65 Mpx/s    13.15 Mpx/s
+>>> 7712x4352 lzs   0.41647 s     9.84 Mpx/s    10.10 Mpx/s
 
 AVX2
 ~~~~
->>> 16x16 bil       0.00453 s   904.39 Mpx/s   947.70 Mpx/s
->>> 16x16 bic       0.00845 s   484.73 Mpx/s   525.19 Mpx/s
->>> 16x16 lzs       0.01440 s   284.40 Mpx/s   339.81 Mpx/s
->>> 320x180 bil     0.00801 s   511.17 Mpx/s   599.81 Mpx/s
->>> 320x180 bic     0.01118 s   366.27 Mpx/s   382.59 Mpx/s
->>> 320x180 lzs     0.01629 s   251.41 Mpx/s   260.18 Mpx/s
->>> 1920x1200 bil   0.02869 s   142.76 Mpx/s   152.52 Mpx/s
->>> 1920x1200 bic   0.03810 s   107.50 Mpx/s   111.93 Mpx/s
->>> 1920x1200 lzs   0.04109 s    99.67 Mpx/s   103.78 Mpx/s
->>> 7712x4352 bil   0.19742 s    20.75 Mpx/s    20.90 Mpx/s
->>> 7712x4352 bic   0.25207 s    16.25 Mpx/s    16.61 Mpx/s
->>> 7712x4352 lzs   0.30607 s    13.38 Mpx/s    13.60 Mpx/s
+>>> 16x16 bil       0.00453 s   903.40 Mpx/s   934.09 Mpx/s
+>>> 16x16 bic       0.00741 s   552.85 Mpx/s   570.08 Mpx/s
+>>> 16x16 lzs       0.01153 s   355.40 Mpx/s   366.73 Mpx/s
+>>> 320x180 bil     0.00733 s   558.57 Mpx/s   580.01 Mpx/s
+>>> 320x180 bic     0.01159 s   353.53 Mpx/s   366.70 Mpx/s
+>>> 320x180 lzs     0.01677 s   244.22 Mpx/s   252.67 Mpx/s
+>>> 1920x1200 bil   0.02693 s   152.11 Mpx/s   159.79 Mpx/s
+>>> 1920x1200 bic   0.03646 s   112.34 Mpx/s   116.78 Mpx/s
+>>> 1920x1200 lzs   0.03971 s   103.16 Mpx/s   108.57 Mpx/s
+>>> 7712x4352 bil   0.20146 s    20.33 Mpx/s    21.23 Mpx/s
+>>> 7712x4352 bic   0.24879 s    16.46 Mpx/s    17.10 Mpx/s
+>>> 7712x4352 lzs   0.30612 s    13.38 Mpx/s    13.92 Mpx/s
 
 
 Pillow-SIMD 3.4.0.post0, preliminary

@@ -4,7 +4,7 @@ AWS Server c4.large
 Operations on `RGB` image `2560×1600` pixels on 
 Intel(R) Xeon(R) CPU E5-2680 v2 @ 2.80GHz
 
-    Test          | Mean time  | Mean perf   | Max perf
+    Test          | Median time| Median perf | Max perf
 
 
 Resampling

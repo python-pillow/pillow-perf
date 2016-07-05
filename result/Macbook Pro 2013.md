@@ -4,7 +4,7 @@ Macbook Pro late 2013
 Operations on `RGB` image `2560×1600` pixels on 
 Intel(R) Core(TM) i5-4258U CPU @ 2.40GHz
 
-    Test          | Mean time  | Mean perf   | Max perf
+    Test          | Median time| Median perf | Max perf
 
 
 Resampling

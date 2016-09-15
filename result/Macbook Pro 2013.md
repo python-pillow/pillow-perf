@@ -10,6 +10,22 @@ Intel(R) Core(TM) i5-4258U CPU @ 2.40GHz
 Resampling
 ==========
 
+Pillow 2.6.0
+------------
+    16x16 bil       0.08145 s    50.29 Mpx/s    51.73 Mpx/s
+    16x16 bic       0.15914 s    25.74 Mpx/s    26.71 Mpx/s
+    16x16 lzs       0.22069 s    18.56 Mpx/s    18.88 Mpx/s
+    320x180 bil     0.12032 s    34.04 Mpx/s    34.49 Mpx/s
+    320x180 bic     0.23536 s    17.40 Mpx/s    17.47 Mpx/s
+    320x180 lzs     0.35478 s    11.55 Mpx/s    11.71 Mpx/s
+    1920x1200 bil   0.37874 s    10.81 Mpx/s    11.39 Mpx/s
+    1920x1200 bic   0.49536 s     8.27 Mpx/s     8.57 Mpx/s
+    1920x1200 lzs   0.63811 s     6.42 Mpx/s     6.63 Mpx/s
+    7712x4352 bil   2.23075 s     1.84 Mpx/s     1.88 Mpx/s
+    7712x4352 bic   2.33359 s     1.76 Mpx/s     1.92 Mpx/s
+    7712x4352 lzs   2.17505 s     1.88 Mpx/s     1.92 Mpx/s
+
+
 Pillow 3.2.0
 ------------
     16x16 bil       0.02031 s   201.70 Mpx/s   216.37 Mpx/s

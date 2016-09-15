@@ -67,12 +67,39 @@ class LoadCase(BaseTestCase):
         return im
 
 class ResizeCase(BaseTestCase):
+    def __init__(self, *args, **kwargs):
+        super(ResizeCase, self).__init__(*args, **kwargs)
+
+        im = Image.new('RGB', (10, 10)).im
+        if not hasattr(im, 'stretch'):
+            self.resize = Image.Image.resize
+
     def runner(self, im, size, *args):
         if not self.kwargs.get('hpass', True):
             size = [im.size[0], size[1]]
         if not self.kwargs.get('vpass', True):
             size = [size[0], im.size[1]]
-        return Image.Image.resize(im, size, *args)
+        return self.resize(im, size, *args)
+
+    @staticmethod
+    def resize(self, size, resample=Image.NEAREST, *args):
+        self.load()
+
+        if self.size == size:
+            return self._new(self.im)
+
+        if self.mode in ("1", "P"):
+            resample = Image.NEAREST
+
+        if self.mode == 'RGBA':
+            return self.convert('RGBa').resize(size, resample).convert('RGBA')
+
+        if resample == Image.NEAREST:
+            im = self.im.resize(size, resample)
+        else:
+            im = self.im.stretch(size, resample)
+
+        return self._new(im)
 
     @property
     def desc(self):
@@ -305,7 +332,7 @@ def run_cases(test_cases, source, times, save=False):
         runs.sort()
         median_duration = runs[times // 2]
         min_duration = runs[0]
-        print('\r>>> {:20} {:8.5f} s {:8.2f} Mpx/s {:8.2f} Mpx/s'.format(
+        print('\r    {:20} {:8.5f} s {:8.2f} Mpx/s {:8.2f} Mpx/s'.format(
             case.desc,
             median_duration, pixels / median_duration / 1000 / 1000,
             pixels / min_duration / 1000 / 1000,
@@ -313,7 +340,7 @@ def run_cases(test_cases, source, times, save=False):
 
         im = None
         if save:
-            case.result.save('_pil ' + case.desc + '.jpg', quality=100,
+            case.result.save('_pil ' + case.desc + '.png', quality=100,
                 compress_level=1, subsampling=0)
         case.cleanup()
 

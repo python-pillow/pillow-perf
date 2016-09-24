@@ -305,8 +305,23 @@ var chart = new Chart(document.getElementById("chartContainer"), {
                     return "Resize of 2560x1600 image to " + title;
                 },
                 label: function(item, data) {
+                    var chart = this._chartInstance;
+                    var first;
+                    for (var i = 0; i < data.datasets.length; i++) {
+                        if ( ! chart.isDatasetVisible(i)) {
+                            continue;
+                        }
+                        first = data.datasets[i].data[item.index];
+                        break;
+                    }
+                    
                     var l = data.datasets[item.datasetIndex].label || '';
-                    return " " + rightpad(l, 30) + item.yLabel + ' ms';
+                    var label = " " + rightpad(l, 26);
+                    label += rightpad('' + item.yLabel.toFixed(4) + ' ms', 12);
+                    if (item.yLabel != first) {
+                        label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+                    }
+                    return label;
                 }
             }
         },

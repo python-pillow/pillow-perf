@@ -50,17 +50,15 @@
 	
 	var _charsAdapter2 = _interopRequireDefault(_charsAdapter);
 	
-	var _macbook = __webpack_require__(2);
+	var _index = __webpack_require__(2);
 	
-	var _macbook2 = _interopRequireDefault(_macbook);
+	var _index2 = _interopRequireDefault(_index);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	data = [];
+	alert("hey " + _index2.default + "!");
 	
-	data.push(_macbook2.default);
-	
-	alert("hey " + _charsAdapter2.default + "!");
+	console.log(_index2.default);
 
 /***/ },
 /* 1 */
@@ -70,6 +68,28 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _macbook = __webpack_require__(3);
+	
+	var _macbook2 = _interopRequireDefault(_macbook);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var data = [];
+	
+	data.push(_macbook2.default);
+	
+	exports.default = data;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	module.exports = {

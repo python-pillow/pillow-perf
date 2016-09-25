@@ -1,6 +1,8 @@
 {
-    "OS": "",
-    "CPU": "",
+    "name": "MacBook Pro (Retina, 13-inch, Late 2013)",
+    "OS": "Ubuntu 14.04.4 LTS 64bit",
+    "CPU": "Intel® Core™ i5-4258U CPU @ 2.40GHz",
+
     "competitions_groups": {
         "resampling": {
             "title": "Convolution resampling"

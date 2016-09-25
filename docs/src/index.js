@@ -1,7 +1,6 @@
 import Chars from "./chars-adapter";
+import data from "../data/index";
 
-data = []
-import dataSource from "../data/macbook.json";
-data.push(dataSource);
+alert(`hey ${data}!`);
 
-alert(`hey ${Chars}!`);
+console.log(data);

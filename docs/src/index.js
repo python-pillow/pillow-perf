@@ -1,6 +1,4 @@
-import Chars from "./chars-adapter";
-import data from "../data/index";
-
-alert(`hey ${data}!`);
+var Chars = require("./chars-adapter");
+var data = require("./data/index");
 
 console.log(data);

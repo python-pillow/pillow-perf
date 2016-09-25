@@ -1,0 +1,15 @@
+{
+  "name": "pillow-perf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Chart.js",
+  "dependencies": {
+    "webpack": "^1.13.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

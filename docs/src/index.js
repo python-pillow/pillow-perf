@@ -1,4 +1,11 @@
-var Chars = require("./chars-adapter");
+var adapter = require("./chars-adapter");
 var data = require("./data/index");
 
-console.log(data);
+var competition = data[0].competitions[0];
+
+document.addEventListener("DOMContentLoaded", function(){
+  adapter.chartForCompetition(
+    document.getElementById("chartContainer"),
+    competition
+  );
+});

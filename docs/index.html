@@ -2,9 +2,33 @@
 <html>
 <head>
     <title></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <script type="text/javascript" src="/bundles/index.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 </head>
 <body>
+
+    <h1>Pillow performance</h1>
+
+    <dl>
+        <dt>PIL</dt>
+        <dd>Python image library</dd>
+
+        <dt>Pillow</dt>
+        <dd>PIL fork</dd>
+
+        <dt>Pillow SIMD</dt>
+        <dd>highly optimized Pillow builds with SIMD inctructions</dd>
+        
+        <dt>ImageMagick</dt>
+        <dd></dd>
+
+        <dt>Skia</dt>
+        <dd></dd>
+    </dl>
+
+
     <style type="text/css">
     canvas {
         display: inline-block !important;
@@ -33,6 +57,7 @@ function dataset(label, color, data, show, id) {
     };
 }
 
+/*
 var chart = new Chart(document.getElementById("chartContainer"), {
     type: 'myBar',
     data: {
@@ -196,29 +221,32 @@ var chart = new Chart(document.getElementById("chartContainer"), {
         ]
     },
     options: {
+        title: {
+            text: "Resize of 2560x1600 image to"
+          },
         maintainAspectRatio: false, 
         responsive: false,
         animation: {
-            duration: 0,
+            // duration: 0,
         },
         legend: {
-            // display: false,
             position: 'left',
-            // reverse: true,
         },
         tooltips: {
             mode: "label",
-            bodyFontFamily: 'Courier New',
-            bodyFontStyle: 'bold',
+            titleFontFamily: "'Inconsolata', monospace", 
+            titleFontSize: 14,
+            bodyFontFamily: "'Inconsolata', monospace",
+            bodyFontSize: 14,
             bodySpacing: 10,
+            backgroundColor: 'rgba(0,0,0,0.9)',
             titleMarginBottom: 10,
             xPadding: 16,
             yPadding: 16,
             callbacks: {
                 title: function(tooltipItems, data) {
                     var title = Chart.defaults.global.tooltips.callbacks.title(tooltipItems, data);
-
-                    return "Resize of 2560x1600 image to " + title;
+                    return this._chartInstance.options.title.text + " " + title;
                 },
                 label: function(item, data) {
                     var chart = this._chartInstance;
@@ -256,7 +284,7 @@ var chart = new Chart(document.getElementById("chartContainer"), {
         }
     }
 });
-
+*/
 
 </script>
 

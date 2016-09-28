@@ -105,12 +105,13 @@ function chartForCompetition(element, competition) {
       maintainAspectRatio: false, 
       responsive: false,
       animation: {
-        duration: 200,
+        duration: 0,
       },
       legend: {
         position: 'left',
       },
       tooltips: {
+        units: "s",
         mode: "label",
         titleFontFamily: "'Inconsolata', monospace", 
         titleFontSize: 14,
@@ -123,8 +124,9 @@ function chartForCompetition(element, competition) {
         yPadding: 16,
         callbacks: {
           title: function(tooltipItems, data) {
+            var chart = this._chartInstance;
             var title = Chart.defaults.global.tooltips.callbacks.title(tooltipItems, data);
-            return this._chartInstance.options.title.text + " " + title;
+            return chart.options.title.text + " " + title;
           },
           label: function(item, data) {
             var chart = this._chartInstance;
@@ -139,7 +141,8 @@ function chartForCompetition(element, competition) {
             
             var l = data.datasets[item.datasetIndex].label || '';
             var label = " " + rightpad(l, 26);
-            label += rightpad('' + item.yLabel.toFixed(4) + ' ms', 12);
+            var units = chart.options.tooltips.units;
+            label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
             if (item.yLabel != first) {
               label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
             }
@@ -165,8 +168,11 @@ function chartForCompetition(element, competition) {
 
   if (competition.competitors.length) {
     var competitor = competition.competitors[0];
+    var lastGroup = null;
+
     for (var j = 0; j < competitor.results.length; j++) {
       var result = competitor.results[j];
+      var group = result.slice(0, -2).join("/");
 
       if (result.length != resultsLen) {
         throw new Error("results length for " +
@@ -182,39 +188,73 @@ function chartForCompetition(element, competition) {
           label.push(result[k])
         }
       }
-      chartData.data.labels.push(label.join(" "));
 
-      if (resultsLen > 2) {
-        chartData.data.groups.push(result.slice(0, -2).join("/"));
-      }      
+      if (lastGroup && group != lastGroup) {
+        chartData.data.labels.push("");
+        if (group) {
+          chartData.data.groups.push("");
+        }
+      }
+      lastGroup = group;
+
+      chartData.data.labels.push(label.join(" "));
+      if (group) {
+        chartData.data.groups.push(group);
+      }
     }
   }
 
   for (var i = 0; i < competition.competitors.length; i++) {
     var competitor = competition.competitors[i];
-    var data = []
+    var data = [];
+    var lastGroup = null;
+    var c = competitor.color;
+
     chartData.data.datasets.push({
       label: competitor.title,
+      name: competitor.name,
       data: data,
-      backgroundColor: "red",
+      backgroundColor: "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)",
       borderColor: "rgba(255, 255, 255, .5)",
       borderWidth: 1,
     });
 
     for (var j = 0; j < competitor.results.length; j++) {
       var result = competitor.results[j];
+      var group = result.slice(0, -2).join("/");
+
+      if (lastGroup && group != lastGroup) {
+        data.push(null);
+      }
+      lastGroup = group;
+
       data.push(result[result.length - 1]);
     }
-
-    console.log(competitor);
   }
 
-  console.log(chartData);
   return new Chart(element, chartData);
+}
+
+
+function applyPreset(chart, presetArr) {
+  var preset = {};
+  for (var i = 0; i < presetArr.length; i++) {
+    preset[presetArr[i]] = true;
+  }
+
+  for (var i = 0; i < chart.data.datasets.length; i++) {
+    var meta = chart.getDatasetMeta(i);
+    var dataset = chart.data.datasets[i];
+
+    meta.hidden = ! preset[dataset.name];
+  }
+
+  chart.update();
 }
 
 
 module.exports = {
   Chart: Chart,
   chartForCompetition: chartForCompetition,
+  applyPreset: applyPreset,
 };

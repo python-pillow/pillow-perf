@@ -149,15 +149,28 @@
 	
 	function populateSystems(systems) {
 	  var select = document.getElementById("select-system");
+	  var parent = select.parentNode;
+	  var info = parent.getElementsByClassName('info')[0];
 	  
 	  var selectItem = createSelect(select, systems, function(i, element) {
 	    element.addEventListener('click', applySystem.bind(null, i));
 	  });
 	
 	  function applySystem(n) {
-	    var applyCompetition = populateCompetitions(systems[n].competitions);
+	    var innerHTML = "";
+	    var system = systems[n];
+	    var applyCompetition = populateCompetitions(system.competitions);
 	    applyCompetition(0);
+	    
 	    selectItem(n);
+	
+	    if (system.OS) {
+	      innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
+	    }
+	    if (system.CPU) {
+	      innerHTML += "<strong>CPU</strong> " + system.CPU + "<br>";
+	    }
+	    info.innerHTML = innerHTML;
 	  }
 	
 	  return applySystem;
@@ -166,7 +179,7 @@
 	
 	document.addEventListener("DOMContentLoaded", function(){
 	
-	  var applySystem = populateSystems([data[0], data[0], data[0], data[0]]);
+	  var applySystem = populateSystems([data[0], data[0], data[0]]);
 	  applySystem(0);
 	
 	});

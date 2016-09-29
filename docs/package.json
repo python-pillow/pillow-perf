@@ -1,0 +1,20 @@
+{
+  "name": "pillow-perf",
+  "version": "1.0.0",
+  "description": "Pillow performance ",
+  "main": "Chart.js",
+  "dependencies": {
+    "chart.js": "^2.3.0",
+    "json-loader": "^0.5.4",
+    "webpack": "^1.13.2"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://github.com/homm/pillow-perf",
+  "author": "",
+  "license": "ISC"
+}

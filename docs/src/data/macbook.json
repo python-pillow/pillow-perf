@@ -68,7 +68,8 @@
                         "pillow-3.4",
                         "pillow-simd-3.4-sse4",
                         "pillow-simd-3.4-avx2"
-                    ]
+                    ],
+                    "default": true
                 },
                 {
                     "title": "Pillow SIMD SSE4 progress",

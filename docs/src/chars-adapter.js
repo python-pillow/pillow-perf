@@ -140,7 +140,7 @@ function chartForCompetition(element, competition) {
             }
             
             var l = data.datasets[item.datasetIndex].label || '';
-            var label = " " + rightpad(l, 26);
+            var label = " " + rightpad(l, 28);
             var units = chart.options.tooltips.units;
             label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
             if (item.yLabel != first) {

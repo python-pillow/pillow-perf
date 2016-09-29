@@ -1,18 +1,12 @@
 {
-    "name": "MacBook Pro (Retina, 13-inch, Late 2013)",
+    "title": "MacBook Pro (Retina, 13-inch, Late 2013)",
     "OS": "Ubuntu 14.04.4 LTS 64bit",
     "CPU": "Intel® Core™ i5-4258U CPU @ 2.40GHz",
 
-    "competitions_groups": {
-        "resampling": {
-            "title": "Convolution resampling"
-        }
-    },
     "competitions": [
         {
-            "name": "resampling-4k-rgb",
-            "group": "resampling",
-            "title": "Resampling 2560×1600 RGB image",
+            "name": "resample-4k-rgb",
+            "title": "Resample 2560×1600 RGB image",
             "source": {
                 "size": [2560, 1600]
             },
@@ -53,22 +47,6 @@
                     ]
                 },
                 {
-                    "title": "Pillow SIMD SSE4 progress",
-                    "set": [
-                        "pillow-simd-3.2-sse4",
-                        "pillow-simd-3.3-sse4",
-                        "pillow-simd-3.4-sse4"
-                    ]
-                },
-                {
-                    "title": "Pillow SIMD AVX2 progress",
-                    "set": [
-                        "pillow-simd-3.2-avx2",
-                        "pillow-simd-3.3-avx2",
-                        "pillow-simd-3.4-avx2"
-                    ]
-                },
-                {
                     "title": "Pillow 3.2 versions",
                     "set": [
                         "pillow-2.7",
@@ -91,12 +69,35 @@
                         "pillow-simd-3.4-sse4",
                         "pillow-simd-3.4-avx2"
                     ]
+                },
+                {
+                    "title": "Pillow SIMD SSE4 progress",
+                    "set": [
+                        "pillow-simd-3.2-sse4",
+                        "pillow-simd-3.3-sse4",
+                        "pillow-simd-3.4-sse4"
+                    ]
+                },
+                {
+                    "title": "Pillow SIMD AVX2 progress",
+                    "set": [
+                        "pillow-simd-3.2-avx2",
+                        "pillow-simd-3.3-avx2",
+                        "pillow-simd-3.4-avx2"
+                    ]
+                },
+                {
+                    "title": "Pillow SIMD 3.4 vs Skia",
+                    "set": [
+                        "skia-53",
+                        "pillow-simd-3.4-sse4",
+                        "pillow-simd-3.4-avx2"
+                    ]
                 }
             ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8.9",
-                    "group": "imagemagick",
                     "title": "ImageMagick 6.8.9-9",
                     "color": [230, 100, 70],
                     "results": [
@@ -115,8 +116,26 @@
                     ]
                 },
                 {
+                    "name": "skia-53",
+                    "title": "Skia 53 SSE2",
+                    "color": [240, 100, 60],
+                    "results": [
+                        ["16x16",      "bil",  0.00506],
+                        ["16x16",      "bic",  0.00904],
+                        ["16x16",      "lzs",  0.01400],
+                        ["320x180",    "bil",  0.00691],
+                        ["320x180",    "bic",  0.01250],
+                        ["320x180",    "lzs",  0.02080],
+                        ["1920x1200",  "bil",  0.02130],
+                        ["1920x1200",  "bic",  0.03630],
+                        ["1920x1200",  "lzs",  0.03910],
+                        ["7712x4352",  "bil",  0.19900],
+                        ["7712x4352",  "bic",  0.24800],
+                        ["7712x4352",  "lzs",  0.34000]
+                    ]
+                },
+                {
                     "name": "pillow-2.0",
-                    "group": "pillow",
                     "title": "PIL & Pillow 2.0 to 2.6.0",
                     "color": [0, 100, 50],
                     "results": [
@@ -136,7 +155,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "group": "pillow",
                     "title": "Pillow 2.7.0 to 3.2.0",
                     "color": [330, 100, 40],
                     "results": [
@@ -156,7 +174,6 @@
                 },
                 {
                     "name": "pillow-3.3",
-                    "group": "pillow",
                     "title": "Pillow 3.3.0",
                     "color": [120, 100, 40],
                     "results": [
@@ -176,7 +193,6 @@
                 },
                 {
                     "name": "pillow-3.4",
-                    "group": "pillow",
                     "title": "Pillow 3.4.0",
                     "color": [34, 100, 40],
                     "results": [
@@ -197,7 +213,6 @@
 
                 {
                     "name": "pillow-simd-3.2-sse4",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.2.0 SSE4",
                     "color": [330, 100, 80],
                     "results": [
@@ -217,7 +232,6 @@
                 },
                 {
                     "name": "pillow-simd-3.2-avx2",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.2.0 AVX2",
                     "color": [330, 100, 60],
                     "results": [
@@ -238,9 +252,8 @@
 
                 {
                     "name": "pillow-simd-3.3-sse4",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.3.0 SSE4",
-                    "color": [120, 100, 80],
+                    "color": [120, 100, 85],
                     "results": [
                         ["16x16",      "bil",  0.00716],
                         ["16x16",      "bic",  0.01340],
@@ -258,7 +271,6 @@
                 },
                 {
                     "name": "pillow-simd-3.3-avx2",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.3.0 AVX2",
                     "color": [120, 100, 60],
                     "results": [
@@ -279,7 +291,6 @@
 
                 {
                     "name": "pillow-simd-3.4-sse4",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.4.0 SSE4",
                     "color": [34, 100, 80],
                     "results": [
@@ -299,7 +310,6 @@
                 },
                 {
                     "name": "pillow-simd-3.4-avx2",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.4.0 AVX2",
                     "color": [34, 100, 60],
                     "results": [
@@ -316,34 +326,12 @@
                         ["7712x4352",  "bic",  0.17111],
                         ["7712x4352",  "lzs",  0.20077]
                     ]
-                },
-
-                {
-                    "name": "skia-53",
-                    "group": "skia",
-                    "title": "Skia 53 SSE2",
-                    "color": [240, 100, 60],
-                    "results": [
-                        ["16x16",      "bil",  0.00506],
-                        ["16x16",      "bic",  0.00904],
-                        ["16x16",      "lzs",  0.01400],
-                        ["320x180",    "bil",  0.00691],
-                        ["320x180",    "bic",  0.01250],
-                        ["320x180",    "lzs",  0.02080],
-                        ["1920x1200",  "bil",  0.02130],
-                        ["1920x1200",  "bic",  0.03630],
-                        ["1920x1200",  "lzs",  0.03910],
-                        ["7712x4352",  "bil",  0.19900],
-                        ["7712x4352",  "bic",  0.24800],
-                        ["7712x4352",  "lzs",  0.34000]
-                    ]
                 }
             ]
         },
         {
             "name": "blur-4k-rgb",
-            "group": "blur",
-            "title": "2560×1600 RGB image",
+            "title": "Blur 2560×1600 RGB image",
             "source": {
                 "size": [2560, 1600]
             },
@@ -357,32 +345,21 @@
                     "units": "s"
                 }
             ],
-            "competitors_groups": {
-                "imagemagick": {
-                    "title": "ImageMagick"
-                },
-                "pillow": {
-                    "title": "Pillow"
-                },
-                "pillow-simd": {
-                    "title": "Pillow SIMD"
-                }
-            },
             "competitors": [
                 {
                     "name": "imagemagick-6.8.9",
-                    "group": "imagemagick",
                     "title": "ImageMagick 6.8.9-9",
+                    "color": [230, 100, 70],
                     "results": [
                         ["1px",     0.6200],
                         ["10px",    1.7900],
-                        ["100px",  12.0090]
+                        ["100px",   5.0090]
                     ]
                 },
                 {
-                    "name": "pillow-2.7",
-                    "group": "pillow",
-                    "title": "Pillow 2.7.0",
+                    "name": "pillow-2.0",
+                    "title": "Pillow 2.0",
+                    "color": [330, 100, 40],
                     "results": [
                         ["1px",    0.24177],
                         ["10px",   0.24173],
@@ -391,8 +368,8 @@
                 },
                 {
                     "name": "pillow-simd-3.2-sse4",
-                    "group": "pillow-simd",
                     "title": "Pillow SIMD 3.2.0 SSE4",
+                    "color": [330, 100, 80],
                     "results": [
                         ["1px",    0.11649],
                         ["10px",   0.11549],

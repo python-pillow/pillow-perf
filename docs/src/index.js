@@ -1,6 +1,9 @@
 var adapter = require("./chars-adapter");
 var data = require("./data/index");
 
+// Global chart instance. Should be destroyed every time.
+var chart = null;
+
 
 function createSelect(select, list, callback) {
   var elements = [];
@@ -9,12 +12,13 @@ function createSelect(select, list, callback) {
     var item = list[i];
     var element = document.createElement('a');
     element.href = '#';
-    document.addEventListener('click', function(e) {
+    element.innerText = item.title;
+    element.addEventListener('click', function(e) {
       e.preventDefault();
     })
+    elements.push(element);
     select.appendChild(document.createElement('li')).appendChild(element);
     callback(i, element, item);
-    elements.push(element);
   }
 
   function selectItem(n) {
@@ -30,9 +34,8 @@ function createSelect(select, list, callback) {
 
 function populatePresets(chart, presets) {
   var select = document.getElementById("select-preset");
-  
-  var selectItem = createSelect(select, presets, function(i, element, preset) {
-    element.innerText = preset.title;
+
+  var selectItem = createSelect(select, presets, function(i, element) {
     element.addEventListener('click', applyPreset.bind(null, i));
   });
 
@@ -47,14 +50,19 @@ function populatePresets(chart, presets) {
 function populateCompetitions(competitions) {
   var select = document.getElementById("select-competition");
   
-  var selectItem = createSelect(select, competitions, function(i, element, competition) {
-    element.innerText = competition.title;
+  var selectItem = createSelect(select, competitions, function(i, element) {
     element.addEventListener('click', applyCompetition.bind(null, i));
   });
 
+
   function applyCompetition(n) {
     var competition = competitions[n];
-    var chart = adapter.chartForCompetition(
+
+    if (chart) {
+      chart.destroy();
+    }
+
+    chart = adapter.chartForCompetition(
       document.getElementById("chart-container"),
       competition
     );
@@ -82,4 +90,5 @@ document.addEventListener("DOMContentLoaded", function(){
   
   var applyCompetition = populateCompetitions(data[0].competitions);
   applyCompetition(0);
+
 });

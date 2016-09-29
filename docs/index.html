@@ -4,8 +4,19 @@
     <title></title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <script type="text/javascript" src="/bundles/index.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="/bundles/index.js"></script>
+    <style type="text/css">
+    canvas {
+        display: inline-block !important;
+    }
+    a.selected {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 0px;
+    }
+    </style>
 </head>
 <body>
 
@@ -46,13 +57,8 @@
     <h4>Presets</h4>
     <ul id="select-preset"></ul>
 
-    <style type="text/css">
-    canvas {
-        display: inline-block !important;
-    }
-    </style>
 
-  <canvas id="chart-container" width="1100" height="500"></canvas>
+    <canvas id="chart-container" width="1100" height="500"></canvas>
 
 </body>
 </html>

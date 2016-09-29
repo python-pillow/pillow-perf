@@ -76,12 +76,12 @@ function populateCompetitions(competitions) {
 
     for (var i = 0; i < parent.classList.length; i++) {
       var theClass = parent.classList[i];
-      if (theClass.substr(0, 'info__'.length) == 'info__') {
+      if (theClass.substr(0, 'topic__'.length) == 'topic__') {
         parent.classList.remove(theClass);
       }
     }
-    if (competition.info) {
-      parent.classList.add('info__' + competition.info);
+    if (competition.topic) {
+      parent.classList.add('topic__' + competition.topic);
     }
 
     if (competition.presets) {

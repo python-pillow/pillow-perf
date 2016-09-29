@@ -82,6 +82,9 @@
 	
 	function populatePresets(chart, presets) {
 	  var select = document.getElementById("select-preset");
+	  var parent = select.parentNode;
+	
+	  parent.style.display = presets.length ? 'block' : 'none';
 	
 	  var selectItem = createSelect(select, presets, function(i, element) {
 	    element.addEventListener('click', applyPreset.bind(null, i));
@@ -97,6 +100,7 @@
 	
 	function populateCompetitions(competitions) {
 	  var select = document.getElementById("select-competition");
+	  var parent = select.parentNode;
 	  
 	  var selectItem = createSelect(select, competitions, function(i, element) {
 	    element.addEventListener('click', applyCompetition.bind(null, i));
@@ -115,6 +119,16 @@
 	    );
 	
 	    selectItem(n);
+	
+	    for (var i = 0; i < parent.classList.length; i++) {
+	      var theClass = parent.classList[i];
+	      if (theClass.substr(0, 'info__'.length) == 'info__') {
+	        parent.classList.remove(theClass);
+	      }
+	    }
+	    if (competition.info) {
+	      parent.classList.add('info__' + competition.info);
+	    }
 	
 	    if (competition.presets) {
 	      var applyPreset = populatePresets(chart, competition.presets);
@@ -11085,6 +11099,7 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
+				"info": "resample",
 				"title": "Resample 2560×1600 RGB image",
 				"source": {
 					"size": [

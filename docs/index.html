@@ -8,21 +8,66 @@
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <script type="text/javascript" src="/bundles/index.js"></script>
     <style type="text/css">
+    html {
+        padding: 0;
+        margin: 0;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    body {
+        min-width: 600px;
+        max-width: 1100px;
+        padding: 2%;
+        margin: 0 auto;
+    }
     canvas {
         display: inline-block !important;
     }
-    a.selected {
-        color: inherit;
-        text-decoration: none;
-        border-bottom: 0px;
+
+    h4 {
+        color: #bbb;
+        font-weight: bold;
+        margin-bottom: 0;
     }
+    a {
+        color: #000095;
+    }
+
+    ul.select {
+        padding: 0;
+        margin: 2px 0 0;
+        list-style-type: none;
+    }
+        ul.select > li {}
+            ul.select > li> a {
+                text-decoration: none;
+                border-bottom: 1px dashed;
+            }
+            ul.select > li> a.selected {
+                color: inherit;
+                text-decoration: none;
+                border-bottom: 0px;
+            }
+    ul.select.--large {
+        font-size: 16px;
+    }
+
+    .selects-grid {
+        display: flex;
+    }
+        .selects-grid__cell {
+            width: 45%;
+            margin-right: 5%;
+        }
+
     </style>
 </head>
 <body>
 
     <h1>Pillow performance</h1>
 
-    <dl>
+    <dl style="display: none;">
         <dt>PIL</dt>
         <dd>Python image library</dd>
 
@@ -39,23 +84,25 @@
         <dd></dd>
     </dl>
 
-    <h4>System</h4>
-    <ul id="select-system">
-        <li><a href="#">MacBook Pro (Retina, 13-inch, Late 2013)</a></li>
-        <li><a href="#">Amazon EC2 c3.large instance</a></li>
-        <li><a href="#">Amazon EC2 c4.large instance</a></li>
-    </ul>
+    <div class="selects-grid">
+        <div class="selects-grid__cell">
+            <h4>System</h4>
+            <ul class="select --large" id="select-system"></ul>
 
-    <p>
-        <strong>OS</strong> Ubuntu 14.04.4 LTS 64bit<br>
-        <strong>CPU</strong> Intel® Core™ i5-4258U CPU @ 2.40GHz<br>
-    </p>
+            <p>
+                <strong>OS</strong> Ubuntu 14.04.4 LTS 64bit<br>
+                <strong>CPU</strong> Intel® Core™ i5-4258U CPU @ 2.40GHz<br>
+            </p>
+        </div>
+        <div class="selects-grid__cell">
+            <h4>Competition</h4>
+            <ul class="select --large" id="select-competition"></ul>
+        </div>
+    </div>
 
-    <h4>Competition</h4>
-    <ul id="select-competition"></ul>
 
-    <h4>Presets</h4>
-    <ul id="select-preset"></ul>
+    <h4>Preset</h4>
+    <ul class="select" id="select-preset"></ul>
 
 
     <canvas id="chart-container" width="1100" height="500"></canvas>

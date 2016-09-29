@@ -54,6 +54,7 @@
 	function createSelect(select, list, callback) {
 	  var elements = [];
 	  select.innerHTML = '';
+	
 	  for (var i = 0; i < list.length; i++) {
 	    var item = list[i];
 	    var element = document.createElement('a');
@@ -64,6 +65,7 @@
 	    })
 	    elements.push(element);
 	    select.appendChild(document.createElement('li')).appendChild(element);
+	    select.appendChild(document.createTextNode(" "));
 	    callback(i, element, item);
 	  }
 	
@@ -100,7 +102,6 @@
 	    element.addEventListener('click', applyCompetition.bind(null, i));
 	  });
 	
-	
 	  function applyCompetition(n) {
 	    var competition = competitions[n];
 	
@@ -132,10 +133,27 @@
 	}
 	
 	
-	document.addEventListener("DOMContentLoaded", function(){
+	function populateSystems(systems) {
+	  var select = document.getElementById("select-system");
 	  
-	  var applyCompetition = populateCompetitions(data[0].competitions);
-	  applyCompetition(0);
+	  var selectItem = createSelect(select, systems, function(i, element) {
+	    element.addEventListener('click', applySystem.bind(null, i));
+	  });
+	
+	  function applySystem(n) {
+	    var applyCompetition = populateCompetitions(systems[n].competitions);
+	    applyCompetition(0);
+	    selectItem(n);
+	  }
+	
+	  return applySystem;
+	}
+	
+	
+	document.addEventListener("DOMContentLoaded", function(){
+	
+	  var applySystem = populateSystems([data[0], data[0], data[0], data[0]]);
+	  applySystem(0);
 	
 	});
 
@@ -248,12 +266,13 @@
 	    },
 	    options: {
 	      title: {},
-	      maintainAspectRatio: false, 
-	      responsive: false,
+	      // maintainAspectRatio: false, 
+	      // responsive: false,
 	      animation: {
 	        duration: 0,
 	      },
 	      legend: {
+	        display: false,
 	        position: 'left',
 	      },
 	      tooltips: {

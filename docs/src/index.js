@@ -8,6 +8,7 @@ var chart = null;
 function createSelect(select, list, callback) {
   var elements = [];
   select.innerHTML = '';
+
   for (var i = 0; i < list.length; i++) {
     var item = list[i];
     var element = document.createElement('a');
@@ -18,6 +19,7 @@ function createSelect(select, list, callback) {
     })
     elements.push(element);
     select.appendChild(document.createElement('li')).appendChild(element);
+    select.appendChild(document.createTextNode(" "));
     callback(i, element, item);
   }
 
@@ -54,7 +56,6 @@ function populateCompetitions(competitions) {
     element.addEventListener('click', applyCompetition.bind(null, i));
   });
 
-
   function applyCompetition(n) {
     var competition = competitions[n];
 
@@ -86,9 +87,26 @@ function populateCompetitions(competitions) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function(){
+function populateSystems(systems) {
+  var select = document.getElementById("select-system");
   
-  var applyCompetition = populateCompetitions(data[0].competitions);
-  applyCompetition(0);
+  var selectItem = createSelect(select, systems, function(i, element) {
+    element.addEventListener('click', applySystem.bind(null, i));
+  });
+
+  function applySystem(n) {
+    var applyCompetition = populateCompetitions(systems[n].competitions);
+    applyCompetition(0);
+    selectItem(n);
+  }
+
+  return applySystem;
+}
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  var applySystem = populateSystems([data[0], data[0], data[0], data[0]]);
+  applySystem(0);
 
 });

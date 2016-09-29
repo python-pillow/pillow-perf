@@ -102,12 +102,13 @@ function chartForCompetition(element, competition) {
     },
     options: {
       title: {},
-      maintainAspectRatio: false, 
-      responsive: false,
+      // maintainAspectRatio: false, 
+      // responsive: false,
       animation: {
         duration: 0,
       },
       legend: {
+        display: false,
         position: 'left',
       },
       tooltips: {

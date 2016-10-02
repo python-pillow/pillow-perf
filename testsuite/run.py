@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from __future__ import print_function, unicode_literals
+from __future__ import print_function, unicode_literals, absolute_import
 
 import time
 import sys
@@ -24,16 +24,8 @@ def run_case(case, size, mode, times, stdout=False):
         sys.stdout.flush()
 
     runs.sort()
-    median_duration = runs[times // 2]
-    min_duration = runs[0]
 
-    pixels = size[0] * size[1]
-    return {
-        "median_duration": median_duration,
-        "median_fillrate": pixels / median_duration / 1000 / 1000,
-        "top_duration": min_duration,
-        "top_fillrate": pixels / min_duration / 1000 / 1000,
-    }
+    return runs[0], runs[times // 2], runs[times - 1]
 
 
 def pixel_size(arg):
@@ -67,9 +59,10 @@ if __name__ == '__main__':
 
     for testsuite in args.testsuite:
         test_cases = load_cases(testsuite)
+        print("\n###", testsuite)
         for case in test_cases:
             stats = run_case(case, *run_case_args)
-            print('>>>', stats)
+            print(" ".join(case.readable_args()), stats[1])
 
     if args.sleep:
         time.sleep(10)

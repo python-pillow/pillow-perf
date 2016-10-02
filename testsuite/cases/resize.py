@@ -7,23 +7,34 @@ from PIL import Image
 from .base import BaseTestCase
 
 
-class ResizeCase(BaseTestCase):
-    def __init__(self, size, filter, **kwargs):
-        super(ResizeCase, self).__init__(size, filter, **kwargs)
 
-        im = Image.new('RGB', (1, 1)).im
-        if hasattr(im, 'stretch'):
-            self.resize = Image.Image.resize
+class ResizeCase(BaseTestCase):
+    filter_ids = {
+        0: 'ner', 1: 'lzs', 2: 'bil', 3: 'bic',
+        4: 'box', 5: 'hmn', 6: 'mtc',
+    }
 
     def create_test_data(self, size, mode):
         return [Image.new(mode, size)]
 
     def runner(self, size, filter, im):
+        size = list(size)
         if not self.kwargs.get('hpass', True):
-            size = [im.size[0], size[1]]
+            size[0] = im.size[0]
         if not self.kwargs.get('vpass', True):
-            size = [size[0], im.size[1]]
+            size[1] = im.size[1]
         return self.resize(im, size, filter)
+
+    def readable_args(self):
+        size = list(self.args[0])
+        if not self.kwargs.get('hpass', True):
+            size[0] = ""
+        if not self.kwargs.get('vpass', True):
+            size[1] = ""
+        return [
+            "x".join(map(str, size)),
+            self.filter_ids.get(self.args[1]),
+        ]
 
     @classmethod
     def resize(cls, self, size, resample=Image.NEAREST):

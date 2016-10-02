@@ -16,7 +16,16 @@ class BaseTestCase(object):
         raise NotImplemented()
 
     def readable_args(self):
-        return self.args
+        return list(map(str, self.args))
+
+
+class TestCase(BaseTestCase):
+    def __init__(self, runner, *args, **kwargs):
+        self.runner = runner
+        super(TestCase, self).__init__(*args, **kwargs)
+
+    def create_test_data(self, size, mode):
+        return []
 
 
 class BaseRunner():
@@ -32,9 +41,9 @@ class BaseRunner():
 
         args = self.test_case.args + self.data
         start = time.time()
-        for _ in range(self.repeat):
-            self.test_case.runner(im, *args)
-        return (time.time() - start) / self.repeat
+        for _ in range(self.test_case.repeat):
+            self.test_case.runner(*args)
+        return (time.time() - start) / self.test_case.repeat
 
     __call__ = run
 

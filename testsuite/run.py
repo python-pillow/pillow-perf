@@ -6,36 +6,34 @@ from __future__ import print_function, unicode_literals
 import time
 import sys
 
-from cases import collect_testsuites
+from cases import collect_testsuites, load_cases
 
 
+def run_case(case, size, mode, times, stdout=False):
+    runs = []
 
-def run_cases(testsuites, size, mode, times, stdout=False):
-    for testsuite in testsuites:
-        test_cases = load_cases(testsuite)
+    with case.prepare(size, mode) as run:
+        for _ in range(times):
+            runs.append(run())
+            if stdout:
+                sys.stdout.write('.')
+                sys.stdout.flush()
 
-        for case in testsuite:
-            runs = []
+    if stdout:
+        sys.stdout.write('\r')
+        sys.stdout.flush()
 
-            with case.prepare(size, mode) as run:
-                for _ in range(times):
-                    runs.append(run())
-                    sys.stdout.write('.')
-                    sys.stdout.flush()
+    runs.sort()
+    median_duration = runs[times // 2]
+    min_duration = runs[0]
 
-            runs.sort()
-            median_duration = runs[times // 2]
-            min_duration = runs[0]
-
-            pixels = size[0] * size[1]
-            yield {
-                "testsuite": testsuite,
-                "case": case,
-                "median_duration": median_duration,
-                "median_fillrate": pixels / median_duration / 1000 / 1000,
-                "min_duration": min_duration,
-                "min_fillrate": pixels / min_duration / 1000 / 1000,
-            }
+    pixels = size[0] * size[1]
+    return {
+        "median_duration": median_duration,
+        "median_fillrate": pixels / median_duration / 1000 / 1000,
+        "top_duration": min_duration,
+        "top_fillrate": pixels / min_duration / 1000 / 1000,
+    }
 
 
 def pixel_size(arg):
@@ -65,8 +63,13 @@ def argument_parser(testsuites):
 if __name__ == '__main__':
     testsuites = collect_testsuites()
     args = argument_parser(testsuites).parse_args()
+    run_case_args = (args.size, args.mode, args.runs, True)
 
-    run_cases(args.testsuite, args.size, args.mode, args.runs, stdout=True)
+    for testsuite in args.testsuite:
+        test_cases = load_cases(testsuite)
+        for case in test_cases:
+            stats = run_case(case, *run_case_args)
+            print('>>>', stats)
 
     if args.sleep:
         time.sleep(10)

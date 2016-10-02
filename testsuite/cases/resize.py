@@ -59,17 +59,6 @@ class ResizeCase(BaseTestCase):
 
         return self._new(im)
 
-    @property
-    def desc(self):
-        flt = _filters.get(self.args[1], self.args[1])
-        add = ''
-        if self.kwargs.get('hpass', True):
-            add += 'h'
-        if self.kwargs.get('vpass', True):
-            add += 'v'
-        return "{size[0]}x{size[1]}{add} {flt}".format(
-            size=self.args[0], add=add, flt=flt)
-
 
 cases = [
     ResizeCase(size, flt, hpass=hpass, vpass=vpass)

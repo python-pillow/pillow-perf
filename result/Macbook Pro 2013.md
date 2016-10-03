@@ -138,36 +138,36 @@ Pillow-SIMD 3.3.0.post0
     7712x4352 lzs   0.30612 s    13.38 Mpx/s    13.92 Mpx/s
 
 
-Pillow-SIMD 3.4.0.post0, preliminary
+Pillow-SIMD 3.4.0.post0
 -----------------------
 
 ##### SSE4 (default)
-    16x16 bil       0.00319 s  1282.85 Mpx/s  1309.84 Mpx/s
-    16x16 bic       0.00575 s   712.95 Mpx/s   716.57 Mpx/s
-    16x16 lzs       0.00934 s   438.60 Mpx/s   442.77 Mpx/s
-    320x180 bil     0.00474 s   863.40 Mpx/s   882.74 Mpx/s
-    320x180 bic     0.00813 s   503.75 Mpx/s   512.25 Mpx/s
-    320x180 lzs     0.01313 s   312.05 Mpx/s   324.98 Mpx/s
-    1920x1200 bil   0.01904 s   215.15 Mpx/s   228.44 Mpx/s
-    1920x1200 bic   0.02404 s   170.41 Mpx/s   177.40 Mpx/s
-    1920x1200 lzs   0.03151 s   130.00 Mpx/s   136.62 Mpx/s
-    7712x4352 bil   0.17956 s    22.81 Mpx/s    23.88 Mpx/s
-    7712x4352 bic   0.22463 s    18.23 Mpx/s    19.21 Mpx/s
-    7712x4352 lzs   0.27496 s    14.90 Mpx/s    15.62 Mpx/s
+    16x16 bil       0.00329 s  1243.48 Mpx/s  1313.24 Mpx/s
+    16x16 bic       0.00564 s   725.99 Mpx/s   741.47 Mpx/s
+    16x16 lzs       0.00940 s   435.69 Mpx/s   452.95 Mpx/s
+    320x180 bil     0.00490 s   835.60 Mpx/s   866.88 Mpx/s
+    320x180 bic     0.00817 s   501.10 Mpx/s   511.17 Mpx/s
+    320x180 lzs     0.01310 s   312.62 Mpx/s   326.04 Mpx/s
+    1920x1200 bil   0.01644 s   249.12 Mpx/s   257.16 Mpx/s
+    1920x1200 bic   0.02320 s   176.52 Mpx/s   186.68 Mpx/s
+    1920x1200 lzs   0.02959 s   138.44 Mpx/s   145.51 Mpx/s
+    7712x4352 bil   0.15508 s    26.41 Mpx/s    28.32 Mpx/s
+    7712x4352 bic   0.19387 s    21.13 Mpx/s    22.05 Mpx/s
+    7712x4352 lzs   0.24063 s    17.02 Mpx/s    17.54 Mpx/s
 
 ##### AVX2
-    16x16 bil       0.00256 s  1601.85 Mpx/s  1666.49 Mpx/s
-    16x16 bic       0.00455 s   900.65 Mpx/s   920.43 Mpx/s
-    16x16 lzs       0.00752 s   544.89 Mpx/s   549.79 Mpx/s
-    320x180 bil     0.00387 s  1057.81 Mpx/s  1086.51 Mpx/s
-    320x180 bic     0.00811 s   504.76 Mpx/s   642.62 Mpx/s
-    320x180 lzs     0.01064 s   384.92 Mpx/s   410.01 Mpx/s
-    1920x1200 bil   0.01527 s   268.29 Mpx/s   293.12 Mpx/s
-    1920x1200 bic   0.01945 s   210.62 Mpx/s   217.40 Mpx/s
-    1920x1200 lzs   0.02520 s   162.57 Mpx/s   178.76 Mpx/s
-    7712x4352 bil   0.14041 s    29.17 Mpx/s    31.86 Mpx/s
-    7712x4352 bic   0.17111 s    23.94 Mpx/s    24.81 Mpx/s
-    7712x4352 lzs   0.20077 s    20.40 Mpx/s    20.98 Mpx/s
+    16x16 bil       0.00266 s  1539.28 Mpx/s  1613.89 Mpx/s
+    16x16 bic       0.00464 s   882.92 Mpx/s   902.83 Mpx/s
+    16x16 lzs       0.00768 s   533.06 Mpx/s   546.35 Mpx/s
+    320x180 bil     0.00412 s   993.17 Mpx/s  1061.73 Mpx/s
+    320x180 bic     0.00663 s   618.09 Mpx/s   638.99 Mpx/s
+    320x180 lzs     0.01036 s   395.40 Mpx/s   410.34 Mpx/s
+    1920x1200 bil   0.01424 s   287.74 Mpx/s   304.83 Mpx/s
+    1920x1200 bic   0.01843 s   222.28 Mpx/s   239.95 Mpx/s
+    1920x1200 lzs   0.02311 s   177.24 Mpx/s   189.95 Mpx/s
+    7712x4352 bil   0.12680 s    32.30 Mpx/s    34.97 Mpx/s
+    7712x4352 bic   0.15511 s    26.41 Mpx/s    28.36 Mpx/s
+    7712x4352 lzs   0.18790 s    21.80 Mpx/s    23.20 Mpx/s
 
 
 Skia 53

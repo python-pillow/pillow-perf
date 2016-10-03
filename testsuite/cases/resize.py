@@ -7,6 +7,7 @@ from PIL import Image
 from .base import BaseTestCase
 
 
+Image.LANCZOS = Image.ANTIALIAS
 
 class ResizeCase(BaseTestCase):
     filter_ids = {

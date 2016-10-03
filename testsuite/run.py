@@ -5,6 +5,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import time
 import sys
+import json
 
 from cases import collect_testsuites, load_cases
 
@@ -20,7 +21,7 @@ def run_case(case, size, mode, times, stdout=False):
                 sys.stdout.flush()
 
     if stdout:
-        sys.stdout.write('\r')
+        sys.stdout.write('\r' + (' ' * times) + '\r')
         sys.stdout.flush()
 
     runs.sort()
@@ -34,7 +35,7 @@ def pixel_size(arg):
             arg = arg.split(sep)
             if len(arg) != 2:
                 raise ValueError('More than two dimensions')
-            return list(map(int, arg))
+            return (int(arg[0]), int(arg[1]))
 
     raise ValueError('No separator found')
 
@@ -56,13 +57,24 @@ if __name__ == '__main__':
     testsuites = collect_testsuites()
     args = argument_parser(testsuites).parse_args()
     run_case_args = (args.size, args.mode, args.runs, True)
+    pixels = args.size[0] * args.size[1]
 
     for testsuite in args.testsuite:
         test_cases = load_cases(testsuite)
+        results = []
+
         print("\n###", testsuite)
         for case in test_cases:
             stats = run_case(case, *run_case_args)
-            print(" ".join(case.readable_args()), stats[1])
+            duration = stats[1]
+
+            results.append(case.readable_args() + [duration])
+
+            name = " ".join(case.readable_args())
+            print('    {:20} {:8.5f} s {:8.2f} Mpx/s'.format(
+                name, duration, pixels / duration / 1000 / 1000,
+            ))
+        print(json.dumps(results, indent=4))
 
     if args.sleep:
         time.sleep(10)

@@ -57,6 +57,7 @@
 
     .selects-grid {
         display: flex;
+        margin-top: 40px;
     }
         .selects-grid__inner,
         .selects-grid__cell {
@@ -106,27 +107,56 @@
             display: block;
         }
 
+    dl.libraries {
+        max-width: 600px;
+    }
+        dl.libraries dt {
+            color: #333;
+            margin: 16px 0 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        dl.libraries dd {
+            margin: 8px 0 0;
+        }
     </style>
 </head>
 <body>
 
     <h1>Pillow performance</h1>
 
-    <dl style="display: none;">
+    <dl class="libraries">
         <dt>PIL</dt>
-        <dd>Python image library</dd>
+        <dd>
+            Python image library. Was initialy released for Python 1.2 in 1995.
+            Last version is 1.1.7 was released on November 15, 2009.
+            Includes image codecs and image manipulation routines.
+        </dd>
 
         <dt>Pillow</dt>
-        <dd>PIL fork</dd>
+        <dd>
+            PIL fork. Originally was designed to simplify installation
+            in the modern environment. Starting from version 2.0 (2013)
+            supports Python 3 and is actively maintained and developed.
+        </dd>
 
         <dt>Pillow SIMD</dt>
-        <dd>highly optimized Pillow builds with SIMD inctructions</dd>
+        <dd>
+            Highly optimized "following" Pillow fork with speedups
+            for some common operations using SIMD inctructions.
+        </dd>
         
         <dt>ImageMagick</dt>
-        <dd></dd>
+        <dd>
+            Very popular image manipulation library with many bindings
+            for different languages. Extremely configurable.
+        </dd>
 
         <dt>Skia</dt>
-        <dd></dd>
+        <dd>
+            Highly efficient 2D graphics library. It serves as the graphics
+            engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
+        </dd>
     </dl>
 
     <div class="selects-grid">

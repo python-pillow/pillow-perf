@@ -10,15 +10,14 @@ import json
 from cases import collect_testsuites, load_cases
 
 
-def run_case(case, size, mode, times, stdout=False):
+def run_test(case, times, stdout=False):
     runs = []
 
-    with case.prepare(size, mode) as run:
-        for _ in range(times):
-            runs.append(run())
-            if stdout:
-                sys.stdout.write('.')
-                sys.stdout.flush()
+    for _ in range(times):
+        runs.append(case())
+        if stdout:
+            sys.stdout.write('.')
+            sys.stdout.flush()
 
     if stdout:
         sys.stdout.write('\r' + (' ' * times) + '\r')
@@ -55,8 +54,7 @@ def argument_parser(testsuites):
 
 if __name__ == '__main__':
     testsuites = collect_testsuites()
-    args = argument_parser(testsuites).parse_args()
-    run_case_args = (args.size, args.mode, args.runs, True)
+    args, unknown_args = argument_parser(testsuites).parse_known_args()
     pixels = args.size[0] * args.size[1]
 
     for testsuite in args.testsuite:
@@ -65,15 +63,18 @@ if __name__ == '__main__':
 
         print("\n###", testsuite)
         for case in test_cases:
-            stats = run_case(case, *run_case_args)
+            test = case(args.size, args.mode)
+            stats = run_test(test, args.runs, True)
             duration = stats[1]
 
-            results.append(case.readable_args() + [duration])
+            results.append(test.readable_args() + [duration])
 
-            name = " ".join(case.readable_args())
+            name = " ".join(test.readable_args())
             print('    {:20} {:8.5f} s {:8.2f} Mpx/s'.format(
                 name, duration, pixels / duration / 1000 / 1000,
             ))
+            # free before create new test
+            test = None
         print(json.dumps(results, indent=4))
 
     if args.sleep:

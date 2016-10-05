@@ -4,7 +4,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 from PIL import Image
 
-from .base import BaseTestCase
+from .base import BaseTestCase, rpartial
 
 
 Image.LANCZOS = Image.ANTIALIAS
@@ -15,26 +15,29 @@ class ResizeCase(BaseTestCase):
         4: 'box', 5: 'hmn', 6: 'mtc',
     }
 
+    def handle_args(self, dest_size, filter, hpass=True, vpass=True):
+        self.dest_size = dest_size
+        self.filter = filter
+        self.hpass = hpass
+        self.vpass = vpass
+
     def create_test_data(self, size, mode):
         return [Image.new(mode, size)]
 
-    def runner(self, size, filter, im):
-        size = list(size)
-        if not self.kwargs.get('hpass', True):
-            size[0] = im.size[0]
-        if not self.kwargs.get('vpass', True):
-            size[1] = im.size[1]
-        return self.resize(im, size, filter)
+    def runner(self, im):
+        self.update_dest_size(im)
+        return self.resize(im, self.dest_size, self.filter)
 
     def readable_args(self):
-        size = list(self.args[0])
-        if not self.kwargs.get('hpass', True):
-            size[0] = ""
-        if not self.kwargs.get('vpass', True):
-            size[1] = ""
         return [
-            "x".join(map(str, size)),
-            self.filter_ids.get(self.args[1]),
+            "x".join(map(str, self.dest_size)),
+            self.filter_ids.get(self.filter, self.filter),
+        ]
+
+    def update_dest_size(self, im):
+        self.dest_size = [
+            self.dest_size[0] if self.hpass else im.size[0],
+            self.dest_size[1] if self.vpass else im.size[1],
         ]
 
     @classmethod
@@ -62,10 +65,10 @@ class ResizeCase(BaseTestCase):
 
 
 cases = [
-    ResizeCase(size, flt, hpass=hpass, vpass=vpass)
+    rpartial(ResizeCase, size, flt, hpass=hpass, vpass=vpass)
     for hpass, vpass in [
-        # (True, False),
-        # (False, True),
+        (True, False),
+        (False, True),
         (True, True),
     ] for size in [
         (16, 16),

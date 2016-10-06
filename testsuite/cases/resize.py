@@ -4,25 +4,17 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 from PIL import Image
 
-from .base import BaseTestCase, rpartial
+from .base import rpartial
+from .pillow import PillowTestCase
 
 
-Image.LANCZOS = Image.ANTIALIAS
-
-class ResizeCase(BaseTestCase):
-    filter_ids = {
-        0: 'ner', 1: 'lzs', 2: 'bil', 3: 'bic',
-        4: 'box', 5: 'hmn', 6: 'mtc',
-    }
+class ResizeCase(PillowTestCase):
 
     def handle_args(self, dest_size, filter, hpass=True, vpass=True):
         self.dest_size = dest_size
         self.filter = filter
         self.hpass = hpass
         self.vpass = vpass
-
-    def create_test_data(self, size, mode):
-        return [Image.new(mode, size)]
 
     def runner(self, im):
         self.update_dest_size(im)
@@ -39,29 +31,6 @@ class ResizeCase(BaseTestCase):
             self.dest_size[0] if self.hpass else im.size[0],
             self.dest_size[1] if self.vpass else im.size[1],
         ]
-
-    @classmethod
-    def resize(cls, self, size, resample=Image.NEAREST):
-        self.load()
-
-        if self.size == size:
-            return self._new(self.im)
-
-        if self.mode in ("1", "P"):
-            resample = Image.NEAREST
-
-        if self.mode == 'RGBA':
-            return cls.resize(self.convert('RGBa'), size, resample).convert('RGBA')
-
-        if self.mode == 'LA':
-            return cls.resize(self.convert('La'), size, resample).convert('LA')
-
-        if resample == Image.NEAREST:
-            im = self.im.resize(size, resample)
-        else:
-            im = self.im.stretch(size, resample)
-
-        return self._new(im)
 
 
 cases = [

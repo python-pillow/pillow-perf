@@ -9,7 +9,6 @@ from .pillow import PillowTestCase
 
 
 class ResizeCase(PillowTestCase):
-
     def handle_args(self, dest_size, filter, hpass=True, vpass=True):
         self.dest_size = dest_size
         self.filter = filter

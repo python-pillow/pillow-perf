@@ -2,6 +2,8 @@
 
 from __future__ import print_function, unicode_literals, absolute_import
 
+import math
+
 from PIL import Image
 
 from .base import BaseTestCase
@@ -40,3 +42,26 @@ class PillowTestCase(BaseTestCase):
             im = self.im.stretch(size, resample)
 
         return self._new(im)
+
+    @classmethod
+    def gaussian_blur(cls, self, radius, n=3):
+        if self.mode == 'RGBA':
+            return cls.gaussian_blur(self.convert('RGBa'), radius, n).convert('RGBA')
+
+        if self.mode == 'LA':
+            return cls.gaussian_blur(self.convert('La'), radius, n).convert('LA')
+
+        # http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf
+        # [7] Box length.
+        L = math.sqrt(12.0 * float(radius) * radius / n + 1.0)
+        # [11] Box radius.
+        l = (L - 1.0) / 2.0
+        # Integer part.
+        li = math.floor(l)
+        # Reduce the fractional part in accordance with tests.
+        a = math.e ** (2.5 * (l - li) / (li + 1)) - 1
+        a /= math.e ** (2.5 / (li + 1)) - 1
+        box_radius = li + a
+
+        self.load()
+        return self._new(self.im.box_blur(box_radius, n))

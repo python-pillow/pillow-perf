@@ -26,16 +26,16 @@ class ResizeCase(BaseTestCase):
 
     def runner(self, im):
         self.update_dest_size(im)
-        return self.resize(im, self.dest_size, self.filter)
+        return self.resize(im, self.calc_dest_size, self.filter)
 
     def readable_args(self):
         return [
-            "x".join(map(str, self.dest_size)),
+            "x".join(map(str, self.calc_dest_size)),
             self.filter_ids.get(self.filter, self.filter),
         ]
 
     def update_dest_size(self, im):
-        self.dest_size = [
+        self.calc_dest_size = [
             self.dest_size[0] if self.hpass else im.size[0],
             self.dest_size[1] if self.vpass else im.size[1],
         ]
@@ -67,8 +67,8 @@ class ResizeCase(BaseTestCase):
 cases = [
     rpartial(ResizeCase, size, flt, hpass=hpass, vpass=vpass)
     for hpass, vpass in [
-        (True, False),
-        (False, True),
+        # (True, False),
+        # (False, True),
         (True, True),
     ] for size in [
         (16, 16),

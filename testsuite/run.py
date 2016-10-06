@@ -29,7 +29,7 @@ def run_test(case, times, stdout=False):
 
 
 def pixel_size(arg):
-    for sep in [',', 'x', '×']:
+    for sep in [',', '*', 'x', '×']:
         if sep in arg:
             arg = arg.split(sep)
             if len(arg) != 2:
@@ -44,7 +44,7 @@ def argument_parser(testsuites):
     parser = argparse.ArgumentParser()
     parser.add_argument('testsuite', nargs='+',
                         choices=testsuites, metavar='testsuite')
-    parser.add_argument('--size', '-s',type=pixel_size, default=[2560, 1600])
+    parser.add_argument('--size', '-s',type=pixel_size, default=[1600, 1600])
     parser.add_argument('--mode', '-m',
                         choices=["RGB", "RGBA", "RGBa", "L"], default="RGB")
     parser.add_argument('--runs', '-n', type=int, default=11)
@@ -75,7 +75,7 @@ if __name__ == '__main__':
             ))
             # free before create new test
             test = None
-        print(json.dumps(results, indent=4))
+        # print(json.dumps(results, indent=4))
 
     if args.sleep:
         time.sleep(10)

@@ -3,6 +3,12 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 import time
+import os.path
+
+
+def root(*chunks):
+    return os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '..', *chunks))
 
 
 def rpartial(func, *args, **keywords):

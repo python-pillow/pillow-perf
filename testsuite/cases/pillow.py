@@ -6,7 +6,7 @@ import math
 
 from PIL import Image
 
-from .base import BaseTestCase
+from .base import BaseTestCase, root
 
 
 Image.LANCZOS = Image.ANTIALIAS
@@ -18,7 +18,10 @@ class PillowTestCase(BaseTestCase):
     }
 
     def create_test_data(self, size, mode):
-        return [Image.new(mode, size)]
+        im = Image.open(root('resources', 'color_circle.png'))
+        im = self.resize(im, size, Image.BICUBIC)
+        im = im.convert(mode)
+        return [ im ]
 
     @classmethod
     def resize(cls, self, size, resample=Image.NEAREST):

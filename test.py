@@ -134,7 +134,10 @@ class ConvertCase(BaseTestCase):
 
     @property
     def desc(self):
-        return "convert {mode}".format(mode=self.args[0])
+        mode = self.args[0]
+        if mode == 'RGBa':
+            mode = 'RGBpre'
+        return "convert {mode}".format(mode=mode)
 
     @property
     def result(self):
@@ -185,8 +188,10 @@ class CreateCase(BaseTestCase):
 
 
 class CompositeCase(BaseTestCase):
-    def runner(self, im, *args):
-        return Image.alpha_composite(im, im)
+    def runner(self, dst, *args):
+        # src = Image.open('../pillow-perf/transparent.png')
+        # dst = dst.crop((0, 0) + src.size)
+        return Image.alpha_composite(dst, dst)
 
     @property
     def desc(self):
@@ -213,30 +218,33 @@ class PasteCase(BaseTestCase):
     desc = "paste"
 
     def prepare(self, im):
+        self.mask = self.im2 = Image.open('../pillow-perf/3k.png').convert('RGBA')
         im.load()
-        self.im2 = Image.open('../pillow-perf/2k.jpg')
-        self.im2.load()
         return im
 
     def runner(self, im, *args):
-        dst = self.im2.copy();
-        dst.paste(im, (0, 0), mask=im)
+        dst = im.copy();
+        dst.paste(self.im2, (0, 0), mask=self.mask)
         return dst
 
 
-class PasteMaskCase(BaseTestCase):
+class PastePremulCase(PasteCase):
+    desc = "paste premul"
+
+    def prepare(self, im):
+        self.mask = self.im2 = Image.open('../pillow-perf/3k.png').convert('RGBa')
+        im.load()
+        return im
+
+
+class PasteMaskCase(PasteCase):
     desc = "paste mask"
 
     def prepare(self, im):
+        self.im2 = Image.open('../pillow-perf/3k.png').convert('RGBA')
+        self.mask = self.im2._new(self.im2.im.getband(3))
         im.load()
-        self.im2 = Image.open('../pillow-perf/2k.jpg')
-        self.im2.load()
         return im
-
-    def runner(self, im, *args):
-        dst = self.im2.copy();
-        dst.paste(im, (0, 0), mask=im._new(im.im.getband(3)))
-        return dst
 
 
 perspective_transform_data = [
@@ -258,9 +266,11 @@ test_cases = [
         # (False, True),
         (True, True),
     ] for size in [
-        # (150, 150),
+        # (4, 4),
+        # (10, 10),
+        # (152, 152),
         # (280, 280),
-        # (720, 720),
+        # # (720, 720),
         # (1350, 1350),
         (16, 16),
         (320, 180),
@@ -275,25 +285,25 @@ test_cases = [
         Image.LANCZOS,
     ]
 ] + [
-#     RotateCase(deg, flt, expand)
-#     for deg in [
-#         10,
-#         45,
-#         89.9,
-#         90,
-#     ] for flt in [
-#         Image.NEAREST,
-#         # Image.BILINEAR,
-#         Image.BICUBIC,
-#         # Image.LANCZOS,
-#     ] for expand in [
-#         False,
-#         True,
-#     ]
-# ] + [
+    RotateCase(deg, flt, expand)
+    for deg in [
+        0,
+        90,
+        180,
+        270,
+    ] for flt in [
+        Image.NEAREST,
+        Image.BILINEAR,
+        Image.BICUBIC,
+        # Image.LANCZOS,
+    ] for expand in [
+        # False,
+        # True,
+    ]
+] + [
     # BlurCase(1),
     # BlurCase(10),
-    # BlurCase(100),
+    # BlurCase(30),
     # ConvertCase('RGBa'),
     # ConvertCase('RGBA'),
     # TransformCase(Image.PERSPECTIVE, perspective_transform_data, Image.NEAREST),
@@ -310,11 +320,12 @@ test_cases = [
     # CreateCase('RGB', (80, 81920)),
     # CompositeCase(),
     # PasteCase(),
+    # PastePremulCase(),
     # PasteMaskCase(),
     # BlendCase(3),
     # BlendCase(0.3),
     # BlendCase(-2),
-    LoadCase(),
+    # LoadCase(),
 ]
 
 

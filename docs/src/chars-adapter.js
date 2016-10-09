@@ -118,11 +118,11 @@ function chartForCompetition(element, competition) {
         titleFontSize: 14,
         bodyFontFamily: "'Inconsolata', monospace",
         bodyFontSize: 14,
-        bodySpacing: 10,
+        bodySpacing: 4,
         backgroundColor: 'rgba(0,0,0,0.9)',
         titleMarginBottom: 10,
-        xPadding: 16,
-        yPadding: 16,
+        xPadding: 10,
+        yPadding: 10,
         callbacks: {
           title: function(tooltipItems, data) {
             var chart = this._chartInstance;

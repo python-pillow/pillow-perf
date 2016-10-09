@@ -309,11 +309,11 @@
 	        titleFontSize: 14,
 	        bodyFontFamily: "'Inconsolata', monospace",
 	        bodyFontSize: 14,
-	        bodySpacing: 10,
+	        bodySpacing: 4,
 	        backgroundColor: 'rgba(0,0,0,0.9)',
 	        titleMarginBottom: 10,
-	        xPadding: 16,
-	        yPadding: 16,
+	        xPadding: 10,
+	        yPadding: 10,
 	        callbacks: {
 	          title: function(tooltipItems, data) {
 	            var chart = this._chartInstance;
@@ -12063,6 +12063,7 @@
 			},
 			{
 				"name": "blur-4k-rgb",
+				"topic": "blur",
 				"title": "Blur 2560×1600 RGB image",
 				"source": {
 					"size": [
@@ -12105,8 +12106,8 @@
 						]
 					},
 					{
-						"name": "pillow-2.0",
-						"title": "Pillow 2.0",
+						"name": "pillow-2.7",
+						"title": "Pillow 2.7",
 						"color": [
 							330,
 							100,

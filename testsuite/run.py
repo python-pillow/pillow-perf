@@ -49,6 +49,7 @@ def argument_parser(testsuites):
                         choices=["RGB", "RGBA", "RGBa", "L"], default="RGB")
     parser.add_argument('--runs', '-n', type=int, default=11)
     parser.add_argument('--sleep', action='store_true')
+    parser.add_argument('--progress', '-p', action='store_true')
     return parser
 
 
@@ -64,7 +65,7 @@ if __name__ == '__main__':
         print("\n###", testsuite)
         for case in test_cases:
             test = case(args.size, args.mode)
-            stats = run_test(test, args.runs, True)
+            stats = run_test(test, args.runs, args.progress)
             duration = stats[1]
 
             results.append(test.readable_args() + [duration])

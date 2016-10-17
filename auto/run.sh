@@ -2,14 +2,14 @@
 
 cd "$(dirname "$0")"
 
-sudo apt-get install python-virtualenv
+if [ ! -d ~/env/pillow-perf ]; then
+  mkdir -p ~/env
+  rm -rf ~/env/pillow-perf
+  virtualenv ~/env/pillow-perf
+  ~/env/pillow-perf/bin/pip install --upgrade pip
+fi
 
-mkdir -p ~/env/pillow-perf
-rm -rf ~/env/pillow-perf
-virtualenv ~/env/pillow-perf
 source ~/env/pillow-perf/bin/activate
-
-pip install --upgrade pip
 
 git clone https://github.com/uploadcare/pillow-simd.git Pillow || true
 

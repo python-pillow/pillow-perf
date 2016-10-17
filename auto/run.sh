@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 cd "$(dirname "$0")"
 
@@ -20,7 +20,9 @@ pushd Pillow
   function checkout {
     git checkout -f $1
     touch ./_imaging.c
-    CFLAGS="$2" python ./setup.py develop
+    CFLAGS="$2" python ./setup.py develop > build.log 2>&1
+    grep --color=always "error:" build.log && exit || true
+    grep "^version" build.log
   }
 
   checkout 2.6.2

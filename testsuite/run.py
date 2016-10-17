@@ -44,7 +44,7 @@ def argument_parser(testsuites):
     parser = argparse.ArgumentParser()
     parser.add_argument('testsuite', nargs='+',
                         choices=testsuites, metavar='testsuite')
-    parser.add_argument('--size', '-s',type=pixel_size, default=[1600, 1600])
+    parser.add_argument('--size', '-s',type=pixel_size, default=[2560, 1600])
     parser.add_argument('--mode', '-m',
                         choices=["RGB", "RGBA", "RGBa", "L"], default="RGB")
     parser.add_argument('--runs', '-n', type=int, default=11)

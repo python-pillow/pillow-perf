@@ -23,7 +23,7 @@ cases = [
         (True, True),
     ] for size in [
         0.01,
-        0.2,
+        0.125,
         0.8,
         2.14,
     ] for flt in [

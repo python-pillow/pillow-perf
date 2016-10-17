@@ -133,7 +133,7 @@ function populateSystems(systems) {
 
 document.addEventListener("DOMContentLoaded", function(){
 
-  var applySystem = populateSystems([data[0], data[0], data[0]]);
+  var applySystem = populateSystems(data);
   applySystem(0);
 
 });

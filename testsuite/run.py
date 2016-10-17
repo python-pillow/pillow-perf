@@ -50,6 +50,7 @@ def argument_parser(testsuites):
     parser.add_argument('--runs', '-n', type=int, default=11)
     parser.add_argument('--sleep', action='store_true')
     parser.add_argument('--progress', '-p', action='store_true')
+    parser.add_argument('--json', '-j', action='store_true')
     return parser
 
 
@@ -68,7 +69,7 @@ if __name__ == '__main__':
             stats = run_test(test, args.runs, args.progress)
             duration = stats[1]
 
-            results.append(test.readable_args() + [duration])
+            results.append((test.readable_args(), duration))
 
             name = " ".join(test.readable_args())
             print('    {:20} {:8.5f} s {:8.2f} Mpx/s'.format(
@@ -76,7 +77,14 @@ if __name__ == '__main__':
             ))
             # free before create new test
             test = None
-        # print(json.dumps(results, indent=4))
+
+        if args.json:
+            print(
+                ",\n".join(
+                    '["' + '", "'.join(readable_args) + '", ' + str(duration) + ']'
+                    for readable_args, duration in results
+                )
+            )
 
     if args.sleep:
         time.sleep(10)

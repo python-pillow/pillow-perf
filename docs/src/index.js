@@ -1,3 +1,5 @@
+require("./stylesheet.css");
+
 var adapter = require("./chars-adapter");
 var data = require("./data/index");
 

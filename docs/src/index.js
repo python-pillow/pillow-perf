@@ -34,6 +34,19 @@ function createSelect(select, list, callback) {
 }
 
 
+function setTopic(parent, topic) {
+  for (var i = 0; i < parent.classList.length; i++) {
+    var theClass = parent.classList[i];
+    if (theClass.substr(0, 'topic__'.length) == 'topic__') {
+      parent.classList.remove(theClass);
+    }
+  }
+  if (topic) {
+    parent.classList.add('topic__' + topic);
+  }
+}
+
+
 function populatePresets(chart, presets) {
   var select = document.getElementById("select-preset");
   var parent = select.parentNode;
@@ -45,8 +58,10 @@ function populatePresets(chart, presets) {
   });
 
   function applyPreset(n) {
+    var preset = presets[n];
     selectItem(n);
-    adapter.applyPreset(chart, presets[n].set);
+    setTopic(parent, preset.topic);
+    adapter.applyPreset(chart, preset.set);
   }
   return applyPreset;
 }
@@ -74,15 +89,7 @@ function populateCompetitions(competitions) {
 
     selectItem(n);
 
-    for (var i = 0; i < parent.classList.length; i++) {
-      var theClass = parent.classList[i];
-      if (theClass.substr(0, 'topic__'.length) == 'topic__') {
-        parent.classList.remove(theClass);
-      }
-    }
-    if (competition.topic) {
-      parent.classList.add('topic__' + competition.topic);
-    }
+    setTopic(parent, competition.topic);
 
     if (competition.presets) {
       var applyPreset = populatePresets(chart, competition.presets);

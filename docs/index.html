@@ -99,17 +99,44 @@
                 margin-top: 50px;
             }
 
+    #select-preset {
+        float: left;
+        margin-right: 20px;
+    }
+
     .topic {
         display: none;
     }
         .topic__resample .topic.-resample,
-        .topic__blur .topic.-blur {
+        .topic__blur .topic.-blur,
+        .topic__resize-27 .topic.-resize-27,
+        .topic__resize-progress .topic.-resize-progress {
             display: block;
         }
 
-    dl.libraries {
-        max-width: 600px;
+    section {
+        margin-top: 50px;
     }
+        section p,
+        section dl {
+            max-width: 700px;
+        }
+
+    .samples {
+        display: flex;
+    }
+        .samples figure {
+            margin: 1em 20px 0 0;
+        }
+        .samples figcaption {
+            color: #666;
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+    dl.libraries {}
         dl.libraries dt {
             color: #333;
             margin: 16px 0 0;
@@ -125,39 +152,74 @@
 
     <h1>Pillow performance</h1>
 
-    <dl class="libraries">
-        <dt>PIL</dt>
-        <dd>
-            Python image library. Was initialy released for Python 1.2 in 1995.
-            Last version is 1.1.7 was released on November 15, 2009.
-            Includes image codecs and image manipulation routines.
-        </dd>
+    <section>
+        <h2>Resampling</h2>
 
-        <dt>Pillow</dt>
-        <dd>
-            PIL fork. Originally was designed to simplify installation
-            in the modern environment. Starting from version 2.0 (2013)
-            supports Python 3 and is actively maintained and developed.
-        </dd>
+        <p>
+            <a href="https://unsplash.com/photos/h0N_2iZMA_4" target="_blank">original</a>
+        </p>
 
-        <dt>Pillow SIMD</dt>
-        <dd>
-            Highly optimized "following" Pillow fork with speedups
-            for some common operations using SIMD inctructions.
-        </dd>
-        
-        <dt>ImageMagick</dt>
-        <dd>
-            Very popular image manipulation library with many bindings
-            for different languages. Extremely configurable.
-        </dd>
+        <div class="samples">
+            <figure>
+                <img src="./static/sample_cv2_cubic.png" alt="CV2 Cubic" />
+                <figcaption>CV2 Cubic</figcaption>
+            </figure>
+            <figure>
+                <img src="./static/sample_cv2_area.png" alt="CV2 Area" />
+                <figcaption>CV2 Area (supersampling)</figcaption>
+            </figure>
+            <figure>
+                <img src="./static/sample_pil_bicubic.png" alt="PIL Bicubic" />
+                <figcaption>PIL Bicubic</figcaption>
+            </figure>
+            <figure>
+                <img src="./static/sample_pil_lanczos.png" alt="PIL Lanczos" />
+                <figcaption>PIL Antialias (Lanczos)</figcaption>
+            </figure>
+            <figure>
+                <img src="./static/sample_pillow_bicubic.png" alt="Pillow Bicubic" />
+                <figcaption>Pillow Bicubic</figcaption>
+            </figure>
+        </div>
+    </section>
 
-        <dt>Skia</dt>
-        <dd>
-            Highly efficient 2D graphics library. It serves as the graphics
-            engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
-        </dd>
-    </dl>
+    <section>
+        <h2>Libraries</h2>
+
+        <dl class="libraries">
+            <dt>PIL</dt>
+            <dd>
+                Python image library. Was initialy released for Python 1.2 in 1995.
+                Last version is 1.1.7 was released on November 15, 2009.
+                Includes image codecs and image manipulation routines.
+            </dd>
+
+            <dt>Pillow</dt>
+            <dd>
+                PIL fork. Originally was designed to simplify installation
+                in the modern environment. Starting from version 2.0 (2013)
+                supports Python 3 and is actively maintained and developed.
+            </dd>
+
+            <dt>Pillow SIMD</dt>
+            <dd>
+                Highly optimized "following" Pillow fork with speedups
+                for some common operations using SIMD inctructions.
+            </dd>
+            
+            <dt>ImageMagick</dt>
+            <dd>
+                Very popular image manipulation library with many bindings
+                for different languages. Extremely configurable.
+            </dd>
+
+            <dt>Skia</dt>
+            <dd>
+                Highly efficient 2D graphics library. It serves as the graphics
+                engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
+            </dd>
+        </dl>
+    </section>
 
     <div class="selects-grid">
         <div class="selects-grid__inner">
@@ -170,6 +232,30 @@
             <div class="selects-grid__cell">
                 <h4>Chart set</h4>
                 <ul class="select" id="select-preset"></ul>
+
+                <div class="topic -resize-27">
+                    <p>
+                        From very begining Pillow and PIL image resampling
+                        performance used to be quite low and comparable to
+                        ImageMagick performance.
+                    </p>
+                    <p>
+                        Pillow 2.7 reverse the trend introducing several
+                        common optimizations.
+                    </p>
+                </div>
+
+                <div class="topic -resize-progress">
+                    <p>
+                        Starting from Pillow 2.7 the performance is constantly
+                        growing.
+                    </p>
+                    <p>
+                        Pillow 3.3 uses only fixed-point arithmetic
+                        which is much faster. Pillow 3.4 has additional
+                        optimizations for large target dimensions.
+                    </p>
+                </div>
             </div>
         </div>
 

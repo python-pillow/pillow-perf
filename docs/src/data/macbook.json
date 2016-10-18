@@ -32,6 +32,7 @@
             ],
             "presets": [
                 {
+                    "topic": "resize-27",
                     "title": "Pillow 2.7 optimizations",
                     "set": [
                         "imagemagick-6.8.9",
@@ -40,6 +41,7 @@
                     ]
                 },
                 {
+                    "topic": "resize-progress",
                     "title": "Pillow progress",
                     "set": [
                         "pillow-2.7",
@@ -48,6 +50,7 @@
                     ]
                 },
                 {
+                    "topic": "resize-32",
                     "title": "Pillow 3.2 versions",
                     "set": [
                         "pillow-2.7",
@@ -56,6 +59,7 @@
                     ]
                 },
                 {
+                    "topic": "resize-33",
                     "title": "Pillow 3.3 versions",
                     "set": [
                         "pillow-3.3",
@@ -64,6 +68,7 @@
                     ]
                 },
                 {
+                    "topic": "resize-34",
                     "title": "Pillow 3.4 versions",
                     "set": [
                         "pillow-3.4",
@@ -73,6 +78,7 @@
                     "default": true
                 },
                 {
+                    "topic": "resize-sse4",
                     "title": "Pillow SIMD SSE4 progress",
                     "set": [
                         "pillow-simd-3.2-sse4",
@@ -81,6 +87,7 @@
                     ]
                 },
                 {
+                    "topic": "resize-avx2",
                     "title": "Pillow SIMD AVX2 progress",
                     "set": [
                         "pillow-simd-3.2-avx2",
@@ -89,6 +96,17 @@
                     ]
                 },
                 {
+                    "topic": "resize-milestones",
+                    "title": "Pillow milestones",
+                    "set": [
+                        "pillow-2.0",
+                        "pillow-2.7",
+                        "pillow-3.4",
+                        "pillow-simd-3.4-avx2"
+                    ]
+                },
+                {
+                    "topic": "resize-skia",
                     "title": "Pillow SIMD 3.4 vs Skia",
                     "set": [
                         "skia-53",

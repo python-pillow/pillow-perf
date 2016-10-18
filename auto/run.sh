@@ -6,7 +6,7 @@ if [ ! -d ~/env/pillow-perf ]; then
   mkdir -p ~/env
   rm -rf ~/env/pillow-perf
   virtualenv ~/env/pillow-perf
-  ~/env/pillow-perf/bin/pip install --upgrade pip
+  ~/env/pillow-perf/bin/pip install -r ../testsuite/requirements.txt
 fi
 
 source ~/env/pillow-perf/bin/activate

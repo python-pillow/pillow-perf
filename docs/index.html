@@ -16,31 +16,77 @@
         <h2>Resampling</h2>
 
         <p>
-            <a href="https://unsplash.com/photos/h0N_2iZMA_4" target="_blank">original</a>
+            Image resampling is one of the most common processing operations.
+            Good resampling can be achieved with
+            <a href="http://www.imagemagick.org/Usage/filter/#filter">
+                convolution-based</a> method.
         </p>
-
+        <p>
+            "Convolution" means that for each pixel in the final image
+            we compute some area ("window")
+            from the source image using weights.
+            Size of the area and weights values depend on choosen filter.
+            There are many filters.
+            This is most common:
+        </p>
+        <ul>
+            <li><code>Bilinear</code> — higly-efficient filter
+                with small window and blurry result;</li>
+            <li><code>Bicubic</code> — high-quality filter with medium window;</li>
+            <li><code>Lanczos</code> — allows trade a quality over performance
+                in some cases.</li>
+        </ul>   
+        <p>
+            Also, when we downscaling the image,
+            we need to increase the window size
+            to do not loose the original image pixels.
+            Unfortunately, not all libraries and programs do this.
+            As a result, output images can look extra sharp and crisp.
+            In some cases the result can
+            only vaguely reminiscent of the original.
+        </p>
+        <p>
+            This is results of resizing
+            <a href="https://unsplash.com/photos/h0N_2iZMA_4" target="_blank">
+                4912 × 7360 image</a> to 150 × 225 px
+            using different software and different filters.
+            OpenCV doesn't increase the window size
+            on downscaling using <code>Bicubic</code> filter,
+            but offers supersampling
+            (different resampling method,
+            not based on convolutions).
+        </p>
         <div class="samples">
             <figure>
-                <img src="./static/bridge_cv2_cubic.png" alt="CV2 Cubic" />
+                <img src="./static/bridge_cv2_cubic.png" alt="CV2 Cubic" width="150" />
                 <figcaption>CV2 Cubic</figcaption>
             </figure>
             <figure>
-                <img src="./static/bridge_cv2_area.png" alt="CV2 Area" />
+                <img src="./static/bridge_cv2_area.png" alt="CV2 Area" width="150" />
                 <figcaption>CV2 Area (supersampling)</figcaption>
             </figure>
             <figure>
-                <img src="./static/bridge_pil_bicubic.png" alt="PIL Bicubic" />
+                <img src="./static/bridge_pil_bicubic.png" alt="PIL Bicubic" width="150" />
                 <figcaption>PIL Bicubic</figcaption>
             </figure>
-            <!-- <figure>
-                <img src="./static/bridge_pil_lanczos.png" alt="PIL Lanczos" />
-                <figcaption>PIL Antialias (Lanczos)</figcaption>
-            </figure> -->
             <figure>
-                <img src="./static/bridge_pillow_bicubic.png" alt="Pillow Bicubic" />
+                <img src="./static/bridge_pil_lanczos.png" alt="PIL Lanczos" width="150" />
+                <figcaption>PIL Antialias (Lanczos)</figcaption>
+            </figure>
+            <figure>
+                <img src="./static/bridge_pillow_bicubic.png" alt="Pillow Bicubic" width="150" />
                 <figcaption>Pillow Bicubic</figcaption>
             </figure>
         </div>
+        <p>
+            From the very begining PIL also doesn't increase the window size
+            for <code>Bilinear</code> and <code>Bicubic</code> filters,
+            while does for <code>Antialias</code>
+            (the real name of used filter is
+            <a href="https://en.wikipedia.org/wiki/Lanczos_algorithm">
+                Lanczos</a>).
+            In Pillow this was fixed in version <code>2.7.0</code>.
+        </p>
     </section>
 
     <section>

@@ -3,7 +3,7 @@ html {
     margin: 0;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-size: 14px;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 body {
     min-width: 700px;
@@ -15,6 +15,7 @@ body {
 h1, h2, h3, h4 {
     font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-weight: 700;
+    margin-bottom: 0;
 }
 
 h4 {
@@ -29,9 +30,17 @@ ul, p {
     margin-bottom: 0;
 }
 
+code {
+    padding: 0 2px;
+    color: #444;
+    border-radius: 2px;
+    border: 1px solid #ececec;
+    background: #f8f8f8;
+}
+
 ul.select {
     padding: 0;
-    margin: 2px 0 0;
+    margin: 0;
     list-style-type: none;
 }
     ul.select > li {}
@@ -113,7 +122,7 @@ section {
     margin-top: 50px;
 }
     section p {
-        max-width: 500px;
+        max-width: 700px;
     }
 
 .samples {

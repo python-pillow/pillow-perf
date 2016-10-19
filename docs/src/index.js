@@ -2,9 +2,42 @@ require("./stylesheet.css");
 
 var adapter = require("./chars-adapter");
 var data = require("./data/index");
+var objectAssign = require('object-assign');
 
 // Global chart instance. Should be destroyed every time.
 var chart = null;
+
+
+function partialCompetition(element, competitionName, preset) {
+  var competitions = data[0].competitions;
+  var competitors = [];
+  var i, competition;
+
+  for (i = 0; i < competitions.length; i++) {
+    if (competitions[i].name == competitionName) {
+      competition = objectAssign({}, competitions[i]);
+      break;
+    }
+  }
+  if ( ! competition) {
+    console.log('Competition ' + competitionName + ' is not found.');
+    return;
+  }
+
+  for (i = 0; i < competition.competitors.length; i++) {
+    var competitor = competition.competitors[i];
+    if (preset.indexOf(competitor.name) > -1) {
+      competitors.push(competitor);
+    }
+  }
+
+  competition.competitors = competitors;
+
+  var chart = adapter.chartForCompetition(
+    element,
+    competition
+  );
+}
 
 
 function createSelect(select, list, callback) {
@@ -144,5 +177,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
   var applySystem = populateSystems(data);
   applySystem(0);
+
+  partialCompetition(
+      document.getElementById("resample-pillow-27"),
+      'resample-4k-rgb',
+      [
+          "imagemagick-6.8.9",
+          "pillow-2.0",
+          "pillow-2.7"
+      ]
+  );
 
 });

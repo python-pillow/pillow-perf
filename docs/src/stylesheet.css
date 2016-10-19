@@ -32,7 +32,7 @@ ul, p {
 
 code {
     padding: 0 2px;
-    color: #444;
+    font-family: 'Inconsolata', monospace;
     border-radius: 2px;
     border: 1px solid #ececec;
     background: #f8f8f8;
@@ -124,6 +124,10 @@ section {
     section p {
         max-width: 700px;
     }
+.chart {
+    margin-top: 40px;
+    max-width: 900px;
+}
 
 .samples {
     display: flex;

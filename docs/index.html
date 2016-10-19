@@ -13,7 +13,7 @@
     <h1>Pillow performance</h1>
 
     <section>
-        <h2>Resampling</h2>
+        <h2 id="resampling">Resampling</h2>
 
         <p>
             Image resampling is one of the most common processing operations.
@@ -22,7 +22,7 @@
                 convolution-based</a> method.
         </p>
         <p>
-            "Convolution" means that for each pixel in the final image
+            "Convolution" means that for each pixel of the final image
             we compute some area ("window")
             from the source image using weights.
             Size of the area and weights values depend on choosen filter.
@@ -40,7 +40,7 @@
             Also, when we downscaling the image,
             we need to increase the window size
             to do not loose the original image pixels.
-            Unfortunately, not all libraries and programs do this.
+            Unfortunately, not all libraries and software do this.
             As a result, output images can look extra sharp and crisp.
             In some cases the result can
             only vaguely reminiscent of the original.
@@ -50,13 +50,18 @@
             <a href="https://unsplash.com/photos/h0N_2iZMA_4" target="_blank">
                 4912 × 7360 image</a> to 150 × 225 px
             using different software and different filters.
-            OpenCV doesn't increase the window size
-            on downscaling using <code>Bicubic</code> filter,
-            but offers supersampling
-            (different resampling method,
-            not based on convolutions).
+            Google Сhome's <code>&lt;canvas&gt;</code> implementation
+            doesn't increase the window size on downscaling.
+            OpenCV also doesn't do this using
+            <code>Bicubic</code> filter,
+            but offers supersampling.
         </p>
+        <!-- TODO: Add Intel Performance Primitives -->
         <div class="samples">
+            <figure>
+                <img src="./static/bridge_chrome.png" alt="Google Chrome" width="150" />
+                <figcaption>Google Chrome canvas</figcaption>
+            </figure>
             <figure>
                 <img src="./static/bridge_cv2_cubic.png" alt="CV2 Cubic" width="150" />
                 <figcaption>CV2 Cubic</figcaption>
@@ -65,6 +70,28 @@
                 <img src="./static/bridge_cv2_area.png" alt="CV2 Area" width="150" />
                 <figcaption>CV2 Area (supersampling)</figcaption>
             </figure>
+        </div>
+        <p>
+            Obviously, this is meaningless to compare OpenCV
+            <code>Bicubic</code> performance
+            with correct convolution implementations.
+            Also, supersampling is different resampling method,
+            not based on convolutions.
+            It is correct for downscaling
+            but unacceptable for upscaling.
+        </p>
+        <p>
+            From the very begining 
+            <a href="#library-pil">PIL</a>
+            also didn't increase the window size
+            for <code>Bilinear</code> and <code>Bicubic</code> filters,
+            while did for <code>Antialias</code>
+            (the real name of the filter is
+            <a href="https://en.wikipedia.org/wiki/Lanczos_algorithm">
+                Lanczos</a>).
+            In Pillow <code>2.7.0</code> this was fixed.
+        </p>
+        <div class="samples">
             <figure>
                 <img src="./static/bridge_pil_bicubic.png" alt="PIL Bicubic" width="150" />
                 <figcaption>PIL Bicubic</figcaption>
@@ -79,47 +106,58 @@
             </figure>
         </div>
         <p>
-            From the very begining PIL also doesn't increase the window size
-            for <code>Bilinear</code> and <code>Bicubic</code> filters,
-            while does for <code>Antialias</code>
-            (the real name of used filter is
-            <a href="https://en.wikipedia.org/wiki/Lanczos_algorithm">
-                Lanczos</a>).
-            In Pillow this was fixed in version <code>2.7.0</code>.
+            On the other hand, some image libraries do convolutions right.
+            For example, <a href="#library-imagemagick">ImageMagick</a>.
+            The problem with ImageMagick that resampling is very slow.
+            For example it about 20x slower than
+            <a href="#library-skia">Skia</a>
+            which also can do high-quality convolution resampling.
         </p>
+        <p>
+            From the very begining PIL and Pillow resampling
+            performance used to be quite low
+            and comparable to ImageMagick.
+            Pillow 2.7 reverse the trend
+            introducing several common optimizations.
+        </p>
+
+        <div class="chart">
+            <canvas id="resample-pillow-27" width="1100" height="400"></canvas>
+        </div>
+        
     </section>
 
     <section>
         <h2>Libraries</h2>
 
         <dl class="libraries">
-            <dt>PIL</dt>
+            <dt id="library-pil">PIL</dt>
             <dd>
                 Python image library. Was initialy released for Python 1.2 in 1995.
                 Last version is 1.1.7 was released on November 15, 2009.
                 Includes image codecs and image manipulation routines.
             </dd>
 
-            <dt>Pillow</dt>
+            <dt id="library-pillow">Pillow</dt>
             <dd>
                 PIL fork. Originally was designed to simplify installation
                 in the modern environment. Starting from version 2.0 (2013)
                 supports Python 3 and is actively maintained and developed.
             </dd>
 
-            <dt>Pillow SIMD</dt>
+            <dt id="library-pillow-simd">Pillow SIMD</dt>
             <dd>
                 Highly optimized "following" Pillow fork with speedups
                 for some common operations using SIMD inctructions.
             </dd>
             
-            <dt>ImageMagick</dt>
+            <dt id="library-imagemagick">ImageMagick</dt>
             <dd>
                 Very popular image manipulation library with many bindings
-                for different languages. Extremely configurable.
+                for different languages. Extremely flexible.
             </dd>
 
-            <dt>Skia</dt>
+            <dt id="library-skia">Skia</dt>
             <dd>
                 Highly efficient 2D graphics library. It serves as the graphics
                 engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
@@ -138,18 +176,6 @@
             <div class="selects-grid__cell">
                 <h4>Chart set</h4>
                 <ul class="select" id="select-preset"></ul>
-
-                <div class="topic -resize-27">
-                    <p>
-                        From very begining Pillow and PIL image resampling
-                        performance used to be quite low and comparable to
-                        ImageMagick performance.
-                    </p>
-                    <p>
-                        Pillow 2.7 reverse the trend introducing several
-                        common optimizations.
-                    </p>
-                </div>
 
                 <div class="topic -resize-progress">
                     <p>

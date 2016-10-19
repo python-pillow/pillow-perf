@@ -123,27 +123,27 @@
             and cache-aware transposition.
         </p>
         <div class="chart">
-            <canvas id="resample-pillow-27" width="1100" height="400"></canvas>
+            <canvas id="chart-resample-scalar" width="1100" height="400"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-resample-scalar"),
+                    'resample-4k-rgb',
+                    [
+                        "imagemagick-6.8.9",
+                        "pillow-2.0",
+                        "pillow-2.7",
+                        "pillow-3.4"
+                    ]
+                );
+            </script>
         </div>
-        <script type="text/javascript">
-            partialCompetition(
-                document.getElementById("resample-pillow-27"),
-                'resample-4k-rgb',
-                [
-                    "imagemagick-6.8.9",
-                    "pillow-2.0",
-                    "pillow-2.7",
-                    "pillow-3.4"
-                ]
-            );
-        </script>
         <p>
             Charts show median time (lower is better)
             required for resizing source 2560x1600 RGB image
             to one of the four destination sizes
             using one of the filters.
             For significat downsampling Pillow 2.7 faster than PIL
-            in <b>4 — 5.5</b> times.
+            in <b>4 — 5.5 times</b>.
             Pillow 3.3 instroduces fixed-point arithmetic
             for resampling which is much faster.
             Pillow 3.4 has additional optimizations
@@ -151,6 +151,31 @@
             In the end current Pillow version
             <b>up to 9 times</b> faster than original PIL.
         </p>
+        <p>
+            But this is not the end of the story.
+            Starting from Pillow 3.2 you can use
+            <a href="#library-pillow-simd">SIMD-enabled Pillow version</a>.
+            Pillow SIMD resampling performance is increasing
+            along with basic Pillow version.
+            The latest Pillow SIMD compiled with AVX2
+            is <b>3.5 — 4.5 times</b> faster than basic Pillow.
+            In sum, Pillow SIMD resampling performance
+            <b>20 — 40 times</b> higher than original PIL.
+        </p>
+        <div class="chart">
+            <canvas id="chart-resample-simd" width="1100" height="400"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-resample-simd"),
+                    'resample-4k-rgb',
+                    [
+                        "pillow-3.4",
+                        "pillow-simd-3.4-sse4",
+                        "pillow-simd-3.4-avx2"
+                    ]
+                );
+            </script>
+        </div>
     </section>
 
     <section>

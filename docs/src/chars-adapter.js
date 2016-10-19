@@ -114,8 +114,9 @@ function chartForCompetition(element, competition) {
       tooltips: {
         units: "s",
         mode: "label",
-        titleFontFamily: "'Inconsolata', monospace", 
+        titleFontFamily: "'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
         titleFontSize: 14,
+        titleFontStyle: 'bold',
         bodyFontFamily: "'Inconsolata', monospace",
         bodyFontSize: 14,
         bodySpacing: 4,

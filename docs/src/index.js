@@ -8,10 +8,10 @@ var objectAssign = require('object-assign');
 var chart = null;
 
 
-function partialCompetition(element, competitionName, preset) {
+function partialCompetition(element, competitionName, presetName) {
   var competitions = data[0].competitions;
   var competitors = [];
-  var i, competition;
+  var i, competition, preset;
 
   for (i = 0; i < competitions.length; i++) {
     if (competitions[i].name == competitionName) {
@@ -24,14 +24,31 @@ function partialCompetition(element, competitionName, preset) {
     return;
   }
 
-  for (i = 0; i < competition.competitors.length; i++) {
-    var competitor = competition.competitors[i];
-    if (preset.indexOf(competitor.name) > -1) {
-      competitors.push(competitor);
+  if (presetName) {
+    if (typeof presetName === "string") {
+      for (i = 0; i < competition.presets.length; i++) {
+        if (competition.presets[i].name == presetName) {
+          preset = competition.presets[i].set;
+          break
+        }
+      }
+      if ( ! preset) {
+        console.log('Preset ' + presetName + ' is not found.');
+        return;
+      }
+    } else {
+      preset = presetName;
     }
-  }
 
-  competition.competitors = competitors;
+    for (i = 0; i < competition.competitors.length; i++) {
+      var competitor = competition.competitors[i];
+      if (preset.indexOf(competitor.name) > -1) {
+        competitors.push(competitor);
+      }
+    }
+
+    competition.competitors = competitors;
+  }
 
   var chart = adapter.chartForCompetition(
     element,
@@ -177,15 +194,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   var applySystem = populateSystems(data);
   applySystem(0);
-
-  partialCompetition(
-      document.getElementById("resample-pillow-27"),
-      'resample-4k-rgb',
-      [
-          "imagemagick-6.8.9",
-          "pillow-2.0",
-          "pillow-2.7"
-      ]
-  );
-
+  
 });
+
+module.exports = partialCompetition;

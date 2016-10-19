@@ -111,20 +111,46 @@
             The problem with ImageMagick that resampling is very slow.
             For example it about 20x slower than
             <a href="#library-skia">Skia</a>
-            which also can do high-quality convolution resampling.
+            which can also do high-quality convolution resampling.
         </p>
         <p>
             From the very begining PIL and Pillow resampling
             performance used to be quite low
             and comparable to ImageMagick.
             Pillow 2.7 reverse the trend
-            introducing several common optimizations.
+            introducing several common optimizations
+            such as loops rearrangement,
+            and cache-aware transposition.
         </p>
-
         <div class="chart">
             <canvas id="resample-pillow-27" width="1100" height="400"></canvas>
         </div>
-        
+        <script type="text/javascript">
+            partialCompetition(
+                document.getElementById("resample-pillow-27"),
+                'resample-4k-rgb',
+                [
+                    "imagemagick-6.8.9",
+                    "pillow-2.0",
+                    "pillow-2.7",
+                    "pillow-3.4"
+                ]
+            );
+        </script>
+        <p>
+            Charts show median time (lower is better)
+            required for resizing source 2560x1600 RGB image
+            to one of the four destination sizes
+            using one of the filters.
+            For significat downsampling Pillow 2.7 faster than PIL
+            in <b>4 — 5.5</b> times.
+            Pillow 3.3 instroduces fixed-point arithmetic
+            for resampling which is much faster.
+            Pillow 3.4 has additional optimizations
+            for large target dimensions.
+            In the end current Pillow version
+            <b>up to 9 times</b> faster than original PIL.
+        </p>
     </section>
 
     <section>
@@ -176,18 +202,6 @@
             <div class="selects-grid__cell">
                 <h4>Chart set</h4>
                 <ul class="select" id="select-preset"></ul>
-
-                <div class="topic -resize-progress">
-                    <p>
-                        Starting from Pillow 2.7 the performance is constantly
-                        growing.
-                    </p>
-                    <p>
-                        Pillow 3.3 uses only fixed-point arithmetic
-                        which is much faster. Pillow 3.4 has additional
-                        optimizations for large target dimensions.
-                    </p>
-                </div>
             </div>
         </div>
 

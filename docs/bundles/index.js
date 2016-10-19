@@ -44,20 +44,27 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["partialCompetition"] = __webpack_require__(1);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(2);
 	
-	var adapter = __webpack_require__(5);
-	var data = __webpack_require__(7);
-	var objectAssign = __webpack_require__(11);
+	var adapter = __webpack_require__(6);
+	var data = __webpack_require__(8);
+	var objectAssign = __webpack_require__(12);
 	
 	// Global chart instance. Should be destroyed every time.
 	var chart = null;
 	
 	
-	function partialCompetition(element, competitionName, preset) {
+	function partialCompetition(element, competitionName, presetName) {
 	  var competitions = data[0].competitions;
 	  var competitors = [];
-	  var i, competition;
+	  var i, competition, preset;
 	
 	  for (i = 0; i < competitions.length; i++) {
 	    if (competitions[i].name == competitionName) {
@@ -70,14 +77,31 @@
 	    return;
 	  }
 	
-	  for (i = 0; i < competition.competitors.length; i++) {
-	    var competitor = competition.competitors[i];
-	    if (preset.indexOf(competitor.name) > -1) {
-	      competitors.push(competitor);
+	  if (presetName) {
+	    if (typeof presetName === "string") {
+	      for (i = 0; i < competition.presets.length; i++) {
+	        if (competition.presets[i].name == presetName) {
+	          preset = competition.presets[i].set;
+	          break
+	        }
+	      }
+	      if ( ! preset) {
+	        console.log('Preset ' + presetName + ' is not found.');
+	        return;
+	      }
+	    } else {
+	      preset = presetName;
 	    }
-	  }
 	
-	  competition.competitors = competitors;
+	    for (i = 0; i < competition.competitors.length; i++) {
+	      var competitor = competition.competitors[i];
+	      if (preset.indexOf(competitor.name) > -1) {
+	        competitors.push(competitor);
+	      }
+	    }
+	
+	    competition.competitors = competitors;
+	  }
 	
 	  var chart = adapter.chartForCompetition(
 	    element,
@@ -223,31 +247,23 @@
 	
 	  var applySystem = populateSystems(data);
 	  applySystem(0);
-	
-	  partialCompetition(
-	      document.getElementById("resample-pillow-27"),
-	      'resample-4k-rgb',
-	      [
-	          "imagemagick-6.8.9",
-	          "pillow-2.0",
-	          "pillow-2.7"
-	      ]
-	  );
-	
+	  
 	});
+	
+	module.exports = partialCompetition;
 
 
 /***/ },
-/* 1 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(2);
+	var content = __webpack_require__(3);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(4)(content, {});
+	var update = __webpack_require__(5)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -264,21 +280,21 @@
 	}
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(3)();
+	exports = module.exports = __webpack_require__(4)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 700px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\n\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 16px;\n}\na {\n    color: #000095;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 2px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\n.topic {\n    display: none;\n}\n    .topic__resample .topic.-resample,\n    .topic__blur .topic.-blur,\n    .topic__resize-27 .topic.-resize-27,\n    .topic__resize-progress .topic.-resize-progress {\n        display: block;\n    }\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 700px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 900px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 20px 0 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 800px;\n}\n    dl.libraries dt {\n        float: left;\n        width: 130px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 8px 140px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 700px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\n\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 16px;\n}\na {\n    color: #000095;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 2px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\n.topic {\n    display: none;\n}\n    .topic__resample .topic.-resample,\n    .topic__blur .topic.-blur,\n    .topic__resize-27 .topic.-resize-27,\n    .topic__resize-progress .topic.-resize-progress {\n        display: block;\n    }\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 700px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 20px 0 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 800px;\n}\n    dl.libraries dt {\n        float: left;\n        width: 130px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 8px 140px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/*
@@ -334,7 +350,7 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -586,10 +602,10 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Chart = __webpack_require__(6);
+	var Chart = __webpack_require__(7);
 	
 	Chart.defaults.global.defaultFontColor = 'black';
 	Chart.defaults.myBar = Chart.defaults.bar;
@@ -854,7 +870,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*!
@@ -11494,18 +11510,18 @@
 	});
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = [
-	  __webpack_require__(8),
 	  __webpack_require__(9),
 	  __webpack_require__(10),
+	  __webpack_require__(11),
 	];
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -11516,7 +11532,7 @@
 			{
 				"name": "resample-4k-rgb",
 				"topic": "resample",
-				"title": "Resize 2560×1600 RGB image",
+				"title": "Resize 2560x1600 RGB image",
 				"source": {
 					"size": [
 						2560,
@@ -11544,6 +11560,7 @@
 				],
 				"presets": [
 					{
+						"name": "pillow-2.7",
 						"topic": "resize-27",
 						"title": "Pillow 2.7 optimizations",
 						"set": [
@@ -11553,6 +11570,7 @@
 						]
 					},
 					{
+						"name": "pillow-progress",
 						"topic": "resize-progress",
 						"title": "Pillow progress",
 						"set": [
@@ -11562,6 +11580,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.2",
 						"topic": "resize-32",
 						"title": "Pillow 3.2 versions",
 						"set": [
@@ -11571,6 +11590,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.3",
 						"topic": "resize-33",
 						"title": "Pillow 3.3 versions",
 						"set": [
@@ -11580,6 +11600,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.4",
 						"topic": "resize-34",
 						"title": "Pillow 3.4 versions",
 						"set": [
@@ -11590,6 +11611,7 @@
 						"default": true
 					},
 					{
+						"name": "pillow-sse4",
 						"topic": "resize-sse4",
 						"title": "Pillow SIMD SSE4 progress",
 						"set": [
@@ -11599,6 +11621,7 @@
 						]
 					},
 					{
+						"name": "pillow-avx2",
 						"topic": "resize-avx2",
 						"title": "Pillow SIMD AVX2 progress",
 						"set": [
@@ -11608,6 +11631,7 @@
 						]
 					},
 					{
+						"name": "pillow-milestones",
 						"topic": "resize-milestones",
 						"title": "Pillow milestones",
 						"set": [
@@ -11618,6 +11642,7 @@
 						]
 					},
 					{
+						"name": "pillow-skia",
 						"topic": "resize-skia",
 						"title": "Pillow SIMD 3.4 vs Skia",
 						"set": [
@@ -12578,7 +12603,7 @@
 	};
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -13159,7 +13184,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -13964,7 +13989,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';

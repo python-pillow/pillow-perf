@@ -179,7 +179,24 @@
     </section>
 
     <section>
-        <h2>Libraries</h2>
+        <h2 id="blur">Blur</h2>
+        <p>
+            High-quality
+            <a href="https://en.wikipedia.org/wiki/Gaussian_blur">
+                gaussian blur</a>.
+        </p>
+
+        <p>
+            Starting from Pillow 2.7 the Gaussian blur implementation is 
+            based on the
+            <a href="http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf">
+                Mathematical Image Analysis Group work</a>
+            and operates in constant time related to blur radius.
+        </p>
+    </section>
+
+    <section>
+        <h2 id="libraries">Libraries</h2>
 
         <dl class="libraries">
             <dt id="library-pil">PIL</dt>
@@ -194,24 +211,31 @@
                 PIL fork. Originally was designed to simplify installation
                 in the modern environment. Starting from version 2.0 (2013)
                 supports Python 3 and is actively maintained and developed.
+                <a href="https://pillow.readthedocs.io/en/3.4.x/">
+                    docs</a>
             </dd>
 
             <dt id="library-pillow-simd">Pillow SIMD</dt>
             <dd>
                 Highly optimized "following" Pillow fork with speedups
                 for some common operations using SIMD inctructions.
+                <a href="https://github.com/uploadcare/pillow-simd#pillow-simd">
+                    readme</a>
             </dd>
             
             <dt id="library-imagemagick">ImageMagick</dt>
             <dd>
                 Very popular image manipulation library with many bindings
                 for different languages. Extremely flexible.
+                <a href="http://www.imagemagick.org/">
+                    homepage</a>
             </dd>
 
             <dt id="library-skia">Skia</dt>
             <dd>
                 Highly efficient 2D graphics library. It serves as the graphics
                 engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
+                <a href="https://skia.org">homepage</a>
             </dd>
         </dl>
     </section>
@@ -233,44 +257,6 @@
         <div class="selects-grid__cell">
             <h4>Competition</h4>
             <ul class="select -large" id="select-competition"></ul>
-
-            <div class="topic -resample">
-                <p>
-                    The test includes libraries which provide
-                    <a href="http://www.imagemagick.org/Usage/filter/#filter">
-                        high-quality convolution-based</a>
-                    resampling using filters.
-                </p>
-
-                <p>
-                    There are three filters with differts window size
-                    and different complexity:
-                </p>
-
-                <ul>
-                    <li>Bilinear — higly-efficient filter with small window
-                        and blurry result;</li>
-                    <li>Bicubic — high-quality filter with medium window;</li>
-                    <li>Lanczos — allows trade a quality over performance
-                        in some cases.</li>
-                </ul>            
-            </div>
-
-            <div class="topic -blur">
-                <p>
-                    High-quality
-                    <a href="https://en.wikipedia.org/wiki/Gaussian_blur">
-                        gaussian blur</a>.
-                </p>
-
-                <p>
-                    Starting from Pillow 2.7 the Gaussian blur implementation is 
-                    based on the
-                    <a href="http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf">
-                        Mathematical Image Analysis Group work</a>
-                    and operates in constant time related to blur radius.
-                </p>
-            </div>
         </div>
     </div>
 

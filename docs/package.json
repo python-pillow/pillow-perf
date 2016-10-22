@@ -4,14 +4,13 @@
   "description": "Pillow performance ",
   "main": "Chart.js",
   "dependencies": {
+  },
+  "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "chart.js": "^2.3.0",
     "css-loader": "^0.25.0",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
-  },
-  "devDependencies": {
     "webpack": "^1.13.2"
   },
   "scripts": {

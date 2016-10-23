@@ -69,7 +69,7 @@ $ CC="ccache cc" ./run.sh # Speed up subsequent builds using CC cache
 
 # Docs
 
-The docs is [public page](https://python-pillow.github.io/pillow-perf/)
+The docs is [public page](https://python-pillow.org/pillow-perf/)
 with benchmark results and details.
 
 ### Build once

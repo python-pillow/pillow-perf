@@ -1,11 +1,11 @@
 # Testsuites
 
-Performance tests divided by suites.
+Performance tests divided into suites.
 
-### Prerequirements
+### Prerequisites
 
-* [Any Pillow version](https://pillow.readthedocs.io/en/3.4.x/installation.html#basic-installation)
-* [ImageMagick dev package for wand](http://docs.wand-py.org/en/0.4.3/#requirements)
+* [Any Pillow version](https://pillow.readthedocs.io/en/latest/installation.html#basic-installation)
+* [ImageMagick dev package for Wand](http://docs.wand-py.org/en/0.4.3/#requirements)
 
 ### Install and run
 
@@ -23,10 +23,10 @@ $ ./run.py [testsuite]
 * composition
 * wand_scale
 
-List can grow, please refer to:
+The list can grow, please refer to:
 
 ```bash
-$ ./run.py list
+$ ./run.py --help
 ```
 
 ### CLI
@@ -39,7 +39,7 @@ $ ./run.py scale --size 512x512
 ```
 
 For some suites the chosen mode (`scale`, `blur`) does matter,
-while other (`convert`, `composition`) work regardless of current mode.
+while others (`convert`, `composition`) work regardless of current mode.
 
 
 # Automatic test
@@ -48,7 +48,7 @@ Automatic test launches testsuites against relevant Pillow versions
 including SSE4 and AVX2.
 Currently it works only on Linux.
 
-### Prerequirements
+### Prerequisites
 
 * git
 * virtualenv
@@ -69,7 +69,7 @@ $ CC="ccache cc" ./run.sh # Speed up subsequent builds using CC cache
 
 # Docs
 
-The docs is [public page](https://python-pillow.org/pillow-perf/)
+The docs can be found on the [public page](https://python-pillow.org/pillow-perf/)
 with benchmark results and details.
 
 ### Build once

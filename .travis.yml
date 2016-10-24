@@ -15,6 +15,7 @@ python:
   - nightly
 
 install:
+  - travis_retry pip install pillow
   - travis_retry pip install -r testsuite/requirements.txt
 
 script:

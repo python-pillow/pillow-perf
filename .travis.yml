@@ -1,0 +1,38 @@
+language: python
+
+# Run slow PyPy* first, to give them a headstart and reduce waiting time.
+# Run latest 3.x and 2.x next, to get quick compatibility results.
+# Then run the remainder.
+python:
+  - "pypy"
+  - "pypy3"
+  - 3.5
+  - 2.7
+  - 2.6
+  - 3.2
+  - 3.3
+  - 3.4
+  - nightly
+
+install:
+  - travis_retry pip install -r testsuite/requirements.txt
+
+script:
+  - cd testsuite
+  - ./run.py list
+  - ./run.py convert
+  - ./run.py scale
+  - ./run.py blur
+  - ./run.py composition
+  - ./run.py wand_scale
+
+after_success:
+  - pwd
+  - travis_retry pip install pep8 pyflakes
+  - pep8 --statistics --count .
+  - pyflakes . | tee >(wc -l)
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - python: nightly

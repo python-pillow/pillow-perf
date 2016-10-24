@@ -5,7 +5,6 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import time
 import sys
-import json
 
 from cases import collect_testsuites, load_cases
 

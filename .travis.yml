@@ -18,11 +18,7 @@ install:
 script:
   - cd testsuite
   - ./run.py --help
-  - ./run.py convert
-  - ./run.py scale
-  - ./run.py blur
-  - ./run.py composition
-  - ./run.py wand_scale
+  - ./run.py convert scale blur composition wand_scale -s 512x512 -n 1
 
 after_success:
   - pwd

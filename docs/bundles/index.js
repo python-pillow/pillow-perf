@@ -103,7 +103,7 @@
 	    competition.competitors = competitors;
 	  }
 	
-	  var chart = adapter.chartForCompetition(
+	  return adapter.chartForCompetition(
 	    element,
 	    competition
 	  );
@@ -12548,6 +12548,29 @@
 							[
 								"30px",
 								3.919
+							]
+						]
+					},
+					{
+						"name": "opencv 2.4.8",
+						"title": "OpenCV 2.4.8",
+						"color": [
+							240,
+							100,
+							60
+						],
+						"results": [
+							[
+								"1px",
+								0.0189
+							],
+							[
+								"10px",
+								0.264
+							],
+							[
+								"30px",
+								1.72
 							]
 						]
 					},

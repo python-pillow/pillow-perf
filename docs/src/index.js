@@ -50,7 +50,7 @@ function partialCompetition(element, competitionName, presetName) {
     competition.competitors = competitors;
   }
 
-  var chart = adapter.chartForCompetition(
+  return adapter.chartForCompetition(
     element,
     competition
   );

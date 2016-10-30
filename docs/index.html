@@ -13,7 +13,7 @@
     <h1>Pillow performance</h1>
 
     <section>
-        <h2 id="resampling">Resampling</h2>
+        <h2 id="resampling">Convolution Resampling</h2>
 
         <p>
             Image resampling is one of the most common processing operations.
@@ -53,8 +53,8 @@
             using different software and different filters.
             Google Сhome's <code>&lt;canvas&gt;</code> implementation
             doesn't increase the window size on downscaling.
-            OpenCV also doesn't do this using
-            <code>Bicubic</code> filter,
+            <a href="#library-opencv">OpenCV</a>
+            also doesn't do this using <code>Bicubic</code> filter,
             but offers supersampling resampling method.
         </p>
         <!-- TODO: Add Intel Performance Primitives -->
@@ -191,26 +191,39 @@
         <p>
             Mathematically, applying a Gaussian blur to an image
             is the same as convolving the image with a Gaussian function.
-            The amount of blur is depend on standard deviation size in pixels.
+            The amount of blur is depend on standard deviation size.
+            In theory, the Gaussian function is infinite.
+            This means that we need to compute every pixel of source image
+            for every pixel in destination image.
+            In practice, Gaussian is rapidly decreasing function
+            and window size more than 3*sigma has no meaning.
         </p>
         <p>
-            Starting from Pillow 2.7 the Gaussian blur implementation is 
-            based on the
+            As a result, Gaussian blur performance should depends
+            on windows size and sigma.
+            For most implementations this is true.
+            But in 2011 Mathematical Image Analysis Group
+            from Saarland University
             <a href="http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf">
-                Mathematical Image Analysis Group work</a>
-            and operates in constant time related to blur radius.
+                prooved</a>
+            that Gaussian blur can be very closely approximated by
+            series of extended box filters.
+            In opposite to true Gaussian filter,
+            box filters can be performed in constant time
+            relative to blur radius.
+        </p>
+        <p>
+            This approach was implemented in Pillow <code>2.7.0</code>.
+            According to the tests, even if other convolution implementations
+            can beat box filters approximation on small sigma,
+            this benefit disappears alongside with sigma increasing.
+            SIMD gives additional 2x boost.
         </p>
         <p>
             <canvas id="chart-blur" width="1100" height="400"></canvas>
             <script type="text/javascript">
                 partialCompetition(
-                    document.getElementById("chart-blur"),
-                    'blur-4k-rgb',
-                    [
-                        "imagemagick-6.8.9",
-                        "pillow-2.7",
-                        "pillow-simd-3.2-sse4"
-                    ]
+                    document.getElementById("chart-blur"), 'blur-4k-rgb'
                 );
             </script>
         </p>
@@ -246,8 +259,8 @@
             
             <dt id="library-imagemagick">ImageMagick</dt>
             <dd>
-                Very popular image manipulation library with many bindings
-                for different languages. Extremely flexible.
+                Very popular image manipulation library with bindings
+                for many languages. Extremely flexible.
                 <a href="http://www.imagemagick.org/">
                     homepage</a>
             </dd>
@@ -258,30 +271,42 @@
                 engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
                 <a href="https://skia.org">homepage</a>
             </dd>
+            <dt id="library-opencv">OpenCV</dt>
+            <dd>
+                OpenCV aimed at real-time computer vision.
+                Originally developed by Intel's research center,
+                it was later supported by Willow Garage
+                and is now maintained by Itseez.
+                <a href="http://opencv.org">homepage</a>
+            </dd>
         </dl>
     </section>
 
-    <div class="selects-grid">
-        <div class="selects-grid__inner">
-            <div class="selects-grid__cell">
-                <h4>System</h4>
-                <ul class="select -large" id="select-system"></ul>
-                <p class="info"></p>
+    <section>
+        <h2 id="results">Results Browser</h2>
+
+        <div class="selects-grid">
+            <div class="selects-grid__inner">
+                <div class="selects-grid__cell">
+                    <h4>System</h4>
+                    <ul class="select -large" id="select-system"></ul>
+                    <p class="info"></p>
+                </div>
+
+                <div class="selects-grid__cell">
+                    <h4>Chart set</h4>
+                    <ul class="select" id="select-preset"></ul>
+                </div>
             </div>
 
             <div class="selects-grid__cell">
-                <h4>Chart set</h4>
-                <ul class="select" id="select-preset"></ul>
+                <h4>Competition</h4>
+                <ul class="select -large" id="select-competition"></ul>
             </div>
         </div>
 
-        <div class="selects-grid__cell">
-            <h4>Competition</h4>
-            <ul class="select -large" id="select-competition"></ul>
-        </div>
-    </div>
-
-    <canvas id="chart-container" width="1100" height="400"></canvas>
+        <canvas id="chart-container" width="1100" height="400"></canvas>
+    </section>
 
 </body>
 </html>

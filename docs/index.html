@@ -17,21 +17,21 @@
 
         <p>
             Image resampling is one of the most common processing operations.
-            Good and predicatble quality can be achieved using
+            Good and predictable quality can be achieved using
             <a href="http://www.imagemagick.org/Usage/filter/#filter">
-                convolution-based</a> method.
+                the convolution-based</a> method.
         </p>
         <p>
             "Convolution" means that for each pixel of the final image
             we compute some area ("window")
             of the source image using weights.
-            Size of the area and weights depend on choosen filter.
+            The size of the area and weights depend on chosen filter.
             There are many filters.
             This is most common:
         </p>
         <ul>
-            <li><code>Bilinear</code> — higly-efficient filter
-                with small window and blurry result;</li>
+            <li><code>Bilinear</code> — high-efficient filter
+                with the small window and a blurry result;</li>
             <li><code>Bicubic</code> — high-quality filter with medium window;</li>
             <li><code>Lanczos</code> — allows trade a quality over performance
                 in some cases.</li>
@@ -39,10 +39,10 @@
         <p>
             For the image downscaling
             the window size should be increased.
-            This allows to take into account
+            This allows taking into account
             all pixels of the original image.
             Unfortunately, not all libraries and software do this.
-            As a result, output image can look extra sharp and crisp.
+            As a result, the output image can look extra sharp and crisp.
             In some cases, the result can
             only vaguely reminiscent of the original.
         </p>
@@ -54,7 +54,7 @@
             Google Сhome's <code>&lt;canvas&gt;</code> implementation
             doesn't increase the window size on downscaling.
             <a href="#library-opencv">OpenCV</a>
-            also doesn't do this using <code>Bicubic</code> filter,
+            also doesn't do this using <code>Bicubic</code> filter
             but offers supersampling resampling method.
         </p>
         <!-- TODO: Add Intel Performance Primitives -->
@@ -82,7 +82,7 @@
             but unacceptable for upscaling.
         </p>
         <p>
-            From the very begining 
+            From the very beginning, 
             <a href="#library-pil">PIL</a>
             also didn't increase the window size
             for <code>Bilinear</code> and <code>Bicubic</code> filters,
@@ -110,12 +110,12 @@
             On the other hand, some image libraries do convolutions right.
             For example, <a href="#library-imagemagick">ImageMagick</a>.
             The problem with ImageMagick that resampling is very slow.
-            For example it about 20x slower than
+            For example, it about 20x slower than
             <a href="#library-skia">Skia</a>
             which can also do high-quality convolution resampling.
         </p>
         <p>
-            From the very begining PIL and Pillow resampling
+            From the very beginning, PIL and Pillow resampling
             performance used to be quite low
             and comparable to ImageMagick.
             Pillow 2.7 reverse the trend
@@ -142,9 +142,9 @@
             required for resizing source 2560x1600 RGB image
             to one of the four destination sizes
             using one of the filters.
-            For significat downsampling Pillow 2.7 faster than PIL
+            For significant downsampling Pillow 2.7 faster than PIL
             in <b>4 — 5.5 times</b>.
-            Pillow 3.3 instroduces fixed-point arithmetic
+            Pillow 3.3 introduces fixed-point arithmetic
             for resampling which is much faster.
             Pillow 3.4 has additional optimizations
             for large target dimensions.
@@ -191,10 +191,10 @@
         <p>
             Mathematically, applying a Gaussian blur to an image
             is the same as convolving the image with a Gaussian function.
-            The amount of blur is depend on standard deviation size.
+            The amount of blur depends on standard deviation size (sigma).
             In theory, the Gaussian function is infinite.
-            This means that we need to compute every pixel of source image
-            for every pixel in destination image.
+            This means that we need to compute every pixel of the source image
+            for every pixel in the destination image.
             In practice, Gaussian is rapidly decreasing function
             and window size more than 3*sigma has no meaning.
         </p>

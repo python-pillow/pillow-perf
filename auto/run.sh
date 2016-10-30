@@ -34,7 +34,7 @@ pushd Pillow
   checkout 3.3.3
   ../../testsuite/run.py scale "${@:2}"
 
-  checkout 3.4.1
+  checkout 3.4.2
   ../../testsuite/run.py scale "${@:2}"
 
   checkout v3.2.0.post3 -msse4

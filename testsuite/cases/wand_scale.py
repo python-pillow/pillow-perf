@@ -5,11 +5,14 @@ from __future__ import print_function, unicode_literals, absolute_import
 from .base import rpartial
 from .wand_resize import ResizeCase
 
+
 class ScaleCase(ResizeCase):
     def update_dest_size(self, im):
         self.calc_dest_size = [
-            int(round(self.dest_size * im.width)) if self.hpass else im.width,
-            int(round(self.dest_size * im.height)) if self.vpass else im.height,
+            (int(round(self.dest_size * im.width))
+                if self.hpass else im.width),
+            (int(round(self.dest_size * im.height))
+                if self.vpass else im.height),
         ]
 
 

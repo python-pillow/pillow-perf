@@ -22,7 +22,7 @@ class ConvertCase(PillowTestCase):
         return im.convert(self.mode_to)
 
     def readable_args(self):
-        return [ "from {} to {}".format(self.mode_from, self.mode_to) ]
+        return ["from {} to {}".format(self.mode_from, self.mode_to)]
 
 
 cases = [

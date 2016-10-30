@@ -7,11 +7,14 @@ from PIL import Image
 from .base import rpartial
 from .resize import ResizeCase
 
+
 class ScaleCase(ResizeCase):
     def update_dest_size(self, im):
         self.calc_dest_size = [
-            int(round(self.dest_size * im.size[0])) if self.hpass else im.size[0],
-            int(round(self.dest_size * im.size[1])) if self.vpass else im.size[1],
+            (int(round(self.dest_size * im.size[0]))
+                if self.hpass else im.size[0]),
+            (int(round(self.dest_size * im.size[1]))
+                if self.vpass else im.size[1]),
         ]
 
 

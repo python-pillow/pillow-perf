@@ -11,6 +11,7 @@ from .base import BaseTestCase, root
 
 Image.LANCZOS = Image.ANTIALIAS
 
+
 class PillowTestCase(BaseTestCase):
     filter_ids = {
         0: 'ner', 1: 'lzs', 2: 'bil', 3: 'bic',
@@ -21,7 +22,7 @@ class PillowTestCase(BaseTestCase):
         im = Image.open(root('resources', 'color_circle.png'))
         im = self.resize(im, size, Image.BICUBIC)
         im = im.convert(mode)
-        return [ im ]
+        return [im]
 
     @classmethod
     def resize(cls, self, size, resample=Image.NEAREST):
@@ -34,10 +35,12 @@ class PillowTestCase(BaseTestCase):
             resample = Image.NEAREST
 
         if self.mode == 'RGBA':
-            return cls.resize(self.convert('RGBa'), size, resample).convert('RGBA')
+            return cls.resize(self.convert('RGBa'),
+                              size, resample).convert('RGBA')
 
         if self.mode == 'LA':
-            return cls.resize(self.convert('La'), size, resample).convert('LA')
+            return cls.resize(self.convert('La'),
+                              size, resample).convert('LA')
 
         if resample == Image.NEAREST:
             im = self.im.resize(size, resample)
@@ -49,10 +52,12 @@ class PillowTestCase(BaseTestCase):
     @classmethod
     def gaussian_blur(cls, self, radius, n=3):
         if self.mode == 'RGBA':
-            return cls.gaussian_blur(self.convert('RGBa'), radius, n).convert('RGBA')
+            return cls.gaussian_blur(self.convert('RGBa'),
+                                     radius, n).convert('RGBA')
 
         if self.mode == 'LA':
-            return cls.gaussian_blur(self.convert('La'), radius, n).convert('LA')
+            return cls.gaussian_blur(self.convert('La'),
+                                     radius, n).convert('LA')
 
         # http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf
         # [7] Box length.

@@ -81,7 +81,8 @@ if __name__ == '__main__':
         if args.json:
             print(
                 ",\n".join(
-                    '["' + '", "'.join(readable_args) + '", ' + str(duration) + ']'
+                    ('["' + '", "'.join(readable_args) + '", ' +
+                     str(duration) + ']')
                     for readable_args, duration in results
                 )
             )

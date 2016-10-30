@@ -18,7 +18,7 @@ class CompositionCase(PillowTestCase):
         return Image.alpha_composite(first, second)
 
     def readable_args(self):
-        return [ "Composition" ]
+        return ["Composition"]
 
 
 cases = [

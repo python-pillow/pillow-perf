@@ -21,7 +21,7 @@ class ResizeCase(BaseTestCase):
         elif mode in ('LA', 'La'):
             im.type = 'grayscalematte'
         im.resize(size[0], size[1], 'catrom')
-        return [ im ]
+        return [im]
 
     def handle_args(self, dest_size, filter, hpass=True, vpass=True):
         self.dest_size = dest_size

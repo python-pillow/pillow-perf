@@ -14,7 +14,7 @@ class BlurCase(PillowTestCase):
         return self.gaussian_blur(im, self.radius)
 
     def readable_args(self):
-        return [ "{}px".format(self.radius) ]
+        return ["{}px".format(self.radius)]
 
 
 cases = [

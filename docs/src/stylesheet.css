@@ -6,7 +6,7 @@ html {
     line-height: 1.5;
 }
 body {
-    min-width: 700px;
+    min-width: 690px;
     max-width: 1100px;
     padding: 2%;
     margin: 0 auto;
@@ -122,7 +122,7 @@ section {
     margin-top: 50px;
 }
     section p {
-        max-width: 700px;
+        max-width: 690px;
     }
 .chart {
     margin-top: 40px;
@@ -132,9 +132,10 @@ section {
 .samples {
     display: flex;
     flex-wrap: wrap;
+    margin-right: -30px;
 }
     .samples figure {
-        margin: 1em 20px 0 0;
+        margin: 1em 30px 0 0;
     }
     .samples figcaption {
         font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;

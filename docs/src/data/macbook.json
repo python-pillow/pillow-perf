@@ -36,7 +36,7 @@
                     "topic": "resize-27",
                     "title": "Pillow 2.7 optimizations",
                     "set": [
-                        "imagemagick-6.8.9",
+                        "imagemagick-6.7",
                         "pillow-2.0",
                         "pillow-2.7"
                     ]
@@ -126,8 +126,8 @@
             ],
             "competitors": [
                 {
-                    "name": "imagemagick-6.8.9",
-                    "title": "ImageMagick 6.8.9-9",
+                    "name": "imagemagick-6.7",
+                    "title": "ImageMagick 6.7.7-10",
                     "color": [230, 100, 70],
                     "results": [
                         ["26x16", "bil", 0.12073302269],
@@ -377,8 +377,8 @@
             ],
             "competitors": [
                 {
-                    "name": "imagemagick-6.8.9",
-                    "title": "ImageMagick 6.8.9-9",
+                    "name": "imagemagick-6.7",
+                    "title": "ImageMagick 6.7.7-10",
                     "color": [230, 100, 70],
                     "results": [
                         ["1px",     0.6200],

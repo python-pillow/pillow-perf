@@ -17,6 +17,10 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json',
+      },
+      {
+        test: require.resolve("./src/index.js"),
+        loader: "expose?partialCompetition"
       }
     ],
     noParse: [

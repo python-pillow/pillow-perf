@@ -2,9 +2,59 @@ require("./stylesheet.css");
 
 var adapter = require("./chars-adapter");
 var data = require("./data/index");
+var objectAssign = require('object-assign');
 
 // Global chart instance. Should be destroyed every time.
 var chart = null;
+
+
+function partialCompetition(element, competitionName, presetName) {
+  var competitions = data[0].competitions;
+  var competitors = [];
+  var i, competition, preset;
+
+  for (i = 0; i < competitions.length; i++) {
+    if (competitions[i].name == competitionName) {
+      competition = objectAssign({}, competitions[i]);
+      break;
+    }
+  }
+  if ( ! competition) {
+    console.log('Competition ' + competitionName + ' is not found.');
+    return;
+  }
+
+  if (presetName) {
+    if (typeof presetName === "string") {
+      for (i = 0; i < competition.presets.length; i++) {
+        if (competition.presets[i].name == presetName) {
+          preset = competition.presets[i].set;
+          break
+        }
+      }
+      if ( ! preset) {
+        console.log('Preset ' + presetName + ' is not found.');
+        return;
+      }
+    } else {
+      preset = presetName;
+    }
+
+    for (i = 0; i < competition.competitors.length; i++) {
+      var competitor = competition.competitors[i];
+      if (preset.indexOf(competitor.name) > -1) {
+        competitors.push(competitor);
+      }
+    }
+
+    competition.competitors = competitors;
+  }
+
+  return adapter.chartForCompetition(
+    element,
+    competition
+  );
+}
 
 
 function createSelect(select, list, callback) {
@@ -144,5 +194,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   var applySystem = populateSystems(data);
   applySystem(0);
-
+  
 });
+
+module.exports = partialCompetition;

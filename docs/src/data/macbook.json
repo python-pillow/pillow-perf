@@ -7,7 +7,7 @@
         {
             "name": "resample-4k-rgb",
             "topic": "resample",
-            "title": "Resize 2560×1600 RGB image",
+            "title": "Resize 2560x1600 RGB image",
             "source": {
                 "size": [2560, 1600]
             },
@@ -32,6 +32,7 @@
             ],
             "presets": [
                 {
+                    "name": "pillow-2.7",
                     "topic": "resize-27",
                     "title": "Pillow 2.7 optimizations",
                     "set": [
@@ -41,6 +42,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-progress",
                     "topic": "resize-progress",
                     "title": "Pillow progress",
                     "set": [
@@ -50,6 +52,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.2",
                     "topic": "resize-32",
                     "title": "Pillow 3.2 versions",
                     "set": [
@@ -59,6 +62,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.3",
                     "topic": "resize-33",
                     "title": "Pillow 3.3 versions",
                     "set": [
@@ -68,6 +72,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.4",
                     "topic": "resize-34",
                     "title": "Pillow 3.4 versions",
                     "set": [
@@ -78,6 +83,7 @@
                     "default": true
                 },
                 {
+                    "name": "pillow-sse4",
                     "topic": "resize-sse4",
                     "title": "Pillow SIMD SSE4 progress",
                     "set": [
@@ -87,6 +93,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-avx2",
                     "topic": "resize-avx2",
                     "title": "Pillow SIMD AVX2 progress",
                     "set": [
@@ -96,6 +103,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-milestones",
                     "topic": "resize-milestones",
                     "title": "Pillow milestones",
                     "set": [
@@ -106,6 +114,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-skia",
                     "topic": "resize-skia",
                     "title": "Pillow SIMD 3.4 vs Skia",
                     "set": [
@@ -375,6 +384,16 @@
                         ["1px",     0.6200],
                         ["10px",    1.6600],
                         ["30px",    3.9190]
+                    ]
+                },
+                {
+                    "name": "opencv 2.4.8",
+                    "title": "OpenCV 2.4.8",
+                    "color": [240, 100, 60],
+                    "results": [
+                        ["1px",     0.0189],
+                        ["10px",    0.2640],
+                        ["30px",    1.7200]
                     ]
                 },
                 {

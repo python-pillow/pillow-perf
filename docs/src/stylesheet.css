@@ -3,10 +3,10 @@ html {
     margin: 0;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-size: 14px;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 body {
-    min-width: 700px;
+    min-width: 690px;
     max-width: 1100px;
     padding: 2%;
     margin: 0 auto;
@@ -15,6 +15,7 @@ body {
 h1, h2, h3, h4 {
     font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-weight: 700;
+    margin-bottom: 0;
 }
 
 h4 {
@@ -29,9 +30,17 @@ ul, p {
     margin-bottom: 0;
 }
 
+code {
+    padding: 0 3px;
+    font-family: 'Inconsolata', monospace;
+    border-radius: 2px;
+    border: 1px solid #ececec;
+    background: #f8f8f8;
+}
+
 ul.select {
     padding: 0;
-    margin: 2px 0 0;
+    margin: 0;
     list-style-type: none;
 }
     ul.select > li {}
@@ -113,15 +122,20 @@ section {
     margin-top: 50px;
 }
     section p {
-        max-width: 500px;
+        max-width: 690px;
     }
+.chart {
+    margin-top: 40px;
+    max-width: 860px;
+}
 
 .samples {
     display: flex;
     flex-wrap: wrap;
+    margin-right: -30px;
 }
     .samples figure {
-        margin: 1em 20px 0 0;
+        margin: 1em 30px 0 0;
     }
     .samples figcaption {
         font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;

@@ -13,157 +13,300 @@
     <h1>Pillow performance</h1>
 
     <section>
-        <h2>Resampling</h2>
+        <h2 id="resampling">Convolution Resampling</h2>
 
         <p>
-            <a href="https://unsplash.com/photos/h0N_2iZMA_4" target="_blank">original</a>
+            Image resampling is one of the most common processing operations.
+            Good and predictable quality can be achieved using
+            <a href="http://www.imagemagick.org/Usage/filter/#filter">
+                the convolution-based</a> method.
         </p>
-
+        <p>
+            "Convolution" means that for each pixel of the final image
+            we compute some area ("window")
+            of the source image using weights.
+            The size of the area and weights depend on chosen filter.
+            There are many filters.
+            This is most common:
+        </p>
+        <ul>
+            <li><code>Bilinear</code> — high-efficient filter
+                with the small window and a blurry result;</li>
+            <li><code>Bicubic</code> — high-quality filter with medium window;</li>
+            <li><code>Lanczos</code> — allows trade a quality over performance
+                in some cases.</li>
+        </ul>   
+        <p>
+            For the image downscaling
+            the window size should be increased.
+            This allows taking into account
+            all pixels of the original image.
+            Unfortunately, not all libraries and software do this.
+            As a result, the output image can look extra sharp and crisp.
+            In some cases, the result can
+            only vaguely reminiscent of the original.
+        </p>
+        <p>
+            This is results of resizing
+            <a href="https://unsplash.com/photos/OLlj17tUZnU" target="_blank">
+                4928 × 3280 px image</a> to 210 × 140 px
+            using different software and different filters.
+            Google Сhome's <code>&lt;canvas&gt;</code> implementation
+            doesn't increase the window size on downscaling.
+            <a href="#library-opencv">OpenCV</a>
+            also doesn't do this using <code>Bicubic</code> filter
+            but offers supersampling resampling method.
+        </p>
+        <!-- TODO: Add Intel Performance Primitives -->
         <div class="samples">
             <figure>
-                <img src="./static/bridge_cv2_cubic.png" alt="CV2 Cubic" />
-                <figcaption>CV2 Cubic</figcaption>
+                <img src="./static/space_chrome.png" alt="Google Chrome" width="210" />
+                <figcaption>Google Chrome canvas</figcaption>
             </figure>
             <figure>
-                <img src="./static/bridge_cv2_area.png" alt="CV2 Area" />
-                <figcaption>CV2 Area (supersampling)</figcaption>
+                <img src="./static/space_cv2_cubic.png" alt="OpenCV Cubic" width="210" />
+                <figcaption>OpenCV Cubic</figcaption>
             </figure>
             <figure>
-                <img src="./static/bridge_pil_bicubic.png" alt="PIL Bicubic" />
+                <img src="./static/space_cv2_area.png" alt="OpenCV Area" width="210" />
+                <figcaption>OpenCV Area (supersampling)</figcaption>
+            </figure>
+        </div>
+        <p>
+            Obviously, this is meaningless to compare OpenCV
+            <code>Bicubic</code> performance
+            with correct convolution implementations.
+            Also, supersampling is different resampling method,
+            not based on convolutions.
+            It is correct for downscaling
+            but unacceptable for upscaling.
+        </p>
+        <p>
+            From the very beginning, 
+            <a href="#library-pil">PIL</a>
+            also didn't increase the window size
+            for <code>Bilinear</code> and <code>Bicubic</code> filters,
+            while did for <code>Antialias</code>
+            (the real name of the filter is
+            <a href="https://en.wikipedia.org/wiki/Lanczos_algorithm">
+                Lanczos</a>).
+            In Pillow <code>2.7.0</code> this was fixed.
+        </p>
+        <div class="samples">
+            <figure>
+                <img src="./static/space_pil_bicubic.png" alt="PIL Bicubic" width="210" />
                 <figcaption>PIL Bicubic</figcaption>
             </figure>
-            <!-- <figure>
-                <img src="./static/bridge_pil_lanczos.png" alt="PIL Lanczos" />
-                <figcaption>PIL Antialias (Lanczos)</figcaption>
-            </figure> -->
             <figure>
-                <img src="./static/bridge_pillow_bicubic.png" alt="Pillow Bicubic" />
+                <img src="./static/space_pil_lanczos.png" alt="PIL Lanczos" width="210" />
+                <figcaption>PIL Antialias (Lanczos)</figcaption>
+            </figure>
+            <figure>
+                <img src="./static/space_pillow_bicubic.png" alt="Pillow Bicubic" width="210" />
                 <figcaption>Pillow Bicubic</figcaption>
             </figure>
+        </div>
+        <p>
+            On the other hand, some image libraries do convolutions right.
+            For example, <a href="#library-imagemagick">ImageMagick</a>.
+            The problem with ImageMagick that resampling is very slow.
+            For example, it about 20x slower than
+            <a href="#library-skia">Skia</a>
+            which can also do high-quality convolution resampling.
+        </p>
+        <p>
+            From the very beginning, PIL and Pillow resampling
+            performance used to be quite low
+            and comparable to ImageMagick.
+            Pillow 2.7 reverse the trend
+            introducing several common optimizations
+            such as loops rearrangement,
+            and cache-aware transposition.
+        </p>
+        <div class="chart">
+            <canvas id="chart-resample-scalar" width="1100" height="400"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-resample-scalar"),
+                    'resample-4k-rgb',
+                    [
+                        "pillow-2.0",
+                        "pillow-2.7",
+                        "pillow-3.4"
+                    ]
+                );
+            </script>
+        </div>
+        <p>
+            Charts show median time (lower is better)
+            required for resizing source 2560x1600 RGB image
+            to one of the four destination sizes
+            using one of the filters.
+            For significant downsampling Pillow 2.7 faster than PIL
+            in <b>4 — 5.5 times</b>.
+            Pillow 3.3 introduces fixed-point arithmetic
+            for resampling which is much faster.
+            Pillow 3.4 has additional optimizations
+            for large target dimensions.
+            In the end current Pillow version
+            <b>up to 9 times</b> faster than original PIL.
+        </p>
+        <p>
+            But this is not the end of the story.
+            Starting from Pillow 3.2 you can use
+            <a href="#library-pillow-simd">SIMD-enabled Pillow version</a>.
+            Pillow SIMD resampling performance is increasing
+            along with basic Pillow version.
+            The latest Pillow SIMD compiled with AVX2
+            is <b>3.5 — 4.5 times</b> faster than basic Pillow.
+            In sum, Pillow SIMD resampling performance
+            <b>20 — 40 times</b> higher than original PIL.
+        </p>
+        <div class="chart">
+            <canvas id="chart-resample-simd" width="1100" height="400"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-resample-simd"),
+                    'resample-4k-rgb',
+                    [
+                        "pillow-3.4",
+                        "pillow-simd-3.4-sse4",
+                        "pillow-simd-3.4-avx2"
+                    ]
+                );
+            </script>
         </div>
     </section>
 
     <section>
-        <h2>Libraries</h2>
+        <h2 id="blur">Gaussian blur</h2>
+        <p>
+            High-quality
+            <a href="https://en.wikipedia.org/wiki/Gaussian_blur">
+                Gaussian blur</a>
+            can be used to reduce image noise and detail.
+            It is also used as a pre-processing stage
+            in computer vision algorithms.
+        </p>
+        <p>
+            Mathematically, applying a Gaussian blur to an image
+            is the same as convolving the image with a Gaussian function.
+            The amount of blur depends on standard deviation size (sigma).
+            In theory, the Gaussian function is infinite.
+            This means that we need to compute every pixel of the source image
+            for every pixel in the destination image.
+            In practice, Gaussian is rapidly decreasing function
+            and window size more than 3*sigma has no meaning.
+        </p>
+        <p>
+            As a result, Gaussian blur performance should depends
+            on windows size and sigma.
+            For most implementations this is true.
+            But in 2011 Mathematical Image Analysis Group
+            from Saarland University
+            <a href="http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf">
+                prooved</a>
+            that Gaussian blur can be very closely approximated by
+            series of extended box filters.
+            In opposite to true Gaussian filter,
+            box filters can be performed in constant time
+            relative to blur radius.
+        </p>
+        <p>
+            This approach was implemented in Pillow <code>2.7.0</code>.
+            According to the tests, even if other convolution implementations
+            can beat box filters approximation on small sigma,
+            this benefit disappears alongside with sigma increasing.
+            SIMD gives additional 2x boost.
+        </p>
+        <p>
+            <canvas id="chart-blur" width="1100" height="400"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-blur"), 'blur-4k-rgb'
+                );
+            </script>
+        </p>
+    </section>
+
+    <section>
+        <h2 id="libraries">Libraries</h2>
 
         <dl class="libraries">
-            <dt>PIL</dt>
+            <dt id="library-pil">PIL</dt>
             <dd>
                 Python image library. Was initialy released for Python 1.2 in 1995.
                 Last version is 1.1.7 was released on November 15, 2009.
                 Includes image codecs and image manipulation routines.
             </dd>
 
-            <dt>Pillow</dt>
+            <dt id="library-pillow">Pillow</dt>
             <dd>
                 PIL fork. Originally was designed to simplify installation
                 in the modern environment. Starting from version 2.0 (2013)
                 supports Python 3 and is actively maintained and developed.
+                <a href="https://pillow.readthedocs.io/en/3.4.x/">
+                    docs</a>
             </dd>
 
-            <dt>Pillow SIMD</dt>
+            <dt id="library-pillow-simd">Pillow SIMD</dt>
             <dd>
                 Highly optimized "following" Pillow fork with speedups
                 for some common operations using SIMD inctructions.
+                <a href="https://github.com/uploadcare/pillow-simd#pillow-simd">
+                    readme</a>
             </dd>
             
-            <dt>ImageMagick</dt>
+            <dt id="library-imagemagick">ImageMagick</dt>
             <dd>
-                Very popular image manipulation library with many bindings
-                for different languages. Extremely configurable.
+                Very popular image manipulation library with bindings
+                for many languages. Extremely flexible.
+                <a href="http://www.imagemagick.org/">
+                    homepage</a>
             </dd>
 
-            <dt>Skia</dt>
+            <dt id="library-skia">Skia</dt>
             <dd>
                 Highly efficient 2D graphics library. It serves as the graphics
                 engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
+                <a href="https://skia.org">homepage</a>
+            </dd>
+            <dt id="library-opencv">OpenCV</dt>
+            <dd>
+                OpenCV aimed at real-time computer vision.
+                Originally developed by Intel's research center,
+                it was later supported by Willow Garage
+                and is now maintained by Itseez.
+                <a href="http://opencv.org">homepage</a>
             </dd>
         </dl>
     </section>
 
-    <div class="selects-grid">
-        <div class="selects-grid__inner">
-            <div class="selects-grid__cell">
-                <h4>System</h4>
-                <ul class="select -large" id="select-system"></ul>
-                <p class="info"></p>
+    <section>
+        <h2 id="results">Results Browser</h2>
+
+        <div class="selects-grid">
+            <div class="selects-grid__inner">
+                <div class="selects-grid__cell">
+                    <h4>System</h4>
+                    <ul class="select -large" id="select-system"></ul>
+                    <p class="info"></p>
+                </div>
+
+                <div class="selects-grid__cell">
+                    <h4>Chart set</h4>
+                    <ul class="select" id="select-preset"></ul>
+                </div>
             </div>
 
             <div class="selects-grid__cell">
-                <h4>Chart set</h4>
-                <ul class="select" id="select-preset"></ul>
-
-                <div class="topic -resize-27">
-                    <p>
-                        From very begining Pillow and PIL image resampling
-                        performance used to be quite low and comparable to
-                        ImageMagick performance.
-                    </p>
-                    <p>
-                        Pillow 2.7 reverse the trend introducing several
-                        common optimizations.
-                    </p>
-                </div>
-
-                <div class="topic -resize-progress">
-                    <p>
-                        Starting from Pillow 2.7 the performance is constantly
-                        growing.
-                    </p>
-                    <p>
-                        Pillow 3.3 uses only fixed-point arithmetic
-                        which is much faster. Pillow 3.4 has additional
-                        optimizations for large target dimensions.
-                    </p>
-                </div>
+                <h4>Competition</h4>
+                <ul class="select -large" id="select-competition"></ul>
             </div>
         </div>
 
-        <div class="selects-grid__cell">
-            <h4>Competition</h4>
-            <ul class="select -large" id="select-competition"></ul>
-
-            <div class="topic -resample">
-                <p>
-                    The test includes libraries which provide
-                    <a href="http://www.imagemagick.org/Usage/filter/#filter">
-                        high-quality convolution-based</a>
-                    resampling using filters.
-                </p>
-
-                <p>
-                    There are three filters with differts window size
-                    and different complexity:
-                </p>
-
-                <ul>
-                    <li>Bilinear — higly-efficient filter with small window
-                        and blurry result;</li>
-                    <li>Bicubic — high-quality filter with medium window;</li>
-                    <li>Lanczos — allows trade a quality over performance
-                        in some cases.</li>
-                </ul>            
-            </div>
-
-            <div class="topic -blur">
-                <p>
-                    High-quality
-                    <a href="https://en.wikipedia.org/wiki/Gaussian_blur">
-                        gaussian blur</a>.
-                </p>
-
-                <p>
-                    Starting from Pillow 2.7 the Gaussian blur implementation is 
-                    based on the
-                    <a href="http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf">
-                        Mathematical Image Analysis Group work</a>
-                    and operates in constant time related to blur radius.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <canvas id="chart-container" width="1100" height="400"></canvas>
+        <canvas id="chart-container" width="1100" height="400"></canvas>
+    </section>
 
 </body>
 </html>

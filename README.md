@@ -26,7 +26,7 @@ $ ./run.py [testsuite]
 The list can grow, please refer to:
 
 ```bash
-$ ./run.py list  # for now just shows error with all possible options
+$ ./run.py --help
 ```
 
 ### CLI

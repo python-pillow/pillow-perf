@@ -43,7 +43,8 @@ def argument_parser(testsuites):
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('testsuite', nargs='+',
-                        choices=testsuites, metavar='testsuite')
+                        choices=testsuites, metavar='testsuite',
+                        help='{%(choices)s}')
     parser.add_argument('--size', '-s', type=pixel_size, default=[2560, 1600])
     parser.add_argument('--mode', '-m', default="RGB",
                         choices=["RGB", "RGBA", "RGBa", "L", "LA", "La"],)

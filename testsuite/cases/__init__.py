@@ -10,6 +10,7 @@ from .composition import cases as composition_cases
 
 from .wand_resize import cases as wand_resize_cases
 from .wand_scale import cases as wand_scale_cases
+from .wand_blur import cases as wand_blur_cases
 
 
 ALL_CASES = {
@@ -21,6 +22,7 @@ ALL_CASES = {
 
     "wand_resize": wand_resize_cases,
     "wand_scale": wand_scale_cases,
+    "wand_blur": wand_blur_cases,
 }
 
 

@@ -22,6 +22,8 @@ class WandTestCase(BaseTestCase):
         im = Image(filename=root('resources', 'color_circle.png'))
         if mode == 'RGB':
             im.type = 'truecolor'
+        elif mode == 'RGBA':
+            pass
         elif mode == 'L':
             im.type = 'grayscale'
         elif mode in ('LA', 'La'):

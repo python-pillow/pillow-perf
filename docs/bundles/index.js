@@ -288,7 +288,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\n\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 16px;\n}\na {\n    color: #000095;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\n.topic {\n    display: none;\n}\n    .topic__resample .topic.-resample,\n    .topic__blur .topic.-blur,\n    .topic__resize-27 .topic.-resize-27,\n    .topic__resize-progress .topic.-resize-progress {\n        display: block;\n    }\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    margin-right: -30px;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 800px;\n}\n    dl.libraries dt {\n        float: left;\n        width: 130px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 8px 140px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\n.topic {\n    display: none;\n}\n    .topic__resample .topic.-resample,\n    .topic__blur .topic.-blur,\n    .topic__resize-27 .topic.-resize-27,\n    .topic__resize-progress .topic.-resize-progress {\n        display: block;\n    }\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    margin-right: -30px;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 800px;\n}\n    dl.libraries dt {\n        float: left;\n        width: 130px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 8px 140px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
@@ -819,11 +819,15 @@
 	    var lastGroup = null;
 	    var c = competitor.color;
 	
+	    if (typeof c != "string") {
+	      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
+	    }
+	
 	    chartData.data.datasets.push({
 	      label: competitor.title,
 	      name: competitor.name,
 	      data: data,
-	      backgroundColor: "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)",
+	      backgroundColor: c,
 	      borderColor: "rgba(255, 255, 255, .5)",
 	      borderWidth: 1,
 	    });
@@ -11799,8 +11803,8 @@
 						"name": "pillow-2.0",
 						"title": "PIL & Pillow 2.0 to 2.6.2",
 						"color": [
-							0,
-							100,
+							10,
+							90,
 							50
 						],
 						"results": [
@@ -11870,9 +11874,9 @@
 						"name": "pillow-2.7",
 						"title": "Pillow 2.7.0 to 3.2.0",
 						"color": [
-							330,
-							100,
-							40
+							340,
+							90,
+							43
 						],
 						"results": [
 							[
@@ -11941,9 +11945,9 @@
 						"name": "pillow-3.3",
 						"title": "Pillow 3.3.3",
 						"color": [
-							120,
-							100,
-							40
+							190,
+							90,
+							43
 						],
 						"results": [
 							[
@@ -12013,8 +12017,8 @@
 						"title": "Pillow 3.4.2",
 						"color": [
 							34,
-							100,
-							40
+							90,
+							43
 						],
 						"results": [
 							[
@@ -12083,9 +12087,9 @@
 						"name": "pillow-simd-3.2-sse4",
 						"title": "Pillow SIMD 3.2.0 SSE4",
 						"color": [
-							330,
-							100,
-							80
+							340,
+							90,
+							75
 						],
 						"results": [
 							[
@@ -12154,8 +12158,8 @@
 						"name": "pillow-simd-3.2-avx2",
 						"title": "Pillow SIMD 3.2.0 AVX2",
 						"color": [
-							330,
-							100,
+							340,
+							90,
 							60
 						],
 						"results": [
@@ -12225,9 +12229,9 @@
 						"name": "pillow-simd-3.3-sse4",
 						"title": "Pillow SIMD 3.3.0 SSE4",
 						"color": [
-							120,
-							100,
-							85
+							190,
+							90,
+							75
 						],
 						"results": [
 							[
@@ -12296,8 +12300,8 @@
 						"name": "pillow-simd-3.3-avx2",
 						"title": "Pillow SIMD 3.3.0 AVX2",
 						"color": [
-							120,
-							100,
+							190,
+							90,
 							60
 						],
 						"results": [
@@ -12368,8 +12372,8 @@
 						"title": "Pillow SIMD 3.4.0 SSE4",
 						"color": [
 							34,
-							100,
-							80
+							90,
+							75
 						],
 						"results": [
 							[
@@ -12439,7 +12443,7 @@
 						"title": "Pillow SIMD 3.4.0 AVX2",
 						"color": [
 							34,
-							100,
+							90,
 							60
 						],
 						"results": [
@@ -12578,9 +12582,9 @@
 						"name": "pillow-2.7",
 						"title": "Pillow 2.7",
 						"color": [
-							330,
-							100,
-							40
+							340,
+							90,
+							43
 						],
 						"results": [
 							[
@@ -12601,7 +12605,7 @@
 						"name": "pillow-simd-3.2-sse4",
 						"title": "Pillow SIMD 3.2.0 SSE4",
 						"color": [
-							330,
+							340,
 							100,
 							80
 						],

@@ -13297,9 +13297,90 @@
 							"pillow-simd-3.3-avx2",
 							"pillow-simd-3.4-avx2"
 						]
+					},
+					{
+						"name": "pillow-skia",
+						"topic": "resize-skia",
+						"title": "Pillow SIMD 3.4 vs Skia",
+						"set": [
+							"skia-53",
+							"pillow-simd-3.4-sse4",
+							"pillow-simd-3.4-avx2"
+						]
 					}
 				],
 				"competitors": [
+					{
+						"name": "skia-53",
+						"title": "Skia 53 SSE2",
+						"color": [
+							240,
+							100,
+							60
+						],
+						"results": [
+							[
+								"26x16",
+								"bil",
+								0.00477
+							],
+							[
+								"26x16",
+								"bic",
+								0.0087
+							],
+							[
+								"26x16",
+								"lzs",
+								0.0131
+							],
+							[
+								"320x200",
+								"bil",
+								0.00641
+							],
+							[
+								"320x200",
+								"bic",
+								0.0118
+							],
+							[
+								"320x200",
+								"lzs",
+								0.0181
+							],
+							[
+								"2048x1280",
+								"bil",
+								0.0209
+							],
+							[
+								"2048x1280",
+								"bic",
+								0.0342
+							],
+							[
+								"2048x1280",
+								"lzs",
+								0.0398
+							],
+							[
+								"5478x3424",
+								"bil",
+								0.0968
+							],
+							[
+								"5478x3424",
+								"bic",
+								0.124
+							],
+							[
+								"5478x3424",
+								"lzs",
+								0.175
+							]
+						]
+					},
 					{
 						"name": "pillow-2.0",
 						"title": "PIL & Pillow 2.0 to 2.6.2",

@@ -763,6 +763,7 @@
 	        yAxes: [{
 	          display: false,
 	          gridLines: {display: false},
+	          ticks: {beginAtZero: true},
 	        }],
 	        xAxes: [{
 	          gridLines: {display: false},
@@ -12621,6 +12622,74 @@
 							[
 								"30px",
 								0.11527
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "composition-4k-rgb",
+				"topic": "blur",
+				"title": "Composition two 2560×1600 RGBA images",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "radius",
+						"title": "Blur radius"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "pillow-3.4",
+						"title": "Pillow 3.4.2",
+						"color": [
+							34,
+							90,
+							43
+						],
+						"results": [
+							[
+								"Composition",
+								0.0364
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-3.4-sse4",
+						"title": "Pillow SIMD 3.4.0 SSE4",
+						"color": [
+							34,
+							90,
+							75
+						],
+						"results": [
+							[
+								"Composition",
+								0.01401
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-3.4-avx2",
+						"title": "Pillow SIMD 3.4.0 AVX2",
+						"color": [
+							34,
+							90,
+							60
+						],
+						"results": [
+							[
+								"Composition",
+								0.0102
 							]
 						]
 					}

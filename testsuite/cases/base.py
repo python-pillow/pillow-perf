@@ -38,7 +38,7 @@ class BaseTestCase(object):
         self.kwargs = kwargs
 
     def create_test_data(self, size, mode):
-        raise NotImplementedError()
+        return []
 
     def run(self):
         self.prepare_runner()

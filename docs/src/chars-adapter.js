@@ -156,6 +156,7 @@ function chartForCompetition(element, competition) {
         yAxes: [{
           display: false,
           gridLines: {display: false},
+          ticks: {beginAtZero: true},
         }],
         xAxes: [{
           gridLines: {display: false},

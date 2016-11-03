@@ -17,11 +17,16 @@ h1, h2, h3, h4 {
     font-weight: 700;
     margin-bottom: 0;
 }
-
+h1 {
+    font-size: 2.5em;
+}
+h2 {
+    font-size: 2em;
+}
 h4 {
     color: #aaa;
     margin-bottom: 0;
-    font-size: 16px;
+    font-size: 1.1em;
 }
 a {
     color: #000095;

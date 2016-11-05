@@ -18,6 +18,10 @@ class WandTestCase(BaseTestCase):
         'lanczos': 'lzs', 'triangle': 'bil', 'catrom': 'bic', 'hamming': 'hmn',
     }
 
+    def __init__(self, *args, **kwargs):
+        self._free_resources = []
+        super(WandTestCase, self).__init__(*args, **kwargs)
+
     def create_test_data(self, size, mode):
         im = Image(filename=root('resources', 'color_circle.png'))
         if mode == 'RGB':
@@ -31,4 +35,9 @@ class WandTestCase(BaseTestCase):
         else:
             raise ValueError('Unknown mode: {}'.format(mode))
         im.resize(size[0], size[1], 'catrom')
+        self._free_resources.append(im)
         return [im]
+
+    def __del__(self):
+        for resource in self._free_resources:
+            resource.destroy()

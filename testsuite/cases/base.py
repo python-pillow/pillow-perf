@@ -31,6 +31,7 @@ class BaseTestCase(object):
         self.mode = mode
         self.repeat = kwargs.pop('repeat', 1)
         self.handle_args(*args, **kwargs)
+        self.data = self.create_test_data(size, mode)
 
     def handle_args(self, *args, **kwargs):
         self.args = args
@@ -40,11 +41,10 @@ class BaseTestCase(object):
         return []
 
     def run(self):
-        test_data = self.create_test_data(self.size, self.mode)
         self.prepare_runner()
         start = time.time()
         for _ in range(self.repeat):
-            self.runner(*test_data)
+            self.runner(*self.data)
         return (time.time() - start) / self.repeat
 
     __call__ = run

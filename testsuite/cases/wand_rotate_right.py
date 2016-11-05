@@ -6,22 +6,11 @@ import os
 
 from wand.image import Image
 
-from .base import BaseTestCase, rpartial, root
+from .base import rpartial, root
+from .wand import WandTestCase
 
-os.environ['MAGICK_THREAD_LIMIT'] = '1'
 
-class RotateRightCase(BaseTestCase):
-    def create_test_data(self, size, mode):
-        im = Image(filename=root('resources', 'color_circle.png'))
-        if mode == 'RGB':
-            im.type = 'truecolor'
-        elif mode == 'L':
-            im.type = 'grayscale'
-        elif mode in ('LA', 'La'):
-            im.type = 'grayscalematte'
-        im.resize(size[0], size[1], 'catrom')
-        return [im]
-
+class RotateRightCase(WandTestCase):
     def handle_args(self, name, transposition):
         self.name = name
         self.transposition = transposition

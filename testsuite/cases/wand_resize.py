@@ -4,25 +4,11 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 from wand.image import Image
 
-from .base import BaseTestCase, rpartial, root
+from .base import rpartial, root
+from .wand import WandTestCase
 
 
-class ResizeCase(BaseTestCase):
-    filter_ids = {
-        'lanczos': 'lzs', 'triangle': 'bil', 'catrom': 'bic', 'hamming': 'hmn',
-    }
-
-    def create_test_data(self, size, mode):
-        im = Image(filename=root('resources', 'color_circle.png'))
-        if mode == 'RGB':
-            im.type = 'truecolor'
-        elif mode == 'L':
-            im.type = 'grayscale'
-        elif mode in ('LA', 'La'):
-            im.type = 'grayscalematte'
-        im.resize(size[0], size[1], 'catrom')
-        return [im]
-
+class ResizeCase(WandTestCase):
     def handle_args(self, dest_size, filter, hpass=True, vpass=True):
         self.dest_size = dest_size
         self.filter = filter

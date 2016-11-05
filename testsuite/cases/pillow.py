@@ -20,8 +20,8 @@ class PillowTestCase(BaseTestCase):
 
     def create_test_data(self, size, mode):
         im = Image.open(root('resources', 'color_circle.png'))
-        im = self.resize(im, size, Image.BICUBIC)
         im = im.convert(mode)
+        im = self.resize(im, size, Image.BICUBIC)
         return [im]
 
     @classmethod

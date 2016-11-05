@@ -13,7 +13,7 @@ class LoadCase(BaseTestCase):
         self.filename = filename
 
     def runner(self):
-        with Image(filename=root('resources', self.filename)) as im:
+        with Image(filename=root('resources', self.filename)):
             pass
 
     def readable_args(self):

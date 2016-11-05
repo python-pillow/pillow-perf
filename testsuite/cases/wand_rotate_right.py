@@ -1,0 +1,44 @@
+# coding: utf-8
+
+from __future__ import print_function, unicode_literals, absolute_import
+
+import os
+
+from wand.image import Image
+
+from .base import BaseTestCase, rpartial, root
+
+os.environ['MAGICK_THREAD_LIMIT'] = '1'
+
+class RotateRightCase(BaseTestCase):
+    def create_test_data(self, size, mode):
+        im = Image(filename=root('resources', 'color_circle.png'))
+        if mode == 'RGB':
+            im.type = 'truecolor'
+        elif mode == 'L':
+            im.type = 'grayscale'
+        elif mode in ('LA', 'La'):
+            im.type = 'grayscalematte'
+        im.resize(size[0], size[1], 'catrom')
+        return [im]
+
+    def handle_args(self, name, transposition):
+        self.name = name
+        self.transposition = transposition
+
+    def runner(self, im):
+        with im.clone() as im:
+            self.transposition(im)
+
+    def readable_args(self):
+        return [self.name]
+
+
+cases = [
+    rpartial(RotateRightCase, 'Flop', Image.flop),
+    rpartial(RotateRightCase, 'Flip', Image.flip),
+    rpartial(RotateRightCase, 'Rotate 90', rpartial(Image.rotate, degree=270.0)),
+    rpartial(RotateRightCase, 'Rotate 180', rpartial(Image.rotate, degree=180.0)),
+    rpartial(RotateRightCase, 'Rotate 270', rpartial(Image.rotate, degree=90.0)),
+    rpartial(RotateRightCase, 'Transpose', Image.transpose),
+]

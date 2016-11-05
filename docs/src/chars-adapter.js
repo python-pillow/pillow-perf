@@ -156,6 +156,7 @@ function chartForCompetition(element, competition) {
         yAxes: [{
           display: false,
           gridLines: {display: false},
+          ticks: {beginAtZero: true},
         }],
         xAxes: [{
           gridLines: {display: false},
@@ -212,11 +213,15 @@ function chartForCompetition(element, competition) {
     var lastGroup = null;
     var c = competitor.color;
 
+    if (typeof c != "string") {
+      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
+    }
+
     chartData.data.datasets.push({
       label: competitor.title,
       name: competitor.name,
       data: data,
-      backgroundColor: "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)",
+      backgroundColor: c,
       borderColor: "rgba(255, 255, 255, .5)",
       borderWidth: 1,
     });

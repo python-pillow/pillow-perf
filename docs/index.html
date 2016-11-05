@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Pillow performance</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
@@ -10,11 +10,10 @@
 </head>
 <body>
 
-    <h1>Pillow performance</h1>
+    <h1>Pillow Performance</h1>
 
     <section>
         <h2 id="resampling">Convolution Resampling</h2>
-
         <p>
             Image resampling is one of the most common processing operations.
             Good and predictable quality can be achieved using
@@ -283,8 +282,27 @@
     </section>
 
     <section>
-        <h2 id="results">Results Browser</h2>
+        <h2 id="benchmarks">Benchmarks</h2>
+        <p>
+            Libraries with Python bindings are tested using
+            <a href="https://github.com/python-pillow/pillow-perf#testsuites">
+                pillow-perf test suites</a>.
+            Skia is tested using
+            <a href="https://gist.github.com/homm/6e048cb0dad135b6db63b924458730e8">
+                test files</a>.
+            All libraries included in any test
+            produce the same (or very similar) results.
+            Add vice versa, if some library
+            does not produce a very similar result,
+            it is not included in the test.
+            For example, OpenCV image resampling with
+            the area filter is not included.
+            This means that results are directly comparable to each other.
+        </p>
+    </section>
 
+    <section>
+        <h2 id="results">Results Browser</h2>
         <div class="selects-grid">
             <div class="selects-grid__inner">
                 <div class="selects-grid__cell">
@@ -304,7 +322,6 @@
                 <ul class="select -large" id="select-competition"></ul>
             </div>
         </div>
-
         <canvas id="chart-container" width="1100" height="400"></canvas>
     </section>
 

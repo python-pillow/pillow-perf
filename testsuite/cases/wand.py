@@ -30,7 +30,7 @@ class WandTestCase(BaseTestCase):
             pass
         elif mode == 'L':
             im.type = 'grayscale'
-        elif mode in ('LA', 'La'):
+        elif mode in 'LA':
             im.type = 'grayscalematte'
         else:
             raise ValueError('Unknown mode: {}'.format(mode))

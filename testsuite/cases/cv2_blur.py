@@ -2,16 +2,21 @@
 
 from __future__ import print_function, unicode_literals, absolute_import
 
+from math import ceil
+
+import cv2
+
 from .base import rpartial
-from .pillow import PillowTestCase
+from .cv2 import Cv2TestCase
 
 
-class BlurCase(PillowTestCase):
+class BlurCase(Cv2TestCase):
     def handle_args(self, radius):
         self.radius = radius
 
     def runner(self, im):
-        self.gaussian_blur(im, self.radius)
+        window = 1 + int(ceil(self.radius * 2.5)) * 2
+        cv2.GaussianBlur(im, (window, window), self.radius)
 
     def readable_args(self):
         return ["{}px".format(self.radius)]

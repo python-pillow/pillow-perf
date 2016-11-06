@@ -13,7 +13,8 @@ class LoadCase(BaseTestCase):
         self.filename = filename
 
     def runner(self):
-        cv2.imread(root('resources', self.filename))
+        cv2.imread(root('resources', self.filename),
+                   flags=cv2.IMREAD_UNCHANGED)
 
     def readable_args(self):
         return ["{} load".format(self.filetype)]

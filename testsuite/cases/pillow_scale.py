@@ -5,10 +5,26 @@ from __future__ import print_function, unicode_literals, absolute_import
 from PIL import Image
 
 from .base import rpartial
-from .pillow_resize import ResizeCase
+from .pillow import PillowTestCase
 
 
-class ScaleCase(ResizeCase):
+class ScaleCase(PillowTestCase):
+    def handle_args(self, dest_size, filter, hpass=True, vpass=True):
+        self.dest_size = dest_size
+        self.filter = filter
+        self.hpass = hpass
+        self.vpass = vpass
+
+    def runner(self, im):
+        self.update_dest_size(im)
+        return self.resize(im, self.calc_dest_size, self.filter)
+
+    def readable_args(self):
+        return [
+            "x".join(map(str, self.calc_dest_size)),
+            self.filter_ids.get(self.filter, self.filter),
+        ]
+
     def update_dest_size(self, im):
         self.calc_dest_size = [
             (int(round(self.dest_size * im.size[0]))

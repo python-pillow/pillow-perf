@@ -8,7 +8,7 @@ from importlib import import_module
 def collect_testsuites():
     return [
         "load", "convert", "composition", "rotate_right",
-        "resize", "scale", "blur",
+        "scale", "blur",
 
         "wand_load", "wand_rotate_right", "wand_scale",
 

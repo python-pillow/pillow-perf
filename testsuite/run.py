@@ -60,7 +60,7 @@ if __name__ == '__main__':
     pixels = args.size[0] * args.size[1]
 
     for testsuite in args.testsuite:
-        test_cases = load_cases(testsuite)
+        test_cases = load_cases(testsuite, unknown_args)
         results = []
 
         print("\n###", testsuite)

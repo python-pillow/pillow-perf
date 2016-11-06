@@ -18,4 +18,9 @@ def collect_testsuites():
 
 
 def load_cases(testsuite, args):
-    return import_module('.' + testsuite, 'cases').cases
+    try:
+        # Try to load Pillow test first
+        module = import_module('.pillow_' + testsuite, 'cases')
+    except ImportError:
+        module = import_module('.' + testsuite, 'cases')
+    return module.cases

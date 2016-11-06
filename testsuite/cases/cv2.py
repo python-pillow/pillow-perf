@@ -7,6 +7,13 @@ import cv2
 from .base import BaseTestCase, root
 
 
+try:
+    cv2.setNumThreads(1)
+except AttributeError:
+    print('!!! You are using OpenCV which does not allow to set '
+          'the number of threads')
+
+
 class Cv2TestCase(BaseTestCase):
     filter_ids = {
         cv2.INTER_AREA: 'sup',

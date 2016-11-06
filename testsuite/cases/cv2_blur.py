@@ -15,7 +15,7 @@ class BlurCase(Cv2TestCase):
         self.radius = radius
 
     def runner(self, im):
-        window = int(ceil(self.radius * 2.5)) * 2 + 1
+        window = 1 + int(ceil(self.radius * 2.5)) * 2
         cv2.GaussianBlur(im, (window, window), self.radius)
 
     def readable_args(self):

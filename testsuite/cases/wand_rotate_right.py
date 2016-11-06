@@ -9,13 +9,13 @@ from .wand import WandTestCase
 
 
 class RotateRightCase(WandTestCase):
-    def handle_args(self, name, transposition):
+    def handle_args(self, name, operation):
         self.name = name
-        self.transposition = transposition
+        self.operation = operation
 
     def runner(self, im):
         with im.clone() as im:
-            self.transposition(im)
+            self.operation(im)
 
     def readable_args(self):
         return [self.name]

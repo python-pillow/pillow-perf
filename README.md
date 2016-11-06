@@ -19,11 +19,18 @@ $ ./run.py [testsuite]
 
 `[testsuite]` is one of available testsuites:
 
+* load
 * convert
+* rotate_right
 * scale
 * blur
 * composition
+* wand_load
+* wand_rotate_right
 * wand_scale
+* cv2_load
+* cv2_rotate_right
+* cv2_blur
 
 The list can grow, please refer to:
 

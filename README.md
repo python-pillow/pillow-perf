@@ -1,4 +1,4 @@
-# Testsuites
+# Test Suites
 
 [![Build Status](https://travis-ci.org/python-pillow/pillow-perf.svg?branch=master)](https://travis-ci.org/python-pillow/pillow-perf)
 
@@ -14,10 +14,10 @@ Performance tests divided into suites.
 ```bash
 $ cd testsuite
 $ pip install -r ./requirements.txt
-$ ./run.py [testsuite]
+$ ./run.py test_suite [test_suite ...]
 ```
 
-`[testsuite]` is one of available testsuites:
+`test_suite` is one of available test suites:
 
 * load
 * convert
@@ -53,7 +53,7 @@ while others (`convert`, `composition`) work regardless of current mode.
 
 # Automatic test
 
-Automatic test launches testsuites against relevant Pillow versions
+Automatic test launches test suites against relevant Pillow versions
 including SSE4 and AVX2.
 Currently it works only on Linux.
 
@@ -70,7 +70,7 @@ Currently it works only on Linux.
 $ cd auto
 $ ./run.sh                # Run all tests
 $ ./run.sh no             # Skip AVX2 tests
-$ ./run.sh - -s 512x512   # Pass extra arguments to testsuite
+$ ./run.sh - -s 512x512   # Pass extra arguments to test suite
 $ ./run.sh no -s 512x512  # Pass extra arguments and skip AVX2 tests
 $ CC="ccache cc" ./run.sh # Speed up subsequent builds using CC cache
 ```

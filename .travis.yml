@@ -18,7 +18,6 @@ script:
   - ./run.py --help
   - ./run.py -s 512x512 -n 1  load convert scale blur composition rotate_right
   - ./run.py -s 512x512 -n 1  wand_load wand_scale wand_rotate_right
-  - ./run.py -s 512x512 -n 1  cv2_load cv2_scale cv2_blur cv2_rotate_right
 
 after_success:
   - pwd

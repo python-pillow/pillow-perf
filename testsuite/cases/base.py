@@ -54,3 +54,27 @@ class BaseTestCase(object):
 
     def readable_args(self):
         return list(map(str, self.args))
+
+
+class BaseScaleCase(object):
+    def create_test_data(self, size, mode):
+        self.update_dest_size(size[0], size[1])
+        return super(BaseScaleCase, self).create_test_data(size, mode)
+
+    def handle_args(self, scale, filter, hpass=True, vpass=True):
+        self.scale = scale
+        self.filter = filter
+        self.hpass = hpass
+        self.vpass = vpass
+
+    def readable_args(self):
+        return [
+            "x".join(map(str, self.dest_size)),
+            self.filter_ids.get(self.filter, self.filter),
+        ]
+
+    def update_dest_size(self, width, height):
+        self.dest_size = (
+            int(round(self.scale * width)) if self.hpass else width,
+            int(round(self.scale * height)) if self.vpass else height,
+        )

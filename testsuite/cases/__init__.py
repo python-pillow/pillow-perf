@@ -10,8 +10,7 @@ def collect_testsuites():
         "load", "convert", "composition", "rotate_right",
         "resize", "scale", "blur",
 
-        "wand_load", "wand_rotate_right",
-        "wand_resize", "wand_scale",
+        "wand_load", "wand_rotate_right", "wand_scale",
 
         "cv2_load", "cv2_rotate_right", "cv2_blur",
     ]

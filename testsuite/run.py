@@ -6,7 +6,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 import time
 import sys
 
-from cases import collect_testsuites, load_cases
+from cases import collect_test_suites, load_cases
 
 
 def run_test(case, times, stdout=False):
@@ -38,11 +38,11 @@ def pixel_size(arg):
     raise ValueError('No separator found')
 
 
-def argument_parser(testsuites):
+def argument_parser(test_suites):
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('testsuite', nargs='+',
-                        choices=testsuites, metavar='testsuite',
+    parser.add_argument('test_suites', nargs='+',
+                        choices=test_suites, metavar='test_suite',
                         help='{%(choices)s}')
     parser.add_argument('--size', '-s', type=pixel_size, default=[2560, 1600])
     parser.add_argument('--mode', '-m', default="RGB",
@@ -55,15 +55,15 @@ def argument_parser(testsuites):
 
 
 if __name__ == '__main__':
-    testsuites = collect_testsuites()
-    args, unknown_args = argument_parser(testsuites).parse_known_args()
+    test_suites = collect_test_suites()
+    args, unknown_args = argument_parser(test_suites).parse_known_args()
     pixels = args.size[0] * args.size[1]
 
-    for testsuite in args.testsuite:
-        test_cases = load_cases(testsuite, unknown_args)
+    for test_suite in args.test_suites:
+        test_cases = load_cases(test_suite, unknown_args)
         results = []
 
-        print("\n###", testsuite)
+        print("\n###", test_suite)
         for case in test_cases:
             test = case(args.size, args.mode)
             stats = run_test(test, args.runs, args.progress)

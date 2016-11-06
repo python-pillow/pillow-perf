@@ -13,7 +13,7 @@ def collect_testsuites():
         "wand_load", "wand_rotate_right",
         "wand_resize", "wand_scale",
 
-        "cv2_load",
+        "cv2_load", "cv2_blur",
     ]
 
 

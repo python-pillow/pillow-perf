@@ -2,4 +2,4 @@ pip==8.1.2
 setuptools==28.6.0
 
 Wand==0.4.3
-opencv-python==3.1.0.3
+opencv-python

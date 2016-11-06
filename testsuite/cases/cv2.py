@@ -8,6 +8,14 @@ from .base import BaseTestCase, root
 
 
 class Cv2TestCase(BaseTestCase):
+    filter_ids = {
+        cv2.INTER_AREA: 'sup',
+        cv2.INTER_NEAREST: 'ner',
+        cv2.INTER_LINEAR: 'bil',
+        cv2.INTER_CUBIC: 'bic',
+        cv2.INTER_LANCZOS4: 'lzs4',
+    }
+
     def create_test_data(self, size, mode):
         im = cv2.imread(root('resources', 'color_circle.png'),
                         flags=cv2.IMREAD_UNCHANGED)

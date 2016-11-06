@@ -17,7 +17,7 @@ class ScaleCase(PillowTestCase):
 
     def runner(self, im):
         self.update_dest_size(im)
-        return self.resize(im, self.calc_dest_size, self.filter)
+        self.resize(im, self.calc_dest_size, self.filter)
 
     def readable_args(self):
         return [

@@ -15,7 +15,7 @@ class CompositionCase(PillowTestCase):
         return [im, im.copy()]
 
     def runner(self, first, second):
-        return Image.alpha_composite(first, second)
+        Image.alpha_composite(first, second)
 
     def readable_args(self):
         return ["Composition"]

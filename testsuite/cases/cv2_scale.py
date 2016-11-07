@@ -14,7 +14,7 @@ class ScaleCase(BaseScaleCase, Cv2TestCase):
 
 
 cases = [
-    rpartial(ScaleCase, scale, cv2.INTER_AREA, hpass=hpass, vpass=vpass)
+    rpartial(ScaleCase, scale, flt, hpass=hpass, vpass=vpass)
     for hpass, vpass in [
         # (True, False),
         # (False, True),
@@ -23,13 +23,18 @@ cases = [
         0.01,
         0.125,
         0.8,
+    ] for flt in [
+        # cv2.INTER_NEAREST,
+        cv2.INTER_AREA,
     ]
 ] + [
-    rpartial(ScaleCase, 2.14, flt, hpass=hpass, vpass=vpass)
+    rpartial(ScaleCase, scale, flt, hpass=hpass, vpass=vpass)
     for hpass, vpass in [
         # (True, False),
         # (False, True),
         (True, True),
+    ] for scale in [
+        2.14,
     ] for flt in [
         # cv2.INTER_NEAREST,
         cv2.INTER_LINEAR,

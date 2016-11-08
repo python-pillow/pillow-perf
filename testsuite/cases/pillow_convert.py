@@ -14,12 +14,10 @@ class ConvertCase(PillowTestCase):
         self.mode_to = mode_to
 
     def create_test_data(self, size, mode):
-        im = Image.open(root('resources', 'color_circle.png'))
-        im = self.resize(im, size, Image.BICUBIC)
-        return [im.convert(self.mode_from)]
+        return super(ConvertCase, self).create_test_data(size, self.mode_from)
 
     def runner(self, im):
-        return im.convert(self.mode_to)
+        im.convert(self.mode_to)
 
     def readable_args(self):
         return ["from {} to {}".format(self.mode_from, self.mode_to)]
@@ -28,4 +26,6 @@ class ConvertCase(PillowTestCase):
 cases = [
     rpartial(ConvertCase, 'RGBa', 'RGBA'),
     rpartial(ConvertCase, 'RGBA', 'RGBa'),
+    rpartial(ConvertCase, 'RGBA', 'LA'),
+    rpartial(ConvertCase, 'RGB', 'L'),
 ]

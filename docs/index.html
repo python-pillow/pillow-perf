@@ -229,6 +229,29 @@
     </section>
 
     <section>
+        <h2 id="transposition">Transposition</h2>
+        <p>
+            This is a group of operations
+            which includes such operaions as
+            rotating by right angle, mirorring and
+            <a href="https://en.wikipedia.org/wiki/Transpose">
+                transposition itself</a>.
+            It differs from regular rotation because
+            this non-destructive operation
+            (ie when pixel values are not modified)
+            and can be performed very fast.
+        </p>
+        <div class="chart">
+            <canvas id="chart-transposition" width="1100" height="400"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-transposition"), 'transposition-4k-rgb'
+                );
+            </script>
+        </div>
+    </section>
+
+    <section>
         <h2 id="libraries">Libraries</h2>
 
         <dl class="libraries">

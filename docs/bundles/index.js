@@ -12587,6 +12587,16 @@
 				],
 				"competitors": [
 					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"results": [
+							[
+								"Composition",
+								0.103698015213
+							]
+						]
+					},
+					{
 						"name": "pillow-3.4",
 						"title": "Pillow 3.4.2",
 						"results": [
@@ -12613,6 +12623,149 @@
 							[
 								"Composition",
 								0.0102
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "transposition-4k-rgb",
+				"topic": "transposition",
+				"title": "Transpose 2560×1600 RGBA image",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "operation",
+						"title": "Operation"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "opencv 2.4.8",
+						"title": "OpenCV 2.4.8",
+						"results": [
+							[
+								"Flop",
+								0.00900101661682
+							],
+							[
+								"Flip",
+								0.00327491760254
+							],
+							[
+								"Rotate 90",
+								0.0296530723572
+							],
+							[
+								"Rotate 180",
+								0.0150630474091
+							],
+							[
+								"Rotate 270",
+								0.0356049537659
+							],
+							[
+								"Transpose",
+								0.0256328582764
+							]
+						]
+					},
+					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"results": [
+							[
+								"Flop",
+								0.00670599937439
+							],
+							[
+								"Flip",
+								0.00673222541809
+							],
+							[
+								"Rotate 90",
+								0.0340640544891
+							],
+							[
+								"Rotate 180",
+								0.0210030078888
+							],
+							[
+								"Rotate 270",
+								0.0337069034576
+							],
+							[
+								"Transpose",
+								0.0786318778992
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"title": "PIL & Pillow 2.0 to 2.6",
+						"results": [
+							[
+								"Flop",
+								0.00933408737183
+							],
+							[
+								"Flip",
+								0.00511789321899
+							],
+							[
+								"Rotate 90",
+								0.0884799957275
+							],
+							[
+								"Rotate 180",
+								0.00890707969666
+							],
+							[
+								"Rotate 270",
+								0.0911710262299
+							],
+							[
+								"Transpose",
+								null
+							]
+						]
+					},
+					{
+						"name": "pillow-2.7",
+						"title": "Pillow 2.7",
+						"results": [
+							[
+								"Flop",
+								0.00928902626038
+							],
+							[
+								"Flip",
+								0.00517797470093
+							],
+							[
+								"Rotate 90",
+								0.0181818008423
+							],
+							[
+								"Rotate 180",
+								0.00899291038513
+							],
+							[
+								"Rotate 270",
+								0.0161418914795
+							],
+							[
+								"Transpose",
+								0.0160100460052
 							]
 						]
 					}

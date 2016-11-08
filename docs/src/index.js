@@ -9,7 +9,7 @@ var chart = null;
 
 
 function partialCompetition(element, competitionName, presetName) {
-  var competitions = data[0].competitions;
+  var competitions = data.systems[0].competitions;
   var competitors = [];
   var i, competition, preset;
 
@@ -52,7 +52,8 @@ function partialCompetition(element, competitionName, presetName) {
 
   return adapter.chartForCompetition(
     element,
-    competition
+    competition,
+    data.colors
   );
 }
 
@@ -136,7 +137,8 @@ function populateCompetitions(competitions) {
 
     chart = adapter.chartForCompetition(
       document.getElementById("chart-container"),
-      competition
+      competition,
+      data.colors
     );
 
     selectItem(n);
@@ -192,7 +194,7 @@ function populateSystems(systems) {
 
 document.addEventListener("DOMContentLoaded", function(){
 
-  var applySystem = populateSystems(data);
+  var applySystem = populateSystems(data.systems);
   applySystem(0);
   
 });

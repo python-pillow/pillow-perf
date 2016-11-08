@@ -90,4 +90,4 @@ class BaseConvertCase(object):
             size, self.mode_from)
 
     def readable_args(self):
-        return ["from {} to {}".format(self.mode_from, self.mode_to)]
+        return ["{} to {}".format(self.mode_from, self.mode_to)]

@@ -17,7 +17,7 @@ script:
   - cd testsuite
   - ./run.py --help
   - ./run.py -s 512x512 -n 1  load convert scale blur composition rotate_right
-  - ./run.py -s 512x512 -n 1  wand_load wand_scale wand_rotate_right
+  - ./run.py -s 512x512 -n 1  wand_load wand_convert wand_composition wand_rotate_right wand_scale
 
 after_success:
   - pwd

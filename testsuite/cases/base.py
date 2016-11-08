@@ -78,3 +78,16 @@ class BaseScaleCase(object):
             int(round(self.scale * width)) if self.hpass else width,
             int(round(self.scale * height)) if self.vpass else height,
         )
+
+
+class BaseConvertCase(object):
+    def handle_args(self, mode_from, mode_to):
+        self.mode_from = mode_from
+        self.mode_to = mode_to
+
+    def create_test_data(self, size, mode):
+        return super(BaseConvertCase, self).create_test_data(
+            size, self.mode_from)
+
+    def readable_args(self):
+        return ["from {} to {}".format(self.mode_from, self.mode_to)]

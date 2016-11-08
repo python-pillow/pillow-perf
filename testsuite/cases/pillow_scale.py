@@ -4,27 +4,22 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 from PIL import Image
 
-from .base import rpartial
-from .resize import ResizeCase
+from .base import rpartial, BaseScaleCase
+from .pillow import PillowTestCase
 
 
-class ScaleCase(ResizeCase):
-    def update_dest_size(self, im):
-        self.calc_dest_size = [
-            (int(round(self.dest_size * im.size[0]))
-                if self.hpass else im.size[0]),
-            (int(round(self.dest_size * im.size[1]))
-                if self.vpass else im.size[1]),
-        ]
+class ScaleCase(BaseScaleCase, PillowTestCase):
+    def runner(self, im):
+        self.resize(im, self.dest_size, self.filter)
 
 
 cases = [
-    rpartial(ScaleCase, size, flt, hpass=hpass, vpass=vpass)
+    rpartial(ScaleCase, scale, flt, hpass=hpass, vpass=vpass)
     for hpass, vpass in [
         # (True, False),
         # (False, True),
         (True, True),
-    ] for size in [
+    ] for scale in [
         0.01,
         0.125,
         0.8,

@@ -11569,7 +11569,7 @@
 						"topic": "resize-27",
 						"title": "Pillow 2.7 optimizations",
 						"set": [
-							"imagemagick-6.8.9",
+							"imagemagick-6.7",
 							"pillow-2.0",
 							"pillow-2.7"
 						]
@@ -11659,8 +11659,8 @@
 				],
 				"competitors": [
 					{
-						"name": "imagemagick-6.8.9",
-						"title": "ImageMagick 6.8.9-9",
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
 						"color": [
 							230,
 							100,
@@ -11802,7 +11802,7 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6.2",
+						"title": "PIL & Pillow 2.0 to 2.6",
 						"color": [
 							10,
 							90,
@@ -12534,8 +12534,8 @@
 				],
 				"competitors": [
 					{
-						"name": "imagemagick-6.8.9",
-						"title": "ImageMagick 6.8.9-9",
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
 						"color": [
 							230,
 							100,
@@ -12629,7 +12629,7 @@
 			},
 			{
 				"name": "composition-4k-rgb",
-				"topic": "blur",
+				"topic": "composition",
 				"title": "Composition two 2560×1600 RGBA images",
 				"source": {
 					"size": [
@@ -12648,6 +12648,21 @@
 					}
 				],
 				"competitors": [
+					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"color": [
+							230,
+							100,
+							70
+						],
+						"results": [
+							[
+								"Composition",
+								0.103698015213
+							]
+						]
+					},
 					{
 						"name": "pillow-3.4",
 						"title": "Pillow 3.4.2",

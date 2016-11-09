@@ -169,3 +169,12 @@ dl.libraries {
         display: block;
         clear: left;
     }
+
+
+.under-construction {
+    border: 2px solid hsl(34, 90%, 75%);
+    background: hsl(34, 90%, 98%);
+    padding: 1em;
+    max-width: 690px;
+    box-sizing: border-box;
+}

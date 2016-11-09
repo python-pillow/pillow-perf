@@ -444,7 +444,7 @@
         {
             "name": "transposition-4k-rgb",
             "topic": "transposition",
-            "title": "Transpose 2560×1600 RGBA image",
+            "title": "Transpose 2560×1600 RGB image",
             "source": {
                 "size": [2560, 1600]
             },
@@ -505,6 +505,76 @@
                         ["Rotate 180", 0.00899291038513],
                         ["Rotate 270", 0.0161418914795],
                         ["Transpose", 0.0160100460052]
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "conversion-4k-rgb",
+            "topic": "conversion",
+            "title": "Color conversion 2560×1600 image",
+            "source": {
+                "size": [2560, 1600]
+            },
+            "columns": [
+                {
+                    "name": "modes",
+                    "title": "Modes"
+                },
+                {
+                    "name": "result",
+                    "units": "s"
+                }
+            ],
+            "competitors": [
+                {
+                    "name": "imagemagick-6.7",
+                    "title": "ImageMagick 6.7.7-10",
+                    "results": [
+                        ["RGB to L", 0.734226942062],
+                        ["RGBA to LA", 0.663765192032],
+                        ["RGBa to RGBA", null],
+                        ["RGBA to RGBa", null]
+                    ]
+                },
+                {
+                    "name": "pillow-2.0",
+                    "title": "PIL & Pillow 2.0 to 2.6",
+                    "results": [
+                        ["RGB to L", 0.00903606414795],
+                        ["RGBA to LA", 0.0113651752472],
+                        ["RGBa to RGBA", 0.054703950882],
+                        ["RGBA to RGBa", 0.0145680904388]
+                    ]
+                },
+                {
+                    "name": "pillow-3.3",
+                    "title": "Pillow 3.3.3",
+                    "results": [
+                        ["RGB to L", 0.00840902328491],
+                        ["RGBA to LA", 0.011461019516],
+                        ["RGBa to RGBA", 0.0341680049896],
+                        ["RGBA to RGBa", 0.0150349140167]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-3.3-sse4",
+                    "title": "Pillow SIMD 3.3.0 SSE4",
+                    "results": [
+                        ["RGB to L", 0.00853490829468],
+                        ["RGBA to LA", 0.0114579200745],
+                        ["RGBa to RGBA", 0.0352101325989],
+                        ["RGBA to RGBa", 0.00605893135071]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-3.3-avx2",
+                    "title": "Pillow SIMD 3.3.0 AVX2",
+                    "results": [
+                        ["RGB to L", 0.00853490829468],
+                        ["RGBA to LA", 0.0114579200745],
+                        ["RGBa to RGBA", 0.0179569721222],
+                        ["RGBA to RGBa", 0.00544810295105]
                     ]
                 }
             ]

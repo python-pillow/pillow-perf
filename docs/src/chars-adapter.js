@@ -138,15 +138,20 @@ function chartForCompetition(element, competition, colors) {
                 continue;
               }
               first = data.datasets[i].data[item.index];
+              if (first === null) {
+                continue;
+              }
               break;
             }
             
             var l = data.datasets[item.datasetIndex].label || '';
             var label = " " + rightpad(l, 28);
             var units = chart.options.tooltips.units;
-            label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
-            if (item.yLabel != first) {
-              label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+            if (item.yLabel) {
+              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+              if (item.yLabel != first) {
+                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+              }
             }
             return label;
           }

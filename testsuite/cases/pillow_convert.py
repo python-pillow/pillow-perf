@@ -12,8 +12,8 @@ class ConvertCase(BaseConvertCase, PillowTestCase):
 
 
 cases = [
+    rpartial(ConvertCase, 'RGB', 'L'),
+    rpartial(ConvertCase, 'RGBA', 'LA'),
     rpartial(ConvertCase, 'RGBa', 'RGBA'),
     rpartial(ConvertCase, 'RGBA', 'RGBa'),
-    rpartial(ConvertCase, 'RGBA', 'LA'),
-    rpartial(ConvertCase, 'RGB', 'L'),
 ]

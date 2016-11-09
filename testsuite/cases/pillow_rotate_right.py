@@ -26,5 +26,7 @@ cases = [
     rpartial(RotateRightCase, 'Rotate 90', Image.ROTATE_90),
     rpartial(RotateRightCase, 'Rotate 180', Image.ROTATE_180),
     rpartial(RotateRightCase, 'Rotate 270', Image.ROTATE_270),
-    rpartial(RotateRightCase, 'Transpose', Image.TRANSPOSE),
 ]
+
+if hasattr(Image, 'TRANSPOSE'):
+    cases.append(rpartial(RotateRightCase, 'Transpose', Image.TRANSPOSE))

@@ -18,6 +18,6 @@ class ConvertCase(BaseConvertCase, WandTestCase):
 
 
 cases = [
-    rpartial(ConvertCase, 'RGBA', 'LA'),
     rpartial(ConvertCase, 'RGB', 'L'),
+    rpartial(ConvertCase, 'RGBA', 'LA'),
 ]

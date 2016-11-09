@@ -195,7 +195,7 @@
             This means that we need to compute every pixel of the source image
             for every pixel in the destination image.
             In practice, Gaussian is rapidly decreasing function
-            and window size more than 3*sigma has no meaning.
+            and window size more than 3 * sigma has no meaning.
         </p>
         <p>
             As a result, Gaussian blur performance should depends
@@ -232,7 +232,9 @@
         <h2 id="transposition">Transposition</h2>
         <p>
             This is a group of operations
-            which includes such operaions as
+            which most relevant when
+            an image has orientation flag stored in EXIF.
+            The group includes such operaions as
             rotating by right angles, mirorring and
             <a href="https://en.wikipedia.org/wiki/Transpose">
                 transposition</a> itself.
@@ -241,8 +243,18 @@
             (ie pixel values are not modified)
             and can be performed very fast.
         </p>
+        <p>
+            Mirorring and rotating by 180° are reasonable fast
+            in most implementations.
+            There was the issue in Pillow
+            with rotating by 90° and 270°
+            because that operations can consume
+            CPU cache highly inefficient.
+            In Pillow 2.7 the cache-aware algorithm was implemented.
+            Also, transposition was added.
+        </p>
         <div class="chart">
-            <canvas id="chart-transposition" width="1100" height="400"></canvas>
+            <canvas id="chart-transposition" width="1100" height="350"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-transposition"), 'transposition-4k-rgb'
@@ -253,8 +265,20 @@
 
     <section>
         <h2 id="conversion">Color Conversion</h2>
+        <ul>
+            <li><code>RGB</code> — General red, green, blue values</li>
+            <li><code>RGBA</code> — RGB with alpha channel</li>
+            <li><code>RGBa</code> — RGB values multiplied on alpha channel with alpha channel</li>
+            <li><code>L</code> — luminance values (grayscale)</li>
+            <li><code>LA</code> — luminance values with alpha channel</li>
+        </ul>
+        <p>
+            Convertion from <code>RGBA</code> to <code>RGBa</code>
+            can be used to normalize pixel values
+            before resizing and rotating by non-right degrees.
+        </p>
         <p class="chart">
-            <canvas id="chart-conversion" width="1100" height="400"></canvas>
+            <canvas id="chart-conversion" width="1100" height="350"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-conversion"), 'conversion-4k-rgb'

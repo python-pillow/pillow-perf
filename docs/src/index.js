@@ -123,6 +123,7 @@ function populatePresets(chart, presets) {
 function populateCompetitions(competitions) {
   var select = document.getElementById("select-competition");
   var parent = select.parentNode;
+  var info = parent.getElementsByClassName('info')[0];
   
   var selectItem = createSelect(select, competitions, function(i, element) {
     element.addEventListener('click', applyCompetition.bind(null, i));
@@ -140,6 +141,13 @@ function populateCompetitions(competitions) {
       competition,
       data.colors
     );
+
+    var innerHTML = "";
+    if (competition.topic) {
+      innerHTML = '<a class="pseudo" href="#' +
+        competition.topic + '">More info about operation</a>';
+    }
+    info.innerHTML = innerHTML;
 
     selectItem(n);
 
@@ -172,13 +180,13 @@ function populateSystems(systems) {
   });
 
   function applySystem(n) {
-    var innerHTML = "";
     var system = systems[n];
     var applyCompetition = populateCompetitions(system.competitions);
     applyCompetition(0);
     
     selectItem(n);
 
+    var innerHTML = "";
     if (system.OS) {
       innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
     }

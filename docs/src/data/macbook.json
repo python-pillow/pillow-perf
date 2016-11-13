@@ -6,7 +6,7 @@
     "competitions": [
         {
             "name": "resample-4k-rgb",
-            "topic": "resample",
+            "topic": "resampling",
             "title": "Resize 2560x1600 RGB image",
             "source": {
                 "size": [2560, 1600]

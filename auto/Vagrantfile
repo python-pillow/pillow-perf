@@ -1,9 +1,12 @@
 Vagrant.configure(2) do |config|
-    config.vm.box = "ubuntu/trusty64"
+    config.vm.box = "bento/ubuntu-16.04"
 
     config.vm.synced_folder "..", "/vagrant/pillow-perf"
+    config.vm.provider "virtualbox" do |v|
+        v.memory = 512
+        v.cpus = 2
+    end
 
-    config.ssh.forward_agent = true
 
     config.vm.provision "swap", type: "shell",
     inline: <<-SHELL
@@ -22,13 +25,14 @@ Vagrant.configure(2) do |config|
         fi
     SHELL
 
+
     config.vm.provision "preinstall", type: "shell", path: "./install_ubuntu.sh"
+
 
     config.vm.provision "run", type: "shell", privileged: false, inline: <<-SHELL
         rsync -r /vagrant/pillow-perf ./ \
             --exclude=pillow-perf/docs/node_modules \
             --exclude=pillow-perf/.git
-        cd ./pillow-perf/auto
-        CC="ccache cc" ./run.sh - -s 512x512 -n 3 --json
+        CC="ccache cc" ./pillow-perf/auto/run.sh - --json
     SHELL
 end

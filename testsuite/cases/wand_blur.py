@@ -12,7 +12,7 @@ class BlurCase(WandTestCase):
 
     def runner(self, im):
         with im.clone() as im:
-            im.blur(2.5 * self.radius, self.radius)
+            self.blur(im, 2.5 * self.radius, self.radius)
 
     def readable_args(self):
         return ["{}px".format(self.radius)]

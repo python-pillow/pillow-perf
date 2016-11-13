@@ -6,7 +6,7 @@
     "competitions": [
         {
             "name": "resample-4k-rgb",
-            "topic": "resample",
+            "topic": "resampling",
             "title": "Resize 2560×1600 RGB image",
             "source": {
                 "size": [2560, 1600]
@@ -32,6 +32,7 @@
             ],
             "presets": [
                 {
+                    "name": "pillow-progress",
                     "title": "Pillow progress",
                     "set": [
                         "pillow-2.7",
@@ -40,6 +41,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.2",
                     "title": "Pillow 3.2 versions",
                     "set": [
                         "pillow-2.7",
@@ -47,6 +49,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.3",
                     "title": "Pillow 3.3 versions",
                     "set": [
                         "pillow-3.3",
@@ -54,6 +57,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.4",
                     "title": "Pillow 3.4 versions",
                     "set": [
                         "pillow-3.4",
@@ -62,10 +66,21 @@
                     "default": true
                 },
                 {
+                    "name": "pillow-sse4",
                     "title": "Pillow SIMD SSE4 progress",
                     "set": [
                         "pillow-simd-3.2-sse4",
                         "pillow-simd-3.3-sse4",
+                        "pillow-simd-3.4-sse4"
+                    ]
+                },
+                {
+                    "name": "pillow-milestones",
+                    "title": "Pillow milestones",
+                    "set": [
+                        "pillow-2.0",
+                        "pillow-2.7",
+                        "pillow-3.4",
                         "pillow-simd-3.4-sse4"
                     ]
                 }

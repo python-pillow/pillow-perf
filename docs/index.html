@@ -127,7 +127,7 @@
             such as loops rearrangement,
             and cache-aware transposition.
         </p>
-        <div class="chart">
+        <p class="chart">
             <canvas id="chart-resample-scalar" width="1100" height="400"></canvas>
             <script type="text/javascript">
                 partialCompetition(
@@ -140,7 +140,7 @@
                     ]
                 );
             </script>
-        </div>
+        </p>
         <p>
             Charts show median time (lower is better)
             required for resizing source 2560x1600 RGB image
@@ -166,7 +166,7 @@
             In sum, Pillow SIMD resampling performance
             <b>20 — 40 times</b> higher than original PIL.
         </p>
-        <div class="chart">
+        <p class="chart">
             <canvas id="chart-resample-simd" width="1100" height="400"></canvas>
             <script type="text/javascript">
                 partialCompetition(
@@ -179,7 +179,7 @@
                     ]
                 );
             </script>
-        </div>
+        </p>
     </section>
 
     <section>
@@ -258,14 +258,14 @@
             In Pillow 2.7 the cache-aware algorithm was implemented.
             Also, transposition was added.
         </p>
-        <div class="chart">
+        <p class="chart">
             <canvas id="chart-transposition" width="1100" height="350"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-transposition"), 'transposition-4k-rgb'
                 );
             </script>
-        </div>
+        </p>
     </section>
 
     <section>
@@ -273,20 +273,40 @@
         <ul>
             <li><code>RGB</code> — General red, green, blue values</li>
             <li><code>RGBA</code> — RGB with alpha channel</li>
-            <li><code>RGBa</code> — RGB values multiplied on alpha channel with alpha channel</li>
-            <li><code>L</code> — luminance values (grayscale)</li>
+            <li><code>RGBa</code> — RGB values multiplied on alpha channel</li>
+            <li><code>L</code> — luminance values (grayscale) with 1 byte per pixel</li>
             <li><code>LA</code> — luminance values with alpha channel</li>
         </ul>
         <p>
             Convertion from <code>RGBA</code> to <code>RGBa</code>
             can be used to normalize pixel values
-            before resizing and rotating by non-right degrees.
+            before resizing and other transformations.
         </p>
         <p class="chart">
             <canvas id="chart-conversion" width="1100" height="350"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-conversion"), 'conversion-4k-rgb'
+                );
+            </script>
+        </div>
+    </section>
+
+    <section>
+        <h2 id="compositing">Compositing</h2>
+        <p>
+            <a href="https://en.wikipedia.org/wiki/Alpha_compositing">
+                Alpha compositing</a>
+            is used for overlaying two semitransparent images.
+            In opposite to alpha blending,
+            alpha compositing mixes color and alpha channels
+            with different coefficients.
+        </p>
+        <p>
+            <canvas id="chart-composition" width="1100" height="350"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-composition"), 'composition-4k-rgb'
                 );
             </script>
         </div>
@@ -348,20 +368,50 @@
     <section>
         <h2 id="benchmarks">Benchmarks</h2>
         <p>
+            The main idea of the tests is that
+            they perform <b>equivalent opertions</b>
+            using the <b>same hardware</b>.
+            And every word does matter.
+        </p>
+        <p>
+            Equivalent operations mean that
+            initial values and results of each operation
+            are as close as possible.
+            If any library does not produce a comparable result,
+            it is not included in the test.
+            This allows directly compare execution time
+            across different libraries.
+        </p>
+        <p>
+            Some tested libraries can execute one operation
+            using several threads.
+            Depending on your needs,
+            this may or may not be an advantage.
+            In general, one of the following statements is true:
+            you have many images and
+            you can run processing in parallel
+            on more high level,
+            and this could be more effective
+            because of lack of data dependencies.
+            Or you only have the an image
+            and any operation already
+            will be reasonable fast 
+            and you don't get much profit
+            from parallel execution.
+            That is why all tests
+            in this benchmarks
+            are done in one thread,
+            even if a library supports multithreading.
+        </p>
+        <p>
             Libraries with Python bindings are tested using
             <a href="https://github.com/python-pillow/pillow-perf#testsuites">
                 pillow-perf test suites</a>.
             Skia is tested using
             <a href="https://gist.github.com/homm/6e048cb0dad135b6db63b924458730e8">
                 test files</a>.
-            All libraries included in any test
-            produce the same (or very similar) results.
-            Add vice versa, if some library
-            does not produce a very similar result,
-            it is not included in the test.
-            For example, OpenCV image resampling with
-            the area filter is not included.
-            This means that results are directly comparable to each other.
+            Each test is run 21 times
+            and mean execution time is taken.
         </p>
     </section>
 
@@ -376,14 +426,14 @@
                 </div>
 
                 <div class="selects-grid__cell">
-                    <h4>Chart set</h4>
-                    <ul class="select" id="select-preset"></ul>
+                    <h4>Competition</h4>
+                    <ul class="select -large" id="select-competition"></ul>
+                    <p class="info"></p>
                 </div>
             </div>
-
             <div class="selects-grid__cell">
-                <h4>Competition</h4>
-                <ul class="select -large" id="select-competition"></ul>
+                <h4>Chart set</h4>
+                <ul class="select" id="select-preset"></ul>
             </div>
         </div>
         <canvas id="chart-container" width="1100" height="400"></canvas>

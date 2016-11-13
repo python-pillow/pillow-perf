@@ -31,6 +31,10 @@ h4 {
 a {
     color: #000095;
 }
+a.pseudo {
+    text-decoration: none;
+    border-bottom: 1px dashed;
+}
 ul, p {
     margin-bottom: 0;
 }
@@ -112,16 +116,6 @@ ul.select.-large {
     float: left;
     margin-right: 20px;
 }
-
-.topic {
-    display: none;
-}
-    .topic__resample .topic.-resample,
-    .topic__blur .topic.-blur,
-    .topic__resize-27 .topic.-resize-27,
-    .topic__resize-progress .topic.-resize-progress {
-        display: block;
-    }
 
 section {
     margin-top: 50px;

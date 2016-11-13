@@ -127,7 +127,7 @@
             such as loops rearrangement,
             and cache-aware transposition.
         </p>
-        <div class="chart">
+        <p class="chart">
             <canvas id="chart-resample-scalar" width="1100" height="400"></canvas>
             <script type="text/javascript">
                 partialCompetition(
@@ -140,7 +140,7 @@
                     ]
                 );
             </script>
-        </div>
+        </p>
         <p>
             Charts show median time (lower is better)
             required for resizing source 2560x1600 RGB image
@@ -166,7 +166,7 @@
             In sum, Pillow SIMD resampling performance
             <b>20 — 40 times</b> higher than original PIL.
         </p>
-        <div class="chart">
+        <p class="chart">
             <canvas id="chart-resample-simd" width="1100" height="400"></canvas>
             <script type="text/javascript">
                 partialCompetition(
@@ -179,7 +179,7 @@
                     ]
                 );
             </script>
-        </div>
+        </p>
     </section>
 
     <section>
@@ -258,14 +258,14 @@
             In Pillow 2.7 the cache-aware algorithm was implemented.
             Also, transposition was added.
         </p>
-        <div class="chart">
+        <p class="chart">
             <canvas id="chart-transposition" width="1100" height="350"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-transposition"), 'transposition-4k-rgb'
                 );
             </script>
-        </div>
+        </p>
     </section>
 
     <section>
@@ -287,6 +287,26 @@
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-conversion"), 'conversion-4k-rgb'
+                );
+            </script>
+        </div>
+    </section>
+
+    <section>
+        <h2 id="compositing">Compositing</h2>
+        <p>
+            <a href="https://en.wikipedia.org/wiki/Alpha_compositing">
+                Alpha compositing</a>
+            is used for overlaying two semitransparent images.
+            In opposite to alpha blending,
+            alpha compositing mixes color and alpha channels
+            with different coefficients.
+        </p>
+        <p>
+            <canvas id="chart-composition" width="1100" height="350"></canvas>
+            <script type="text/javascript">
+                partialCompetition(
+                    document.getElementById("chart-composition"), 'composition-4k-rgb'
                 );
             </script>
         </div>

@@ -12579,69 +12579,6 @@
 				]
 			},
 			{
-				"name": "composition-4k-rgb",
-				"topic": "composition",
-				"title": "Composition two 2560×1600 RGBA images",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
-				"competitors": [
-					{
-						"name": "imagemagick-6.7",
-						"title": "ImageMagick 6.7.7-10",
-						"results": [
-							[
-								"Composition",
-								0.103698015213
-							]
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"title": "Pillow 3.4.2",
-						"results": [
-							[
-								"Composition",
-								0.0364
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-sse4",
-						"title": "Pillow SIMD 3.4.0 SSE4",
-						"results": [
-							[
-								"Composition",
-								0.01401
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-avx2",
-						"title": "Pillow SIMD 3.4.0 AVX2",
-						"results": [
-							[
-								"Composition",
-								0.0102
-							]
-						]
-					}
-				]
-			},
-			{
 				"name": "transposition-4k-rgb",
 				"topic": "transposition",
 				"title": "Transpose 2560×1600 RGB image",
@@ -12912,6 +12849,69 @@
 							[
 								"RGBA to RGBa",
 								0.00544810295105
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "composition-4k-rgb",
+				"topic": "compositing",
+				"title": "Composition two 2560×1600 RGBA images",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "radius",
+						"title": "Blur radius"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"results": [
+							[
+								"Composition",
+								0.103698015213
+							]
+						]
+					},
+					{
+						"name": "pillow-3.4",
+						"title": "Pillow 3.4.2",
+						"results": [
+							[
+								"Composition",
+								0.0364
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-3.4-sse4",
+						"title": "Pillow SIMD 3.4.0 SSE4",
+						"results": [
+							[
+								"Composition",
+								0.01401
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-3.4-avx2",
+						"title": "Pillow SIMD 3.4.0 AVX2",
+						"results": [
+							[
+								"Composition",
+								0.0102
 							]
 						]
 					}

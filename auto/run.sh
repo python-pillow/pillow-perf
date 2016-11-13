@@ -17,7 +17,7 @@ pushd Pillow
 
   git fetch
 
-  function checkout {
+  function pillow_checkout {
     git checkout -f $1
     touch ./_imaging.c
     CFLAGS="$2" python ./setup.py develop > build.log 2>&1
@@ -25,39 +25,39 @@ pushd Pillow
     grep "^version" build.log
   }
 
-  checkout 2.6.2
+  pillow_checkout 2.6.2
   ../../testsuite/run.py scale "${@:2}"
   
-  checkout 2.7.0
+  pillow_checkout 2.7.0
   ../../testsuite/run.py scale "${@:2}"
 
-  checkout 3.3.3
+  pillow_checkout 3.3.3
   ../../testsuite/run.py scale "${@:2}"
 
-  checkout 3.4.2
+  pillow_checkout 3.4.2
   ../../testsuite/run.py scale "${@:2}"
 
-  checkout v3.2.0.post3 -msse4
+  pillow_checkout v3.2.0.post3 -msse4
   ../../testsuite/run.py scale "${@:2}"
 
   if [ "$1" != "no" ]; then
-    checkout v3.2.0.post3 -mavx2
+    pillow_checkout v3.2.0.post3 -mavx2
     ../../testsuite/run.py scale "${@:2}"
   fi
 
-  checkout v3.3.3.post0 -msse4
+  pillow_checkout v3.3.3.post0 -msse4
   ../../testsuite/run.py scale "${@:2}"
 
   if [ "$1" != "no" ]; then
-    checkout v3.3.3.post0 -mavx2
+    pillow_checkout v3.3.3.post0 -mavx2
     ../../testsuite/run.py scale "${@:2}"
   fi
 
-  checkout v3.4.1.post1 -msse4
+  pillow_checkout v3.4.1.post1 -msse4
   ../../testsuite/run.py scale "${@:2}"
 
   if [ "$1" != "no" ]; then
-    checkout v3.4.1.post1 -mavx2
+    pillow_checkout v3.4.1.post1 -mavx2
     ../../testsuite/run.py scale "${@:2}"
   fi
 

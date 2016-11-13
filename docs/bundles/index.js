@@ -62,7 +62,7 @@
 	
 	
 	function partialCompetition(element, competitionName, presetName) {
-	  var competitions = data[0].competitions;
+	  var competitions = data.systems[0].competitions;
 	  var competitors = [];
 	  var i, competition, preset;
 	
@@ -105,7 +105,8 @@
 	
 	  return adapter.chartForCompetition(
 	    element,
-	    competition
+	    competition,
+	    data.colors
 	  );
 	}
 	
@@ -175,6 +176,7 @@
 	function populateCompetitions(competitions) {
 	  var select = document.getElementById("select-competition");
 	  var parent = select.parentNode;
+	  var info = parent.getElementsByClassName('info')[0];
 	  
 	  var selectItem = createSelect(select, competitions, function(i, element) {
 	    element.addEventListener('click', applyCompetition.bind(null, i));
@@ -189,8 +191,16 @@
 	
 	    chart = adapter.chartForCompetition(
 	      document.getElementById("chart-container"),
-	      competition
+	      competition,
+	      data.colors
 	    );
+	
+	    var innerHTML = "";
+	    if (competition.topic) {
+	      innerHTML = '<a class="pseudo" href="#' +
+	        competition.topic + '">More info about operation</a>';
+	    }
+	    info.innerHTML = innerHTML;
 	
 	    selectItem(n);
 	
@@ -223,13 +233,13 @@
 	  });
 	
 	  function applySystem(n) {
-	    var innerHTML = "";
 	    var system = systems[n];
 	    var applyCompetition = populateCompetitions(system.competitions);
 	    applyCompetition(0);
 	    
 	    selectItem(n);
 	
+	    var innerHTML = "";
 	    if (system.OS) {
 	      innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
 	    }
@@ -245,7 +255,7 @@
 	
 	document.addEventListener("DOMContentLoaded", function(){
 	
-	  var applySystem = populateSystems(data);
+	  var applySystem = populateSystems(data.systems);
 	  applySystem(0);
 	  
 	});
@@ -288,7 +298,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\n.topic {\n    display: none;\n}\n    .topic__resample .topic.-resample,\n    .topic__blur .topic.-blur,\n    .topic__resize-27 .topic.-resize-27,\n    .topic__resize-progress .topic.-resize-progress {\n        display: block;\n    }\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    margin-right: -30px;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 800px;\n}\n    dl.libraries dt {\n        float: left;\n        width: 130px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 8px 140px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    margin-right: -30px;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 800px;\n}\n    dl.libraries dt {\n        float: left;\n        width: 130px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 8px 140px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n\n\n.under-construction {\n    border: 2px solid hsl(34, 90%, 75%);\n    background: hsl(34, 90%, 98%);\n    padding: 1em;\n    max-width: 690px;\n    box-sizing: border-box;\n}\n", ""]);
 	
 	// exports
 
@@ -699,7 +709,7 @@
 	}
 	
 	
-	function chartForCompetition(element, competition) {
+	function chartForCompetition(element, competition, colors) {
 	  var chartData = {
 	    type: 'myBar',
 	    data: {
@@ -745,15 +755,20 @@
 	                continue;
 	              }
 	              first = data.datasets[i].data[item.index];
+	              if (first === null) {
+	                continue;
+	              }
 	              break;
 	            }
 	            
 	            var l = data.datasets[item.datasetIndex].label || '';
 	            var label = " " + rightpad(l, 28);
 	            var units = chart.options.tooltips.units;
-	            label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
-	            if (item.yLabel != first) {
-	              label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+	            if (item.yLabel) {
+	              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+	              if (item.yLabel != first) {
+	                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+	              }
 	            }
 	            return label;
 	          }
@@ -818,7 +833,7 @@
 	    var competitor = competition.competitors[i];
 	    var data = [];
 	    var lastGroup = null;
-	    var c = competitor.color;
+	    var c = colors[competitor.name];
 	
 	    if (typeof c != "string") {
 	      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
@@ -11518,11 +11533,36 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = [
+	var colors = {
+	  "imagemagick-6.7":      [230, 100, 70],
+	  "opencv 2.4.8":         [240, 100, 60],
+	  "skia-53":              [250, 100, 50],
+	
+	  "pillow-2.0":           [10, 90, 50],
+	  
+	  "pillow-2.7":           [340, 90, 43],
+	  "pillow-simd-3.2-sse4": [340, 90, 75],
+	  "pillow-simd-3.2-avx2": [340, 90, 60],
+	  
+	  "pillow-3.3":           [190, 90, 43],
+	  "pillow-simd-3.3-sse4": [190, 90, 75],
+	  "pillow-simd-3.3-avx2": [190, 90, 60],
+	
+	  "pillow-3.4":           [34, 90, 43],
+	  "pillow-simd-3.4-sse4": [34, 90, 75],
+	  "pillow-simd-3.4-avx2": [34, 90, 60],
+	};
+	
+	var systems = [
 	  __webpack_require__(9),
 	  __webpack_require__(10),
 	  __webpack_require__(11),
 	];
+	
+	module.exports = {
+	  colors: colors,
+	  systems: systems,
+	};
 
 
 /***/ },
@@ -11536,7 +11576,7 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resample",
+				"topic": "resampling",
 				"title": "Resize 2560x1600 RGB image",
 				"source": {
 					"size": [
@@ -11566,7 +11606,6 @@
 				"presets": [
 					{
 						"name": "pillow-2.7",
-						"topic": "resize-27",
 						"title": "Pillow 2.7 optimizations",
 						"set": [
 							"imagemagick-6.7",
@@ -11576,7 +11615,6 @@
 					},
 					{
 						"name": "pillow-progress",
-						"topic": "resize-progress",
 						"title": "Pillow progress",
 						"set": [
 							"pillow-2.7",
@@ -11586,7 +11624,6 @@
 					},
 					{
 						"name": "pillow-3.2",
-						"topic": "resize-32",
 						"title": "Pillow 3.2 versions",
 						"set": [
 							"pillow-2.7",
@@ -11596,7 +11633,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"topic": "resize-33",
 						"title": "Pillow 3.3 versions",
 						"set": [
 							"pillow-3.3",
@@ -11606,7 +11642,6 @@
 					},
 					{
 						"name": "pillow-3.4",
-						"topic": "resize-34",
 						"title": "Pillow 3.4 versions",
 						"set": [
 							"pillow-3.4",
@@ -11617,7 +11652,6 @@
 					},
 					{
 						"name": "pillow-sse4",
-						"topic": "resize-sse4",
 						"title": "Pillow SIMD SSE4 progress",
 						"set": [
 							"pillow-simd-3.2-sse4",
@@ -11627,7 +11661,6 @@
 					},
 					{
 						"name": "pillow-avx2",
-						"topic": "resize-avx2",
 						"title": "Pillow SIMD AVX2 progress",
 						"set": [
 							"pillow-simd-3.2-avx2",
@@ -11637,7 +11670,6 @@
 					},
 					{
 						"name": "pillow-milestones",
-						"topic": "resize-milestones",
 						"title": "Pillow milestones",
 						"set": [
 							"pillow-2.0",
@@ -11648,7 +11680,6 @@
 					},
 					{
 						"name": "pillow-skia",
-						"topic": "resize-skia",
 						"title": "Pillow SIMD 3.4 vs Skia",
 						"set": [
 							"skia-53",
@@ -11661,11 +11692,6 @@
 					{
 						"name": "imagemagick-6.7",
 						"title": "ImageMagick 6.7.7-10",
-						"color": [
-							230,
-							100,
-							70
-						],
 						"results": [
 							[
 								"26x16",
@@ -11732,11 +11758,6 @@
 					{
 						"name": "skia-53",
 						"title": "Skia 53 SSE2",
-						"color": [
-							240,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -11802,12 +11823,7 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6.2",
-						"color": [
-							10,
-							90,
-							50
-						],
+						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"26x16",
@@ -11874,11 +11890,6 @@
 					{
 						"name": "pillow-2.7",
 						"title": "Pillow 2.7.0 to 3.2.0",
-						"color": [
-							340,
-							90,
-							43
-						],
 						"results": [
 							[
 								"26x16",
@@ -11945,11 +11956,6 @@
 					{
 						"name": "pillow-3.3",
 						"title": "Pillow 3.3.3",
-						"color": [
-							190,
-							90,
-							43
-						],
 						"results": [
 							[
 								"26x16",
@@ -12016,11 +12022,6 @@
 					{
 						"name": "pillow-3.4",
 						"title": "Pillow 3.4.2",
-						"color": [
-							34,
-							90,
-							43
-						],
 						"results": [
 							[
 								"26x16",
@@ -12087,11 +12088,6 @@
 					{
 						"name": "pillow-simd-3.2-sse4",
 						"title": "Pillow SIMD 3.2.0 SSE4",
-						"color": [
-							340,
-							90,
-							75
-						],
 						"results": [
 							[
 								"26x16",
@@ -12158,11 +12154,6 @@
 					{
 						"name": "pillow-simd-3.2-avx2",
 						"title": "Pillow SIMD 3.2.0 AVX2",
-						"color": [
-							340,
-							90,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -12229,11 +12220,6 @@
 					{
 						"name": "pillow-simd-3.3-sse4",
 						"title": "Pillow SIMD 3.3.0 SSE4",
-						"color": [
-							190,
-							90,
-							75
-						],
 						"results": [
 							[
 								"26x16",
@@ -12300,11 +12286,6 @@
 					{
 						"name": "pillow-simd-3.3-avx2",
 						"title": "Pillow SIMD 3.3.0 AVX2",
-						"color": [
-							190,
-							90,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -12371,11 +12352,6 @@
 					{
 						"name": "pillow-simd-3.4-sse4",
 						"title": "Pillow SIMD 3.4.0 SSE4",
-						"color": [
-							34,
-							90,
-							75
-						],
 						"results": [
 							[
 								"26x16",
@@ -12442,11 +12418,6 @@
 					{
 						"name": "pillow-simd-3.4-avx2",
 						"title": "Pillow SIMD 3.4.0 AVX2",
-						"color": [
-							34,
-							90,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -12536,11 +12507,6 @@
 					{
 						"name": "imagemagick-6.7",
 						"title": "ImageMagick 6.7.7-10",
-						"color": [
-							230,
-							100,
-							70
-						],
 						"results": [
 							[
 								"1px",
@@ -12559,11 +12525,6 @@
 					{
 						"name": "opencv 2.4.8",
 						"title": "OpenCV 2.4.8",
-						"color": [
-							240,
-							100,
-							60
-						],
 						"results": [
 							[
 								"1px",
@@ -12582,11 +12543,6 @@
 					{
 						"name": "pillow-2.7",
 						"title": "Pillow 2.7",
-						"color": [
-							340,
-							90,
-							43
-						],
 						"results": [
 							[
 								"1px",
@@ -12605,11 +12561,6 @@
 					{
 						"name": "pillow-simd-3.2-sse4",
 						"title": "Pillow SIMD 3.2.0 SSE4",
-						"color": [
-							340,
-							100,
-							80
-						],
 						"results": [
 							[
 								"1px",
@@ -12628,8 +12579,284 @@
 				]
 			},
 			{
+				"name": "transposition-4k-rgb",
+				"topic": "transposition",
+				"title": "Transpose 2560×1600 RGB image",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "operation",
+						"title": "Operation"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "opencv 2.4.8",
+						"title": "OpenCV 2.4.8",
+						"results": [
+							[
+								"Flop",
+								0.00900101661682
+							],
+							[
+								"Flip",
+								0.00327491760254
+							],
+							[
+								"Rotate 90",
+								0.0296530723572
+							],
+							[
+								"Rotate 180",
+								0.0150630474091
+							],
+							[
+								"Rotate 270",
+								0.0356049537659
+							],
+							[
+								"Transpose",
+								0.0256328582764
+							]
+						]
+					},
+					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"results": [
+							[
+								"Flop",
+								0.00670599937439
+							],
+							[
+								"Flip",
+								0.00673222541809
+							],
+							[
+								"Rotate 90",
+								0.0340640544891
+							],
+							[
+								"Rotate 180",
+								0.0210030078888
+							],
+							[
+								"Rotate 270",
+								0.0337069034576
+							],
+							[
+								"Transpose",
+								0.0786318778992
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"title": "PIL & Pillow 2.0 to 2.6",
+						"results": [
+							[
+								"Flop",
+								0.00933408737183
+							],
+							[
+								"Flip",
+								0.00511789321899
+							],
+							[
+								"Rotate 90",
+								0.0884799957275
+							],
+							[
+								"Rotate 180",
+								0.00890707969666
+							],
+							[
+								"Rotate 270",
+								0.0911710262299
+							],
+							[
+								"Transpose",
+								null
+							]
+						]
+					},
+					{
+						"name": "pillow-2.7",
+						"title": "Pillow 2.7",
+						"results": [
+							[
+								"Flop",
+								0.00928902626038
+							],
+							[
+								"Flip",
+								0.00517797470093
+							],
+							[
+								"Rotate 90",
+								0.0181818008423
+							],
+							[
+								"Rotate 180",
+								0.00899291038513
+							],
+							[
+								"Rotate 270",
+								0.0161418914795
+							],
+							[
+								"Transpose",
+								0.0160100460052
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "conversion-4k-rgb",
+				"topic": "conversion",
+				"title": "Color conversion 2560×1600 image",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "modes",
+						"title": "Modes"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"results": [
+							[
+								"RGB to L",
+								0.734226942062
+							],
+							[
+								"RGBA to LA",
+								0.663765192032
+							],
+							[
+								"RGBa to RGBA",
+								null
+							],
+							[
+								"RGBA to RGBa",
+								null
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"title": "PIL & Pillow 2.0 to 2.6",
+						"results": [
+							[
+								"RGB to L",
+								0.00903606414795
+							],
+							[
+								"RGBA to LA",
+								0.0113651752472
+							],
+							[
+								"RGBa to RGBA",
+								0.054703950882
+							],
+							[
+								"RGBA to RGBa",
+								0.0145680904388
+							]
+						]
+					},
+					{
+						"name": "pillow-3.3",
+						"title": "Pillow 3.3.3",
+						"results": [
+							[
+								"RGB to L",
+								0.00840902328491
+							],
+							[
+								"RGBA to LA",
+								0.011461019516
+							],
+							[
+								"RGBa to RGBA",
+								0.0341680049896
+							],
+							[
+								"RGBA to RGBa",
+								0.0150349140167
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-3.3-sse4",
+						"title": "Pillow SIMD 3.3.0 SSE4",
+						"results": [
+							[
+								"RGB to L",
+								0.00853490829468
+							],
+							[
+								"RGBA to LA",
+								0.0114579200745
+							],
+							[
+								"RGBa to RGBA",
+								0.0352101325989
+							],
+							[
+								"RGBA to RGBa",
+								0.00605893135071
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-3.3-avx2",
+						"title": "Pillow SIMD 3.3.0 AVX2",
+						"results": [
+							[
+								"RGB to L",
+								0.00853490829468
+							],
+							[
+								"RGBA to LA",
+								0.0114579200745
+							],
+							[
+								"RGBa to RGBA",
+								0.0179569721222
+							],
+							[
+								"RGBA to RGBa",
+								0.00544810295105
+							]
+						]
+					}
+				]
+			},
+			{
 				"name": "composition-4k-rgb",
-				"topic": "blur",
+				"topic": "compositing",
 				"title": "Composition two 2560×1600 RGBA images",
 				"source": {
 					"size": [
@@ -12649,13 +12876,18 @@
 				],
 				"competitors": [
 					{
+						"name": "imagemagick-6.7",
+						"title": "ImageMagick 6.7.7-10",
+						"results": [
+							[
+								"Composition",
+								0.103698015213
+							]
+						]
+					},
+					{
 						"name": "pillow-3.4",
 						"title": "Pillow 3.4.2",
-						"color": [
-							34,
-							90,
-							43
-						],
 						"results": [
 							[
 								"Composition",
@@ -12666,11 +12898,6 @@
 					{
 						"name": "pillow-simd-3.4-sse4",
 						"title": "Pillow SIMD 3.4.0 SSE4",
-						"color": [
-							34,
-							90,
-							75
-						],
 						"results": [
 							[
 								"Composition",
@@ -12681,11 +12908,6 @@
 					{
 						"name": "pillow-simd-3.4-avx2",
 						"title": "Pillow SIMD 3.4.0 AVX2",
-						"color": [
-							34,
-							90,
-							60
-						],
 						"results": [
 							[
 								"Composition",
@@ -12709,7 +12931,7 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resample",
+				"topic": "resampling",
 				"title": "Resize 2560×1600 RGB image",
 				"source": {
 					"size": [
@@ -12738,6 +12960,7 @@
 				],
 				"presets": [
 					{
+						"name": "pillow-progress",
 						"title": "Pillow progress",
 						"set": [
 							"pillow-2.7",
@@ -12746,6 +12969,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.2",
 						"title": "Pillow 3.2 versions",
 						"set": [
 							"pillow-2.7",
@@ -12753,6 +12977,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.3",
 						"title": "Pillow 3.3 versions",
 						"set": [
 							"pillow-3.3",
@@ -12760,6 +12985,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.4",
 						"title": "Pillow 3.4 versions",
 						"set": [
 							"pillow-3.4",
@@ -12768,10 +12994,21 @@
 						"default": true
 					},
 					{
+						"name": "pillow-sse4",
 						"title": "Pillow SIMD SSE4 progress",
 						"set": [
 							"pillow-simd-3.2-sse4",
 							"pillow-simd-3.3-sse4",
+							"pillow-simd-3.4-sse4"
+						]
+					},
+					{
+						"name": "pillow-milestones",
+						"title": "Pillow milestones",
+						"set": [
+							"pillow-2.0",
+							"pillow-2.7",
+							"pillow-3.4",
 							"pillow-simd-3.4-sse4"
 						]
 					}
@@ -12780,11 +13017,6 @@
 					{
 						"name": "pillow-2.0",
 						"title": "PIL & Pillow 2.0 to 2.6.2",
-						"color": [
-							0,
-							100,
-							50
-						],
 						"results": [
 							[
 								"26x16",
@@ -12851,11 +13083,6 @@
 					{
 						"name": "pillow-2.7",
 						"title": "Pillow 2.7.0 to 3.2.0",
-						"color": [
-							330,
-							100,
-							40
-						],
 						"results": [
 							[
 								"26x16",
@@ -12922,11 +13149,6 @@
 					{
 						"name": "pillow-3.3",
 						"title": "Pillow 3.3.3",
-						"color": [
-							120,
-							100,
-							40
-						],
 						"results": [
 							[
 								"26x16",
@@ -12993,11 +13215,6 @@
 					{
 						"name": "pillow-3.4",
 						"title": "Pillow 3.4.2",
-						"color": [
-							34,
-							100,
-							40
-						],
 						"results": [
 							[
 								"26x16",
@@ -13064,11 +13281,6 @@
 					{
 						"name": "pillow-simd-3.2-sse4",
 						"title": "Pillow SIMD 3.2.0 SSE4",
-						"color": [
-							330,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -13135,11 +13347,6 @@
 					{
 						"name": "pillow-simd-3.3-sse4",
 						"title": "Pillow SIMD 3.3.0 SSE4",
-						"color": [
-							120,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -13206,11 +13413,6 @@
 					{
 						"name": "pillow-simd-3.4-sse4",
 						"title": "Pillow SIMD 3.4.0 SSE4",
-						"color": [
-							34,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -13290,7 +13492,7 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resample",
+				"topic": "resampling",
 				"title": "Resize 2560×1600 RGB image",
 				"source": {
 					"size": [
@@ -13319,6 +13521,7 @@
 				],
 				"presets": [
 					{
+						"name": "pillow-progress",
 						"title": "Pillow progress",
 						"set": [
 							"pillow-2.7",
@@ -13327,6 +13530,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.2",
 						"title": "Pillow 3.2 versions",
 						"set": [
 							"pillow-2.7",
@@ -13335,6 +13539,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.3",
 						"title": "Pillow 3.3 versions",
 						"set": [
 							"pillow-3.3",
@@ -13343,6 +13548,7 @@
 						]
 					},
 					{
+						"name": "pillow-3.4",
 						"title": "Pillow 3.4 versions",
 						"set": [
 							"pillow-3.4",
@@ -13352,6 +13558,7 @@
 						"default": true
 					},
 					{
+						"name": "pillow-sse4",
 						"title": "Pillow SIMD SSE4 progress",
 						"set": [
 							"pillow-simd-3.2-sse4",
@@ -13360,6 +13567,7 @@
 						]
 					},
 					{
+						"name": "pillow-avx2",
 						"title": "Pillow SIMD AVX2 progress",
 						"set": [
 							"pillow-simd-3.2-avx2",
@@ -13368,8 +13576,17 @@
 						]
 					},
 					{
+						"name": "pillow-milestones",
+						"title": "Pillow milestones",
+						"set": [
+							"pillow-2.0",
+							"pillow-2.7",
+							"pillow-3.4",
+							"pillow-simd-3.4-avx2"
+						]
+					},
+					{
 						"name": "pillow-skia",
-						"topic": "resize-skia",
 						"title": "Pillow SIMD 3.4 vs Skia",
 						"set": [
 							"skia-53",
@@ -13382,11 +13599,6 @@
 					{
 						"name": "skia-53",
 						"title": "Skia 53 SSE2",
-						"color": [
-							240,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -13453,11 +13665,6 @@
 					{
 						"name": "pillow-2.0",
 						"title": "PIL & Pillow 2.0 to 2.6.2",
-						"color": [
-							0,
-							100,
-							50
-						],
 						"results": [
 							[
 								"26x16",
@@ -13524,11 +13731,6 @@
 					{
 						"name": "pillow-2.7",
 						"title": "Pillow 2.7.0 to 3.2.0",
-						"color": [
-							330,
-							100,
-							40
-						],
 						"results": [
 							[
 								"26x16",
@@ -13595,11 +13797,6 @@
 					{
 						"name": "pillow-3.3",
 						"title": "Pillow 3.3.3",
-						"color": [
-							120,
-							100,
-							40
-						],
 						"results": [
 							[
 								"26x16",
@@ -13666,11 +13863,6 @@
 					{
 						"name": "pillow-3.4",
 						"title": "Pillow 3.4.2",
-						"color": [
-							34,
-							100,
-							40
-						],
 						"results": [
 							[
 								"26x16",
@@ -13737,11 +13929,6 @@
 					{
 						"name": "pillow-simd-3.2-sse4",
 						"title": "Pillow SIMD 3.2.0 SSE4",
-						"color": [
-							330,
-							100,
-							80
-						],
 						"results": [
 							[
 								"26x16",
@@ -13808,11 +13995,6 @@
 					{
 						"name": "pillow-simd-3.2-avx2",
 						"title": "Pillow SIMD 3.2.0 AVX2",
-						"color": [
-							330,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -13879,11 +14061,6 @@
 					{
 						"name": "pillow-simd-3.3-sse4",
 						"title": "Pillow SIMD 3.3.0 SSE4",
-						"color": [
-							120,
-							100,
-							85
-						],
 						"results": [
 							[
 								"26x16",
@@ -13950,11 +14127,6 @@
 					{
 						"name": "pillow-simd-3.3-avx2",
 						"title": "Pillow SIMD 3.3.0 AVX2",
-						"color": [
-							120,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",
@@ -14021,11 +14193,6 @@
 					{
 						"name": "pillow-simd-3.4-sse4",
 						"title": "Pillow SIMD 3.4.0 SSE4",
-						"color": [
-							34,
-							100,
-							80
-						],
 						"results": [
 							[
 								"26x16",
@@ -14092,11 +14259,6 @@
 					{
 						"name": "pillow-simd-3.4-avx2",
 						"title": "Pillow SIMD 3.4.0 AVX2",
-						"color": [
-							34,
-							100,
-							60
-						],
 						"results": [
 							[
 								"26x16",

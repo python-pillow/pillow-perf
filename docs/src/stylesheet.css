@@ -31,6 +31,10 @@ h4 {
 a {
     color: #000095;
 }
+a.pseudo {
+    text-decoration: none;
+    border-bottom: 1px dashed;
+}
 ul, p {
     margin-bottom: 0;
 }
@@ -113,16 +117,6 @@ ul.select.-large {
     margin-right: 20px;
 }
 
-.topic {
-    display: none;
-}
-    .topic__resample .topic.-resample,
-    .topic__blur .topic.-blur,
-    .topic__resize-27 .topic.-resize-27,
-    .topic__resize-progress .topic.-resize-progress {
-        display: block;
-    }
-
 section {
     margin-top: 50px;
 }
@@ -169,3 +163,12 @@ dl.libraries {
         display: block;
         clear: left;
     }
+
+
+.under-construction {
+    border: 2px solid hsl(34, 90%, 75%);
+    background: hsl(34, 90%, 98%);
+    padding: 1em;
+    max-width: 690px;
+    box-sizing: border-box;
+}

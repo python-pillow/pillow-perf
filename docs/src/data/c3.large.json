@@ -6,7 +6,7 @@
     "competitions": [
         {
             "name": "resample-4k-rgb",
-            "topic": "resample",
+            "topic": "resampling",
             "title": "Resize 2560×1600 RGB image",
             "source": {
                 "size": [2560, 1600]
@@ -32,6 +32,7 @@
             ],
             "presets": [
                 {
+                    "name": "pillow-progress",
                     "title": "Pillow progress",
                     "set": [
                         "pillow-2.7",
@@ -40,6 +41,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.2",
                     "title": "Pillow 3.2 versions",
                     "set": [
                         "pillow-2.7",
@@ -47,6 +49,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.3",
                     "title": "Pillow 3.3 versions",
                     "set": [
                         "pillow-3.3",
@@ -54,6 +57,7 @@
                     ]
                 },
                 {
+                    "name": "pillow-3.4",
                     "title": "Pillow 3.4 versions",
                     "set": [
                         "pillow-3.4",
@@ -62,10 +66,21 @@
                     "default": true
                 },
                 {
+                    "name": "pillow-sse4",
                     "title": "Pillow SIMD SSE4 progress",
                     "set": [
                         "pillow-simd-3.2-sse4",
                         "pillow-simd-3.3-sse4",
+                        "pillow-simd-3.4-sse4"
+                    ]
+                },
+                {
+                    "name": "pillow-milestones",
+                    "title": "Pillow milestones",
+                    "set": [
+                        "pillow-2.0",
+                        "pillow-2.7",
+                        "pillow-3.4",
                         "pillow-simd-3.4-sse4"
                     ]
                 }
@@ -74,7 +89,6 @@
                 {
                     "name": "pillow-2.0",
                     "title": "PIL & Pillow 2.0 to 2.6.2",
-                    "color": [0, 100, 50],
                     "results": [
                         ["26x16", "bil", 0.0793950557709],
                         ["26x16", "bic", 0.151000022888],
@@ -93,7 +107,6 @@
                 {
                     "name": "pillow-2.7",
                     "title": "Pillow 2.7.0 to 3.2.0",
-                    "color": [330, 100, 40],
                     "results": [
                         ["26x16", "bil", 0.0201299190521],
                         ["26x16", "bic", 0.038722038269],
@@ -112,7 +125,6 @@
                 {
                     "name": "pillow-3.3",
                     "title": "Pillow 3.3.3",
-                    "color": [120, 100, 40],
                     "results": [
                         ["26x16", "bil", 0.0123372077942],
                         ["26x16", "bic", 0.0235810279846],
@@ -131,7 +143,6 @@
                 {
                     "name": "pillow-3.4",
                     "title": "Pillow 3.4.2",
-                    "color": [34, 100, 40],
                     "results": [
                         ["26x16", "bil", 0.0122351646423],
                         ["26x16", "bic", 0.0235159397125],
@@ -151,7 +162,6 @@
                 {
                     "name": "pillow-simd-3.2-sse4",
                     "title": "Pillow SIMD 3.2.0 SSE4",
-                    "color": [330, 100, 60],
                     "results": [
                         ["26x16", "bil", 0.00850486755371],
                         ["26x16", "bic", 0.0164241790771],
@@ -171,7 +181,6 @@
                 {
                     "name": "pillow-simd-3.3-sse4",
                     "title": "Pillow SIMD 3.3.0 SSE4",
-                    "color": [120, 100, 60],
                     "results": [
                         ["26x16", "bil", 0.00646495819092],
                         ["26x16", "bic", 0.0122308731079],
@@ -191,7 +200,6 @@
                 {
                     "name": "pillow-simd-3.4-sse4",
                     "title": "Pillow SIMD 3.4.0 SSE4",
-                    "color": [34, 100, 60],
                     "results": [
                         ["26x16", "bil", 0.00282311439514],
                         ["26x16", "bic", 0.00537204742432],

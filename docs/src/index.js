@@ -9,7 +9,7 @@ var chart = null;
 
 
 function partialCompetition(element, competitionName, presetName) {
-  var competitions = data[0].competitions;
+  var competitions = data.systems[0].competitions;
   var competitors = [];
   var i, competition, preset;
 
@@ -52,7 +52,8 @@ function partialCompetition(element, competitionName, presetName) {
 
   return adapter.chartForCompetition(
     element,
-    competition
+    competition,
+    data.colors
   );
 }
 
@@ -122,6 +123,7 @@ function populatePresets(chart, presets) {
 function populateCompetitions(competitions) {
   var select = document.getElementById("select-competition");
   var parent = select.parentNode;
+  var info = parent.getElementsByClassName('info')[0];
   
   var selectItem = createSelect(select, competitions, function(i, element) {
     element.addEventListener('click', applyCompetition.bind(null, i));
@@ -136,8 +138,16 @@ function populateCompetitions(competitions) {
 
     chart = adapter.chartForCompetition(
       document.getElementById("chart-container"),
-      competition
+      competition,
+      data.colors
     );
+
+    var innerHTML = "";
+    if (competition.topic) {
+      innerHTML = '<a class="pseudo" href="#' +
+        competition.topic + '">More info about operation</a>';
+    }
+    info.innerHTML = innerHTML;
 
     selectItem(n);
 
@@ -170,13 +180,13 @@ function populateSystems(systems) {
   });
 
   function applySystem(n) {
-    var innerHTML = "";
     var system = systems[n];
     var applyCompetition = populateCompetitions(system.competitions);
     applyCompetition(0);
     
     selectItem(n);
 
+    var innerHTML = "";
     if (system.OS) {
       innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
     }
@@ -192,7 +202,7 @@ function populateSystems(systems) {
 
 document.addEventListener("DOMContentLoaded", function(){
 
-  var applySystem = populateSystems(data);
+  var applySystem = populateSystems(data.systems);
   applySystem(0);
   
 });

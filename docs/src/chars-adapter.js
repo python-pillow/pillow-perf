@@ -92,7 +92,7 @@ function rightpad(s, size) {
 }
 
 
-function chartForCompetition(element, competition) {
+function chartForCompetition(element, competition, colors) {
   var chartData = {
     type: 'myBar',
     data: {
@@ -138,15 +138,20 @@ function chartForCompetition(element, competition) {
                 continue;
               }
               first = data.datasets[i].data[item.index];
+              if (first === null) {
+                continue;
+              }
               break;
             }
             
             var l = data.datasets[item.datasetIndex].label || '';
             var label = " " + rightpad(l, 28);
             var units = chart.options.tooltips.units;
-            label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
-            if (item.yLabel != first) {
-              label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+            if (item.yLabel) {
+              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+              if (item.yLabel != first) {
+                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+              }
             }
             return label;
           }
@@ -211,7 +216,7 @@ function chartForCompetition(element, competition) {
     var competitor = competition.competitors[i];
     var data = [];
     var lastGroup = null;
-    var c = competitor.color;
+    var c = colors[competitor.name];
 
     if (typeof c != "string") {
       c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";

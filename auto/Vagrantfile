@@ -1,0 +1,34 @@
+Vagrant.configure(2) do |config|
+    config.vm.box = "ubuntu/trusty64"
+
+    config.vm.synced_folder "..", "/vagrant/pillow-perf"
+
+    config.ssh.forward_agent = true
+
+    config.vm.provision "swap", type: "shell",
+    inline: <<-SHELL
+        # does the swap file already exist?
+        grep -q "swapfile" /etc/fstab
+        # if not then create it
+        if [ $? -ne 0 ]; then
+          echo 'swapfile not found. Adding swapfile.'
+          fallocate -l 512M /swapfile
+          chmod 600 /swapfile
+          mkswap /swapfile
+          swapon /swapfile
+          echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+        else
+          echo 'swapfile found. No changes made.'
+        fi
+    SHELL
+
+    config.vm.provision "preinstall", type: "shell", path: "./install_ubuntu.sh"
+
+    config.vm.provision "run", type: "shell", privileged: false, inline: <<-SHELL
+        rsync -r /vagrant/pillow-perf ./ \
+            --exclude=pillow-perf/docs/node_modules \
+            --exclude=pillow-perf/.git
+        cd ./pillow-perf/auto
+        CC="ccache cc" ./run.sh - -s 512x512 -n 3 --json
+    SHELL
+end

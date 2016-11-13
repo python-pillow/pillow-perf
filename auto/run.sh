@@ -27,7 +27,7 @@ pushd Pillow
   }
 
   pillow_checkout 2.6.2
-  ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale load convert composition rotate_right "${@:2}"
   
   pillow_checkout 2.7.0
   ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"

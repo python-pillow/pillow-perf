@@ -7,7 +7,9 @@ Performance tests divided into suites.
 ### Prerequisites
 
 * [Any Pillow version](https://pillow.readthedocs.io/en/latest/installation.html#basic-installation)
-* [ImageMagick dev package for Wand](http://docs.wand-py.org/en/0.4.3/#requirements)
+* [ImageMagick dev package for Wand](http://docs.wand-py.org/en/0.4.4/#requirements)
+* OpenCV for Python, for example through
+[opencv-python](https://pypi.python.org/pypi/opencv-python) binary package
 
 ### Install and run
 
@@ -19,18 +21,22 @@ $ ./run.py test_suite [test_suite ...]
 
 `test_suite` is one of available test suites:
 
-* load
-* convert
-* rotate_right
-* scale
-* blur
-* composition
-* wand_load
-* wand_rotate_right
-* wand_scale
-* cv2_load
-* cv2_rotate_right
-* cv2_blur
+`load`,
+`convert`,
+`composition`,
+`rotate_right`,
+`scale`,
+`blur`,
+`wand_load`,
+`wand_convert`,
+`wand_composition`,
+`wand_rotate_right`,
+`wand_scale`,
+`wand_blur`,
+`cv2_load`,
+`cv2_rotate_right`,
+`cv2_scale`,
+`cv2_blur`
 
 The list can grow, please refer to:
 

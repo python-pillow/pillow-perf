@@ -21,22 +21,12 @@ $ ./run.py test_suite [test_suite ...]
 
 `test_suite` is one of available test suites:
 
-`load`,
-`convert`,
-`composition`,
-`rotate_right`,
-`scale`,
-`blur`,
-`wand_load`,
-`wand_convert`,
-`wand_composition`,
-`wand_rotate_right`,
-`wand_scale`,
-`wand_blur`,
-`cv2_load`,
-`cv2_rotate_right`,
-`cv2_scale`,
-`cv2_blur`
+```
+load, convert, composition, rotate_right, scale,
+blur, wand_load, wand_convert, wand_composition,
+wand_rotate_right, wand_scale, wand_blur, cv2_load,
+cv2_rotate_right, cv2_scale, cv2_blur
+```
 
 The list can grow, please refer to:
 

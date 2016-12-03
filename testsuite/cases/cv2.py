@@ -10,7 +10,7 @@ from .base import BaseTestCase, root
 try:
     cv2.setNumThreads(1)
 except AttributeError:
-    print('!!! You are using OpenCV which does not allow to set '
+    print('!!! You are using OpenCV which does not allow you to set '
           'the number of threads')
 
 

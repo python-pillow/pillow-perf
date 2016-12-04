@@ -127,12 +127,14 @@ with benchmark results and details.
 $ cd docs
 $ npm install -g webpack
 $ npm install
-$ webpack --display-modules
+$ webpack
 ```
 
 ### Serve local & rebuild
 
 ```bash
 $ python -m SimpleHTTPServer &
-$ webpack --display-modules -w
+$ webpack -w --watch-poll
 ```
+
+`--watch-poll` will help if you have any problems with auto reload.

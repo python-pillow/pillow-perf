@@ -42,7 +42,7 @@ class PillowTestCase(BaseTestCase):
             return cls.resize(self.convert('La'),
                               size, resample).convert('LA')
 
-        if resample == Image.NEAREST:
+        if resample == Image.NEAREST or not hasattr(self.im, 'stretch'):
             im = self.im.resize(size, resample)
         else:
             im = self.im.stretch(size, resample)

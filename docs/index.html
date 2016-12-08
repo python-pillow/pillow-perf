@@ -26,12 +26,12 @@
                 the convolution-based</a> method.
         </p>
         <p>
-            "Convolution" means that for each pixel of the final image
+            "Convolution" means that for the each pixel of the final image
             we compute some area ("window")
             of the source image using weights.
             The size of the area and weights depend on chosen filter.
             There are many filters.
-            This is most common:
+            Most common of them are:
         </p>
         <ul>
             <li><code>Bilinear</code> — high-efficient filter
@@ -48,10 +48,10 @@
             Unfortunately, not all libraries and software do this.
             As a result, the output image can look extra sharp and crisp.
             In some cases, the result can
-            only vaguely reminiscent of the original.
+            only vaguely resemble the original image.
         </p>
         <p>
-            This is results of resizing
+            This are results of resizing
             <a href="https://unsplash.com/photos/OLlj17tUZnU" target="_blank">
                 4928 × 3280 px image</a> to 210 × 140 px
             using different software and different filters.
@@ -59,7 +59,7 @@
             doesn't increase the window size on downscaling.
             <a href="#library-opencv">OpenCV</a>
             also doesn't do this using <code>Bicubic</code> filter
-            but offers supersampling resampling method.
+            but it offers supersampling resampling method.
         </p>
         <!-- TODO: Add Intel Performance Primitives -->
         <div class="samples">
@@ -77,10 +77,10 @@
             </figure>
         </div>
         <p>
-            Obviously, this is meaningless to compare OpenCV
+            Obviously, it's meaningless to compare OpenCV
             <code>Bicubic</code> performance
-            with correct convolution implementations.
-            Also, supersampling is different resampling method,
+            with the correct convolution implementations.
+            Also, supersampling is a different resampling method,
             not based on convolutions.
             It is correct for downscaling
             but unacceptable for upscaling.
@@ -94,7 +94,7 @@
             (the real name of the filter is
             <a href="https://en.wikipedia.org/wiki/Lanczos_algorithm">
                 Lanczos</a>).
-            In Pillow <code>2.7.0</code> this was fixed.
+            In Pillow <code>2.7.0</code> it was fixed.
         </p>
         <div class="samples">
             <figure>
@@ -113,8 +113,8 @@
         <p>
             On the other hand, some image libraries do convolutions right.
             For example, <a href="#library-imagemagick">ImageMagick</a>.
-            The problem with ImageMagick that resampling is very slow.
-            For example, it about 20x slower than
+            The problem with ImageMagick is that resampling is very slow.
+            For example, it's about 20 times slower than
             <a href="#library-skia">Skia</a>
             which can also do high-quality convolution resampling.
         </p>
@@ -124,7 +124,7 @@
             and comparable to ImageMagick.
             Pillow 2.7 reverse the trend
             introducing several common optimizations
-            such as loops rearrangement,
+            such as loops rearrangement
             and cache-aware transposition.
         </p>
         <p class="chart">
@@ -143,27 +143,27 @@
         </p>
         <p>
             Charts show median time (lower is better)
-            required for resizing source 2560x1600 RGB image
+            required for resizing the source 2560x1600 RGB image
             to one of the four destination sizes
             using one of the filters.
-            For significant downsampling Pillow 2.7 faster than PIL
-            in <b>4 — 5.5 times</b>.
+            For significant downsampling Pillow 2.7 is
+            <b>4 — 5.5 times</b> faster than PIL.
             Pillow 3.3 introduces fixed-point arithmetic
-            for resampling which is much faster.
+            for resampling which is even faster.
             Pillow 3.4 has additional optimizations
             for large target dimensions.
-            In the end current Pillow version
+            In the end, current Pillow version is
             <b>up to 9 times</b> faster than original PIL.
         </p>
         <p>
             But this is not the end of the story.
             Starting from Pillow 3.2 you can use
             <a href="#library-pillow-simd">SIMD-enabled Pillow version</a>.
-            Pillow SIMD resampling performance is increasing
+            Pillow SIMD resampling performance is increased
             along with basic Pillow version.
             The latest Pillow SIMD compiled with AVX2
             is <b>3.5 — 4.5 times</b> faster than basic Pillow.
-            In sum, Pillow SIMD resampling performance
+            In sum, Pillow SIMD resampling performance is
             <b>20 — 40 times</b> higher than original PIL.
         </p>
         <p class="chart">
@@ -188,7 +188,7 @@
             High-quality
             <a href="https://en.wikipedia.org/wiki/Gaussian_blur">
                 Gaussian blur</a>
-            can be used to reduce image noise and detail.
+            can be used to reduce image noise and details.
             It is also used as a pre-processing stage
             in computer vision algorithms.
         </p>
@@ -197,7 +197,7 @@
             is the same as convolving the image with a Gaussian function.
             The amount of blur depends on standard deviation size (sigma).
             In theory, the Gaussian function is infinite.
-            This means that we need to compute every pixel of the source image
+            It means that we need to compute every pixel of the source image
             for every pixel in the destination image.
             In practice, Gaussian is rapidly decreasing function
             and window size more than 3 * sigma has no meaning.
@@ -209,7 +209,7 @@
             But in 2011 Mathematical Image Analysis Group
             from Saarland University
             <a href="http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf">
-                prooved</a>
+                proved</a>
             that Gaussian blur can be very closely approximated by
             series of extended box filters.
             In opposite to true Gaussian filter,
@@ -237,7 +237,7 @@
         <h2 id="transposition">Transposition</h2>
         <p>
             This is a group of operations
-            which most relevant when
+            which is most relevant when
             an image has orientation flag stored in EXIF.
             The group includes such operaions as
             rotating by right angles, mirorring and

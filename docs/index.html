@@ -20,10 +20,51 @@
     <section>
         <h2 id="benchmarks">Benchmarks</h2>
         <p>
-            The main idea of the tests is that
-            they perform <b>equivalent opertions</b>
-            using the <b>same hardware</b>.
-            And every word does matter.
+            On this page, you'll find estimates
+            for Pillow performance, comparation with
+            performance of special version Pillow-SIMD
+            and other graphic libraries.
+            Mainly libraries available for Python
+            are tested.
+        </p>
+        <p>
+            Unfortunately, there is no unified performance
+            metric for the whole library.
+            Different libraries perform operations
+            with different efficiency and sometimes in different ways.
+            It is only possible to measure performance
+            of single operation or group of operations
+            when solving particular task.
+            For good comporation you need to be sure
+            in <a href="#uniform-results">uniform results</b>
+            of tested operations and
+            <a href="#same-resources">same resources</b>
+            are used to perform an operation.
+        </p>
+
+        <h3 id="uniform-results">Uniform results</h3>
+        <p>
+            A operation could be performed
+            using different algorithms.
+            Thus, the chosen algorithm
+            can significantly affect the result. 
+            For example, if you want to perform a resize,
+            you can use very fast nearest neighbor algorithm
+            and get very poor quality.
+            Or you can use convolution resampling and get
+            a reasonable quality for most cases.
+            Depending on your needs, you can or can not
+            consider nearest neighbor resizing.
+        </p>
+        <p>
+            In this benchmarks we always assume that
+            you are expecting results
+            as close as possible to each other.
+        </p>
+
+        <h3 id="same-resources">Same resources</h3>
+        <p>
+            
         </p>
         <p>
             Equivalent operations mean that

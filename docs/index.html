@@ -21,35 +21,36 @@
         <h2 id="benchmarks">Benchmarks</h2>
         <p>
             On this page, you'll find estimates
-            for Pillow performance, comparation with
-            performance of special version Pillow-SIMD
+            for Pillow performance, comparison with
+            the performance of special version Pillow-SIMD
             and other graphic libraries.
-            Mainly libraries available for Python
+            Mainly, libraries available for Python
             are tested.
         </p>
         <p>
             Unfortunately, there is no unified performance
-            metric for the whole library.
+            metric for the libraries.
             Different libraries perform operations
             with different efficiency and sometimes in different ways.
-            It is only possible to measure performance
-            of single operation or group of operations
-            when solving particular task.
-            For good comporation you need to be sure
-            in <a href="#uniform-results">uniform results</a>
-            of tested operations and
-            <a href="#same-resources">same resources</a>
+            It is only possible to measure the performance
+            of a single operation or group of operations
+            when solving a particular task.
+            For a good comparison, you need to be sure
+            that tested libraries give
+            the <a href="#same-outcome">same outcome</a>
+            for an operation
+            and the <a href="#same-resources">same resources</a>
             are used to perform an operation.
         </p>
 
-        <h3 id="uniform-results">Uniform results</h3>
+        <h3 id="same-outcome">Same outcome</h3>
         <p>
-            A operation could be performed
+            An operation could be performed
             using different algorithms.
             Thus, the chosen algorithm
             can significantly affect the result. 
             For example, if you want to perform a resize,
-            you can use very fast nearest neighbor algorithm
+            you can use the very fast nearest neighbor algorithm
             and get very poor quality.
             Or you can use convolution resampling and get
             a reasonable quality for most cases.
@@ -57,8 +58,8 @@
             consider nearest neighbor resizing.
         </p>
         <p>
-            In this benchmarks we always assume that
-            you are expecting results
+            In this benchmarks, we always assume that
+            you expect results
             as close as possible to each other.
         </p>
 

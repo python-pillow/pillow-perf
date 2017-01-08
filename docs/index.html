@@ -68,28 +68,28 @@
             For example, graphics processing unit
             or several CPU cores.
 
-            В некоторых случаях это может быть преимуществом,
-            потому что позволяет сократить время выполнения операции.
-            Грубо говоря, если время выполнения операции
-            на одном ядре процессора составляет 2 секунды,
-            и библиотека может сократить его до 0.5 секунд,
-            используя 4 ядра, то она может быть предпочтительнее
-            библиотеки, выполняющей операцию за 1 секунду,
-            но не умеющей использоваться несколько ядер.
-
-            Однако часто важно не абсолютное время операции,
-            а пропускная способность.
-            Если нам нужно произвести сразу много операций,
-            мы можем производить их параллельно.
-            В этом случае пропускная пособность первой библиотеки
-            не измениться: 2 операции в секунду.
-            А пропускная способность второй будет 4 операции в секунду.
-            Вторая библиотека будет препочтительнее.
-        </p>
+            For some cases, this could be an advantage
+            because it shrinks execution time.
+            For example, if the execution time
+            using one core is 2 seconds,
+            the library can reduce it to 0.5 seconds
+            using 4 cores.
+            This library gets the advantage over the library
+            which performs the same operation in 1 second
+            but can't use multiple cores.
+        <p>
+            However, sometimes overal throughput
+            is more important than execution time.
+            If you need to perform the operation
+            on a group of images, you can do it in parallel.
+            In this case, the first library's throughput
+            remains the same: 2 operations per second.
+            The second library's throughput
+            is 4 operations per second.
+            The second library is preferred.
         <p>
             In this benchmarks, we measure the throughput
             on single CPU core, not minimum achievable execution time.
-        </p>
 
         <h3 id="test-suites">Test suites</h3>
         <p>

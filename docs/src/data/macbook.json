@@ -107,8 +107,9 @@
                 },
                 {
                     "name": "pillow-skia",
-                    "title": "Skia vs IPP vs Pillow SIMD",
+                    "title": "Pillow SIMD vs other libraries",
                     "set": [
+                        "imagemagick-6.8",
                         "skia-53",
                         "ipp-2017",
                         "pillow-simd-3.4-avx2"

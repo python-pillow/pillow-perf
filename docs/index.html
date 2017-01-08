@@ -46,7 +46,7 @@
             Or you can use convolution resampling and get
             a reasonable quality for most cases.
             Depending on your needs, you can or can not
-            consider nearest neighbor resizing.
+            consider the nearest neighbor method.
         <p>
             In this benchmarks, we always assume that
             you expect results
@@ -69,7 +69,7 @@
             which performs the same operation in 1 second
             but can't use multiple cores.
         <p>
-            However, sometimes overal throughput
+            However, sometimes overall throughput
             is more important than execution time.
             If you need to perform the operation
             on a group of images, you can do it in parallel.
@@ -100,8 +100,8 @@
         <dl class="libraries">
             <dt id="library-pil">PIL</dt>
             <dd>
-                Python image library. Was initialy released for Python 1.2 in 1995.
-                Last version is 1.1.7 was released on November 15, 2009.
+                Python image library. Was initially released for Python 1.2 in 1995.
+                The last version is 1.1.7 was released on November 15, 2009.
                 Includes image codecs and image manipulation routines.
             </dd>
 
@@ -117,7 +117,7 @@
             <dt id="library-pillow-simd">Pillow SIMD</dt>
             <dd>
                 Highly optimized "following" Pillow fork with speedups
-                for some common operations using SIMD inctructions.
+                for some common operations using SIMD instructions.
                 <a href="https://github.com/uploadcare/pillow-simd#pillow-simd">
                     readme</a>
             </dd>
@@ -133,7 +133,7 @@
             <dt id="library-skia">Skia</dt>
             <dd>
                 Highly efficient 2D graphics library. It serves as the graphics
-                engine for Chrome and Chrome OS, Android, Firefox and Firefox OS.
+                engine for Chrome and Chrome OS, Android, Firefox, and Firefox OS.
                 <a href="https://skia.org">homepage</a>
             </dd>
             <dt id="library-opencv">OpenCV</dt>
@@ -211,7 +211,7 @@
             In some cases, the result can
             only vaguely resemble the original image.
         <p>
-            This are results of resizing
+            These are results of resizing
             <a href="https://unsplash.com/photos/OLlj17tUZnU" target="_blank">
                 4928 × 3280 px image</a> to 210 × 140 px
             using different software and different filters.
@@ -303,7 +303,7 @@
             required for resizing the source 2560x1600 RGB image
             to one of the four destination sizes
             using one of the filters.
-            For significant downsampling Pillow 2.7 is
+            For significant downsampling, Pillow 2.7 is
             <b>4 — 5.5 times</b> faster than PIL.
             Pillow 3.3 introduces fixed-point arithmetic
             for resampling which is even faster.
@@ -357,7 +357,7 @@
             In practice, Gaussian is rapidly decreasing function
             and window size more than 3 * sigma has no meaning.
         <p>
-            As a result, Gaussian blur performance should depends
+            As a result, Gaussian blur performance should depend
             on windows size and sigma.
             For most implementations this is true.
             But in 2011 Mathematical Image Analysis Group
@@ -374,7 +374,7 @@
             According to the tests, even if other convolution implementations
             can beat box filters approximation on small sigma,
             this benefit disappears alongside with sigma increasing.
-            SIMD gives additional 2x boost.
+            SIMD gives an additional 2x boost.
 
         <p class="chart">
             <canvas id="chart-blur" width="1100" height="300"></canvas>
@@ -392,21 +392,21 @@
             This is a group of operations
             which is most relevant when
             an image has orientation flag stored in EXIF.
-            The group includes such operaions as
-            rotating by right angles, mirorring and
+            The group includes such operations as
+            rotating by right angles, mirroring and
             <a href="https://en.wikipedia.org/wiki/Transpose">
                 transposition</a> itself.
-            It differs from regular rotation because
-            this operation are non-destructive
+            It differs from the regular rotation because
+            these operations are non-destructive
             (ie pixel values are not modified)
             and can be performed very fast.
         <p>
-            Mirorring and rotating by 180° are reasonable fast
+            Mirroring and rotating by 180° are reasonable fast
             in most implementations.
             There was the issue in Pillow
             with rotating by 90° and 270°
             because that operations can consume
-            CPU cache highly inefficient.
+            CPU cache highly inefficiently.
             In Pillow 2.7 the cache-aware algorithm was implemented.
             Also, transposition was added.
 
@@ -430,7 +430,7 @@
             <li><code>LA</code> — luminance values with alpha channel</li>
         </ul>
         <p>
-            Convertion from <code>RGBA</code> to <code>RGBa</code>
+            Conversion from <code>RGBA</code> to <code>RGBa</code>
             can be used to normalize pixel values
             before resizing and other transformations.
 

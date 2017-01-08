@@ -376,8 +376,8 @@
             this benefit disappears alongside with sigma increasing.
             SIMD gives additional 2x boost.
 
-        <p>
-            <canvas id="chart-blur" width="1100" height="400"></canvas>
+        <p class="chart">
+            <canvas id="chart-blur" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-blur"), 'blur-4k-rgb'
@@ -411,7 +411,7 @@
             Also, transposition was added.
 
         <p class="chart">
-            <canvas id="chart-transposition" width="1100" height="350"></canvas>
+            <canvas id="chart-transposition" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-transposition"), 'transposition-4k-rgb'
@@ -435,7 +435,7 @@
             before resizing and other transformations.
 
         <p class="chart">
-            <canvas id="chart-conversion" width="1100" height="350"></canvas>
+            <canvas id="chart-conversion" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-conversion"), 'conversion-4k-rgb'
@@ -454,8 +454,8 @@
             alpha compositing mixes color and alpha channels
             with different coefficients.
 
-        <p>
-            <canvas id="chart-composition" width="1100" height="350"></canvas>
+        <p class="chart">
+            <canvas id="chart-composition" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
                     document.getElementById("chart-composition"), 'composition-4k-rgb'

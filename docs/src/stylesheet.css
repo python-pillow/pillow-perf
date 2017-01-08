@@ -134,10 +134,12 @@ section {
 .samples {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -30px;
 }
     .samples figure {
         margin: 1em 30px 0 0;
+    }
+    .samples figure:last-child {
+        margin-right: 0;
     }
     .samples figcaption {
         font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
@@ -147,7 +149,7 @@ section {
     }
 
 dl.libraries {
-    max-width: 800px;
+    max-width: 690px;
 }
     dl.libraries dt {
         float: left;

@@ -153,7 +153,7 @@ dl.libraries {
 }
     dl.libraries dt {
         float: left;
-        width: 130px;
+        margin-right: 10px;
 
         font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
         font-weight: 700;
@@ -161,7 +161,7 @@ dl.libraries {
         font-size: 16px;
     }
     dl.libraries dd {
-        margin: 0 0 8px 140px;
+        margin: 0 0 12px 120px;
     }
     dl.libraries dd:after {
         content: "";

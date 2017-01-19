@@ -54,11 +54,11 @@ pushd Pillow
     ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
   fi
 
-  pillow_checkout v3.4.1.post1 -msse4
+  pillow_checkout v3.4.1.post2 -msse4
   ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
 
   if [ "$1" != "no" ]; then
-    pillow_checkout v3.4.1.post1 -mavx2
+    pillow_checkout v3.4.1.post2 -mavx2
     ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
   fi
 

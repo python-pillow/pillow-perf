@@ -22,7 +22,7 @@ class PillowTestCase(BaseTestCase):
         im = Image.open(root('resources', 'color_circle.png'))
         im = im.convert(mode)
         im = self.resize(im, size, Image.BICUBIC)
-        assert im.size == size
+        assert im.size == tuple(size)
         return [im]
 
     @classmethod

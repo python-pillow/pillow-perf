@@ -199,8 +199,7 @@
             <li><code>Bilinear</code> — high-efficiency filter
                 with the small window and a blurry result;</li>
             <li><code>Bicubic</code> — high-quality filter with medium window;</li>
-            <li><code>Lanczos</code> — allows a trade off of quality over performance
-                in some cases.</li>
+            <li><code>Lanczos</code> — high-quality filter with large window.</li>
         </ul>   
         <p>
             For the image downscaling
@@ -279,7 +278,7 @@
         <p>
             From the very beginning, PIL and Pillow resampling
             performance used to be quite low
-            compared to ImageMagick.
+            and similar to ImageMagick's performance.
             Pillow 2.7 reverses the trend
             introducing several common optimizations
             such as loops rearrangement
@@ -372,9 +371,10 @@
             relative to blur radius.
         <p>
             This approach was implemented in Pillow <code>2.7.0</code>.
-            According to the tests, even if other convolution implementations
-            are superior to box filters' approximation with small sigma,
-            this benefit disappears alongside with a larger sigma.
+            According to the tests, even if box filters' approximation
+            could be little slower with a small sigma,
+            with a larger sigma this gap disappears and 
+            box filters' approximation becomes much faster.
             SIMD gives an additional 2x boost.
 
         <p class="chart">

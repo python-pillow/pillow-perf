@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pillow performance</title>
+    <title>Pillow Performance</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
@@ -16,23 +16,23 @@
         <h2 id="benchmarks">Benchmarks</h2>
         <p>
             On this page, you'll find estimates
-            for Pillow performance, comparison with
-            the performance of special version Pillow-SIMD
-            and other graphic libraries.
-            Mainly, libraries available for Python
-            are tested.
+            of Pillow's performance, a comparison of 
+            Pillow's performance with Pillow-SIMD
+            (a special performance-optimized version of
+            Pillow), and other graphic libraries.
+            Mainly Python libraries are tested.
         <p>
             Unfortunately, there is no single performance
-            metric for the libraries.
+            metric for these libraries.
             Different libraries perform operations
             with different efficiency and sometimes in different ways.
             It is only possible to measure the performance
             of a single operation or group of operations.
             For a good comparison, you need to be sure
-            that tested libraries give
+            that the tested libraries give
             the same outcome for an operation
             and the same resources
-            are used to perform an operation.
+            are used to perform the operation.
 
         <h3 id="same-outcome">Same outcome</h3>
         <p>
@@ -48,7 +48,7 @@
             Depending on your needs, you can or can not
             consider the nearest neighbor method.
         <p>
-            In this benchmarks, we always assume that
+            In these benchmarks, we always assume that
             you expect results
             as close as possible to each other.
             This allows to directly compare the execution time.
@@ -57,7 +57,7 @@
         <p>
             Some libraries could use more processing power than others.
             For example, graphics processing unit
-            or several CPU cores.
+            or multi-core CPUs.
 
             For some cases, this could be an advantage
             because it shrinks execution time.
@@ -65,7 +65,7 @@
             using one core is 2 seconds,
             the library can reduce it to 0.5 seconds
             using 4 cores.
-            This library gets the advantage over the library
+            This library has an advantage over the library
             which performs the same operation in 1 second
             but can't use multiple cores.
         <p>
@@ -79,7 +79,7 @@
             is 4 operations per second.
             The second library is preferred.
         <p>
-            In this benchmarks, we measure the throughput
+            In these benchmarks, we measure the throughput
             on single CPU core, not minimum achievable execution time.
 
         <h3 id="test-suites">Test suites</h3>
@@ -91,7 +91,7 @@
             <a href="https://gist.github.com/homm/6e048cb0dad135b6db63b924458730e8">
                 test files</a>.
             Each test is run 21 times
-            and mean execution time is taken.
+            and the mean execution time is calculated.
     </section>
 
     <section>
@@ -100,24 +100,25 @@
         <dl class="libraries">
             <dt id="library-pil">PIL</dt>
             <dd>
-                Python image library. Was initially released for Python 1.2 in 1995.
-                The last version is 1.1.7 was released on November 15, 2009.
+                Python Imaging Library. Initially released for Python 1.2 in 1995.
+                Last version, 1.1.7, released on November 15, 2009.
                 Includes image codecs and image manipulation routines.
             </dd>
 
             <dt id="library-pillow">Pillow</dt>
             <dd>
-                PIL fork. Originally was designed to simplify installation
-                in the modern environment. Starting from version 2.0 (2013)
+                Python Imaging Library (fork). Originally a packaging fork, designed to
+                facilitate more reliable installation from the Python Package
+                Index. Starting with version 2.0 (2013), Pillow
                 supports Python 3 and is actively maintained and developed.
                 <a href="https://pillow.readthedocs.io/en/3.4.x/">
                     docs</a>
             </dd>
 
-            <dt id="library-pillow-simd">Pillow SIMD</dt>
+            <dt id="library-pillow-simd">Pillow-SIMD</dt>
             <dd>
-                Highly optimized "following" Pillow fork with speedups
-                for some common operations using SIMD instructions.
+                Highly optimized downstream Pillow fork with performance
+                improvements made for common operations using SIMD instructions.
                 <a href="https://github.com/uploadcare/pillow-simd#pillow-simd">
                     readme</a>
             </dd>
@@ -138,7 +139,7 @@
             </dd>
             <dt id="library-opencv">OpenCV</dt>
             <dd>
-                OpenCV aimed at real-time computer vision.
+                OpenCV aims to support real-time computer vision.
                 Originally developed by Intel's research center,
                 it was later supported by Willow Garage
                 and is now maintained by Itseez.
@@ -146,8 +147,8 @@
             </dd>
             <dt id="library-ipp">IPP</dt>
             <dd>
-                Intel Integrated Performance Primitives is
-                high-quality, low-level building blocks
+                Intel Integrated Performance Primitives.
+                High-quality, low-level building blocks
                 for image processing applications.
                 Intel IPP is highly optimized using
                 SSE and AVX2 instruction sets.
@@ -188,38 +189,37 @@
             <a href="http://www.imagemagick.org/Usage/filter/#filter">
                 the convolution-based</a> method.
         <p>
-            "Convolution" means that for the each pixel of the final image
+            "Convolution" means that for each pixel of the final image
             we compute some area ("window")
             of the source image using weights.
-            The size of the area and weights depend on chosen filter.
+            The size of the area and weights depend on the chosen filter.
             There are many filters.
-            Most common of them are:
+            The most common of which are:
         <ul>
-            <li><code>Bilinear</code> — high-efficient filter
+            <li><code>Bilinear</code> — high-efficiency filter
                 with the small window and a blurry result;</li>
             <li><code>Bicubic</code> — high-quality filter with medium window;</li>
-            <li><code>Lanczos</code> — allows trade a quality over performance
-                in some cases.</li>
+            <li><code>Lanczos</code> — high-quality filter with large window.</li>
         </ul>   
         <p>
             For the image downscaling
             the window size should be increased.
-            This allows taking into account
+            This takes into account
             all pixels of the original image.
             Unfortunately, not all libraries and software do this.
             As a result, the output image can look extra sharp and crisp.
-            In some cases, the result can
-            only vaguely resemble the original image.
+            In some cases, the result
+            only vaguely resembles the original image.
         <p>
-            These are results of resizing
+            These are the results of resizing a
             <a href="https://unsplash.com/photos/OLlj17tUZnU" target="_blank">
                 4928 × 3280 px image</a> to 210 × 140 px
             using different software and different filters.
             Google Сhome's <code>&lt;canvas&gt;</code> implementation
             doesn't increase the window size on downscaling.
             <a href="#library-opencv">OpenCV</a>
-            also doesn't do this using <code>Bicubic</code> filter
-            but it offers supersampling resampling method.
+            also doesn't do this using the <code>Bicubic</code> filter
+            but it offers a supersampling resampling method.
 
         <div class="samples">
             <figure>
@@ -236,7 +236,7 @@
             </figure>
         </div>
         <p>
-            Obviously, it's meaningless to compare OpenCV
+            Obviously, it's meaningless to compare OpenCV's
             <code>Bicubic</code> performance
             with the correct convolution implementations.
             Also, supersampling is a different resampling method,
@@ -248,11 +248,11 @@
             <a href="#library-pil">PIL</a>
             also didn't increase the window size
             for <code>Bilinear</code> and <code>Bicubic</code> filters,
-            while did for <code>Antialias</code>
+            but it did for <code>Antialias</code>
             (the real name of the filter is
             <a href="https://en.wikipedia.org/wiki/Lanczos_algorithm">
                 Lanczos</a>).
-            In Pillow <code>2.7.0</code> it was fixed.
+            In Pillow <code>2.7.0</code> this was finally fixed.
 
         <div class="samples">
             <figure>
@@ -278,8 +278,8 @@
         <p>
             From the very beginning, PIL and Pillow resampling
             performance used to be quite low
-            and comparable to ImageMagick.
-            Pillow 2.7 reverse the trend
+            and similar to ImageMagick's performance.
+            Pillow 2.7 reverses the trend
             introducing several common optimizations
             such as loops rearrangement
             and cache-aware transposition.
@@ -310,17 +310,17 @@
             Pillow 3.4 has additional optimizations
             for large target dimensions.
             In the end, current Pillow version is
-            <b>up to 9 times</b> faster than original PIL.
+            <b>up to 9 times</b> faster than the original PIL.
         <p>
             But this is not the end of the story.
-            Starting from Pillow 3.2 you can use
+            Starting with Pillow 3.2 you can use a
             <a href="#library-pillow-simd">SIMD-enabled Pillow version</a>.
-            Pillow SIMD resampling performance is increased
-            along with basic Pillow version.
-            The latest Pillow SIMD compiled with AVX2
-            is <b>3.5 — 4.5 times</b> faster than basic Pillow.
-            In sum, Pillow SIMD resampling performance is
-            <b>20 — 40 times</b> higher than original PIL.
+            Pillow-SIMD resampling performance is significantly increased
+            compared to Pillow.
+            The latest Pillow-SIMD compiled with AVX2
+            is <b>3.5 — 4.5 times</b> faster than Pillow.
+            In sum, Pillow-SIMD resampling performance is
+            <b>20 — 40 times</b> higher than the original PIL.
 
         <p class="chart">
             <canvas id="chart-resample-simd" width="1100" height="400"></canvas>
@@ -354,11 +354,11 @@
             In theory, the Gaussian function is infinite.
             It means that we need to compute every pixel of the source image
             for every pixel in the destination image.
-            In practice, Gaussian is rapidly decreasing function
-            and window size more than 3 * sigma has no meaning.
+            In practice, Gaussian is a rapidly decreasing function
+            and a window size more than 3 * sigma has no meaning.
         <p>
             As a result, Gaussian blur performance should depend
-            on windows size and sigma.
+            on window size and sigma.
             For most implementations this is true.
             But in 2011 Mathematical Image Analysis Group
             from Saarland University
@@ -366,14 +366,15 @@
                 proved</a>
             that Gaussian blur can be very closely approximated by
             series of extended box filters.
-            In opposite to true Gaussian filter,
-            box filters can be performed in constant time
+            Unlike a true Gaussian filter,
+            box filter can be performed in constant time
             relative to blur radius.
         <p>
             This approach was implemented in Pillow <code>2.7.0</code>.
-            According to the tests, even if other convolution implementations
-            can beat box filters approximation on small sigma,
-            this benefit disappears alongside with sigma increasing.
+            According to the tests, even if approximation with box filters
+            could be little slower with a small sigma,
+            with a larger sigma this gap disappears and 
+            approximation becomes much faster.
             SIMD gives an additional 2x boost.
 
         <p class="chart">
@@ -391,21 +392,21 @@
         <p>
             This is a group of operations
             which is most relevant when
-            an image has orientation flag stored in EXIF.
+            an image has an orientation flag stored in EXIF.
             The group includes such operations as
             rotating by right angles, mirroring and
             <a href="https://en.wikipedia.org/wiki/Transpose">
                 transposition</a> itself.
-            It differs from the regular rotation because
+            It differs from regular rotation because
             these operations are non-destructive
             (ie pixel values are not modified)
             and can be performed very fast.
         <p>
-            Mirroring and rotating by 180° are reasonable fast
+            Mirroring and rotating by 180° are reasonably fast
             in most implementations.
-            There was the issue in Pillow
+            There was an issue in Pillow
             with rotating by 90° and 270°
-            because that operations can consume
+            because those operations can consume
             CPU cache highly inefficiently.
             In Pillow 2.7 the cache-aware algorithm was implemented.
             Also, transposition was added.
@@ -450,7 +451,7 @@
             <a href="https://en.wikipedia.org/wiki/Alpha_compositing">
                 Alpha compositing</a>
             is used for overlaying two semitransparent images.
-            In opposite to alpha blending,
+            Unlike alpha blending,
             alpha compositing mixes color and alpha channels
             with different coefficients.
 

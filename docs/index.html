@@ -367,14 +367,14 @@
             that Gaussian blur can be very closely approximated by
             series of extended box filters.
             Unlike a true Gaussian filter,
-            box filters can be performed in constant time
+            box filter can be performed in constant time
             relative to blur radius.
         <p>
             This approach was implemented in Pillow <code>2.7.0</code>.
-            According to the tests, even if box filters' approximation
+            According to the tests, even if approximation with box filters
             could be little slower with a small sigma,
             with a larger sigma this gap disappears and 
-            box filters' approximation becomes much faster.
+            approximation becomes much faster.
             SIMD gives an additional 2x boost.
 
         <p class="chart">

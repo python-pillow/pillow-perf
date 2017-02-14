@@ -25,6 +25,7 @@ var systems = [
   require("./macbook.json"),
   require("./c3.large.json"),
   require("./c4.large.json"),
+  require("./amd.a10.7800.json"),
 ];
 
 module.exports = {

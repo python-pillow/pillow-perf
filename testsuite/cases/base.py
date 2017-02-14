@@ -55,6 +55,9 @@ class BaseTestCase(object):
     def readable_args(self):
         return list(map(str, self.args))
 
+    def readable_name(self):
+        return " ".join(self.readable_args())
+
 
 class BaseScaleCase(object):
     def create_test_data(self, size, mode):
@@ -78,6 +81,9 @@ class BaseScaleCase(object):
             int(round(self.scale * width)) if self.hpass else width,
             int(round(self.scale * height)) if self.vpass else height,
         )
+
+    def readable_name(self):
+        return 'to ' + super(BaseScaleCase, self).readable_name()
 
 
 class BaseConvertCase(object):

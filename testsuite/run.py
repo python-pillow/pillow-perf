@@ -63,7 +63,10 @@ if __name__ == '__main__':
         test_cases = load_cases(test_suite, unknown_args)
         results = []
 
-        print("\n###", test_suite)
+        test_suite_name = test_suite.capitalize().replace('_', ' ')
+        print("\n" + test_suite_name,
+              '{}×{}'.format(*args.size), args.mode, 'image')
+
         for case in test_cases:
             test = case(args.size, args.mode)
             stats = run_test(test, args.runs, args.progress)
@@ -71,9 +74,8 @@ if __name__ == '__main__':
 
             results.append((test.readable_args(), duration))
 
-            name = " ".join(test.readable_args())
-            print('    {:20} {:8.5f} s {:8.2f} Mpx/s'.format(
-                name, duration, pixels / duration / 1000 / 1000,
+            print('    {:18} {:8.5f} s {:8.2f} Mpx/s'.format(
+                test.readable_name(), duration, pixels / duration / 1000 / 1000,
             ))
             # free before create new test
             test = None

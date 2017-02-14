@@ -7,7 +7,7 @@ if [ ! -d ~/env/pillow-perf ]; then
   rm -rf ~/env/pillow-perf
   virtualenv ~/env/pillow-perf
   ~/env/pillow-perf/bin/pip install -r ../testsuite/requirements.txt
-  ~/env/pillow-perf/bin/pip install opencv-python==3.1.0.3
+  ~/env/pillow-perf/bin/pip install opencv-python==3.1.0.5
 fi
 
 source ~/env/pillow-perf/bin/activate

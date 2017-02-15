@@ -303,13 +303,13 @@
             to one of the four destination sizes
             using one of the filters.
             For significant downsampling, Pillow 2.7 is
-            <b>4 — 5.5 times</b> faster than PIL.
+            <b>2 — 4 times</b> faster than PIL.
             Pillow 3.3 introduces fixed-point arithmetic
             for resampling which is even faster.
             Pillow 3.4 has additional optimizations
             for large target dimensions.
             In the end, current Pillow version is
-            <b>up to 9 times</b> faster than the original PIL.
+            <b>up to 7 times</b> faster than the original PIL.
         <p>
             But this is not the end of the story.
             Starting with Pillow 3.2 you can use a
@@ -317,9 +317,9 @@
             Pillow-SIMD resampling performance is significantly increased
             compared to Pillow.
             The latest Pillow-SIMD compiled with AVX2
-            is <b>3.5 — 4.5 times</b> faster than Pillow.
+            is <b>3.5 — 6 times</b> faster than Pillow.
             In sum, Pillow-SIMD resampling performance is
-            <b>20 — 40 times</b> higher than the original PIL.
+            <b>12 — 35 times</b> higher than the original PIL.
 
         <p class="chart">
             <canvas id="chart-resample-simd" width="1100" height="400"></canvas>

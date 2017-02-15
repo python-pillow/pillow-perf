@@ -1,7 +1,7 @@
 {
-    "title": "Amazon Elastic Compute Cloud c4.large instance",
+    "title": "Amazon EC2 c4.large instance",
     "OS": "Ubuntu 16.04.1 LTS 64bit",
-    "CPU": "Intel® Xeon® E5-2666 v3 @ 2.90GHz",
+    "CPU": "Intel Xeon E5-2666 v3 @ 2.90GHz",
 
     "competitions": [
         {

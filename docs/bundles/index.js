@@ -298,7 +298,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__inner,\n    .selects-grid__cell {\n        width: 45%;\n        margin-right: 5%;\n        margin-bottom: 50px;\n    }\n    .selects-grid__cell {\n        position: relative;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__cell.-long,\n    .selects-grid__inner.-long {\n        width: 95%;\n    }\n    .selects-grid__inner {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    }\n        .selects-grid__inner .selects-grid__cell {\n            width: 100%;\n            margin-right: 0;\n            margin-bottom: 0;\n        }\n        .selects-grid__inner .selects-grid__cell:last-child {\n            margin-top: 50px;\n        }\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    \n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
@@ -11574,9 +11574,9 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"title": "MacBook Pro (Retina, 13-inch, Late 2013)",
+		"title": "MacBook Pro late 2013",
 		"OS": "Ubuntu 16.04.1 LTS 64bit",
-		"CPU": "Intel® Core™ i5-4258U CPU @ 2.40GHz",
+		"CPU": "Intel Core i5-4258U @ 2.40GHz",
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
@@ -12996,9 +12996,9 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"title": "Amazon Elastic Compute Cloud c3.large instance",
+		"title": "Amazon EC2 c3.large instance",
 		"OS": "Ubuntu 16.04.1 LTS 64bit",
-		"CPU": "Intel® Xeon® E5-2680 v2 @ 2.80GHz",
+		"CPU": "Intel Xeon E5-2680 v2 @ 2.80GHz",
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
@@ -14034,9 +14034,9 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"title": "Amazon Elastic Compute Cloud c4.large instance",
+		"title": "Amazon EC2 c4.large instance",
 		"OS": "Ubuntu 16.04.1 LTS 64bit",
-		"CPU": "Intel® Xeon® E5-2666 v3 @ 2.90GHz",
+		"CPU": "Intel Xeon E5-2666 v3 @ 2.90GHz",
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",

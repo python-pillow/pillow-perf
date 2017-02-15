@@ -1,7 +1,7 @@
 {
-    "title": "Amazon Elastic Compute Cloud c3.large instance",
+    "title": "Amazon EC2 c3.large instance",
     "OS": "Ubuntu 16.04.1 LTS 64bit",
-    "CPU": "Intel® Xeon® E5-2680 v2 @ 2.80GHz",
+    "CPU": "Intel Xeon E5-2680 v2 @ 2.80GHz",
 
     "competitions": [
         {

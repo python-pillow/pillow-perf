@@ -95,15 +95,20 @@ $ CC="ccache cc" ./run.sh # Speed up subsequent builds using CC cache
 
 ### Submit results
 
-We are highly concerned in tests on latest AMD CPU.
+We are concerned in tests on a AMD CPU with AVX2 (Zen microarchitecture)
+and on an Intel Skylake CPU.
 
 1. Before run any tests, please ensure that
 you have exited all browsers on host machine,
 closed all audio players and stopped backup system.
+The full test lasts up to 15 minutes.
 
-2. Run [automatic test](#automatic-test) using
-default `--size`, `--mode` and `--runs` settings.
-Also, please include `--json` option.
+2. Run [automatic test](#automatic-test) with `--json` option.
+Please avoid custom `--size`, `--mode` and `--runs` settings.
+
+    ```bash
+    $ ./run.sh - --json
+    ```
 
 3. Collect the following information about your system:
 name, OS version, CPU. For example:

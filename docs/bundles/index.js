@@ -13091,6 +13091,15 @@
 							"pillow-3.4",
 							"pillow-simd-3.4-sse4"
 						]
+					},
+					{
+						"name": "pillow-skia",
+						"title": "Pillow SIMD vs other libraries",
+						"set": [
+							"imagemagick-6.8",
+							"pillow-3.4",
+							"pillow-simd-3.4-sse4"
+						]
 					}
 				],
 				"competitors": [
@@ -14144,10 +14153,10 @@
 					},
 					{
 						"name": "pillow-skia",
-						"title": "Pillow SIMD 3.4 vs Skia",
+						"title": "Pillow SIMD vs other libraries",
 						"set": [
+							"imagemagick-6.8",
 							"skia-53",
-							"pillow-simd-3.4-sse4",
 							"pillow-simd-3.4-avx2"
 						]
 					}
@@ -15481,6 +15490,15 @@
 						"set": [
 							"pillow-2.0",
 							"pillow-2.7",
+							"pillow-3.4",
+							"pillow-simd-3.4-sse4"
+						]
+					},
+					{
+						"name": "pillow-skia",
+						"title": "Pillow SIMD vs other libraries",
+						"set": [
+							"imagemagick-6.8",
 							"pillow-3.4",
 							"pillow-simd-3.4-sse4"
 						]

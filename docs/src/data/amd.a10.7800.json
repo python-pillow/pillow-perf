@@ -92,6 +92,15 @@
                         "pillow-3.4",
                         "pillow-simd-3.4-sse4"
                     ]
+                },
+                {
+                    "name": "pillow-skia",
+                    "title": "Pillow SIMD vs other libraries",
+                    "set": [
+                        "imagemagick-6.8",
+                        "pillow-3.4",
+                        "pillow-simd-3.4-sse4"
+                    ]
                 }
             ],
             "competitors": [

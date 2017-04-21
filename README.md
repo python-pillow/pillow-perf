@@ -58,7 +58,7 @@ Vagrant or host (tested on Ubuntu 14.04 and 16.04).
 
 ### Run in Vagrant
 
-Please, ensure that you are using Vagrant version 1.8.7 or latter.
+Please, ensure that you are using Vagrant version 1.8.7 or later.
 
 ```bash
 $ cd auto

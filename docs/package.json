@@ -18,7 +18,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "https://github.com/homm/pillow-perf",
+  "repository": "https://github.com/python-pillow/pillow-perf",
   "author": "",
   "license": "ISC"
 }

@@ -51,7 +51,7 @@ while others (`convert`, `composition`) work regardless of current mode.
 
 Automatic test launches test suites against relevant Pillow versions
 including SSE4 and AVX2.
-Currently it works only on Linux Ubuntu.
+Currently it only works on Linux Ubuntu.
 
 You have two ways to run the test:
 Vagrant or host (tested on Ubuntu 14.04 and 16.04).
@@ -66,7 +66,7 @@ $ vagrant up
 ```
 
 It will automatically start a full test
-which can took over 10 minutes.
+which can take over 10 minutes.
 Run the test again:
 
 ```bash
@@ -98,9 +98,9 @@ $ CC="ccache cc" ./run.sh # Speed up subsequent builds using CC cache
 We are concerned in tests on a AMD CPU with AVX2 (Zen microarchitecture)
 and on an Intel Skylake CPU.
 
-1. Before run any tests, please ensure that
-you have exited all browsers on host machine,
-closed all audio players and stopped backup system.
+1. Before running any tests, please ensure that
+you have exited all browsers on the host machine,
+closed all audio players and stopped any backup systems.
 The full test lasts up to 15 minutes.
 
 2. Run [automatic test](#automatic-test) with `--json` option.
@@ -118,7 +118,7 @@ name, OS version, CPU. For example:
     * CPU: Intel® Core™ i5-4258U CPU @ 2.40GHz
 
 4. Create an [issue](https://github.com/python-pillow/pillow-perf/issues)
-with collected information and test output.
+with the collected information and test output.
 
 
 # Docs
@@ -135,7 +135,7 @@ $ npm install
 $ webpack
 ```
 
-### Serve local & rebuild
+### Serve locally & rebuild
 
 ```bash
 $ python -m SimpleHTTPServer &

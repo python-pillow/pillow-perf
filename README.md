@@ -1,6 +1,6 @@
 # Test Suites
 
-[![Build Status](https://travis-ci.org/python-pillow/pillow-perf.svg?branch=master)](https://travis-ci.org/python-pillow/pillow-perf)
+[![Build Status](https://api.travis-ci.org/python-pillow/pillow-perf.svg?branch=master)](https://travis-ci.org/python-pillow/pillow-perf)
 
 Performance tests divided into suites.
 

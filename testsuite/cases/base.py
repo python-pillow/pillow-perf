@@ -105,3 +105,28 @@ class BaseAllocateCase(BaseTestCase):
 
     def readable_args(self):
         return ['mode ' + self.mode]
+
+
+class BaseCropCase(object):
+    def create_test_data(self, size, mode):
+        self.update_dest_size(size[0], size[1])
+        return super(BaseCropCase, self).create_test_data(size, mode)
+
+    def handle_args(self, scale):
+        self.scale = scale
+
+    def readable_args(self):
+        return ["x".join(map(str, self.dest_size))]
+
+    def update_dest_size(self, width, height):
+        self.dest_size = (
+            int(round(self.scale[0] * width)),
+            int(round(self.scale[1] * height)),
+        )
+        top = int((width - self.dest_size[0]) / 2)
+        left = int((height - self.dest_size[1]) / 2)
+        self.dest_box = (
+            top, left,
+            self.dest_size[0] + top,
+            self.dest_size[1] + left,
+        )

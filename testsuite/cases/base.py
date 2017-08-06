@@ -97,3 +97,11 @@ class BaseConvertCase(object):
 
     def readable_args(self):
         return ["{} to {}".format(self.mode_from, self.mode_to)]
+
+
+class BaseAllocateCase(BaseTestCase):
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ['mode ' + self.mode]

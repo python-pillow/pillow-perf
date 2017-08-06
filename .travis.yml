@@ -17,7 +17,7 @@ install:
 script:
   - cd testsuite
   - ./run.py --help
-  - ./run.py -s 512x512 -n 1 --json  load convert scale blur composition rotate_right
+  - ./run.py -s 512x512 -n 1 --json  load convert scale blur composition rotate_right allocate
   - ./run.py -s 512x512 -n 1 --json  wand_load wand_convert wand_scale wand_blur wand_composition wand_rotate_right
 
 after_success:

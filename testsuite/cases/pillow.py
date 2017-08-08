@@ -18,11 +18,11 @@ class PillowTestCase(BaseTestCase):
         4: 'box', 5: 'hmn', 6: 'mtc',
     }
 
-    def create_test_data(self, size, mode):
+    def create_test_data(self):
         im = Image.open(root('resources', 'color_circle.png'))
-        im = im.convert(mode)
-        im = self.resize(im, size, Image.BICUBIC)
-        assert im.size == tuple(size)
+        im = im.convert(self.mode)
+        im = self.resize(im, self.size, Image.BICUBIC)
+        assert im.size == tuple(self.size)
         return [im]
 
     @classmethod

@@ -31,13 +31,13 @@ class BaseTestCase(object):
         self.mode = mode
         self.repeat = kwargs.pop('repeat', 1)
         self.handle_args(*args, **kwargs)
-        self.data = self.create_test_data(size, mode)
+        self.data = self.create_test_data()
 
     def handle_args(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
 
-    def create_test_data(self, size, mode):
+    def create_test_data(self):
         return []
 
     def run(self):
@@ -81,9 +81,6 @@ class BaseConvertCase(object):
         self.mode = mode
         self.mode_to = mode_to
 
-    def create_test_data(self, size, mode):
-        return super(BaseConvertCase, self).create_test_data(size, self.mode)
-
     def readable_args(self):
         return ["{} to {}".format(self.mode, self.mode_to)]
 
@@ -97,9 +94,6 @@ class BaseAllocateCase(BaseTestCase):
 
 
 class BaseSplitCase(object):
-    def create_test_data(self, size, mode):
-        return super(BaseSplitCase, self).create_test_data(size, self.mode)
-
     def handle_args(self, mode):
         self.mode = mode
 
@@ -108,9 +102,6 @@ class BaseSplitCase(object):
 
 
 class BaseGetBandCase(object):
-    def create_test_data(self, size, mode):
-        return super(BaseGetBandCase, self).create_test_data(size, self.mode)
-
     def handle_args(self, mode, band):
         self.mode = mode
         self.band = band
@@ -120,8 +111,8 @@ class BaseGetBandCase(object):
 
 
 class BaseMergeCase(object):
-    def create_test_data(self, size, mode):
-        data = super(BaseMergeCase, self).create_test_data(size, self.mode)
+    def create_test_data(self):
+        data = super(BaseMergeCase, self).create_test_data()
         return [data[0].split()]
 
     def handle_args(self, mode):

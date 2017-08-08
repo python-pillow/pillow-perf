@@ -29,19 +29,19 @@ class WandTestCase(BaseTestCase):
         self._free_resources = []
         super(WandTestCase, self).__init__(*args, **kwargs)
 
-    def create_test_data(self, size, mode):
+    def create_test_data(self):
         im = Image(filename=root('resources', 'color_circle.png'))
-        if mode == 'RGB':
+        if self.mode == 'RGB':
             im.type = 'truecolor'
-        elif mode == 'RGBA':
+        elif self.mode == 'RGBA':
             pass
-        elif mode == 'L':
+        elif self.mode == 'L':
             im.type = 'grayscale'
-        elif mode in 'LA':
+        elif self.mode in 'LA':
             im.type = 'grayscalematte'
         else:
-            raise ValueError('Unknown mode: {}'.format(mode))
-        im.resize(size[0], size[1], 'catrom')
+            raise ValueError('Unknown mode: {}'.format(self.mode))
+        im.resize(self.size[0], self.size[1], 'catrom')
         self._free_resources.append(im)
         return [im]
 

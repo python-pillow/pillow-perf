@@ -41,16 +41,12 @@ class BaseTestCase(object):
         return []
 
     def run(self):
-        self.prepare_runner()
         start = time.time()
         for _ in range(self.repeat):
             self.runner(*self.data)
         return (time.time() - start) / self.repeat
 
     __call__ = run
-
-    def prepare_runner(self):
-        pass
 
     def readable_args(self):
         return list(map(str, self.args))
@@ -60,27 +56,21 @@ class BaseTestCase(object):
 
 
 class BaseScaleCase(object):
-    def create_test_data(self, size, mode):
-        self.update_dest_size(size[0], size[1])
-        return super(BaseScaleCase, self).create_test_data(size, mode)
-
     def handle_args(self, scale, filter, hpass=True, vpass=True):
         self.scale = scale
         self.filter = filter
         self.hpass = hpass
         self.vpass = vpass
+        self.dest_size = (
+            int(round(scale * self.size[0])) if hpass else self.size[0],
+            int(round(scale * self.size[1])) if vpass else self.size[1],
+        )
 
     def readable_args(self):
         return [
             "x".join(map(str, self.dest_size)),
             self.filter_ids.get(self.filter, self.filter),
         ]
-
-    def update_dest_size(self, width, height):
-        self.dest_size = (
-            int(round(self.scale * width)) if self.hpass else width,
-            int(round(self.scale * height)) if self.vpass else height,
-        )
 
     def readable_name(self):
         return 'to ' + super(BaseScaleCase, self).readable_name()
@@ -142,25 +132,14 @@ class BaseMergeCase(object):
 
 
 class BaseCropCase(object):
-    def create_test_data(self, size, mode):
-        self.update_dest_size(size[0], size[1])
-        return super(BaseCropCase, self).create_test_data(size, mode)
-
     def handle_args(self, scale):
         self.scale = scale
+        width = int(round(scale[0] * self.size[0]))
+        height = int(round(scale[1] * self.size[1]))
+        top = int((self.size[0] - width) / 2)
+        left = int((self.size[1] - height) / 2)
+        self.dest_size = (width, height)
+        self.dest_box = (top, left, width + top, height + left)
 
     def readable_args(self):
         return ["x".join(map(str, self.dest_size))]
-
-    def update_dest_size(self, width, height):
-        self.dest_size = (
-            int(round(self.scale[0] * width)),
-            int(round(self.scale[1] * height)),
-        )
-        top = int((width - self.dest_size[0]) / 2)
-        left = int((height - self.dest_size[1]) / 2)
-        self.dest_box = (
-            top, left,
-            self.dest_size[0] + top,
-            self.dest_size[1] + left,
-        )

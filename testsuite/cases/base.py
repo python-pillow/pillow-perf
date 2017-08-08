@@ -87,16 +87,15 @@ class BaseScaleCase(object):
 
 
 class BaseConvertCase(object):
-    def handle_args(self, mode_from, mode_to):
-        self.mode_from = mode_from
+    def handle_args(self, mode, mode_to):
+        self.mode = mode
         self.mode_to = mode_to
 
     def create_test_data(self, size, mode):
-        return super(BaseConvertCase, self).create_test_data(
-            size, self.mode_from)
+        return super(BaseConvertCase, self).create_test_data(size, self.mode)
 
     def readable_args(self):
-        return ["{} to {}".format(self.mode_from, self.mode_to)]
+        return ["{} to {}".format(self.mode, self.mode_to)]
 
 
 class BaseAllocateCase(BaseTestCase):

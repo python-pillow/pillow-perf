@@ -107,6 +107,41 @@ class BaseAllocateCase(BaseTestCase):
         return ['mode ' + self.mode]
 
 
+class BaseSplitCase(object):
+    def create_test_data(self, size, mode):
+        return super(BaseSplitCase, self).create_test_data(size, self.mode)
+
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["split {}".format(self.mode)]
+
+
+class BaseGetBandCase(object):
+    def create_test_data(self, size, mode):
+        return super(BaseGetBandCase, self).create_test_data(size, self.mode)
+
+    def handle_args(self, mode, band):
+        self.mode = mode
+        self.band = band
+
+    def readable_args(self):
+        return ["get {} of {}".format(self.mode[self.band], self.mode)]
+
+
+class BaseMergeCase(object):
+    def create_test_data(self, size, mode):
+        data = super(BaseMergeCase, self).create_test_data(size, self.mode)
+        return [data[0].split()]
+
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["merge {}".format(self.mode)]
+
+
 class BaseCropCase(object):
     def create_test_data(self, size, mode):
         self.update_dest_size(size[0], size[1])

@@ -22,7 +22,7 @@ class SaveCase(BaseSaveCase):
         return [im]
 
     def runner(self, im):
-        im.save(BytesIO(), format=self.filetype)
+        im.save(BytesIO(), format=self.filetype, quality=85)
 
 
 cases = [

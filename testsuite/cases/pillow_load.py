@@ -6,20 +6,13 @@ from io import BytesIO
 
 from PIL import Image
 
-from .base import rpartial, root, BaseTestCase
+from .base import rpartial, root, BaseLoadCase, BaseTestCase
 
 
-class LoadCase(BaseTestCase):
-    def handle_args(self, filetype, filename):
-        self.filetype = filetype
-        self.filename = filename
-
+class LoadCase(BaseLoadCase):
     def runner(self):
         im = Image.open(root('resources', self.filename))
         im.load()
-
-    def readable_args(self):
-        return ["{} load".format(self.filetype)]
 
 
 class SaveCase(BaseTestCase):
@@ -36,10 +29,10 @@ class SaveCase(BaseTestCase):
         im.save(BytesIO(), format=self.filetype)
 
     def readable_args(self):
-        return ["{} save".format(self.filetype)]
+        return ["{} save".format(self.filetype.capitalize())]
 
 
 cases = [
-    rpartial(LoadCase, 'Jpeg', 'pineapple.jpeg'),
-    rpartial(SaveCase, 'Jpeg', 'pineapple.jpeg'),
+    rpartial(LoadCase, 'JPEG', 'pineapple.jpeg'),
+    rpartial(SaveCase, 'JPEG', 'pineapple.jpeg'),
 ]

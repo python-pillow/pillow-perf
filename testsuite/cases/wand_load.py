@@ -4,22 +4,15 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 from wand.image import Image
 
-from .base import rpartial, root, BaseTestCase
+from .base import rpartial, root, BaseLoadCase
 
 
-class LoadCase(BaseTestCase):
-    def handle_args(self, filetype, filename):
-        self.filetype = filetype
-        self.filename = filename
-
+class LoadCase(BaseLoadCase):
     def runner(self):
         with Image(filename=root('resources', self.filename)):
             pass
 
-    def readable_args(self):
-        return ["{} load".format(self.filetype)]
-
 
 cases = [
-    rpartial(LoadCase, 'Jpeg', 'pineapple.jpeg'),
+    rpartial(LoadCase, 'JPEG', 'pineapple.jpeg'),
 ]

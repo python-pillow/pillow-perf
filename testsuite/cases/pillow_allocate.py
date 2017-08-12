@@ -19,7 +19,7 @@ class SplitCase(BaseSplitCase, PillowTestCase):
 
 class GetBandCase(BaseGetBandCase, PillowTestCase):
     def runner(self, im):
-        im.split()[self.band]
+        self.getchannel(im, self.band)
 
 
 class MergeCase(BaseMergeCase, PillowTestCase):

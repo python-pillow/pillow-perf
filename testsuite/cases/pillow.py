@@ -74,3 +74,10 @@ class PillowTestCase(BaseTestCase):
 
         self.load()
         return self._new(self.im.box_blur(box_radius, n))
+
+    @classmethod
+    def getchannel(cls, self, channel):
+        if hasattr(self, 'getchannel'):
+            return self.getchannel(channel)
+        else:
+            return self.split()[channel]

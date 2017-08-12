@@ -134,3 +134,21 @@ class BaseCropCase(object):
 
     def readable_args(self):
         return ["x".join(map(str, self.dest_size))]
+
+
+class BaseLoadCase(BaseTestCase):
+    def handle_args(self, filetype, filename):
+        self.filetype = filetype
+        self.filename = filename
+
+    def readable_args(self):
+        return ["{} load".format(self.filetype.capitalize())]
+
+
+class BaseSaveCase(BaseTestCase):
+    def handle_args(self, filetype, filename):
+        self.filetype = filetype
+        self.filename = filename
+
+    def readable_args(self):
+        return ["{} save".format(self.filetype.capitalize())]

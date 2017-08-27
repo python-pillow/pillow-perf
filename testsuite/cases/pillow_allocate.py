@@ -2,14 +2,28 @@
 
 from __future__ import print_function, unicode_literals, absolute_import
 
-from .base import (rpartial, BaseAllocateCase, BaseSplitCase,
-                   BaseGetBandCase, BaseMergeCase)
+from .base import (rpartial, BaseAllocateCase, BaseSplitCase, BasePackCase,
+                   BaseGetBandCase, BaseMergeCase, BaseUnpackCase)
 from .pillow import Image, PillowTestCase
 
 
 class AllocateCase(BaseAllocateCase):
     def runner(self):
         Image.new(self.mode, self.size)
+
+
+class UnpackCase(BaseUnpackCase, PillowTestCase):
+    def create_test_data(self):
+        im = super(UnpackCase, self).create_test_data()[0]
+        return [im, im.tobytes()]
+
+    def runner(self, im, data):
+        im.frombytes(data)
+
+
+class PackCase(BasePackCase, PillowTestCase):
+    def runner(self, im):
+        im.tobytes()
 
 
 class SplitCase(BaseSplitCase, PillowTestCase):
@@ -32,6 +46,14 @@ cases = [
     rpartial(AllocateCase, 'LA'),
     rpartial(AllocateCase, 'RGB'),
     rpartial(AllocateCase, 'RGBA'),
+    rpartial(UnpackCase, 'L'),
+    rpartial(UnpackCase, 'LA'),
+    rpartial(UnpackCase, 'RGB'),
+    rpartial(UnpackCase, 'RGBA'),
+    rpartial(PackCase, 'L'),
+    rpartial(PackCase, 'LA'),
+    rpartial(PackCase, 'RGB'),
+    rpartial(PackCase, 'RGBA'),
     rpartial(SplitCase, 'LA'),
     rpartial(SplitCase, 'RGB'),
     rpartial(SplitCase, 'RGBA'),

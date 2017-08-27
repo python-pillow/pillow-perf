@@ -93,6 +93,22 @@ class BaseAllocateCase(BaseTestCase):
         return ['mode ' + self.mode]
 
 
+class BasePackCase(object):
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["Pack to {}".format(self.mode)]
+
+
+class BaseUnpackCase(object):
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["Unpack from {}".format(self.mode)]
+
+
 class BaseSplitCase(object):
     def handle_args(self, mode):
         self.mode = mode

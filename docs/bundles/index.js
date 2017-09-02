@@ -106,7 +106,7 @@
 	  return adapter.chartForCompetition(
 	    element,
 	    competition,
-	    data.colors
+	    data.competitors
 	  );
 	}
 	
@@ -192,7 +192,7 @@
 	    chart = adapter.chartForCompetition(
 	      document.getElementById("chart-container"),
 	      competition,
-	      data.colors
+	      data.competitors
 	    );
 	
 	    var innerHTML = "";
@@ -709,7 +709,7 @@
 	}
 	
 	
-	function chartForCompetition(element, competition, colors) {
+	function chartForCompetition(element, competition, competitors) {
 	  var chartData = {
 	    type: 'myBar',
 	    data: {
@@ -794,6 +794,7 @@
 	  if (competition.competitors.length) {
 	    var competitor = competition.competitors[0];
 	    var lastGroup = null;
+	    var title = competitors[competitor.name].title;
 	
 	    for (var j = 0; j < competitor.results.length; j++) {
 	      var result = competitor.results[j];
@@ -801,7 +802,7 @@
 	
 	      if (result.length != resultsLen) {
 	        throw new Error("results length for " +
-	                        competitor.title + " doesn't match required. " +
+	                        title + " doesn't match required. " +
 	                        "Got " + result.length + ", expected " + resultsLen);
 	      }
 	
@@ -833,14 +834,15 @@
 	    var competitor = competition.competitors[i];
 	    var data = [];
 	    var lastGroup = null;
-	    var c = colors[competitor.name];
+	    var c = competitors[competitor.name].color;
+	    var title = competitors[competitor.name].title;
 	
 	    if (typeof c != "string") {
 	      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
 	    }
 	
 	    chartData.data.datasets.push({
-	      label: competitor.title,
+	      label: title,
 	      name: competitor.name,
 	      data: data,
 	      backgroundColor: c,
@@ -11533,27 +11535,29 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var colors = {
-	  "imagemagick-6.7":      [230, 100, 70],
-	  "imagemagick-6.8":      [230, 100, 70],
-	  "opencv 2.4.8":         [240, 100, 60],
-	  "opencv-3.1":           [240, 100, 60],
-	  "skia-53":              [250, 100, 50],
-	  "ipp-2017":             [250, 100, 30],
+	var competitors = {
+	  "imagemagick-6.8":      {"color": [230, 100, 70], "title": "ImageMagick 6.8.9-9"},
+	  "opencv-3.1":           {"color": [240, 100, 60], "title": "OpenCV 3.1.0"},
+	  "skia-53":              {"color": [250, 100, 50], "title": "Skia 53 SSE2"},
+	  "ipp-2017":             {"color": [250, 100, 30], "title": "IPP 2017 AVX2"},
 	
-	  "pillow-2.0":           [10, 90, 50],
+	  "pillow-2.0":           {"color": [10, 90, 50], "title": "PIL & Pillow 2.0 to 2.6"},
 	  
-	  "pillow-2.7":           [340, 90, 43],
-	  "pillow-simd-3.2-sse4": [340, 90, 75],
-	  "pillow-simd-3.2-avx2": [340, 90, 60],
+	  "pillow-2.7":           {"color": [340, 90, 43], "title": "Pillow 2.7"},
+	  "pillow-simd-3.2-sse4": {"color": [340, 90, 75], "title": "Pillow SIMD 3.2.0 SSE4"},
+	  "pillow-simd-3.2-avx2": {"color": [340, 90, 60], "title": "Pillow SIMD 3.2.0 AVX2"},
 	  
-	  "pillow-3.3":           [190, 90, 43],
-	  "pillow-simd-3.3-sse4": [190, 90, 75],
-	  "pillow-simd-3.3-avx2": [190, 90, 60],
+	  "pillow-3.3":           {"color": [190, 90, 43], "title": "Pillow 3.3"},
+	  "pillow-simd-3.3-sse4": {"color": [190, 90, 75], "title": "Pillow SIMD 3.3.0 SSE4"},
+	  "pillow-simd-3.3-avx2": {"color": [190, 90, 60], "title": "Pillow SIMD 3.3.0 AVX2"},
 	
-	  "pillow-3.4":           [34, 90, 43],
-	  "pillow-simd-3.4-sse4": [34, 90, 75],
-	  "pillow-simd-3.4-avx2": [34, 90, 60],
+	  "pillow-3.4":           {"color": [34, 90, 43], "title": "Pillow 3.4.2"},
+	  "pillow-simd-3.4-sse4": {"color": [34, 90, 75], "title": "Pillow SIMD 3.4.0 SSE4"},
+	  "pillow-simd-3.4-avx2": {"color": [34, 90, 60], "title": "Pillow SIMD 3.4.0 AVX2"},
+	
+	  "pillow-4.3":           {"color": [250, 90, 43], "title": "Pillow 4.3-demo"},
+	  "pillow-simd-4.3-sse4": {"color": [250, 90, 75], "title": "Pillow SIMD 4.3-demo SSE4"},
+	  "pillow-simd-4.3-avx2": {"color": [250, 90, 60], "title": "Pillow SIMD 4.3-demo AVX2"},
 	};
 	
 	var systems = [
@@ -11564,7 +11568,7 @@
 	];
 	
 	module.exports = {
-	  colors: colors,
+	  competitors: competitors,
 	  systems: systems,
 	};
 
@@ -14087,15 +14091,6 @@
 						]
 					},
 					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4"
-						]
-					},
-					{
 						"name": "pillow-3.2",
 						"title": "Pillow 3.2 versions",
 						"set": [
@@ -14120,8 +14115,27 @@
 							"pillow-3.4",
 							"pillow-simd-3.4-sse4",
 							"pillow-simd-3.4-avx2"
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"title": "Pillow 4.3 demoversions",
+						"set": [
+							"pillow-4.3",
+							"pillow-simd-4.3-sse4",
+							"pillow-simd-4.3-avx2"
 						],
 						"default": true
+					},
+					{
+						"name": "pillow-progress",
+						"title": "Pillow progress",
+						"set": [
+							"pillow-2.7",
+							"pillow-3.3",
+							"pillow-3.4",
+							"pillow-4.3"
+						]
 					},
 					{
 						"name": "pillow-sse4",
@@ -14129,7 +14143,8 @@
 						"set": [
 							"pillow-simd-3.2-sse4",
 							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4"
+							"pillow-simd-3.4-sse4",
+							"pillow-simd-4.3-sse4"
 						]
 					},
 					{
@@ -14138,17 +14153,8 @@
 						"set": [
 							"pillow-simd-3.2-avx2",
 							"pillow-simd-3.3-avx2",
-							"pillow-simd-3.4-avx2"
-						]
-					},
-					{
-						"name": "pillow-milestones",
-						"title": "Pillow milestones",
-						"set": [
-							"pillow-2.0",
-							"pillow-2.7",
-							"pillow-3.4",
-							"pillow-simd-3.4-avx2"
+							"pillow-simd-3.4-avx2",
+							"pillow-simd-4.3-avx2"
 						]
 					},
 					{
@@ -14157,14 +14163,13 @@
 						"set": [
 							"imagemagick-6.8",
 							"skia-53",
-							"pillow-simd-3.4-avx2"
+							"pillow-simd-4.3-avx2"
 						]
 					}
 				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"26x16",
@@ -14230,7 +14235,6 @@
 					},
 					{
 						"name": "skia-53",
-						"title": "Skia 53 SSE2",
 						"results": [
 							[
 								"26x16",
@@ -14296,7 +14300,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"26x16",
@@ -14362,7 +14365,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7.0 to 3.2.0",
 						"results": [
 							[
 								"26x16",
@@ -14428,7 +14430,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"26x16",
@@ -14494,7 +14495,6 @@
 					},
 					{
 						"name": "pillow-3.4",
-						"title": "Pillow 3.4.2",
 						"results": [
 							[
 								"26x16",
@@ -14559,8 +14559,72 @@
 						]
 					},
 					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"26x16",
+								"bil",
+								0.0101509094238
+							],
+							[
+								"26x16",
+								"bic",
+								0.0194928646088
+							],
+							[
+								"26x16",
+								"lzs",
+								0.0296411514282
+							],
+							[
+								"320x200",
+								"bil",
+								0.0163011550903
+							],
+							[
+								"320x200",
+								"bic",
+								0.0262808799744
+							],
+							[
+								"320x200",
+								"lzs",
+								0.0401749610901
+							],
+							[
+								"2048x1280",
+								"bil",
+								0.0441479682922
+							],
+							[
+								"2048x1280",
+								"bic",
+								0.066642999649
+							],
+							[
+								"2048x1280",
+								"lzs",
+								0.0947289466858
+							],
+							[
+								"5478x3424",
+								"bil",
+								0.222105026245
+							],
+							[
+								"5478x3424",
+								"bic",
+								0.304317951202
+							],
+							[
+								"5478x3424",
+								"lzs",
+								0.389125108719
+							]
+						]
+					},
+					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -14626,7 +14690,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-avx2",
-						"title": "Pillow SIMD 3.2.0 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -14692,7 +14755,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -14758,7 +14820,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-avx2",
-						"title": "Pillow SIMD 3.3.0 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -14824,7 +14885,6 @@
 					},
 					{
 						"name": "pillow-simd-3.4-sse4",
-						"title": "Pillow SIMD 3.4.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -14890,7 +14950,6 @@
 					},
 					{
 						"name": "pillow-simd-3.4-avx2",
-						"title": "Pillow SIMD 3.4.0 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -14953,6 +15012,210 @@
 								0.10955786705
 							]
 						]
+					},
+					{
+						"name": "pillow-simd-4.3-sse4",
+						"results": [
+							[
+								"26x16",
+								"bil",
+								0.00222992897034
+							],
+							[
+								"26x16",
+								"bic",
+								0.00422596931458
+							],
+							[
+								"26x16",
+								"lzs",
+								0.00722479820251
+							],
+							[
+								"320x200",
+								"bil",
+								0.00306010246277
+							],
+							[
+								"320x200",
+								"bic",
+								0.00531601905823
+							],
+							[
+								"320x200",
+								"lzs",
+								0.00853180885315
+							],
+							[
+								"2048x1280",
+								"bil",
+								0.0116589069366
+							],
+							[
+								"2048x1280",
+								"bic",
+								0.0173101425171
+							],
+							[
+								"2048x1280",
+								"lzs",
+								0.0218620300293
+							],
+							[
+								"5478x3424",
+								"bil",
+								0.0771350860596
+							],
+							[
+								"5478x3424",
+								"bic",
+								0.0956928730011
+							],
+							[
+								"5478x3424",
+								"lzs",
+								0.117388010025
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-avx2",
+						"results": [
+							[
+								"26x16",
+								"bil",
+								0.00155305862427
+							],
+							[
+								"26x16",
+								"bic",
+								0.00292992591858
+							],
+							[
+								"26x16",
+								"lzs",
+								0.00537705421448
+							],
+							[
+								"320x200",
+								"bil",
+								0.00219893455505
+							],
+							[
+								"320x200",
+								"bic",
+								0.00368499755859
+							],
+							[
+								"320x200",
+								"lzs",
+								0.00618290901184
+							],
+							[
+								"2048x1280",
+								"bil",
+								0.00999689102173
+							],
+							[
+								"2048x1280",
+								"bic",
+								0.0129449367523
+							],
+							[
+								"2048x1280",
+								"lzs",
+								0.0172429084778
+							],
+							[
+								"5478x3424",
+								"bil",
+								0.0677461624146
+							],
+							[
+								"5478x3424",
+								"bic",
+								0.0780148506165
+							],
+							[
+								"5478x3424",
+								"lzs",
+								0.09552693367
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "image-io-4k-rgb",
+				"title": "Input/Output 2560×1600 RGB image",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "operation",
+						"title": "Operation"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "imagemagick-6.8",
+						"results": [
+							[
+								"Jpeg load",
+								0.0275268554688
+							],
+							[
+								"Jpeg save",
+								0.0555610656738
+							]
+						]
+					},
+					{
+						"name": "opencv-3.1",
+						"results": [
+							[
+								"Jpeg load",
+								0.0484218597412
+							],
+							[
+								"Jpeg save",
+								0.0987451076508
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"results": [
+							[
+								"Jpeg load",
+								0.026340007782
+							],
+							[
+								"Jpeg save",
+								0.0275778770447
+							]
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Jpeg load",
+								0.0230400562286
+							],
+							[
+								"Jpeg save",
+								0.0241959095001
+							]
+						]
 					}
 				]
 			},
@@ -14979,7 +15242,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"1px",
@@ -14997,7 +15259,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"1px",
@@ -15015,7 +15276,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"1px",
@@ -15033,7 +15293,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"1px",
@@ -15046,6 +15305,96 @@
 							[
 								"30px",
 								0.094966173172
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "filter-4k-rgb",
+				"title": "Kernel filter 2560×1600 RGB image",
+				"source": {
+					"size": [
+						2560,
+						1600
+					]
+				},
+				"columns": [
+					{
+						"name": "kernel",
+						"title": "Kernel"
+					},
+					{
+						"name": "result",
+						"units": "s"
+					}
+				],
+				"competitors": [
+					{
+						"name": "opencv-3.1",
+						"results": [
+							[
+								"Smooth",
+								0.0224120616913
+							],
+							[
+								"Sharpen",
+								0.0223751068115
+							],
+							[
+								"Smooth More",
+								0.0575280189514
+							]
+						]
+					},
+					{
+						"name": "pillow-3.4",
+						"results": [
+							[
+								"Smooth",
+								0.117032051086
+							],
+							[
+								"Sharpen",
+								0.11692905426
+							],
+							[
+								"Smooth More",
+								0.267985105515
+							]
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Smooth",
+								0.0798780918121
+							],
+							[
+								"Sharpen",
+								0.0799729824066
+							],
+							[
+								"Smooth More",
+								0.204999923706
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-sse4",
+						"results": [
+							[
+								"Smooth",
+								0.0195109844208
+							],
+							[
+								"Sharpen",
+								0.0195319652557
+							],
+							[
+								"Smooth More",
+								0.063138961792
 							]
 						]
 					}
@@ -15074,7 +15423,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Flop",
@@ -15104,7 +15452,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"Flop",
@@ -15134,7 +15481,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Flop",
@@ -15164,7 +15510,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"Flop",
@@ -15217,7 +15562,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"RGB to L",
@@ -15239,7 +15583,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"RGB to L",
@@ -15260,68 +15603,65 @@
 						]
 					},
 					{
-						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
+						"name": "pillow-4.3",
 						"results": [
 							[
 								"RGB to L",
-								0.00608015060425
+								0.00582003593445
 							],
 							[
 								"RGBA to LA",
-								0.00837182998657
+								0.00715303421021
 							],
 							[
 								"RGBa to RGBA",
-								0.0293049812317
+								0.0266849994659
 							],
 							[
 								"RGBA to RGBa",
-								0.0117719173431
+								0.0103809833527
 							]
 						]
 					},
 					{
-						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
+						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
 								"RGB to L",
-								0.00605702400208
+								0.00585699081421
 							],
 							[
 								"RGBA to LA",
-								0.00831604003906
+								0.00716996192932
 							],
 							[
 								"RGBa to RGBA",
-								0.0280389785767
+								0.00354099273682
 							],
 							[
 								"RGBA to RGBa",
-								0.00411200523376
+								0.00316190719604
 							]
 						]
 					},
 					{
-						"name": "pillow-simd-3.3-avx2",
-						"title": "Pillow SIMD 3.3.0 AVX2",
+						"name": "pillow-simd-4.3-avx2",
 						"results": [
 							[
 								"RGB to L",
-								0.00606107711792
+								0.0058422088623
 							],
 							[
 								"RGBA to LA",
-								0.00834178924561
+								0.00716686248779
 							],
 							[
 								"RGBa to RGBA",
-								0.0136919021606
+								0.00278306007385
 							],
 							[
 								"RGBA to RGBa",
-								0.00339913368225
+								0.00259304046631
 							]
 						]
 					}
@@ -15350,7 +15690,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Composition",
@@ -15360,7 +15699,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Composition",
@@ -15369,8 +15707,16 @@
 						]
 					},
 					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Composition",
+								0.0278680324554
+							]
+						]
+					},
+					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"Composition",
@@ -15380,11 +15726,28 @@
 					},
 					{
 						"name": "pillow-simd-3.3-avx2",
-						"title": "Pillow SIMD 3.3.0 AVX2",
 						"results": [
 							[
 								"Composition",
 								0.00724411010742
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-sse4",
+						"results": [
+							[
+								"Composition",
+								0.00914311408997
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-avx2",
+						"results": [
+							[
+								"Composition",
+								0.00546288490295
 							]
 						]
 					}

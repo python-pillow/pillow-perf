@@ -41,15 +41,6 @@
                     ]
                 },
                 {
-                    "name": "pillow-progress",
-                    "title": "Pillow progress",
-                    "set": [
-                        "pillow-2.7",
-                        "pillow-3.3",
-                        "pillow-3.4"
-                    ]
-                },
-                {
                     "name": "pillow-3.2",
                     "title": "Pillow 3.2 versions",
                     "set": [
@@ -74,8 +65,27 @@
                         "pillow-3.4",
                         "pillow-simd-3.4-sse4",
                         "pillow-simd-3.4-avx2"
+                    ]
+                },
+                {
+                    "name": "pillow-4.3",
+                    "title": "Pillow 4.3 demoversions",
+                    "set": [
+                        "pillow-4.3",
+                        "pillow-simd-4.3-sse4",
+                        "pillow-simd-4.3-avx2"
                     ],
                     "default": true
+                },
+                {
+                    "name": "pillow-progress",
+                    "title": "Pillow progress",
+                    "set": [
+                        "pillow-2.7",
+                        "pillow-3.3",
+                        "pillow-3.4",
+                        "pillow-4.3"
+                    ]
                 },
                 {
                     "name": "pillow-sse4",
@@ -83,7 +93,8 @@
                     "set": [
                         "pillow-simd-3.2-sse4",
                         "pillow-simd-3.3-sse4",
-                        "pillow-simd-3.4-sse4"
+                        "pillow-simd-3.4-sse4",
+                        "pillow-simd-4.3-sse4"
                     ]
                 },
                 {
@@ -92,17 +103,8 @@
                     "set": [
                         "pillow-simd-3.2-avx2",
                         "pillow-simd-3.3-avx2",
-                        "pillow-simd-3.4-avx2"
-                    ]
-                },
-                {
-                    "name": "pillow-milestones",
-                    "title": "Pillow milestones",
-                    "set": [
-                        "pillow-2.0",
-                        "pillow-2.7",
-                        "pillow-3.4",
-                        "pillow-simd-3.4-avx2"
+                        "pillow-simd-3.4-avx2",
+                        "pillow-simd-4.3-avx2"
                     ]
                 },
                 {
@@ -111,14 +113,13 @@
                     "set": [
                         "imagemagick-6.8",
                         "skia-53",
-                        "pillow-simd-3.4-avx2"
+                        "pillow-simd-4.3-avx2"
                     ]
                 }
             ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["26x16", "bil", 0.03227186203],
 ["26x16", "bic", 0.0584180355072],
@@ -136,7 +137,6 @@
                 },
                 {
                     "name": "skia-53",
-                    "title": "Skia 53 SSE2",
                     "results": [
                         ["26x16",      "bil",  0.00477],
                         ["26x16",      "bic",  0.00870],
@@ -154,7 +154,6 @@
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["26x16", "bil", 0.0699510574341],
 ["26x16", "bic", 0.135254144669],
@@ -172,7 +171,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "title": "Pillow 2.7.0 to 3.2.0",
                     "results": [
 ["26x16", "bil", 0.0173790454865],
 ["26x16", "bic", 0.0333411693573],
@@ -190,7 +188,6 @@
                 },
                 {
                     "name": "pillow-3.3",
-                    "title": "Pillow 3.3.3",
                     "results": [
 ["26x16", "bil", 0.0104608535767],
 ["26x16", "bic", 0.0197870731354],
@@ -208,7 +205,6 @@
                 },
                 {
                     "name": "pillow-3.4",
-                    "title": "Pillow 3.4.2",
                     "results": [
 ["26x16", "bil", 0.010195016861],
 ["26x16", "bic", 0.0195429325104],
@@ -224,10 +220,26 @@
 ["5478x3424", "lzs", 0.419642925262]
                     ]
                 },
+                {
+                    "name": "pillow-4.3",
+                    "results": [
+["26x16", "bil", 0.0101509094238],
+["26x16", "bic", 0.0194928646088],
+["26x16", "lzs", 0.0296411514282],
+["320x200", "bil", 0.0163011550903],
+["320x200", "bic", 0.0262808799744],
+["320x200", "lzs", 0.0401749610901],
+["2048x1280", "bil", 0.0441479682922],
+["2048x1280", "bic", 0.066642999649],
+["2048x1280", "lzs", 0.0947289466858],
+["5478x3424", "bil", 0.222105026245],
+["5478x3424", "bic", 0.304317951202],
+["5478x3424", "lzs", 0.389125108719]
+                    ]
+                },
 
                 {
                     "name": "pillow-simd-3.2-sse4",
-                    "title": "Pillow SIMD 3.2.0 SSE4",
                     "results": [
 ["26x16", "bil", 0.00785899162292],
 ["26x16", "bic", 0.0154111385345],
@@ -245,7 +257,6 @@
                 },
                 {
                     "name": "pillow-simd-3.2-avx2",
-                    "title": "Pillow SIMD 3.2.0 AVX2",
                     "results": [
 ["26x16", "bil", 0.00421500205994],
 ["26x16", "bic", 0.00838208198547],
@@ -264,7 +275,6 @@
 
                 {
                     "name": "pillow-simd-3.3-sse4",
-                    "title": "Pillow SIMD 3.3.0 SSE4",
                     "results": [
 ["26x16", "bil", 0.00642681121826],
 ["26x16", "bic", 0.01220703125],
@@ -282,7 +292,6 @@
                 },
                 {
                     "name": "pillow-simd-3.3-avx2",
-                    "title": "Pillow SIMD 3.3.0 AVX2",
                     "results": [
 ["26x16", "bil", 0.00363111495972],
 ["26x16", "bic", 0.00694394111633],
@@ -301,7 +310,6 @@
 
                 {
                     "name": "pillow-simd-3.4-sse4",
-                    "title": "Pillow SIMD 3.4.0 SSE4",
                     "results": [
 ["26x16", "bil", 0.00236105918884],
 ["26x16", "bic", 0.00448989868164],
@@ -319,7 +327,6 @@
                 },
                 {
                     "name": "pillow-simd-3.4-avx2",
-                    "title": "Pillow SIMD 3.4.0 AVX2",
                     "results": [
 ["26x16", "bil", 0.00182104110718],
 ["26x16", "bic", 0.00344896316528],
@@ -333,6 +340,88 @@
 ["5478x3424", "bil", 0.0830850601196],
 ["5478x3424", "bic", 0.094743013382],
 ["5478x3424", "lzs", 0.10955786705]
+                    ]
+                },
+
+                {
+                    "name": "pillow-simd-4.3-sse4",
+                    "results": [
+["26x16", "bil", 0.00222992897034],
+["26x16", "bic", 0.00422596931458],
+["26x16", "lzs", 0.00722479820251],
+["320x200", "bil", 0.00306010246277],
+["320x200", "bic", 0.00531601905823],
+["320x200", "lzs", 0.00853180885315],
+["2048x1280", "bil", 0.0116589069366],
+["2048x1280", "bic", 0.0173101425171],
+["2048x1280", "lzs", 0.0218620300293],
+["5478x3424", "bil", 0.0771350860596],
+["5478x3424", "bic", 0.0956928730011],
+["5478x3424", "lzs", 0.117388010025]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-4.3-avx2",
+                    "results": [
+["26x16", "bil", 0.00155305862427],
+["26x16", "bic", 0.00292992591858],
+["26x16", "lzs", 0.00537705421448],
+["320x200", "bil", 0.00219893455505],
+["320x200", "bic", 0.00368499755859],
+["320x200", "lzs", 0.00618290901184],
+["2048x1280", "bil", 0.00999689102173],
+["2048x1280", "bic", 0.0129449367523],
+["2048x1280", "lzs", 0.0172429084778],
+["5478x3424", "bil", 0.0677461624146],
+["5478x3424", "bic", 0.0780148506165],
+["5478x3424", "lzs", 0.09552693367]
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "image-io-4k-rgb",
+            "title": "Input/Output 2560×1600 RGB image",
+            "source": {
+                "size": [2560, 1600]
+            },
+            "columns": [
+                {
+                    "name": "operation",
+                    "title": "Operation"
+                },
+                {
+                    "name": "result",
+                    "units": "s"
+                }
+            ],
+            "competitors": [
+                {
+                    "name": "imagemagick-6.8",
+                    "results": [
+["Jpeg load", 0.0275268554688],
+["Jpeg save", 0.0555610656738]
+                    ]
+                },
+                {
+                    "name": "opencv-3.1",
+                    "results": [
+["Jpeg load", 0.0484218597412],
+["Jpeg save", 0.0987451076508]
+                    ]
+                },
+                {
+                    "name": "pillow-2.0",
+                    "results": [
+["Jpeg load", 0.026340007782],
+["Jpeg save", 0.0275778770447]
+                    ]
+                },
+                {
+                    "name": "pillow-4.3",
+                    "results": [
+["Jpeg load", 0.0230400562286],
+["Jpeg save", 0.0241959095001]
                     ]
                 }
             ]
@@ -357,7 +446,6 @@
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["1px", 0.430732965469],
 ["10px", 1.53419089317],
@@ -366,7 +454,6 @@
                 },
                 {
                     "name": "opencv-3.1",
-                    "title": "OpenCV 3.1.0",
                     "results": [
 ["1px", 0.0279190540314],
 ["10px", 0.222306013107],
@@ -375,7 +462,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "title": "Pillow 2.7",
                     "results": [
 ["1px", 0.205476045609],
 ["10px", 0.204723834991],
@@ -384,13 +470,63 @@
                 },
                 {
                     "name": "pillow-simd-3.2-sse4",
-                    "title": "Pillow SIMD 3.2.0 SSE4",
                     "results": [
 ["1px", 0.0967028141022],
 ["10px", 0.0947999954224],
 ["30px", 0.094966173172]
                     ]
                 }
+            ]
+        },
+        {
+            "name": "filter-4k-rgb",
+            "title": "Kernel filter 2560×1600 RGB image",
+            "source": {
+                "size": [2560, 1600]
+            },
+            "columns": [
+                {
+                    "name": "kernel",
+                    "title": "Kernel"
+                },
+                {
+                    "name": "result",
+                    "units": "s"
+                }
+            ],
+            "competitors": [
+                {
+                    "name": "opencv-3.1",
+                    "results": [
+["Smooth", 0.0224120616913],
+["Sharpen", 0.0223751068115],
+["Smooth More", 0.0575280189514]
+                    ]
+                },
+                {
+                    "name": "pillow-3.4",
+                    "results": [
+["Smooth", 0.117032051086],
+["Sharpen", 0.11692905426],
+["Smooth More", 0.267985105515]
+                    ]
+                },
+                {
+                    "name": "pillow-4.3",
+                    "results": [
+["Smooth", 0.0798780918121],
+["Sharpen", 0.0799729824066],
+["Smooth More", 0.204999923706]
+                    ]
+               },
+                {
+                    "name": "pillow-simd-4.3-sse4",
+                    "results": [
+["Smooth", 0.0195109844208],
+["Sharpen", 0.0195319652557],
+["Smooth More", 0.063138961792]
+                    ]
+               }
             ]
         },
         {
@@ -413,7 +549,6 @@
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["Flop", 0.00635981559753],
 ["Flip", 0.00725412368774],
@@ -425,7 +560,6 @@
                 },
                 {
                     "name": "opencv-3.1",
-                    "title": "OpenCV 3.1.0",
                     "results": [
 ["Flop", 0.00979495048523],
 ["Flip", 0.00159406661987],
@@ -437,7 +571,6 @@
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["Flop", 0.0068838596344],
 ["Flip", 0.00292491912842],
@@ -449,7 +582,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "title": "Pillow 2.7",
                     "results": [
 ["Flop", 0.00647401809692],
 ["Flip", 0.00304913520813],
@@ -481,7 +613,6 @@
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["RGB to L", 0.0421621799469],
 ["RGBA to LA", 0.0419001579285],
@@ -491,7 +622,6 @@
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["RGB to L", 0.0060088634491],
 ["RGBA to LA", 0.00822997093201],
@@ -500,33 +630,30 @@
                     ]
                 },
                 {
-                    "name": "pillow-3.3",
-                    "title": "Pillow 3.3.3",
+                    "name": "pillow-4.3",
                     "results": [
-["RGB to L", 0.00608015060425],
-["RGBA to LA", 0.00837182998657],
-["RGBa to RGBA", 0.0293049812317],
-["RGBA to RGBa", 0.0117719173431]
+["RGB to L", 0.00582003593445],
+["RGBA to LA", 0.00715303421021],
+["RGBa to RGBA", 0.0266849994659],
+["RGBA to RGBa", 0.0103809833527]
                     ]
                 },
                 {
-                    "name": "pillow-simd-3.3-sse4",
-                    "title": "Pillow SIMD 3.3.0 SSE4",
+                    "name": "pillow-simd-4.3-sse4",
                     "results": [
-["RGB to L", 0.00605702400208],
-["RGBA to LA", 0.00831604003906],
-["RGBa to RGBA", 0.0280389785767],
-["RGBA to RGBa", 0.00411200523376]
+["RGB to L", 0.00585699081421],
+["RGBA to LA", 0.00716996192932],
+["RGBa to RGBA", 0.00354099273682],
+["RGBA to RGBa", 0.00316190719604]
                     ]
                 },
                 {
-                    "name": "pillow-simd-3.3-avx2",
-                    "title": "Pillow SIMD 3.3.0 AVX2",
+                    "name": "pillow-simd-4.3-avx2",
                     "results": [
-["RGB to L", 0.00606107711792],
-["RGBA to LA", 0.00834178924561],
-["RGBa to RGBA", 0.0136919021606],
-["RGBA to RGBa", 0.00339913368225]
+["RGB to L", 0.0058422088623],
+["RGBA to LA", 0.00716686248779],
+["RGBa to RGBA", 0.00278306007385],
+["RGBA to RGBa", 0.00259304046631]
                     ]
                 }
             ]
@@ -551,30 +678,44 @@
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["Composition", 0.116813182831]
                     ]
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["Composition", 0.0302698612213]
                     ]
                 },
                 {
+                    "name": "pillow-4.3",
+                    "results": [
+["Composition", 0.0278680324554]
+                    ]
+                },
+                {
                     "name": "pillow-simd-3.3-sse4",
-                    "title": "Pillow SIMD 3.3.0 SSE4",
                     "results": [
 ["Composition", 0.010862827301]
                     ]
                 },
                 {
                     "name": "pillow-simd-3.3-avx2",
-                    "title": "Pillow SIMD 3.3.0 AVX2",
                     "results": [
 ["Composition", 0.00724411010742]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-4.3-sse4",
+                    "results": [
+["Composition", 0.00914311408997]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-4.3-avx2",
+                    "results": [
+["Composition", 0.00546288490295]
                     ]
                 }
             ]

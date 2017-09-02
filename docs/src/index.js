@@ -53,7 +53,7 @@ function partialCompetition(element, competitionName, presetName) {
   return adapter.chartForCompetition(
     element,
     competition,
-    data.colors
+    data.competitors
   );
 }
 
@@ -139,7 +139,7 @@ function populateCompetitions(competitions) {
     chart = adapter.chartForCompetition(
       document.getElementById("chart-container"),
       competition,
-      data.colors
+      data.competitors
     );
 
     var innerHTML = "";

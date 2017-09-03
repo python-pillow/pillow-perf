@@ -8,6 +8,45 @@ var objectAssign = require('object-assign');
 var globalChart = null;
 var globalUnits;
 
+var unitsPresets = {
+  seconds: {
+    label: 's',
+    valuePrecision: 4,
+    leftpad: 7,
+    formatValue: function(time, competition) {
+      return time;
+    },
+    howFaster: function(current, first) {
+      return first / current;
+    }
+  },
+  megapixels: {
+    label: 'MP/s',
+    valuePrecision: 2,
+    leftpad: 7,
+    formatValue: function(time, competition) {
+      var size = competition.source.size;
+      if (time)
+        return size[0] * size[1] / time / 1e6;
+    },
+    howFaster: function(current, first) {
+      return current / first;
+    }
+  },
+  operations: {
+    label: 'op/s',
+    valuePrecision: 2,
+    leftpad: 7,
+    formatValue: function(time, competition) {
+      if (time)
+        return 1.0 / time;
+    },
+    howFaster: function(current, first) {
+      return current / first;
+    }
+  },
+}
+
 
 function partialCompetition(element, competitionName, presetName) {
   var competitions = data.systems[0].competitions;
@@ -53,7 +92,8 @@ function partialCompetition(element, competitionName, presetName) {
 
   return adapter.chartForCompetition(
     element,
-    competition
+    competition,
+    unitsPresets.megapixels
   );
 }
 
@@ -138,7 +178,8 @@ function populateCompetitions(competitions) {
 
     globalChart = adapter.chartForCompetition(
       document.getElementById("chart-container"),
-      competition
+      competition,
+      unitsPresets[globalUnits]
     );
 
     var innerHTML = "";

@@ -90,9 +90,14 @@ function rightpad(s, size) {
         s += ' ';
     return s;
 }
+function leftpad(s, size) {
+    while (s.length < size)
+        s = ' ' + s;
+    return s;
+}
 
 
-function chartForCompetition(element, competition) {
+function chartForCompetition(element, competition, units) {
   var chartData = {
     type: 'myBar',
     data: {
@@ -112,7 +117,7 @@ function chartForCompetition(element, competition) {
         position: 'left',
       },
       tooltips: {
-        units: "s",
+        units: units.label,
         mode: "label",
         titleFontFamily: "'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
         titleFontSize: 14,
@@ -146,11 +151,13 @@ function chartForCompetition(element, competition) {
             
             var l = data.datasets[item.datasetIndex].label || '';
             var label = " " + rightpad(l, 28);
-            var units = chart.options.tooltips.units;
+            var unitsLabel = chart.options.tooltips.units;
+            var value = item.yLabel.toFixed(units.valuePrecision);
+            var howFaster = units.howFaster(item.yLabel, first);
             if (item.yLabel) {
-              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+              label += leftpad('' + value, units.leftpad) + ' ' + unitsLabel;
               if (item.yLabel != first) {
-                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+                label += '  ' + howFaster.toFixed(2) + 'x faster';
               }
             }
             return label;
@@ -240,7 +247,7 @@ function chartForCompetition(element, competition) {
       }
       lastGroup = group;
 
-      data.push(result[result.length - 1]);
+      data.push(units.formatValue(result[result.length - 1], competition));
     }
   }
 

@@ -55,11 +55,50 @@
 	
 	var adapter = __webpack_require__(6);
 	var data = __webpack_require__(8);
-	var objectAssign = __webpack_require__(13);
+	var objectAssign = __webpack_require__(9);
 	
 	// Global chart instance. Should be destroyed every time.
 	var globalChart = null;
 	var globalUnits;
+	
+	var unitsPresets = {
+	  seconds: {
+	    label: 's',
+	    valuePrecision: 4,
+	    leftpad: 7,
+	    formatValue: function(time, competition) {
+	      return time;
+	    },
+	    howFaster: function(current, first) {
+	      return first / current;
+	    }
+	  },
+	  megapixels: {
+	    label: 'MP/s',
+	    valuePrecision: 2,
+	    leftpad: 7,
+	    formatValue: function(time, competition) {
+	      var size = competition.source.size;
+	      if (time)
+	        return size[0] * size[1] / time / 1e6;
+	    },
+	    howFaster: function(current, first) {
+	      return current / first;
+	    }
+	  },
+	  operations: {
+	    label: 'op/s',
+	    valuePrecision: 2,
+	    leftpad: 7,
+	    formatValue: function(time, competition) {
+	      if (time)
+	        return 1.0 / time;
+	    },
+	    howFaster: function(current, first) {
+	      return current / first;
+	    }
+	  },
+	}
 	
 	
 	function partialCompetition(element, competitionName, presetName) {
@@ -106,7 +145,8 @@
 	
 	  return adapter.chartForCompetition(
 	    element,
-	    competition
+	    competition,
+	    unitsPresets.megapixels
 	  );
 	}
 	
@@ -191,7 +231,8 @@
 	
 	    globalChart = adapter.chartForCompetition(
 	      document.getElementById("chart-container"),
-	      competition
+	      competition,
+	      unitsPresets[globalUnits]
 	    );
 	
 	    var innerHTML = "";
@@ -728,9 +769,14 @@
 	        s += ' ';
 	    return s;
 	}
+	function leftpad(s, size) {
+	    while (s.length < size)
+	        s = ' ' + s;
+	    return s;
+	}
 	
 	
-	function chartForCompetition(element, competition) {
+	function chartForCompetition(element, competition, units) {
 	  var chartData = {
 	    type: 'myBar',
 	    data: {
@@ -750,7 +796,7 @@
 	        position: 'left',
 	      },
 	      tooltips: {
-	        units: "s",
+	        units: units.label,
 	        mode: "label",
 	        titleFontFamily: "'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
 	        titleFontSize: 14,
@@ -784,11 +830,13 @@
 	            
 	            var l = data.datasets[item.datasetIndex].label || '';
 	            var label = " " + rightpad(l, 28);
-	            var units = chart.options.tooltips.units;
+	            var unitsLabel = chart.options.tooltips.units;
+	            var value = item.yLabel.toFixed(units.valuePrecision);
+	            var howFaster = units.howFaster(item.yLabel, first);
 	            if (item.yLabel) {
-	              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+	              label += leftpad('' + value, units.leftpad) + ' ' + unitsLabel;
 	              if (item.yLabel != first) {
-	                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+	                label += '  ' + howFaster.toFixed(2) + 'x faster';
 	              }
 	            }
 	            return label;
@@ -878,7 +926,7 @@
 	      }
 	      lastGroup = group;
 	
-	      data.push(result[result.length - 1]);
+	      data.push(units.formatValue(result[result.length - 1], competition));
 	    }
 	  }
 	
@@ -11554,7 +11602,7 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var objectAssign = __webpack_require__(13);
+	var objectAssign = __webpack_require__(9);
 	
 	var competitors_meta = {
 	  "imagemagick-6.8":      {"color": [230, 100, 70], "title": "ImageMagick 6.8.9-9"},
@@ -11655,16 +11703,105 @@
 	
 	module.exports = {
 	  systems: [
-		  fillSystemWithMeta(__webpack_require__(9)),
 		  fillSystemWithMeta(__webpack_require__(10)),
 		  fillSystemWithMeta(__webpack_require__(11)),
 		  fillSystemWithMeta(__webpack_require__(12)),
+		  fillSystemWithMeta(__webpack_require__(13)),
 		],
 	};
 
 
 /***/ },
 /* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+	/* eslint-disable no-unused-vars */
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+	
+	function toObject(val) {
+		if (val === null || val === undefined) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+	
+		return Object(val);
+	}
+	
+	function shouldUseNative() {
+		try {
+			if (!Object.assign) {
+				return false;
+			}
+	
+			// Detect buggy property enumeration order in older V8 versions.
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+			var test1 = new String('abc');  // eslint-disable-line
+			test1[5] = 'de';
+			if (Object.getOwnPropertyNames(test1)[0] === '5') {
+				return false;
+			}
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+			var test2 = {};
+			for (var i = 0; i < 10; i++) {
+				test2['_' + String.fromCharCode(i)] = i;
+			}
+			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+				return test2[n];
+			});
+			if (order2.join('') !== '0123456789') {
+				return false;
+			}
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+			var test3 = {};
+			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+				test3[letter] = letter;
+			});
+			if (Object.keys(Object.assign({}, test3)).join('') !==
+					'abcdefghijklmnopqrst') {
+				return false;
+			}
+	
+			return true;
+		} catch (e) {
+			// We don't expect any of the above to throw, but better to be safe.
+			return false;
+		}
+	}
+	
+	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+		var from;
+		var to = toObject(target);
+		var symbols;
+	
+		for (var s = 1; s < arguments.length; s++) {
+			from = Object(arguments[s]);
+	
+			for (var key in from) {
+				if (hasOwnProperty.call(from, key)) {
+					to[key] = from[key];
+				}
+			}
+	
+			if (Object.getOwnPropertySymbols) {
+				symbols = Object.getOwnPropertySymbols(from);
+				for (var i = 0; i < symbols.length; i++) {
+					if (propIsEnumerable.call(from, symbols[i])) {
+						to[symbols[i]] = from[symbols[i]];
+					}
+				}
+			}
+		}
+	
+		return to;
+	};
+
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -12957,7 +13094,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -13882,7 +14019,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -15109,7 +15246,7 @@
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -16032,95 +16169,6 @@
 			}
 		]
 	};
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	'use strict';
-	/* eslint-disable no-unused-vars */
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-	
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-	
-		return Object(val);
-	}
-	
-	function shouldUseNative() {
-		try {
-			if (!Object.assign) {
-				return false;
-			}
-	
-			// Detect buggy property enumeration order in older V8 versions.
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
-			test1[5] = 'de';
-			if (Object.getOwnPropertyNames(test1)[0] === '5') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test2 = {};
-			for (var i = 0; i < 10; i++) {
-				test2['_' + String.fromCharCode(i)] = i;
-			}
-			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-				return test2[n];
-			});
-			if (order2.join('') !== '0123456789') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test3 = {};
-			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-				test3[letter] = letter;
-			});
-			if (Object.keys(Object.assign({}, test3)).join('') !==
-					'abcdefghijklmnopqrst') {
-				return false;
-			}
-	
-			return true;
-		} catch (e) {
-			// We don't expect any of the above to throw, but better to be safe.
-			return false;
-		}
-	}
-	
-	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-	
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-	
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-	
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-	
-		return to;
-	};
-
 
 /***/ }
 /******/ ]);

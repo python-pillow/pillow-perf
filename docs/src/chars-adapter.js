@@ -92,7 +92,7 @@ function rightpad(s, size) {
 }
 
 
-function chartForCompetition(element, competition, colors) {
+function chartForCompetition(element, competition) {
   var chartData = {
     type: 'myBar',
     data: {
@@ -214,19 +214,19 @@ function chartForCompetition(element, competition, colors) {
 
   for (var i = 0; i < competition.competitors.length; i++) {
     var competitor = competition.competitors[i];
+    var color = competitor.color;
     var data = [];
     var lastGroup = null;
-    var c = colors[competitor.name];
 
-    if (typeof c != "string") {
-      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
+    if (typeof color != "string") {
+      color = "hsla("+color[0]+","+color[1]+"%,"+color[2]+"%,1.0)";
     }
 
     chartData.data.datasets.push({
       label: competitor.title,
       name: competitor.name,
       data: data,
-      backgroundColor: c,
+      backgroundColor: color,
       borderColor: "rgba(255, 255, 255, .5)",
       borderWidth: 1,
     });

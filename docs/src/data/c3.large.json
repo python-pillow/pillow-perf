@@ -6,30 +6,6 @@
     "competitions": [
         {
             "name": "resample-4k-rgb",
-            "topic": "resampling",
-            "title": "Resize 2560x1600 RGB image",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "resolution",
-                    "title": "Destination resolution"
-                },
-                {
-                    "name": "filter",
-                    "title": "Convolution filter",
-                    "map": {
-                        "bil": "Bilinear",
-                        "bic": "Bicubic",
-                        "lzs": "Lanczos"
-                    }
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "presets": [
                 {
                     "name": "pillow-2.7",
@@ -106,7 +82,6 @@
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["26x16", "bil", 0.038477897644],
 ["26x16", "bic", 0.0708239078522],
@@ -124,7 +99,6 @@
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["26x16", "bil", 0.0779840946198],
 ["26x16", "bic", 0.148402929306],
@@ -142,7 +116,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "title": "Pillow 2.7.0 to 3.2.0",
                     "results": [
 ["26x16", "bil", 0.0201079845428],
 ["26x16", "bic", 0.0387599468231],
@@ -160,7 +133,6 @@
                 },
                 {
                     "name": "pillow-3.3",
-                    "title": "Pillow 3.3.3",
                     "results": [
 ["26x16", "bil", 0.0123510360718],
 ["26x16", "bic", 0.0236129760742],
@@ -178,7 +150,6 @@
                 },
                 {
                     "name": "pillow-3.4",
-                    "title": "Pillow 3.4.2",
                     "results": [
 ["26x16", "bil", 0.0122990608215],
 ["26x16", "bic", 0.0235109329224],
@@ -197,7 +168,6 @@
 
                 {
                     "name": "pillow-simd-3.2-sse4",
-                    "title": "Pillow SIMD 3.2.0 SSE4",
                     "results": [
 ["26x16", "bil", 0.00853085517883],
 ["26x16", "bic", 0.0164618492126],
@@ -216,7 +186,6 @@
 
                 {
                     "name": "pillow-simd-3.3-sse4",
-                    "title": "Pillow SIMD 3.3.0 SSE4",
                     "results": [
 ["26x16", "bil", 0.00645899772644],
 ["26x16", "bic", 0.0122480392456],
@@ -235,7 +204,6 @@
 
                 {
                     "name": "pillow-simd-3.4-sse4",
-                    "title": "Pillow SIMD 3.4.0 SSE4",
                     "results": [
 ["26x16", "bil", 0.00283789634705],
 ["26x16", "bic", 0.00541305541992],
@@ -255,25 +223,9 @@
         },
         {
             "name": "blur-4k-rgb",
-            "topic": "blur",
-            "title": "Blur 2560×1600 RGB image",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "radius",
-                    "title": "Blur radius"
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["1px", 0.475826978683],
 ["10px", 1.76704597473],
@@ -282,7 +234,6 @@
                 },
                 {
                     "name": "opencv-3.1",
-                    "title": "OpenCV 3.1.0",
                     "results": [
 ["1px", 0.0310461521149],
 ["10px", 0.231682062149],
@@ -291,7 +242,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "title": "Pillow 2.7",
                     "results": [
 ["1px", 0.21710395813],
 ["10px", 0.215872049332],
@@ -300,7 +250,6 @@
                 },
                 {
                     "name": "pillow-simd-3.2-sse4",
-                    "title": "Pillow SIMD 3.2.0 SSE4",
                     "results": [
 ["1px", 0.0951750278473],
 ["10px", 0.0935611724854],
@@ -311,25 +260,9 @@
         },
         {
             "name": "transposition-4k-rgb",
-            "topic": "transposition",
-            "title": "Transpose 2560×1600 RGB image",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "operation",
-                    "title": "Operation"
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["Flop", 0.0060338973999],
 ["Flip", 0.00630402565002],
@@ -341,7 +274,6 @@
                 },
                 {
                     "name": "opencv-3.1",
-                    "title": "OpenCV 3.1.0",
                     "results": [
 ["Flop", 0.00998592376709],
 ["Flip", 0.00163388252258],
@@ -353,7 +285,6 @@
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["Flop", 0.00733089447021],
 ["Flip", 0.00340485572815],
@@ -365,7 +296,6 @@
                 },
                 {
                     "name": "pillow-2.7",
-                    "title": "Pillow 2.7",
                     "results": [
 ["Flop", 0.00789308547974],
 ["Flip", 0.00348997116089],
@@ -379,25 +309,9 @@
         },
         {
             "name": "conversion-4k-rgb",
-            "topic": "conversion",
-            "title": "Color conversion 2560×1600 image",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "modes",
-                    "title": "Modes"
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["RGB to L", 0.0497930049896],
 ["RGBA to LA", 0.0496079921722],
@@ -407,7 +321,6 @@
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["RGB to L", 0.00789618492126],
 ["RGBA to LA", 0.010036945343],
@@ -417,7 +330,6 @@
                 },
                 {
                     "name": "pillow-3.3",
-                    "title": "Pillow 3.3.3",
                     "results": [
 ["RGB to L", 0.00790691375732],
 ["RGBA to LA", 0.0101199150085],
@@ -427,7 +339,6 @@
                 },
                 {
                     "name": "pillow-simd-3.3-sse4",
-                    "title": "Pillow SIMD 3.3.0 SSE4",
                     "results": [
 ["RGB to L", 0.00790596008301],
 ["RGBA to LA", 0.0100450515747],
@@ -439,39 +350,21 @@
         },
         {
             "name": "composition-4k-rgb",
-            "topic": "compositing",
-            "title": "Composition two 2560×1600 RGBA images",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "radius",
-                    "title": "Blur radius"
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
-                    "title": "ImageMagick 6.8.9-9",
                     "results": [
 ["Composition", 0.132797956467]
                     ]
                 },
                 {
                     "name": "pillow-2.0",
-                    "title": "PIL & Pillow 2.0 to 2.6",
                     "results": [
 ["Composition", 0.0346670150757]
                     ]
                 },
                 {
                     "name": "pillow-simd-3.3-sse4",
-                    "title": "Pillow SIMD 3.3.0 SSE4",
                     "results": [
 ["Composition", 0.0124380588531]
                     ]

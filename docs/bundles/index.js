@@ -152,7 +152,7 @@
 	  return adapter.chartForCompetition(
 	    element,
 	    competition,
-	    unitsPresets.megapixels
+	    unitsPresets.seconds
 	  );
 	}
 	

@@ -99,7 +99,7 @@ function partialCompetition(element, competitionName, presetName) {
   return adapter.chartForCompetition(
     element,
     competition,
-    unitsPresets.megapixels
+    unitsPresets.seconds
   );
 }
 

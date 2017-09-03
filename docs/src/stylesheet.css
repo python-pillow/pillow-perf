@@ -38,6 +38,12 @@ a.pseudo {
     text-decoration: none;
     border-bottom: 1px dashed;
 }
+a.pseudo.selected {
+    text-decoration: none;
+    border-bottom: none;
+    color: inherit;
+    font-weight: bold;
+}
 ul, p {
     margin-bottom: 0;
 }

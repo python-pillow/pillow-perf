@@ -5,7 +5,8 @@ var data = require("./data/index");
 var objectAssign = require('object-assign');
 
 // Global chart instance. Should be destroyed every time.
-var chart = null;
+var globalChart = null;
+var globalUnits;
 
 
 function partialCompetition(element, competitionName, presetName) {
@@ -68,7 +69,7 @@ function createSelect(select, list, callback) {
     element.innerText = item.title;
     element.addEventListener('click', function(e) {
       e.preventDefault();
-    })
+    });
     elements.push(element);
     select.appendChild(document.createElement('li')).appendChild(element);
     select.appendChild(document.createTextNode(" "));
@@ -131,11 +132,11 @@ function populateCompetitions(competitions) {
   function applyCompetition(n) {
     var competition = competitions[n];
 
-    if (chart) {
-      chart.destroy();
+    if (globalChart) {
+      globalChart.destroy();
     }
 
-    chart = adapter.chartForCompetition(
+    globalChart = adapter.chartForCompetition(
       document.getElementById("chart-container"),
       competition
     );
@@ -152,7 +153,7 @@ function populateCompetitions(competitions) {
     setTopic(parent, competition.topic);
 
     if (competition.presets) {
-      var applyPreset = populatePresets(chart, competition.presets);
+      var applyPreset = populatePresets(globalChart, competition.presets);
 
       for (var i = 0; i < competition.presets.length; i++) {
         if (competition.presets[i].default) {
@@ -161,7 +162,7 @@ function populateCompetitions(competitions) {
         }
       }
     } else {
-      populatePresets(chart, []);
+      populatePresets(globalChart, []);
     }
   }
   return applyCompetition;
@@ -197,10 +198,32 @@ function populateSystems(systems) {
   return applySystem;
 }
 
+function setupUnits() {
+  var topics = document.getElementById('switch-units').getElementsByTagName("a");
+
+  for (var i = 0; i < topics.length; i++) {
+    if (topics[i].classList.contains('selected')) {
+      globalUnits = topics[i].getAttribute('data-unit');
+    }
+
+    topics[i].addEventListener('click', function(e) {
+      globalUnits = this.getAttribute('data-unit');
+
+      for (var i = 0; i < topics.length; i++) {
+        topics[i].classList.remove('selected');
+      }
+      this.classList.add('selected');
+
+      e.preventDefault();
+    });
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", function(){
 
   var applySystem = populateSystems(data.systems);
+  setupUnits();
   applySystem(0);
   
 });

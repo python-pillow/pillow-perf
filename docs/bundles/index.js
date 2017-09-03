@@ -55,10 +55,56 @@
 	
 	var adapter = __webpack_require__(6);
 	var data = __webpack_require__(8);
-	var objectAssign = __webpack_require__(13);
+	var objectAssign = __webpack_require__(9);
 	
 	// Global chart instance. Should be destroyed every time.
-	var chart = null;
+	var globalChart = null;
+	var globalSystem;
+	var globalCompetition;
+	var globalPreset;
+	var globalUnits;
+	
+	var unitsPresets = {
+	  seconds: {
+	    label: 's',
+	    valuePrecision: 4,
+	    leftpad: 7,
+	    reverseDrawOrder: false,
+	    formatValue: function(time, competition) {
+	      return time;
+	    },
+	    howFaster: function(current, first) {
+	      return first / current;
+	    }
+	  },
+	  megapixels: {
+	    label: 'MP/s',
+	    valuePrecision: 2,
+	    leftpad: 7,
+	    reverseDrawOrder: false,
+	    formatValue: function(time, competition) {
+	      var size = competition.source.size;
+	      if (time)
+	        return size[0] * size[1] / time / 1e6;
+	    },
+	    howFaster: function(current, first) {
+	      return current / first;
+	    }
+	  },
+	  operations: {
+	    label: 'op/s',
+	    valuePrecision: 2,
+	    leftpad: 7,
+	    reverseDrawOrder: false,
+	    formatValue: function(time, competition) {
+	      if (time)
+	        return 1.0 / time;
+	    },
+	    howFaster: function(current, first) {
+	      return current / first;
+	    }
+	  },
+	}
 	
 	
 	function partialCompetition(element, competitionName, presetName) {
@@ -106,8 +152,27 @@
 	  return adapter.chartForCompetition(
 	    element,
 	    competition,
-	    data.competitors
+	    unitsPresets.seconds
 	  );
+	}
+	
+	
+	function applyUnits(units) {
+	  globalUnits = units;
+	
+	  if (globalChart) {
+	    globalChart.destroy();
+	  }
+	
+	  globalChart = adapter.chartForCompetition(
+	    document.getElementById("chart-container"),
+	    globalCompetition,
+	    unitsPresets[globalUnits]
+	  );
+	
+	  if (globalPreset) {
+	    adapter.applyPreset(globalChart, globalPreset.set);
+	  }
 	}
 	
 	
@@ -122,7 +187,7 @@
 	    element.innerText = item.title;
 	    element.addEventListener('click', function(e) {
 	      e.preventDefault();
-	    })
+	    });
 	    elements.push(element);
 	    select.appendChild(document.createElement('li')).appendChild(element);
 	    select.appendChild(document.createTextNode(" "));
@@ -153,7 +218,7 @@
 	}
 	
 	
-	function populatePresets(chart, presets) {
+	function populatePresets(presets) {
 	  var select = document.getElementById("select-preset");
 	  var parent = select.parentNode;
 	
@@ -165,9 +230,10 @@
 	
 	  function applyPreset(n) {
 	    var preset = presets[n];
+	    globalPreset = preset;
 	    selectItem(n);
 	    setTopic(parent, preset.topic);
-	    adapter.applyPreset(chart, preset.set);
+	    adapter.applyPreset(globalChart, preset.set);
 	  }
 	  return applyPreset;
 	}
@@ -184,15 +250,16 @@
 	
 	  function applyCompetition(n) {
 	    var competition = competitions[n];
+	    globalCompetition = competition;
 	
-	    if (chart) {
-	      chart.destroy();
+	    if (globalChart) {
+	      globalChart.destroy();
 	    }
 	
-	    chart = adapter.chartForCompetition(
+	    globalChart = adapter.chartForCompetition(
 	      document.getElementById("chart-container"),
 	      competition,
-	      data.competitors
+	      unitsPresets[globalUnits]
 	    );
 	
 	    var innerHTML = "";
@@ -207,7 +274,7 @@
 	    setTopic(parent, competition.topic);
 	
 	    if (competition.presets) {
-	      var applyPreset = populatePresets(chart, competition.presets);
+	      var applyPreset = populatePresets(competition.presets);
 	
 	      for (var i = 0; i < competition.presets.length; i++) {
 	        if (competition.presets[i].default) {
@@ -216,7 +283,8 @@
 	        }
 	      }
 	    } else {
-	      populatePresets(chart, []);
+	      populatePresets([]);
+	      globalPreset = null;
 	    }
 	  }
 	  return applyCompetition;
@@ -233,18 +301,18 @@
 	  });
 	
 	  function applySystem(n) {
-	    var system = systems[n];
-	    var applyCompetition = populateCompetitions(system.competitions);
+	    globalSystem = systems[n];
+	    var applyCompetition = populateCompetitions(globalSystem.competitions);
 	    applyCompetition(0);
 	    
 	    selectItem(n);
 	
 	    var innerHTML = "";
-	    if (system.OS) {
-	      innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
+	    if (globalSystem.OS) {
+	      innerHTML += "<strong>OS</strong> " + globalSystem.OS + "<br>";
 	    }
-	    if (system.CPU) {
-	      innerHTML += "<strong>CPU</strong> " + system.CPU + "<br>";
+	    if (globalSystem.CPU) {
+	      innerHTML += "<strong>CPU</strong> " + globalSystem.CPU + "<br>";
 	    }
 	    info.innerHTML = innerHTML;
 	  }
@@ -253,9 +321,31 @@
 	}
 	
 	
+	function setupUnits() {
+	  var topics = document.getElementById('switch-units').getElementsByTagName("a");
+	
+	  for (var i = 0; i < topics.length; i++) {
+	    if (topics[i].classList.contains('selected')) {
+	      globalUnits = topics[i].getAttribute('data-unit');
+	    }
+	
+	    topics[i].addEventListener('click', function(e) {
+	      for (var i = 0; i < topics.length; i++) {
+	        topics[i].classList.remove('selected');
+	      }
+	      this.classList.add('selected');
+	      applyUnits(this.getAttribute('data-unit'));
+	
+	      e.preventDefault();
+	    });
+	  }
+	}
+	
+	
 	document.addEventListener("DOMContentLoaded", function(){
 	
 	  var applySystem = populateSystems(data.systems);
+	  setupUnits();
 	  applySystem(0);
 	  
 	});
@@ -298,7 +388,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    \n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n\n#switch-units {\n    text-align: right;\n    position: relative;\n    top: -1em;\n}\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
@@ -691,7 +781,7 @@
 	        if (me.isDatasetVisible(datasetIndex)) {
 	            me.getDatasetMeta(datasetIndex).controller.draw(ease);
 	        }
-	    }, me);
+	    }, me, this.options._reverseDrawOrder);
 	
 	    Chart.plugins.notify('afterDatasetsDraw', [me, easingDecimal]);
 	
@@ -707,9 +797,14 @@
 	        s += ' ';
 	    return s;
 	}
+	function leftpad(s, size) {
+	    while (s.length < size)
+	        s = ' ' + s;
+	    return s;
+	}
 	
 	
-	function chartForCompetition(element, competition, competitors) {
+	function chartForCompetition(element, competition, units) {
 	  var chartData = {
 	    type: 'myBar',
 	    data: {
@@ -718,6 +813,7 @@
 	      datasets: [],
 	    },
 	    options: {
+	      _reverseDrawOrder: units.reverseDrawOrder,
 	      title: {},
 	      // maintainAspectRatio: false, 
 	      // responsive: false,
@@ -729,7 +825,7 @@
 	        position: 'left',
 	      },
 	      tooltips: {
-	        units: "s",
+	        units: units.label,
 	        mode: "label",
 	        titleFontFamily: "'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
 	        titleFontSize: 14,
@@ -743,9 +839,12 @@
 	        yPadding: 10,
 	        callbacks: {
 	          title: function(tooltipItems, data) {
-	            var chart = this._chartInstance;
+	            var chart = this._chartInstance.options.title.text;
 	            var title = Chart.defaults.global.tooltips.callbacks.title(tooltipItems, data);
-	            return chart.options.title.text + " " + title;
+	            if (competition.preposition) {
+	              chart += competition.preposition;
+	            }
+	            return chart + " " + title;
 	          },
 	          label: function(item, data) {
 	            var chart = this._chartInstance;
@@ -763,11 +862,13 @@
 	            
 	            var l = data.datasets[item.datasetIndex].label || '';
 	            var label = " " + rightpad(l, 28);
-	            var units = chart.options.tooltips.units;
+	            var unitsLabel = chart.options.tooltips.units;
+	            var value = item.yLabel.toFixed(units.valuePrecision);
+	            var howFaster = units.howFaster(item.yLabel, first);
 	            if (item.yLabel) {
-	              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+	              label += leftpad('' + value, units.leftpad) + ' ' + unitsLabel;
 	              if (item.yLabel != first) {
-	                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+	                label += '  ' + howFaster.toFixed(2) + 'x faster';
 	              }
 	            }
 	            return label;
@@ -832,20 +933,19 @@
 	
 	  for (var i = 0; i < competition.competitors.length; i++) {
 	    var competitor = competition.competitors[i];
+	    var color = competitor.color;
 	    var data = [];
 	    var lastGroup = null;
-	    var c = competitors[competitor.name].color;
-	    var title = competitors[competitor.name].title;
 	
-	    if (typeof c != "string") {
-	      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
+	    if (typeof color != "string") {
+	      color = "hsla("+color[0]+","+color[1]+"%,"+color[2]+"%,1.0)";
 	    }
 	
 	    chartData.data.datasets.push({
 	      label: title,
 	      name: competitor.name,
 	      data: data,
-	      backgroundColor: c,
+	      backgroundColor: color,
 	      borderColor: "rgba(255, 255, 255, .5)",
 	      borderWidth: 1,
 	    });
@@ -859,7 +959,7 @@
 	      }
 	      lastGroup = group;
 	
-	      data.push(result[result.length - 1]);
+	      data.push(units.formatValue(result[result.length - 1], competition));
 	    }
 	  }
 	
@@ -11535,7 +11635,9 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var competitors = {
+	var objectAssign = __webpack_require__(9);
+	
+	var competitors_meta = {
 	  "imagemagick-6.8":      {"color": [230, 100, 70], "title": "ImageMagick 6.8.9-9"},
 	  "opencv-3.1":           {"color": [240, 100, 60], "title": "OpenCV 3.1.0"},
 	  "skia-53":              {"color": [250, 100, 50], "title": "Skia 53 SSE2"},
@@ -11560,21 +11662,188 @@
 	  "pillow-simd-4.3-avx2": {"color": [250, 90, 60], "title": "Pillow SIMD 4.3-demo AVX2"},
 	};
 	
-	var systems = [
-	  __webpack_require__(9),
-	  __webpack_require__(10),
-	  __webpack_require__(11),
-	  __webpack_require__(12),
-	];
+	var competitions_meta = {
+	  "resample-4k-rgb" : {
+	    "topic": "resampling",
+	    "title": "Resize 2560x1600 RGB image",
+	    "preposition": " to",
+	    "source": {"size": [2560, 1600]},
+	    "columns": [
+	      {"name": "resolution", "title": "Destination resolution"},
+	      {
+	        "name": "filter",
+	        "title": "Convolution filter",
+	        "map": {
+	          "bil": "Bilinear",
+	          "bic": "Bicubic",
+	          "lzs": "Lanczos"
+	        }
+	      },
+	      {"name": "result", "units": "s"}
+	    ],
+	  },
+	  "blur-4k-rgb": {
+	    "topic": "blur",
+	    "title": "Blur 2560×1600 RGB image",
+	    "preposition": ",",
+	    "source": {"size": [2560, 1600]},
+	    "columns": [
+	      {"name": "radius", "title": "Blur radius"},
+	      {"name": "result", "units": "s"}
+	    ],
+	  },
+	  "transposition-4k-rgb": {
+	    "topic": "transposition",
+	    "title": "Transpose 2560×1600 RGB image",
+	    "preposition": ".",
+	    "source": {"size": [2560, 1600]},
+	    "columns": [
+	      {"name": "operation", "title": "Operation"},
+	      {"name": "result", "units": "s"}
+	    ],
+	  },
+	  "conversion-4k-rgb": {
+	    "topic": "conversion",
+	    "title": "Color conversion 2560×1600 image",
+	    "preposition": ".",
+	    "source": {"size": [2560, 1600]},
+	    "columns": [
+	      {"name": "modes", "title": "Modes"},
+	      {"name": "result", "units": "s"}
+	    ],
+	  },
+	  "composition-4k-rgb": {
+			"topic": "compositing",
+	    "title": "Composition two 2560×1600 RGBA images",
+	    "preposition": ".",
+	    "source": {"size": [2560, 1600]},
+	    "columns": [
+	      {"name": "radius", "title": "Blur radius"},
+	      {"name": "result", "units": "s"}
+	    ],
+	  },
+	};
+	
+	
+	function fillSystemWithMeta(system) {
+	  var i, j;
+	  system = objectAssign({}, system);
+	
+	  for (j = 0; j < system.competitions.length; j++) {
+	  	var competition = system.competitions[j];
+	  	system.competitions[j] = competition = objectAssign(
+	  		{}, competitions_meta[competition.name], competition);
+	
+	  	for (i = 0; i < competition.competitors.length; i++) {
+	  		var competitor = competition.competitors[i];
+	  		competition.competitors[i] = competitor = objectAssign(
+	  			{}, competitors_meta[competitor.name], competitor);
+	  	}
+	  }
+	  return system;
+	}
 	
 	module.exports = {
-	  competitors: competitors,
-	  systems: systems,
+	  systems: [
+		  fillSystemWithMeta(__webpack_require__(10)),
+		  fillSystemWithMeta(__webpack_require__(11)),
+		  fillSystemWithMeta(__webpack_require__(12)),
+		  fillSystemWithMeta(__webpack_require__(13)),
+		],
 	};
 
 
 /***/ },
 /* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+	/* eslint-disable no-unused-vars */
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+	
+	function toObject(val) {
+		if (val === null || val === undefined) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+	
+		return Object(val);
+	}
+	
+	function shouldUseNative() {
+		try {
+			if (!Object.assign) {
+				return false;
+			}
+	
+			// Detect buggy property enumeration order in older V8 versions.
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+			var test1 = new String('abc');  // eslint-disable-line
+			test1[5] = 'de';
+			if (Object.getOwnPropertyNames(test1)[0] === '5') {
+				return false;
+			}
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+			var test2 = {};
+			for (var i = 0; i < 10; i++) {
+				test2['_' + String.fromCharCode(i)] = i;
+			}
+			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+				return test2[n];
+			});
+			if (order2.join('') !== '0123456789') {
+				return false;
+			}
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+			var test3 = {};
+			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+				test3[letter] = letter;
+			});
+			if (Object.keys(Object.assign({}, test3)).join('') !==
+					'abcdefghijklmnopqrst') {
+				return false;
+			}
+	
+			return true;
+		} catch (e) {
+			// We don't expect any of the above to throw, but better to be safe.
+			return false;
+		}
+	}
+	
+	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+		var from;
+		var to = toObject(target);
+		var symbols;
+	
+		for (var s = 1; s < arguments.length; s++) {
+			from = Object(arguments[s]);
+	
+			for (var key in from) {
+				if (hasOwnProperty.call(from, key)) {
+					to[key] = from[key];
+				}
+			}
+	
+			if (Object.getOwnPropertySymbols) {
+				symbols = Object.getOwnPropertySymbols(from);
+				for (var i = 0; i < symbols.length; i++) {
+					if (propIsEnumerable.call(from, symbols[i])) {
+						to[symbols[i]] = from[symbols[i]];
+					}
+				}
+			}
+		}
+	
+		return to;
+	};
+
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -11584,33 +11853,6 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resampling",
-				"title": "Resize 2560x1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "resolution",
-						"title": "Destination resolution"
-					},
-					{
-						"name": "filter",
-						"title": "Convolution filter",
-						"map": {
-							"bil": "Bilinear",
-							"bic": "Bicubic",
-							"lzs": "Lanczos"
-						}
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"presets": [
 					{
 						"name": "pillow-2.7",
@@ -11700,7 +11942,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"26x16",
@@ -11766,7 +12007,6 @@
 					},
 					{
 						"name": "skia-53",
-						"title": "Skia 53 SSE2",
 						"results": [
 							[
 								"26x16",
@@ -11832,7 +12072,6 @@
 					},
 					{
 						"name": "ipp-2017",
-						"title": "IPP 2017 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -11898,7 +12137,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"26x16",
@@ -11964,7 +12202,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7.0 to 3.2.0",
 						"results": [
 							[
 								"26x16",
@@ -12030,7 +12267,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"26x16",
@@ -12096,7 +12332,6 @@
 					},
 					{
 						"name": "pillow-3.4",
-						"title": "Pillow 3.4.2",
 						"results": [
 							[
 								"26x16",
@@ -12162,7 +12397,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -12228,7 +12462,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-avx2",
-						"title": "Pillow SIMD 3.2.0 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -12294,7 +12527,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -12360,7 +12592,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-avx2",
-						"title": "Pillow SIMD 3.3.0 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -12426,7 +12657,6 @@
 					},
 					{
 						"name": "pillow-simd-3.4-sse4",
-						"title": "Pillow SIMD 3.4.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -12492,7 +12722,6 @@
 					},
 					{
 						"name": "pillow-simd-3.4-avx2",
-						"title": "Pillow SIMD 3.4.0 AVX2",
 						"results": [
 							[
 								"26x16",
@@ -12560,28 +12789,9 @@
 			},
 			{
 				"name": "blur-4k-rgb",
-				"topic": "blur",
-				"title": "Blur 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"1px",
@@ -12599,7 +12809,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"1px",
@@ -12617,7 +12826,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"1px",
@@ -12635,7 +12843,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"1px",
@@ -12655,28 +12862,9 @@
 			},
 			{
 				"name": "transposition-4k-rgb",
-				"topic": "transposition",
-				"title": "Transpose 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "operation",
-						"title": "Operation"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Flop",
@@ -12706,7 +12894,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"Flop",
@@ -12736,7 +12923,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Flop",
@@ -12766,7 +12952,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"Flop",
@@ -12798,28 +12983,9 @@
 			},
 			{
 				"name": "conversion-4k-rgb",
-				"topic": "conversion",
-				"title": "Color conversion 2560×1600 image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "modes",
-						"title": "Modes"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"RGB to L",
@@ -12841,7 +13007,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"RGB to L",
@@ -12863,7 +13028,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"RGB to L",
@@ -12885,7 +13049,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"RGB to L",
@@ -12907,7 +13070,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-avx2",
-						"title": "Pillow SIMD 3.3.0 AVX2",
 						"results": [
 							[
 								"RGB to L",
@@ -12931,28 +13093,9 @@
 			},
 			{
 				"name": "composition-4k-rgb",
-				"topic": "compositing",
-				"title": "Composition two 2560×1600 RGBA images",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Composition",
@@ -12962,7 +13105,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "Pillow 2.0",
 						"results": [
 							[
 								"Composition",
@@ -12972,7 +13114,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"Composition",
@@ -12982,7 +13123,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-avx2",
-						"title": "Pillow SIMD 3.3.0 AVX2",
 						"results": [
 							[
 								"Composition",
@@ -12996,7 +13136,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -13006,33 +13146,6 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resampling",
-				"title": "Resize 2560x1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "resolution",
-						"title": "Destination resolution"
-					},
-					{
-						"name": "filter",
-						"title": "Convolution filter",
-						"map": {
-							"bil": "Bilinear",
-							"bic": "Bicubic",
-							"lzs": "Lanczos"
-						}
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"presets": [
 					{
 						"name": "pillow-2.7",
@@ -13109,7 +13222,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"26x16",
@@ -13175,7 +13287,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"26x16",
@@ -13241,7 +13352,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7.0 to 3.2.0",
 						"results": [
 							[
 								"26x16",
@@ -13307,7 +13417,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"26x16",
@@ -13373,7 +13482,6 @@
 					},
 					{
 						"name": "pillow-3.4",
-						"title": "Pillow 3.4.2",
 						"results": [
 							[
 								"26x16",
@@ -13439,7 +13547,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -13505,7 +13612,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -13571,7 +13677,6 @@
 					},
 					{
 						"name": "pillow-simd-3.4-sse4",
-						"title": "Pillow SIMD 3.4.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -13639,28 +13744,9 @@
 			},
 			{
 				"name": "blur-4k-rgb",
-				"topic": "blur",
-				"title": "Blur 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"1px",
@@ -13678,7 +13764,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"1px",
@@ -13696,7 +13781,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"1px",
@@ -13714,7 +13798,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"1px",
@@ -13734,28 +13817,9 @@
 			},
 			{
 				"name": "transposition-4k-rgb",
-				"topic": "transposition",
-				"title": "Transpose 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "operation",
-						"title": "Operation"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Flop",
@@ -13785,7 +13849,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"Flop",
@@ -13815,7 +13878,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Flop",
@@ -13845,7 +13907,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"Flop",
@@ -13877,28 +13938,9 @@
 			},
 			{
 				"name": "conversion-4k-rgb",
-				"topic": "conversion",
-				"title": "Color conversion 2560×1600 image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "modes",
-						"title": "Modes"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"RGB to L",
@@ -13920,7 +13962,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"RGB to L",
@@ -13942,7 +13983,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"RGB to L",
@@ -13964,7 +14004,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"RGB to L",
@@ -13988,28 +14027,9 @@
 			},
 			{
 				"name": "composition-4k-rgb",
-				"topic": "compositing",
-				"title": "Composition two 2560×1600 RGBA images",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Composition",
@@ -14019,7 +14039,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Composition",
@@ -14029,7 +14048,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"Composition",
@@ -14043,7 +14061,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -14053,33 +14071,6 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resampling",
-				"title": "Resize 2560x1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "resolution",
-						"title": "Destination resolution"
-					},
-					{
-						"name": "filter",
-						"title": "Convolution filter",
-						"map": {
-							"bil": "Bilinear",
-							"bic": "Bicubic",
-							"lzs": "Lanczos"
-						}
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"presets": [
 					{
 						"name": "pillow-2.7",
@@ -15221,24 +15212,6 @@
 			},
 			{
 				"name": "blur-4k-rgb",
-				"topic": "blur",
-				"title": "Blur 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
@@ -15402,24 +15375,6 @@
 			},
 			{
 				"name": "transposition-4k-rgb",
-				"topic": "transposition",
-				"title": "Transpose 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "operation",
-						"title": "Operation"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
@@ -15541,24 +15496,6 @@
 			},
 			{
 				"name": "conversion-4k-rgb",
-				"topic": "conversion",
-				"title": "Color conversion 2560×1600 image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "modes",
-						"title": "Modes"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
@@ -15669,24 +15606,6 @@
 			},
 			{
 				"name": "composition-4k-rgb",
-				"topic": "compositing",
-				"title": "Composition two 2560×1600 RGBA images",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
@@ -15757,7 +15676,7 @@
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -15767,33 +15686,6 @@
 		"competitions": [
 			{
 				"name": "resample-4k-rgb",
-				"topic": "resampling",
-				"title": "Resize 2560x1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "resolution",
-						"title": "Destination resolution"
-					},
-					{
-						"name": "filter",
-						"title": "Convolution filter",
-						"map": {
-							"bil": "Bilinear",
-							"bic": "Bicubic",
-							"lzs": "Lanczos"
-						}
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"presets": [
 					{
 						"name": "pillow-2.7",
@@ -15870,7 +15762,6 @@
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"26x16",
@@ -15936,7 +15827,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"26x16",
@@ -16002,7 +15892,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7.0 to 3.2.0",
 						"results": [
 							[
 								"26x16",
@@ -16068,7 +15957,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"26x16",
@@ -16134,7 +16022,6 @@
 					},
 					{
 						"name": "pillow-3.4",
-						"title": "Pillow 3.4.2",
 						"results": [
 							[
 								"26x16",
@@ -16200,7 +16087,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -16266,7 +16152,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -16332,7 +16217,6 @@
 					},
 					{
 						"name": "pillow-simd-3.4-sse4",
-						"title": "Pillow SIMD 3.4.0 SSE4",
 						"results": [
 							[
 								"26x16",
@@ -16400,28 +16284,9 @@
 			},
 			{
 				"name": "blur-4k-rgb",
-				"topic": "blur",
-				"title": "Blur 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"1px",
@@ -16439,7 +16304,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"1px",
@@ -16457,7 +16321,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"1px",
@@ -16475,7 +16338,6 @@
 					},
 					{
 						"name": "pillow-simd-3.2-sse4",
-						"title": "Pillow SIMD 3.2.0 SSE4",
 						"results": [
 							[
 								"1px",
@@ -16495,28 +16357,9 @@
 			},
 			{
 				"name": "transposition-4k-rgb",
-				"topic": "transposition",
-				"title": "Transpose 2560×1600 RGB image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "operation",
-						"title": "Operation"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Flop",
@@ -16546,7 +16389,6 @@
 					},
 					{
 						"name": "opencv-3.1",
-						"title": "OpenCV 3.1.0",
 						"results": [
 							[
 								"Flop",
@@ -16576,7 +16418,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Flop",
@@ -16606,7 +16447,6 @@
 					},
 					{
 						"name": "pillow-2.7",
-						"title": "Pillow 2.7",
 						"results": [
 							[
 								"Flop",
@@ -16638,28 +16478,9 @@
 			},
 			{
 				"name": "conversion-4k-rgb",
-				"topic": "conversion",
-				"title": "Color conversion 2560×1600 image",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "modes",
-						"title": "Modes"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"RGB to L",
@@ -16681,7 +16502,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"RGB to L",
@@ -16703,7 +16523,6 @@
 					},
 					{
 						"name": "pillow-3.3",
-						"title": "Pillow 3.3.3",
 						"results": [
 							[
 								"RGB to L",
@@ -16725,7 +16544,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"RGB to L",
@@ -16749,28 +16567,9 @@
 			},
 			{
 				"name": "composition-4k-rgb",
-				"topic": "compositing",
-				"title": "Composition two 2560×1600 RGBA images",
-				"source": {
-					"size": [
-						2560,
-						1600
-					]
-				},
-				"columns": [
-					{
-						"name": "radius",
-						"title": "Blur radius"
-					},
-					{
-						"name": "result",
-						"units": "s"
-					}
-				],
 				"competitors": [
 					{
 						"name": "imagemagick-6.8",
-						"title": "ImageMagick 6.8.9-9",
 						"results": [
 							[
 								"Composition",
@@ -16780,7 +16579,6 @@
 					},
 					{
 						"name": "pillow-2.0",
-						"title": "PIL & Pillow 2.0 to 2.6",
 						"results": [
 							[
 								"Composition",
@@ -16790,7 +16588,6 @@
 					},
 					{
 						"name": "pillow-simd-3.3-sse4",
-						"title": "Pillow SIMD 3.3.0 SSE4",
 						"results": [
 							[
 								"Composition",
@@ -16802,95 +16599,6 @@
 			}
 		]
 	};
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	'use strict';
-	/* eslint-disable no-unused-vars */
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-	
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-	
-		return Object(val);
-	}
-	
-	function shouldUseNative() {
-		try {
-			if (!Object.assign) {
-				return false;
-			}
-	
-			// Detect buggy property enumeration order in older V8 versions.
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
-			test1[5] = 'de';
-			if (Object.getOwnPropertyNames(test1)[0] === '5') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test2 = {};
-			for (var i = 0; i < 10; i++) {
-				test2['_' + String.fromCharCode(i)] = i;
-			}
-			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-				return test2[n];
-			});
-			if (order2.join('') !== '0123456789') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test3 = {};
-			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-				test3[letter] = letter;
-			});
-			if (Object.keys(Object.assign({}, test3)).join('') !==
-					'abcdefghijklmnopqrst') {
-				return false;
-			}
-	
-			return true;
-		} catch (e) {
-			// We don't expect any of the above to throw, but better to be safe.
-			return false;
-		}
-	}
-	
-	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-	
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-	
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-	
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-	
-		return to;
-	};
-
 
 /***/ }
 /******/ ]);

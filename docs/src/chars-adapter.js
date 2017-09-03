@@ -74,7 +74,7 @@ Chart.Controller.prototype.draw = function(ease) {
         if (me.isDatasetVisible(datasetIndex)) {
             me.getDatasetMeta(datasetIndex).controller.draw(ease);
         }
-    }, me);
+    }, me, this.options._reverseDrawOrder);
 
     Chart.plugins.notify('afterDatasetsDraw', [me, easingDecimal]);
 
@@ -90,9 +90,14 @@ function rightpad(s, size) {
         s += ' ';
     return s;
 }
+function leftpad(s, size) {
+    while (s.length < size)
+        s = ' ' + s;
+    return s;
+}
 
 
-function chartForCompetition(element, competition, competitors) {
+function chartForCompetition(element, competition, units) {
   var chartData = {
     type: 'myBar',
     data: {
@@ -101,6 +106,7 @@ function chartForCompetition(element, competition, competitors) {
       datasets: [],
     },
     options: {
+      _reverseDrawOrder: units.reverseDrawOrder,
       title: {},
       // maintainAspectRatio: false, 
       // responsive: false,
@@ -112,7 +118,7 @@ function chartForCompetition(element, competition, competitors) {
         position: 'left',
       },
       tooltips: {
-        units: "s",
+        units: units.label,
         mode: "label",
         titleFontFamily: "'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
         titleFontSize: 14,
@@ -126,9 +132,12 @@ function chartForCompetition(element, competition, competitors) {
         yPadding: 10,
         callbacks: {
           title: function(tooltipItems, data) {
-            var chart = this._chartInstance;
+            var chart = this._chartInstance.options.title.text;
             var title = Chart.defaults.global.tooltips.callbacks.title(tooltipItems, data);
-            return chart.options.title.text + " " + title;
+            if (competition.preposition) {
+              chart += competition.preposition;
+            }
+            return chart + " " + title;
           },
           label: function(item, data) {
             var chart = this._chartInstance;
@@ -146,11 +155,13 @@ function chartForCompetition(element, competition, competitors) {
             
             var l = data.datasets[item.datasetIndex].label || '';
             var label = " " + rightpad(l, 28);
-            var units = chart.options.tooltips.units;
+            var unitsLabel = chart.options.tooltips.units;
+            var value = item.yLabel.toFixed(units.valuePrecision);
+            var howFaster = units.howFaster(item.yLabel, first);
             if (item.yLabel) {
-              label += rightpad('' + item.yLabel.toFixed(4) + ' ' + units, 12);
+              label += leftpad('' + value, units.leftpad) + ' ' + unitsLabel;
               if (item.yLabel != first) {
-                label += ' ' + (first / item.yLabel).toFixed(2) + 'x faster';
+                label += '  ' + howFaster.toFixed(2) + 'x faster';
               }
             }
             return label;
@@ -215,20 +226,19 @@ function chartForCompetition(element, competition, competitors) {
 
   for (var i = 0; i < competition.competitors.length; i++) {
     var competitor = competition.competitors[i];
+    var color = competitor.color;
     var data = [];
     var lastGroup = null;
-    var c = competitors[competitor.name].color;
-    var title = competitors[competitor.name].title;
 
-    if (typeof c != "string") {
-      c = "hsla("+c[0]+","+c[1]+"%,"+c[2]+"%,1.0)";
+    if (typeof color != "string") {
+      color = "hsla("+color[0]+","+color[1]+"%,"+color[2]+"%,1.0)";
     }
 
     chartData.data.datasets.push({
       label: title,
       name: competitor.name,
       data: data,
-      backgroundColor: c,
+      backgroundColor: color,
       borderColor: "rgba(255, 255, 255, .5)",
       borderWidth: 1,
     });
@@ -242,7 +252,7 @@ function chartForCompetition(element, competition, competitors) {
       }
       lastGroup = group;
 
-      data.push(result[result.length - 1]);
+      data.push(units.formatValue(result[result.length - 1], competition));
     }
   }
 

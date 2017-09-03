@@ -66,6 +66,7 @@
 	    label: 's',
 	    valuePrecision: 4,
 	    leftpad: 7,
+	    reverseDrawOrder: false,
 	    formatValue: function(time, competition) {
 	      return time;
 	    },
@@ -77,6 +78,7 @@
 	    label: 'MP/s',
 	    valuePrecision: 2,
 	    leftpad: 7,
+	    reverseDrawOrder: true,
 	    formatValue: function(time, competition) {
 	      var size = competition.source.size;
 	      if (time)
@@ -90,6 +92,7 @@
 	    label: 'op/s',
 	    valuePrecision: 2,
 	    leftpad: 7,
+	    reverseDrawOrder: true,
 	    formatValue: function(time, competition) {
 	      if (time)
 	        return 1.0 / time;
@@ -753,7 +756,7 @@
 	        if (me.isDatasetVisible(datasetIndex)) {
 	            me.getDatasetMeta(datasetIndex).controller.draw(ease);
 	        }
-	    }, me);
+	    }, me, this.options._reverseDrawOrder);
 	
 	    Chart.plugins.notify('afterDatasetsDraw', [me, easingDecimal]);
 	
@@ -785,6 +788,7 @@
 	      datasets: [],
 	    },
 	    options: {
+	      _reverseDrawOrder: units.reverseDrawOrder,
 	      title: {},
 	      // maintainAspectRatio: false, 
 	      // responsive: false,

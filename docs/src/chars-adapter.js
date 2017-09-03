@@ -74,7 +74,7 @@ Chart.Controller.prototype.draw = function(ease) {
         if (me.isDatasetVisible(datasetIndex)) {
             me.getDatasetMeta(datasetIndex).controller.draw(ease);
         }
-    }, me);
+    }, me, this.options._reverseDrawOrder);
 
     Chart.plugins.notify('afterDatasetsDraw', [me, easingDecimal]);
 
@@ -106,6 +106,7 @@ function chartForCompetition(element, competition, units) {
       datasets: [],
     },
     options: {
+      _reverseDrawOrder: units.reverseDrawOrder,
       title: {},
       // maintainAspectRatio: false, 
       // responsive: false,

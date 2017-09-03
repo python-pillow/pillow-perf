@@ -13,6 +13,7 @@ var unitsPresets = {
     label: 's',
     valuePrecision: 4,
     leftpad: 7,
+    reverseDrawOrder: false,
     formatValue: function(time, competition) {
       return time;
     },
@@ -24,6 +25,7 @@ var unitsPresets = {
     label: 'MP/s',
     valuePrecision: 2,
     leftpad: 7,
+    reverseDrawOrder: true,
     formatValue: function(time, competition) {
       var size = competition.source.size;
       if (time)
@@ -37,6 +39,7 @@ var unitsPresets = {
     label: 'op/s',
     valuePrecision: 2,
     leftpad: 7,
+    reverseDrawOrder: true,
     formatValue: function(time, competition) {
       if (time)
         return 1.0 / time;

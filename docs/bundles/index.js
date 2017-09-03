@@ -59,6 +59,9 @@
 	
 	// Global chart instance. Should be destroyed every time.
 	var globalChart = null;
+	var globalSystem;
+	var globalCompetition;
+	var globalPreset;
 	var globalUnits;
 	
 	var unitsPresets = {
@@ -78,7 +81,7 @@
 	    label: 'MP/s',
 	    valuePrecision: 2,
 	    leftpad: 7,
-	    reverseDrawOrder: true,
+	    reverseDrawOrder: false,
 	    formatValue: function(time, competition) {
 	      var size = competition.source.size;
 	      if (time)
@@ -92,7 +95,7 @@
 	    label: 'op/s',
 	    valuePrecision: 2,
 	    leftpad: 7,
-	    reverseDrawOrder: true,
+	    reverseDrawOrder: false,
 	    formatValue: function(time, competition) {
 	      if (time)
 	        return 1.0 / time;
@@ -154,6 +157,25 @@
 	}
 	
 	
+	function applyUnits(units) {
+	  globalUnits = units;
+	
+	  if (globalChart) {
+	    globalChart.destroy();
+	  }
+	
+	  globalChart = adapter.chartForCompetition(
+	    document.getElementById("chart-container"),
+	    globalCompetition,
+	    unitsPresets[globalUnits]
+	  );
+	
+	  if (globalPreset) {
+	    adapter.applyPreset(globalChart, globalPreset.set);
+	  }
+	}
+	
+	
 	function createSelect(select, list, callback) {
 	  var elements = [];
 	  select.innerHTML = '';
@@ -196,7 +218,7 @@
 	}
 	
 	
-	function populatePresets(chart, presets) {
+	function populatePresets(presets) {
 	  var select = document.getElementById("select-preset");
 	  var parent = select.parentNode;
 	
@@ -208,9 +230,10 @@
 	
 	  function applyPreset(n) {
 	    var preset = presets[n];
+	    globalPreset = preset;
 	    selectItem(n);
 	    setTopic(parent, preset.topic);
-	    adapter.applyPreset(chart, preset.set);
+	    adapter.applyPreset(globalChart, preset.set);
 	  }
 	  return applyPreset;
 	}
@@ -227,6 +250,7 @@
 	
 	  function applyCompetition(n) {
 	    var competition = competitions[n];
+	    globalCompetition = competition;
 	
 	    if (globalChart) {
 	      globalChart.destroy();
@@ -250,7 +274,7 @@
 	    setTopic(parent, competition.topic);
 	
 	    if (competition.presets) {
-	      var applyPreset = populatePresets(globalChart, competition.presets);
+	      var applyPreset = populatePresets(competition.presets);
 	
 	      for (var i = 0; i < competition.presets.length; i++) {
 	        if (competition.presets[i].default) {
@@ -259,7 +283,8 @@
 	        }
 	      }
 	    } else {
-	      populatePresets(globalChart, []);
+	      populatePresets([]);
+	      globalPreset = null;
 	    }
 	  }
 	  return applyCompetition;
@@ -276,24 +301,25 @@
 	  });
 	
 	  function applySystem(n) {
-	    var system = systems[n];
-	    var applyCompetition = populateCompetitions(system.competitions);
+	    globalSystem = systems[n];
+	    var applyCompetition = populateCompetitions(globalSystem.competitions);
 	    applyCompetition(0);
 	    
 	    selectItem(n);
 	
 	    var innerHTML = "";
-	    if (system.OS) {
-	      innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
+	    if (globalSystem.OS) {
+	      innerHTML += "<strong>OS</strong> " + globalSystem.OS + "<br>";
 	    }
-	    if (system.CPU) {
-	      innerHTML += "<strong>CPU</strong> " + system.CPU + "<br>";
+	    if (globalSystem.CPU) {
+	      innerHTML += "<strong>CPU</strong> " + globalSystem.CPU + "<br>";
 	    }
 	    info.innerHTML = innerHTML;
 	  }
 	
 	  return applySystem;
 	}
+	
 	
 	function setupUnits() {
 	  var topics = document.getElementById('switch-units').getElementsByTagName("a");
@@ -304,12 +330,11 @@
 	    }
 	
 	    topics[i].addEventListener('click', function(e) {
-	      globalUnits = this.getAttribute('data-unit');
-	
 	      for (var i = 0; i < topics.length; i++) {
 	        topics[i].classList.remove('selected');
 	      }
 	      this.classList.add('selected');
+	      applyUnits(this.getAttribute('data-unit'));
 	
 	      e.preventDefault();
 	    });
@@ -363,7 +388,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    \n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n            border-bottom: 1px dashed;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n\n#switch-units {\n    text-align: right;\n    position: relative;\n    top: -1em;\n}\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
@@ -814,9 +839,12 @@
 	        yPadding: 10,
 	        callbacks: {
 	          title: function(tooltipItems, data) {
-	            var chart = this._chartInstance;
+	            var chart = this._chartInstance.options.title.text;
 	            var title = Chart.defaults.global.tooltips.callbacks.title(tooltipItems, data);
-	            return chart.options.title.text + " " + title;
+	            if (competition.preposition) {
+	              chart += competition.preposition;
+	            }
+	            return chart + " " + title;
 	          },
 	          label: function(item, data) {
 	            var chart = this._chartInstance;
@@ -11633,6 +11661,7 @@
 	  "resample-4k-rgb" : {
 	    "topic": "resampling",
 	    "title": "Resize 2560x1600 RGB image",
+	    "preposition": " to",
 	    "source": {"size": [2560, 1600]},
 	    "columns": [
 	      {"name": "resolution", "title": "Destination resolution"},
@@ -11651,6 +11680,7 @@
 	  "blur-4k-rgb": {
 	    "topic": "blur",
 	    "title": "Blur 2560×1600 RGB image",
+	    "preposition": ",",
 	    "source": {"size": [2560, 1600]},
 	    "columns": [
 	      {"name": "radius", "title": "Blur radius"},
@@ -11660,6 +11690,7 @@
 	  "transposition-4k-rgb": {
 	    "topic": "transposition",
 	    "title": "Transpose 2560×1600 RGB image",
+	    "preposition": ".",
 	    "source": {"size": [2560, 1600]},
 	    "columns": [
 	      {"name": "operation", "title": "Operation"},
@@ -11669,6 +11700,7 @@
 	  "conversion-4k-rgb": {
 	    "topic": "conversion",
 	    "title": "Color conversion 2560×1600 image",
+	    "preposition": ".",
 	    "source": {"size": [2560, 1600]},
 	    "columns": [
 	      {"name": "modes", "title": "Modes"},
@@ -11678,6 +11710,7 @@
 	  "composition-4k-rgb": {
 			"topic": "compositing",
 	    "title": "Composition two 2560×1600 RGBA images",
+	    "preposition": ".",
 	    "source": {"size": [2560, 1600]},
 	    "columns": [
 	      {"name": "radius", "title": "Blur radius"},

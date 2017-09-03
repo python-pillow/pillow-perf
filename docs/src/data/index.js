@@ -25,6 +25,7 @@ var competitions_meta = {
   "resample-4k-rgb" : {
     "topic": "resampling",
     "title": "Resize 2560x1600 RGB image",
+    "preposition": " to",
     "source": {"size": [2560, 1600]},
     "columns": [
       {"name": "resolution", "title": "Destination resolution"},
@@ -43,6 +44,7 @@ var competitions_meta = {
   "blur-4k-rgb": {
     "topic": "blur",
     "title": "Blur 2560×1600 RGB image",
+    "preposition": ",",
     "source": {"size": [2560, 1600]},
     "columns": [
       {"name": "radius", "title": "Blur radius"},
@@ -52,6 +54,7 @@ var competitions_meta = {
   "transposition-4k-rgb": {
     "topic": "transposition",
     "title": "Transpose 2560×1600 RGB image",
+    "preposition": ".",
     "source": {"size": [2560, 1600]},
     "columns": [
       {"name": "operation", "title": "Operation"},
@@ -61,6 +64,7 @@ var competitions_meta = {
   "conversion-4k-rgb": {
     "topic": "conversion",
     "title": "Color conversion 2560×1600 image",
+    "preposition": ".",
     "source": {"size": [2560, 1600]},
     "columns": [
       {"name": "modes", "title": "Modes"},
@@ -70,6 +74,7 @@ var competitions_meta = {
   "composition-4k-rgb": {
 		"topic": "compositing",
     "title": "Composition two 2560×1600 RGBA images",
+    "preposition": ".",
     "source": {"size": [2560, 1600]},
     "columns": [
       {"name": "radius", "title": "Blur radius"},

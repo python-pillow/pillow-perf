@@ -132,9 +132,12 @@ function chartForCompetition(element, competition, units) {
         yPadding: 10,
         callbacks: {
           title: function(tooltipItems, data) {
-            var chart = this._chartInstance;
+            var chart = this._chartInstance.options.title.text;
             var title = Chart.defaults.global.tooltips.callbacks.title(tooltipItems, data);
-            return chart.options.title.text + " " + title;
+            if (competition.preposition) {
+              chart += competition.preposition;
+            }
+            return chart + " " + title;
           },
           label: function(item, data) {
             var chart = this._chartInstance;

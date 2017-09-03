@@ -103,7 +103,13 @@ ul.select.-large {
         .selects-grid__cell > :first-child {
             margin-top: 0;
         }
-    
+
+#switch-units {
+    text-align: right;
+    position: relative;
+    top: -1em;
+}
+
 #select-preset {
     float: left;
     margin-right: 20px;

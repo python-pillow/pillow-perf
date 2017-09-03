@@ -6,6 +6,9 @@ var objectAssign = require('object-assign');
 
 // Global chart instance. Should be destroyed every time.
 var globalChart = null;
+var globalSystem;
+var globalCompetition;
+var globalPreset;
 var globalUnits;
 
 var unitsPresets = {
@@ -25,7 +28,7 @@ var unitsPresets = {
     label: 'MP/s',
     valuePrecision: 2,
     leftpad: 7,
-    reverseDrawOrder: true,
+    reverseDrawOrder: false,
     formatValue: function(time, competition) {
       var size = competition.source.size;
       if (time)
@@ -39,7 +42,7 @@ var unitsPresets = {
     label: 'op/s',
     valuePrecision: 2,
     leftpad: 7,
-    reverseDrawOrder: true,
+    reverseDrawOrder: false,
     formatValue: function(time, competition) {
       if (time)
         return 1.0 / time;
@@ -101,6 +104,25 @@ function partialCompetition(element, competitionName, presetName) {
 }
 
 
+function applyUnits(units) {
+  globalUnits = units;
+
+  if (globalChart) {
+    globalChart.destroy();
+  }
+
+  globalChart = adapter.chartForCompetition(
+    document.getElementById("chart-container"),
+    globalCompetition,
+    unitsPresets[globalUnits]
+  );
+
+  if (globalPreset) {
+    adapter.applyPreset(globalChart, globalPreset.set);
+  }
+}
+
+
 function createSelect(select, list, callback) {
   var elements = [];
   select.innerHTML = '';
@@ -143,7 +165,7 @@ function setTopic(parent, topic) {
 }
 
 
-function populatePresets(chart, presets) {
+function populatePresets(presets) {
   var select = document.getElementById("select-preset");
   var parent = select.parentNode;
 
@@ -155,9 +177,10 @@ function populatePresets(chart, presets) {
 
   function applyPreset(n) {
     var preset = presets[n];
+    globalPreset = preset;
     selectItem(n);
     setTopic(parent, preset.topic);
-    adapter.applyPreset(chart, preset.set);
+    adapter.applyPreset(globalChart, preset.set);
   }
   return applyPreset;
 }
@@ -174,6 +197,7 @@ function populateCompetitions(competitions) {
 
   function applyCompetition(n) {
     var competition = competitions[n];
+    globalCompetition = competition;
 
     if (globalChart) {
       globalChart.destroy();
@@ -197,7 +221,7 @@ function populateCompetitions(competitions) {
     setTopic(parent, competition.topic);
 
     if (competition.presets) {
-      var applyPreset = populatePresets(globalChart, competition.presets);
+      var applyPreset = populatePresets(competition.presets);
 
       for (var i = 0; i < competition.presets.length; i++) {
         if (competition.presets[i].default) {
@@ -206,7 +230,8 @@ function populateCompetitions(competitions) {
         }
       }
     } else {
-      populatePresets(globalChart, []);
+      populatePresets([]);
+      globalPreset = null;
     }
   }
   return applyCompetition;
@@ -223,24 +248,25 @@ function populateSystems(systems) {
   });
 
   function applySystem(n) {
-    var system = systems[n];
-    var applyCompetition = populateCompetitions(system.competitions);
+    globalSystem = systems[n];
+    var applyCompetition = populateCompetitions(globalSystem.competitions);
     applyCompetition(0);
     
     selectItem(n);
 
     var innerHTML = "";
-    if (system.OS) {
-      innerHTML += "<strong>OS</strong> " + system.OS + "<br>";
+    if (globalSystem.OS) {
+      innerHTML += "<strong>OS</strong> " + globalSystem.OS + "<br>";
     }
-    if (system.CPU) {
-      innerHTML += "<strong>CPU</strong> " + system.CPU + "<br>";
+    if (globalSystem.CPU) {
+      innerHTML += "<strong>CPU</strong> " + globalSystem.CPU + "<br>";
     }
     info.innerHTML = innerHTML;
   }
 
   return applySystem;
 }
+
 
 function setupUnits() {
   var topics = document.getElementById('switch-units').getElementsByTagName("a");
@@ -251,12 +277,11 @@ function setupUnits() {
     }
 
     topics[i].addEventListener('click', function(e) {
-      globalUnits = this.getAttribute('data-unit');
-
       for (var i = 0; i < topics.length; i++) {
         topics[i].classList.remove('selected');
       }
       this.classList.add('selected');
+      applyUnits(this.getAttribute('data-unit'));
 
       e.preventDefault();
     });

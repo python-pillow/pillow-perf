@@ -188,7 +188,6 @@ function chartForCompetition(element, competition, units) {
   if (competition.competitors.length) {
     var competitor = competition.competitors[0];
     var lastGroup = null;
-    var title = competitors[competitor.name].title;
 
     for (var j = 0; j < competitor.results.length; j++) {
       var result = competitor.results[j];
@@ -196,7 +195,7 @@ function chartForCompetition(element, competition, units) {
 
       if (result.length != resultsLen) {
         throw new Error("results length for " +
-                        title + " doesn't match required. " +
+                        competitor.title + " doesn't match required. " +
                         "Got " + result.length + ", expected " + resultsLen);
       }
 
@@ -235,7 +234,7 @@ function chartForCompetition(element, competition, units) {
     }
 
     chartData.data.datasets.push({
-      label: title,
+      label: competitor.title,
       name: competitor.name,
       data: data,
       backgroundColor: color,

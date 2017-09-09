@@ -357,20 +357,6 @@
         },
         {
             "name": "image-io-4k-rgb",
-            "title": "Input/Output 2560×1600 RGB image",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "operation",
-                    "title": "Operation"
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "competitors": [
                 {
                     "name": "imagemagick-6.8",
@@ -441,20 +427,6 @@
         },
         {
             "name": "filter-4k-rgb",
-            "title": "Kernel filter 2560×1600 RGB image",
-            "source": {
-                "size": [2560, 1600]
-            },
-            "columns": [
-                {
-                    "name": "kernel",
-                    "title": "Kernel"
-                },
-                {
-                    "name": "result",
-                    "units": "s"
-                }
-            ],
             "competitors": [
                 {
                     "name": "opencv-3.1",

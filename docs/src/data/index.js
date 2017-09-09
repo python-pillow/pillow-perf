@@ -3,6 +3,7 @@ var objectAssign = require('object-assign');
 var competitors_meta = {
   "imagemagick-6.8":      {"color": [230, 100, 70], "title": "ImageMagick 6.8.9-9"},
   "opencv-3.1":           {"color": [240, 100, 60], "title": "OpenCV 3.1.0"},
+  "opencv-3.3":           {"color": [240, 100, 60], "title": "OpenCV 3.3.0"},
   "skia-53":              {"color": [250, 100, 50], "title": "Skia 53 SSE2"},
   "ipp-2017":             {"color": [250, 100, 30], "title": "IPP 2017 AVX2"},
 
@@ -45,6 +46,15 @@ var competitions_meta = {
       {"name": "result", "units": "s"}
     ],
   },
+  "image-io-4k-rgb": {
+    "title": "Input/Output 2560×1600 RGB image",
+    "preposition": ".",
+    "source": {"size": [2560, 1600]},
+    "columns": [
+      {"name": "operation", "title": "Operation"},
+      {"name": "result", "units": "s"}
+    ],
+  },
   "blur-4k-rgb": {
     "topic": "blur",
     "title": "Blur 2560×1600 RGB image",
@@ -53,6 +63,15 @@ var competitions_meta = {
     "columns": [
       {"name": "radius", "title": "Blur radius"},
       {"name": "result", "units": "s"}
+    ],
+  },
+  "filter-4k-rgb": {
+    "title": "Kernel filter 2560×1600 RGB image",
+    "preposition": ".",
+    "source": {"size": [2560, 1600]},
+    "columns": [
+        {"name": "kernel", "title": "Kernel"},
+        {"name": "result","units": "s"}
     ],
   },
   "transposition-4k-rgb": {

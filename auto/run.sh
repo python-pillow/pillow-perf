@@ -65,11 +65,11 @@ pushd Pillow
   fi
 
   pillow_checkout v3.4.1.post2 -msse4
-  ../../testsuite/run.py scale composition "${@:2}"
+  ../../testsuite/run.py scale "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout v3.4.1.post2 -mavx2
-    ../../testsuite/run.py scale composition "${@:2}"
+    ../../testsuite/run.py scale "${@:2}"
   fi
 
   pillow_checkout simd/4.3-demo -msse4

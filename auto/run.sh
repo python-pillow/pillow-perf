@@ -23,60 +23,61 @@ pushd Pillow
     touch ./_imaging.c
     CFLAGS="$2" python ./setup.py develop > build.log 2>&1
     grep --color=always "error:" build.log && exit || true
+    echo "========================="
     grep "^version" build.log
+    echo "========================="
   }
 
   pillow_checkout 2.6.2
-  ../../testsuite/run.py scale -n 3 "${@:2}"
-  ../../testsuite/run.py load convert composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale filter -n 5 "${@:2}"
+  ../../testsuite/run.py load composition rotate_right "${@:2}"
   
   pillow_checkout 2.7.0
   ../../testsuite/run.py scale blur -n 5 "${@:2}"
-  ../../testsuite/run.py load convert composition rotate_right "${@:2}"
+  ../../testsuite/run.py convert rotate_right "${@:2}"
 
   pillow_checkout 3.3.3
-  ../../testsuite/run.py scale blur -n 5 "${@:2}"
-  ../../testsuite/run.py load convert composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale -n 5 "${@:2}"
+  ../../testsuite/run.py convert "${@:2}"
 
   pillow_checkout 3.4.2
-  ../../testsuite/run.py scale blur filter -n 5 "${@:2}"
-  ../../testsuite/run.py load convert composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale -n 5 "${@:2}"
   
   pillow_checkout 4.3-demo
-  ../../testsuite/run.py scale blur filter -n 5 "${@:2}"
+  ../../testsuite/run.py scale filter -n 5 "${@:2}"
   ../../testsuite/run.py load convert composition rotate_right "${@:2}"
   
 
   pillow_checkout v3.2.0.post3 -msse4
-  ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale blur "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout v3.2.0.post3 -mavx2
-    ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+    ../../testsuite/run.py scale "${@:2}"
   fi
 
   pillow_checkout v3.3.3.post0 -msse4
-  ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale convert composition "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout v3.3.3.post0 -mavx2
-    ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+    ../../testsuite/run.py scale convert composition "${@:2}"
   fi
 
   pillow_checkout v3.4.1.post2 -msse4
-  ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+  ../../testsuite/run.py scale composition "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout v3.4.1.post2 -mavx2
-    ../../testsuite/run.py scale load convert blur composition rotate_right "${@:2}"
+    ../../testsuite/run.py scale composition "${@:2}"
   fi
 
   pillow_checkout simd/4.3-demo -msse4
-  ../../testsuite/run.py scale load convert blur composition filter rotate_right "${@:2}"
+  ../../testsuite/run.py scale convert composition filter "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout simd/4.3-demo -mavx2
-    ../../testsuite/run.py scale load convert blur composition filter rotate_right "${@:2}"
+    ../../testsuite/run.py scale convert composition filter "${@:2}"
   fi
 
   ../../testsuite/run.py wand_scale -n 5 "${@:2}"

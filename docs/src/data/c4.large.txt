@@ -239,14 +239,14 @@ Load 2560×1600 RGB image
 ["Jpeg save", 0.0241470336914]
 
 Convert 2560×1600 RGB image
-    RGB to L            0.00589 s   695.43 Mpx/s
-    RGBA to LA          0.00717 s   571.42 Mpx/s
-    RGBa to RGBA        0.02670 s   153.39 Mpx/s
-    RGBA to RGBa        0.01041 s   393.35 Mpx/s
-["RGB to L", 0.00588989257812],
-["RGBA to LA", 0.00716805458069],
-["RGBa to RGBA", 0.0267028808594],
-["RGBA to RGBa", 0.0104131698608]
+    RGB to L            0.00456 s   898.43 Mpx/s
+    RGBA to LA          0.00596 s   687.36 Mpx/s
+    RGBa to RGBA        0.02795 s   146.56 Mpx/s
+    RGBA to RGBa        0.01039 s   394.38 Mpx/s
+["RGB to L", 0.00455904006958],
+["RGBA to LA", 0.00595903396606],
+["RGBa to RGBA", 0.0279469490051],
+["RGBA to RGBa", 0.0103859901428]
 
 Composition 2560×1600 RGB image
     Composition         0.02784 s   147.11 Mpx/s
@@ -522,14 +522,14 @@ Scale 2560×1600 RGB image
 ["5478x3424", "lzs", 0.117641925812]
 
 Convert 2560×1600 RGB image
-    RGB to L            0.00590 s   693.88 Mpx/s
-    RGBA to LA          0.00719 s   569.76 Mpx/s
-    RGBa to RGBA        0.00354 s  1156.12 Mpx/s
-    RGBA to RGBa        0.00316 s  1295.71 Mpx/s
-["RGB to L", 0.00590300559998],
-["RGBA to LA", 0.00718903541565],
-["RGBa to RGBA", 0.00354290008545],
-["RGBA to RGBa", 0.00316119194031]
+    RGB to L            0.00216 s  1892.68 Mpx/s
+    RGBA to LA          0.00272 s  1506.48 Mpx/s
+    RGBa to RGBA        0.00353 s  1160.65 Mpx/s
+    RGBA to RGBa        0.00314 s  1302.39 Mpx/s
+["RGB to L", 0.0021641254425],
+["RGBA to LA", 0.00271892547607],
+["RGBa to RGBA", 0.00352907180786],
+["RGBA to RGBa", 0.00314497947693]
 
 Composition 2560×1600 RGB image
     Composition         0.00918 s   446.04 Mpx/s
@@ -573,14 +573,14 @@ Scale 2560×1600 RGB image
 ["5478x3424", "lzs", 0.0959749221802]
 
 Convert 2560×1600 RGB image
-    RGB to L            0.00586 s   698.51 Mpx/s
-    RGBA to LA          0.00721 s   567.80 Mpx/s
+    RGB to L            0.00213 s  1921.26 Mpx/s
+    RGBA to LA          0.00269 s  1524.93 Mpx/s
     RGBa to RGBA        0.00285 s  1435.72 Mpx/s
-    RGBA to RGBa        0.00260 s  1572.96 Mpx/s
-["RGB to L", 0.005863904953],
-["RGBA to LA", 0.00721383094788],
+    RGBA to RGBa        0.00264 s  1551.51 Mpx/s
+["RGB to L", 0.00213193893433],
+["RGBA to LA", 0.00268602371216],
 ["RGBa to RGBA", 0.00285291671753],
-["RGBA to RGBa", 0.00260400772095]
+["RGBA to RGBa", 0.00264000892639]
 
 Composition 2560×1600 RGB image
     Composition         0.00546 s   750.47 Mpx/s

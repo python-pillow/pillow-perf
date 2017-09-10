@@ -239,12 +239,12 @@ Load 2560×1600 RGB image
 ["Jpeg save", 0.0268619060516]
 
 Convert 2560×1600 RGB image
-    RGB to L            0.00660 s   620.88 Mpx/s
-    RGBA to LA          0.00806 s   508.07 Mpx/s
+    RGB to L            0.00526 s   778.71 Mpx/s
+    RGBA to LA          0.00674 s   607.90 Mpx/s
     RGBa to RGBA        0.02972 s   137.84 Mpx/s
     RGBA to RGBa        0.01166 s   351.29 Mpx/s
-["RGB to L", 0.00659704208374],
-["RGBA to LA", 0.00806188583374],
+["RGB to L", 0.00525999069214],
+["RGBA to LA", 0.00673794746399],
 ["RGBa to RGBA", 0.0297160148621],
 ["RGBA to RGBa", 0.011659860611]
 
@@ -522,14 +522,14 @@ Scale 2560×1600 RGB image
 ["5478x3424", "lzs", 0.126092910767]
 
 Convert 2560×1600 RGB image
-    RGB to L            0.00666 s   615.02 Mpx/s
-    RGBA to LA          0.00827 s   495.40 Mpx/s
-    RGBa to RGBA        0.00494 s   828.62 Mpx/s
-    RGBA to RGBa        0.00355 s  1154.48 Mpx/s
-["RGB to L", 0.00665998458862],
-["RGBA to LA", 0.00826811790466],
-["RGBa to RGBA", 0.00494313240051],
-["RGBA to RGBa", 0.00354790687561]
+    RGB to L            0.00241 s  1700.14 Mpx/s
+    RGBA to LA          0.00318 s  1286.79 Mpx/s
+    RGBa to RGBA        0.00421 s   971.99 Mpx/s
+    RGBA to RGBa        0.00366 s  1118.55 Mpx/s
+["RGB to L", 0.00240921974182],
+["RGBA to LA", 0.00318312644958],
+["RGBa to RGBA", 0.00421404838562],
+["RGBA to RGBa", 0.00366187095642]
 
 Composition 2560×1600 RGB image
     Composition         0.01048 s   390.84 Mpx/s
@@ -573,12 +573,12 @@ Scale 2560×1600 RGB image
 ["5478x3424", "lzs", 0.0968408584595]
 
 Convert 2560×1600 RGB image
-    RGB to L            0.00663 s   617.89 Mpx/s
-    RGBA to LA          0.00810 s   505.93 Mpx/s
+    RGB to L            0.00250 s  1636.33 Mpx/s
+    RGBA to LA          0.00316 s  1297.08 Mpx/s
     RGBa to RGBA        0.00314 s  1306.06 Mpx/s
     RGBA to RGBa        0.00291 s  1405.19 Mpx/s
-["RGB to L", 0.00662899017334],
-["RGBA to LA", 0.00809597969055],
+["RGB to L", 0.00250315666199],
+["RGBA to LA", 0.0031578540802],
 ["RGBa to RGBA", 0.0031361579895],
 ["RGBA to RGBa", 0.0029149055481]
 

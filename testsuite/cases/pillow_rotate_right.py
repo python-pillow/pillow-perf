@@ -14,19 +14,25 @@ class RotateRightCase(PillowTestCase):
         self.transposition = transposition
 
     def runner(self, im):
-        im.transpose(self.transposition)
+        for trans in self.transposition:
+            im = im.transpose(trans)
 
     def readable_args(self):
         return [self.name]
 
 
 cases = [
-    rpartial(RotateRightCase, 'Flop', Image.FLIP_LEFT_RIGHT),
-    rpartial(RotateRightCase, 'Flip', Image.FLIP_TOP_BOTTOM),
-    rpartial(RotateRightCase, 'Rotate 90', Image.ROTATE_90),
-    rpartial(RotateRightCase, 'Rotate 180', Image.ROTATE_180),
-    rpartial(RotateRightCase, 'Rotate 270', Image.ROTATE_270),
+    rpartial(RotateRightCase, 'Flop', [Image.FLIP_LEFT_RIGHT]),
+    rpartial(RotateRightCase, 'Flip', [Image.FLIP_TOP_BOTTOM]),
+    rpartial(RotateRightCase, 'Rotate 90', [Image.ROTATE_90]),
+    rpartial(RotateRightCase, 'Rotate 180', [Image.ROTATE_180]),
+    rpartial(RotateRightCase, 'Rotate 270', [Image.ROTATE_270]),
+    rpartial(RotateRightCase, 'Transpose',
+        [Image.TRANSPOSE]
+        if hasattr(Image, 'TRANSPOSE')
+        else [Image.ROTATE_90, Image.FLIP_LEFT_RIGHT]),
+    rpartial(RotateRightCase, 'Transpose180',
+        [Image.TRANSPOSE_ROTATE_180]
+        if hasattr(Image, 'TRANSPOSE_ROTATE_180')
+        else [Image.ROTATE_270, Image.FLIP_LEFT_RIGHT]),
 ]
-
-if hasattr(Image, 'TRANSPOSE'):
-    cases.append(rpartial(RotateRightCase, 'Transpose', Image.TRANSPOSE))

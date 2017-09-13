@@ -11,7 +11,8 @@ from .cv2 import Cv2TestCase, cv2
 class FilterCase(Cv2TestCase):
     def handle_args(self, name, kernel):
         self.name = name
-        kernel = numpy.asarray(kernel, numpy.float32)
+        size = int(len(kernel) ** 0.5)
+        kernel = numpy.asarray(kernel, numpy.float32).reshape((size, size))
         self.kernel = kernel / kernel.sum()
 
     def runner(self, im):

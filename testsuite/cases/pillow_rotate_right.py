@@ -31,8 +31,8 @@ cases = [
         [Image.TRANSPOSE]
         if hasattr(Image, 'TRANSPOSE')
         else [Image.ROTATE_90, Image.FLIP_LEFT_RIGHT]),
-    rpartial(RotateRightCase, 'Transpose180',
-        [Image.TRANSPOSE_ROTATE_180]
-        if hasattr(Image, 'TRANSPOSE_ROTATE_180')
+    rpartial(RotateRightCase, 'Transverse',
+        [Image.TRANSVERSE]
+        if hasattr(Image, 'TRANSVERSE')
         else [Image.ROTATE_270, Image.FLIP_LEFT_RIGHT]),
 ]

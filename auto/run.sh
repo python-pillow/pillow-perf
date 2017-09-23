@@ -28,6 +28,14 @@ pushd Pillow
     echo "========================="
   }
 
+  function MM {
+    LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.1 \
+    PILLOW_BLOCK_SIZE=128k \
+    PILLOW_BLOCKS_MAX=2048 \
+    PILLOW_ALIGNMENT=64 \
+    "$@"
+  }
+
   pillow_checkout 2.6.2
   ../../testsuite/run.py scale filter -n 5 "${@:2}"
   ../../testsuite/run.py load composition rotate_right "${@:2}"
@@ -46,6 +54,8 @@ pushd Pillow
   pillow_checkout 4.3-demo
   ../../testsuite/run.py scale filter -n 5 "${@:2}"
   ../../testsuite/run.py load convert composition rotate_right "${@:2}"
+  MM ../../testsuite/run.py scale filter -n 5 "${@:2}"
+  MM ../../testsuite/run.py load convert composition rotate_right "${@:2}"
   
 
   pillow_checkout v3.2.0.post3 -msse4
@@ -74,10 +84,12 @@ pushd Pillow
 
   pillow_checkout simd/4.3-demo -msse4
   ../../testsuite/run.py scale convert composition filter "${@:2}"
+  MM ../../testsuite/run.py scale convert composition filter "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout simd/4.3-demo -mavx2
     ../../testsuite/run.py scale convert composition filter "${@:2}"
+    MM ../../testsuite/run.py scale convert composition filter "${@:2}"
   fi
 
   ../../testsuite/run.py wand_scale -n 5 "${@:2}"

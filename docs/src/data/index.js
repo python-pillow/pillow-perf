@@ -21,9 +21,9 @@ var competitors_meta = {
   "pillow-simd-3.4-sse4": {"color": [34, 90, 75], "title": "Pillow SIMD 3.4.0 SSE4"},
   "pillow-simd-3.4-avx2": {"color": [34, 90, 60], "title": "Pillow SIMD 3.4.0 AVX2"},
 
-  "pillow-4.3":           {"color": [250, 90, 43], "title": "Pillow 4.3-demo"},
-  "pillow-simd-4.3-sse4": {"color": [250, 90, 75], "title": "Pillow SIMD 4.3-demo SSE4"},
-  "pillow-simd-4.3-avx2": {"color": [250, 90, 60], "title": "Pillow SIMD 4.3-demo AVX2"},
+  "pillow-4.3":           {"color": [210, 90, 43], "title": "Pillow 4.3.0"},
+  "pillow-simd-4.3-sse4": {"color": [210, 90, 75], "title": "Pillow SIMD 4.3.0 SSE4"},
+  "pillow-simd-4.3-avx2": {"color": [210, 90, 60], "title": "Pillow SIMD 4.3.0 AVX2"},
 };
 
 var competitions_meta = {

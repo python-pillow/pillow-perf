@@ -51,7 +51,7 @@ pushd Pillow
   pillow_checkout 3.4.2
   ../../testsuite/run.py scale -n 5 "${@:2}"
   
-  pillow_checkout 4.3-demo
+  pillow_checkout 4.3.0
   ../../testsuite/run.py scale filter -n 5 "${@:2}"
   ../../testsuite/run.py load convert composition rotate_right "${@:2}"
   MM ../../testsuite/run.py scale filter -n 5 "${@:2}"
@@ -82,12 +82,12 @@ pushd Pillow
     ../../testsuite/run.py scale "${@:2}"
   fi
 
-  pillow_checkout simd/4.3-demo -msse4
+  pillow_checkout v4.3.0.post0 -msse4
   ../../testsuite/run.py scale convert composition filter "${@:2}"
   MM ../../testsuite/run.py scale convert composition filter "${@:2}"
 
   if [ "$1" != "no" ]; then
-    pillow_checkout simd/4.3-demo -mavx2
+    pillow_checkout v4.3.0.post0 -mavx2
     ../../testsuite/run.py scale convert composition filter "${@:2}"
     MM ../../testsuite/run.py scale convert composition filter "${@:2}"
   fi

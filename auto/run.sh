@@ -37,24 +37,24 @@ pushd Pillow
   }
 
   pillow_checkout 2.6.2
-  ../../testsuite/run.py scale filter -n 5 "${@:2}"
+  ../../testsuite/run.py scale filter -n5 "${@:2}"
   ../../testsuite/run.py load composition rotate_right "${@:2}"
   
   pillow_checkout 2.7.0
-  ../../testsuite/run.py scale blur -n 5 "${@:2}"
+  ../../testsuite/run.py scale blur -n5 "${@:2}"
   ../../testsuite/run.py convert rotate_right "${@:2}"
 
   pillow_checkout 3.3.3
-  ../../testsuite/run.py scale -n 5 "${@:2}"
+  ../../testsuite/run.py scale -n5 "${@:2}"
   ../../testsuite/run.py convert "${@:2}"
 
   pillow_checkout 3.4.2
-  ../../testsuite/run.py scale -n 5 "${@:2}"
+  ../../testsuite/run.py scale -n5 "${@:2}"
   
   pillow_checkout 4.3.0
-  ../../testsuite/run.py scale filter -n 5 "${@:2}"
+  ../../testsuite/run.py scale filter -n5 "${@:2}"
   ../../testsuite/run.py load convert composition rotate_right "${@:2}"
-  MM ../../testsuite/run.py scale filter -n 5 "${@:2}"
+  MM ../../testsuite/run.py scale filter -n5 "${@:2}"
   MM ../../testsuite/run.py load convert composition rotate_right "${@:2}"
   
 
@@ -92,11 +92,11 @@ pushd Pillow
     MM ../../testsuite/run.py scale convert composition filter "${@:2}"
   fi
 
-  ../../testsuite/run.py wand_scale -n 5 "${@:2}"
-  ../../testsuite/run.py wand_blur -n 3 "${@:2}"
+  ../../testsuite/run.py wand_scale -n5 "${@:2}"
+  ../../testsuite/run.py wand_blur -n3 "${@:2}"
   ../../testsuite/run.py wand_load wand_convert wand_composition wand_rotate_right "${@:2}"
 
-  ../../testsuite/run.py cv2_scale cv2_blur -n 5 "${@:2}"
+  ../../testsuite/run.py cv2_scale cv2_blur -n5 "${@:2}"
   ../../testsuite/run.py cv2_load cv2_filter cv2_rotate_right "${@:2}"
 
 popd

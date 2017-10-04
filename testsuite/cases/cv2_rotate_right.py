@@ -9,12 +9,9 @@ from .cv2 import Cv2TestCase
 
 
 class RotateRightCase(Cv2TestCase):
-    def handle_args(self, name, operation):
+    def handle_args(self, name, runner):
         self.name = name
-        self.operation = operation
-
-    def runner(self, im):
-        self.operation(im)
+        self.runner = runner
 
     def readable_args(self):
         return [self.name]
@@ -29,4 +26,6 @@ cases = [
     rpartial(RotateRightCase, 'Rotate 270',
              lambda im: cv2.flip(cv2.transpose(im), 1)),
     rpartial(RotateRightCase, 'Transpose', cv2.transpose),
+    rpartial(RotateRightCase, 'Transverse',
+             lambda im: cv2.flip(cv2.transpose(im), -1)),
 ]

@@ -31,4 +31,5 @@ cases = [
     rpartial(RotateRightCase, 'Rotate 270',
              rpartial(Image.rotate, degree=90.0)),
     rpartial(RotateRightCase, 'Transpose', Image.transpose),
+    rpartial(RotateRightCase, 'Transverse', Image.transverse),
 ]

@@ -83,8 +83,8 @@ pushd Pillow
   fi
 
   pillow_checkout v4.3.0.post0 -msse4
-  ../../testsuite/run.py scale convert composition filter "${@:2}"
-  MM ../../testsuite/run.py scale convert composition filter "${@:2}"
+  ../../testsuite/run.py scale blur convert composition filter "${@:2}"
+  MM ../../testsuite/run.py scale blur convert composition filter "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout v4.3.0.post0 -mavx2

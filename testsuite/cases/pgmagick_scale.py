@@ -2,9 +2,8 @@
 
 from __future__ import print_function, unicode_literals, absolute_import
 
-from pgmagick import Image, FilterTypes, Geometry
-
 from .base import rpartial, BaseScaleCase
+from .pgmagick import Image, FilterTypes, Geometry
 from .pgmagick import PgmagickTestCase
 
 
@@ -12,7 +11,7 @@ class ScaleCase(BaseScaleCase, PgmagickTestCase):
     def runner(self, im):
         im = Image(im)
         im.filterType(self.filter)
-        im.resize(Geometry(self.dest_size[0], self.dest_size[1]))
+        im.scale(Geometry(self.dest_size[0], self.dest_size[1]))
 
 
 cases = [

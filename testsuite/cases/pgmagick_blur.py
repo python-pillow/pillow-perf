@@ -3,6 +3,7 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .base import rpartial
+from .pgmagick import Image
 from .pgmagick import PgmagickTestCase
 
 
@@ -11,6 +12,7 @@ class BlurCase(PgmagickTestCase):
         self.radius = radius
 
     def runner(self, im):
+        im = Image(im)
         im.blur(2.5 * self.radius, self.radius)
 
     def readable_args(self):

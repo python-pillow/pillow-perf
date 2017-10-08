@@ -31,26 +31,22 @@ class BaseTestCase(object):
         self.mode = mode
         self.repeat = kwargs.pop('repeat', 1)
         self.handle_args(*args, **kwargs)
-        self.data = self.create_test_data(size, mode)
+        self.data = self.create_test_data()
 
     def handle_args(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
 
-    def create_test_data(self, size, mode):
+    def create_test_data(self):
         return []
 
     def run(self):
-        self.prepare_runner()
         start = time.time()
         for _ in range(self.repeat):
             self.runner(*self.data)
         return (time.time() - start) / self.repeat
 
     __call__ = run
-
-    def prepare_runner(self):
-        pass
 
     def readable_args(self):
         return list(map(str, self.args))
@@ -60,15 +56,15 @@ class BaseTestCase(object):
 
 
 class BaseScaleCase(object):
-    def create_test_data(self, size, mode):
-        self.update_dest_size(size[0], size[1])
-        return super(BaseScaleCase, self).create_test_data(size, mode)
-
     def handle_args(self, scale, filter, hpass=True, vpass=True):
         self.scale = scale
         self.filter = filter
         self.hpass = hpass
         self.vpass = vpass
+        self.dest_size = (
+            int(round(scale * self.size[0])) if hpass else self.size[0],
+            int(round(scale * self.size[1])) if vpass else self.size[1],
+        )
 
     def readable_args(self):
         return [
@@ -76,24 +72,99 @@ class BaseScaleCase(object):
             self.filter_ids.get(self.filter, self.filter),
         ]
 
-    def update_dest_size(self, width, height):
-        self.dest_size = (
-            int(round(self.scale * width)) if self.hpass else width,
-            int(round(self.scale * height)) if self.vpass else height,
-        )
-
     def readable_name(self):
         return 'to ' + super(BaseScaleCase, self).readable_name()
 
 
 class BaseConvertCase(object):
-    def handle_args(self, mode_from, mode_to):
-        self.mode_from = mode_from
+    def handle_args(self, mode, mode_to):
+        self.mode = mode
         self.mode_to = mode_to
 
-    def create_test_data(self, size, mode):
-        return super(BaseConvertCase, self).create_test_data(
-            size, self.mode_from)
+    def readable_args(self):
+        return ["{} to {}".format(self.mode, self.mode_to)]
+
+
+class BaseAllocateCase(BaseTestCase):
+    def handle_args(self, mode):
+        self.mode = mode
 
     def readable_args(self):
-        return ["{} to {}".format(self.mode_from, self.mode_to)]
+        return ['mode ' + self.mode]
+
+
+class BasePackCase(object):
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["Pack to {}".format(self.mode)]
+
+
+class BaseUnpackCase(object):
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["Unpack from {}".format(self.mode)]
+
+
+class BaseSplitCase(object):
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["split {}".format(self.mode)]
+
+
+class BaseGetBandCase(object):
+    def handle_args(self, mode, band):
+        self.mode = mode
+        self.band = band
+
+    def readable_args(self):
+        return ["get {} of {}".format(self.mode[self.band], self.mode)]
+
+
+class BaseMergeCase(object):
+    def create_test_data(self):
+        data = super(BaseMergeCase, self).create_test_data()
+        return [data[0].split()]
+
+    def handle_args(self, mode):
+        self.mode = mode
+
+    def readable_args(self):
+        return ["merge {}".format(self.mode)]
+
+
+class BaseCropCase(object):
+    def handle_args(self, scale):
+        self.scale = scale
+        width = int(round(scale[0] * self.size[0]))
+        height = int(round(scale[1] * self.size[1]))
+        top = int((self.size[0] - width) / 2)
+        left = int((self.size[1] - height) / 2)
+        self.dest_size = (width, height)
+        self.dest_box = (top, left, width + top, height + left)
+
+    def readable_args(self):
+        return ["x".join(map(str, self.dest_size))]
+
+
+class BaseLoadCase(BaseTestCase):
+    def handle_args(self, filetype, filename):
+        self.filetype = filetype
+        self.filename = filename
+
+    def readable_args(self):
+        return ["{} load".format(self.filetype.capitalize())]
+
+
+class BaseSaveCase(BaseTestCase):
+    def handle_args(self, filetype, filename):
+        self.filetype = filetype
+        self.filename = filename
+
+    def readable_args(self):
+        return ["{} save".format(self.filetype.capitalize())]

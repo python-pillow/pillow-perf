@@ -38,6 +38,12 @@ a.pseudo {
     text-decoration: none;
     border-bottom: 1px dashed;
 }
+a.pseudo.selected {
+    text-decoration: none;
+    border-bottom: none;
+    color: inherit;
+    font-weight: bold;
+}
 ul, p {
     margin-bottom: 0;
 }
@@ -58,7 +64,6 @@ ul.select {
     ul.select > li {}
         ul.select > li> a {
             text-decoration: none;
-            border-bottom: 1px dashed;
         }
         ul.select > li> a.selected {
             color: inherit;
@@ -97,7 +102,13 @@ ul.select.-large {
         .selects-grid__cell > :first-child {
             margin-top: 0;
         }
-    
+
+#switch-units {
+    text-align: right;
+    position: relative;
+    top: -1em;
+}
+
 #select-preset {
     float: left;
     margin-right: 20px;

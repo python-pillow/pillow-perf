@@ -4,22 +4,27 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import cv2
 
-from .base import rpartial, root, BaseTestCase
+from .base import rpartial, root, BaseLoadCase, BaseSaveCase
 
 
-class LoadCase(BaseTestCase):
-    def handle_args(self, filetype, filename):
-        self.filetype = filetype
-        self.filename = filename
-
+class LoadCase(BaseLoadCase):
     def runner(self):
         cv2.imread(root('resources', self.filename),
                    flags=cv2.IMREAD_UNCHANGED)
 
-    def readable_args(self):
-        return ["{} load".format(self.filetype)]
+
+class SaveCase(BaseSaveCase):
+    def create_test_data(self):
+        im = cv2.imread(root('resources', self.filename),
+                        flags=cv2.IMREAD_UNCHANGED)
+        return [im]
+
+    def runner(self, im):
+        cv2.imencode("." + self.filetype, im,
+                     [int(cv2.IMWRITE_JPEG_QUALITY), 85])
 
 
 cases = [
-    rpartial(LoadCase, 'Jpeg', 'pineapple.jpeg'),
+    rpartial(LoadCase, 'JPEG', 'pineapple.jpeg'),
+    rpartial(SaveCase, 'JPEG', 'pineapple.jpeg'),
 ]

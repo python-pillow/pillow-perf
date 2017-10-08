@@ -9,9 +9,9 @@ from .pillow import PillowTestCase
 
 
 class CompositionCase(PillowTestCase):
-    def create_test_data(self, size, mode):
+    def create_test_data(self):
         im = Image.open(root('resources', 'color_circle.png'))
-        im = self.resize(im, size, Image.BICUBIC)
+        im = self.resize(im, self.size, Image.BICUBIC)
         return [im, im.copy()]
 
     def runner(self, first, second):

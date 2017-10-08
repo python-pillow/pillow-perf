@@ -23,18 +23,18 @@ class Cv2TestCase(BaseTestCase):
         cv2.INTER_LANCZOS4: 'lzs4',
     }
 
-    def create_test_data(self, size, mode):
+    def create_test_data(self):
         im = cv2.imread(root('resources', 'color_circle.png'),
                         flags=cv2.IMREAD_UNCHANGED)
-        if mode == 'RGB':
+        if self.mode == 'RGB':
             im = im[:, :, :3]
-        elif mode == 'RGBA':
+        elif self.mode == 'RGBA':
             pass
-        elif mode == 'L':
+        elif self.mode == 'L':
             im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         else:
-            raise ValueError('Unknown mode: {}'.format(mode))
+            raise ValueError('Unknown mode: {}'.format(self.mode))
 
         # Fine for upscaling
-        im = cv2.resize(im, tuple(size), interpolation=cv2.INTER_CUBIC)
+        im = cv2.resize(im, tuple(self.size), interpolation=cv2.INTER_CUBIC)
         return [im]

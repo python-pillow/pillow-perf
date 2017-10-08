@@ -8,14 +8,14 @@ from importlib import import_module
 def collect_test_suites():
     return [
         "load", "convert", "composition", "rotate_right",
-        "scale", "blur",
+        "scale", "blur", "filter", "allocate", "crop",
 
         "wand_load", "wand_convert", "wand_composition",
         "wand_rotate_right", "wand_scale", "wand_blur",
 
         "pgmagick_scale", "pgmagick_blur",
 
-        "cv2_load", "cv2_rotate_right", "cv2_scale", "cv2_blur",
+        "cv2_load", "cv2_rotate_right", "cv2_scale", "cv2_blur", "cv2_filter",
     ]
 
 

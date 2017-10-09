@@ -11,7 +11,7 @@ class ScaleCase(BaseScaleCase, PgmagickTestCase):
     def runner(self, im):
         im = Image(im)
         im.filterType(self.filter)
-        im.scale(Geometry(self.dest_size[0], self.dest_size[1]))
+        im.zoom(Geometry(self.dest_size[0], self.dest_size[1]))
 
 
 cases = [

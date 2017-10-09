@@ -22,18 +22,18 @@ class PgmagickTestCase(BaseTestCase):
         FilterTypes.BoxFilter: 'box',
     }
 
-    def create_test_data(self, size, mode):
-        im = Image(root('resources', 'color_circle.png').encode('utf-8'))
-        if mode == 'RGB':
+    def create_test_data(self):
+        im = Image(root('resources', 'pineapple.jpeg').encode('utf-8'))
+        if self.mode == 'RGB':
             im.type(ImageType.TrueColorType)
-        elif mode == 'RGBA':
+        elif self.mode == 'RGBA':
             pass
-        elif mode == 'L':
+        elif self.mode == 'L':
             im.type(ImageType.GrayscaleType)
-        elif mode in 'LA':
+        elif self.mode in 'LA':
             im.type(ImageType.GrayscaleMatteType)
         else:
-            raise ValueError('Unknown mode: {}'.format(mode))
+            raise ValueError('Unknown mode: {}'.format(self.mode))
         im.filterType(FilterTypes.CatromFilter)
-        im.scale(Geometry(b"{}x{}!".format(size[0], size[1])))
+        im.scale(Geometry(b"{}x{}!".format(self.size[0], self.size[1])))
         return [im]

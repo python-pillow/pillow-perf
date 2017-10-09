@@ -23,11 +23,11 @@ class PgmagickTestCase(BaseTestCase):
     }
 
     def create_test_data(self):
-        im = Image(root('resources', 'pineapple.jpeg').encode('utf-8'))
+        im = Image(root('resources', 'color_circle.png').encode('utf-8'))
         if self.mode == 'RGB':
             im.type(ImageType.TrueColorType)
         elif self.mode == 'RGBA':
-            pass
+            im.type(ImageType.TrueColorMatteType)
         elif self.mode == 'L':
             im.type(ImageType.GrayscaleType)
         elif self.mode in 'LA':
@@ -35,5 +35,5 @@ class PgmagickTestCase(BaseTestCase):
         else:
             raise ValueError('Unknown mode: {}'.format(self.mode))
         im.filterType(FilterTypes.CatromFilter)
-        im.scale(Geometry(b"{}x{}!".format(self.size[0], self.size[1])))
+        im.zoom(Geometry(b"{}x{}!".format(self.size[0], self.size[1])))
         return [im]

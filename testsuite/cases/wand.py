@@ -34,7 +34,7 @@ class WandTestCase(BaseTestCase):
         if self.mode == 'RGB':
             im.type = 'truecolor'
         elif self.mode == 'RGBA':
-            pass
+            im.type = 'truecolormatte'
         elif self.mode == 'L':
             im.type = 'grayscale'
         elif self.mode in 'LA':

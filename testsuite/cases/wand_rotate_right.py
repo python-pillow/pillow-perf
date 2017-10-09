@@ -2,10 +2,8 @@
 
 from __future__ import print_function, unicode_literals, absolute_import
 
-from wand.image import Image
-
 from .base import rpartial
-from .wand import WandTestCase
+from .wand import Image, WandTestCase
 
 
 class RotateRightCase(WandTestCase):

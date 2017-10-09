@@ -4,7 +4,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import math
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 from .base import BaseTestCase, root
 

@@ -3,8 +3,7 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .base import rpartial
-from .pgmagick import Image
-from .pgmagick import PgmagickTestCase
+from .pgmagick import Image, PgmagickTestCase
 
 
 class BlurCase(PgmagickTestCase):

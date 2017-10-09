@@ -3,8 +3,7 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .base import rpartial, BaseScaleCase
-from .pgmagick import Image, FilterTypes, Geometry
-from .pgmagick import PgmagickTestCase
+from .pgmagick import Image, FilterTypes, Geometry, PgmagickTestCase
 
 
 class ScaleCase(BaseScaleCase, PgmagickTestCase):

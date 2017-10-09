@@ -8,7 +8,7 @@ import os
 os.environ['OMP_NUM_THREADS'] = '1'
 
 
-from pgmagick import Image, FilterTypes, ImageType, Geometry
+from pgmagick import Image, FilterTypes, ImageType, Geometry, Blob
 
 from .base import BaseTestCase, root
 

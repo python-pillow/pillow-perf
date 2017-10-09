@@ -13,7 +13,7 @@ def collect_test_suites():
         "wand_load", "wand_convert", "wand_composition",
         "wand_rotate_right", "wand_scale", "wand_blur",
 
-        "pgmagick_convert", "pgmagick_composition",
+        "pgmagick_load", "pgmagick_convert", "pgmagick_composition",
         "pgmagick_scale", "pgmagick_blur",
 
         "cv2_load", "cv2_rotate_right", "cv2_scale", "cv2_blur", "cv2_filter",

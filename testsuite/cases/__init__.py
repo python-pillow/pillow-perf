@@ -19,6 +19,7 @@ def collect_test_suites():
         "vips_load", "vips_full_cycle",
 
         "cv2_load", "cv2_rotate_right", "cv2_scale", "cv2_blur", "cv2_filter",
+        "cv2_full_cycle",
     ]
 
 

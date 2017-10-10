@@ -16,6 +16,8 @@ def collect_test_suites():
         "pgmagick_load", "pgmagick_convert", "pgmagick_composition",
         "pgmagick_rotate_right", "pgmagick_scale", "pgmagick_blur",
 
+        "vips_load",
+
         "cv2_load", "cv2_rotate_right", "cv2_scale", "cv2_blur", "cv2_filter",
     ]
 

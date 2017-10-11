@@ -14,7 +14,8 @@ class FullCycleCase(FullCycleBaseCase):
         if self.level > 0:
             im = im.transpose(Image.ROTATE_270)
             if self.level > 1:
-                size = (int(im.width * 0.4 + 0.5), int(im.height * 0.4 + 0.5))
+                size = (int(im.size[0] * 0.4 + 0.5),
+                        int(im.size[1] * 0.4 + 0.5))
                 im = im.resize(size, Image.BICUBIC)
                 if self.level > 2:
                     im = im.filter(ImageFilter.GaussianBlur(4))

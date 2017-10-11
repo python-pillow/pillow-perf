@@ -11642,6 +11642,7 @@
 	  "opencv-3.3":           {"color": [240, 100, 60], "title": "OpenCV 3.3.0"},
 	  "skia-53":              {"color": [250, 100, 50], "title": "Skia 53 SSE2"},
 	  "ipp-2017":             {"color": [250, 100, 30], "title": "IPP 2017 AVX2"},
+	  "vips-8.2":             {"color": [250, 100, 30], "title": "VIPS"},
 	
 	  "pillow-2.0":           {"color": [10, 90, 50], "title": "PIL & Pillow 2.0 to 2.6"},
 	  
@@ -11731,12 +11732,21 @@
 	    ],
 	  },
 	  "composition-4k-rgb": {
-			"topic": "compositing",
+	    "topic": "compositing",
 	    "title": "Composition two 2560×1600 RGBA images",
 	    "preposition": ".",
 	    "source": {"size": [2560, 1600]},
 	    "columns": [
 	      {"name": "radius", "title": "Blur radius"},
+	      {"name": "result", "units": "s"}
+	    ],
+	  },
+	  "full-cycle-4k-rgb": {
+	    "title": "Full opeations cycle, 2560×1600 RGB",
+	    "preposition": ".",
+	    "source": {"size": [2560, 1600]},
+	    "columns": [
+	      {"name": "operation", "title": "Operation"},
 	      {"name": "result", "units": "s"}
 	    ],
 	  },
@@ -15992,15 +16002,15 @@
 						"results": [
 							[
 								"1px",
-								0.0278899669647
+								0.0318949222565
 							],
 							[
 								"10px",
-								0.222353935242
+								0.249096155167
 							],
 							[
 								"30px",
-								0.753798007965
+								0.775735855103
 							]
 						]
 					},
@@ -16188,31 +16198,31 @@
 						"results": [
 							[
 								"Flop",
-								0.0100748538971
+								0.00935006141663
 							],
 							[
 								"Flip",
-								0.00162196159363
+								0.00165486335754
 							],
 							[
 								"Rotate 90",
-								0.013258934021
+								0.0135560035706
 							],
 							[
 								"Rotate 180",
-								0.012885093689
+								0.0116839408875
 							],
 							[
 								"Rotate 270",
-								0.0216588973999
+								0.0208261013031
 							],
 							[
 								"Transpose",
-								0.0174839496613
+								0.0184900760651
 							],
 							[
 								"Transverse",
-								0.0253381729126
+								0.0240840911865
 							]
 						]
 					},
@@ -16553,6 +16563,116 @@
 							[
 								"Composition",
 								0.00547289848328
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "full-cycle-4k-rgb",
+				"competitors": [
+					{
+						"name": "imagemagick-6.8",
+						"results": [
+							[
+								"Save/load",
+								0.0835440158844
+							],
+							[
+								"+transpose",
+								0.116394996643
+							],
+							[
+								"+resize",
+								0.185719966888
+							],
+							[
+								"+blur",
+								0.310394048691
+							]
+						]
+					},
+					{
+						"name": "opencv-3.3",
+						"results": [
+							[
+								"Save/load",
+								0.148349046707
+							],
+							[
+								"+transpose",
+								0.176847934723
+							],
+							[
+								"+resize",
+								0.122283935547
+							],
+							[
+								"+blur",
+								0.132783174515
+							]
+						]
+					},
+					{
+						"name": "vips-8.2",
+						"results": [
+							[
+								"Save/load",
+								0.0507049560547
+							],
+							[
+								"+transpose",
+								0.0577130317688
+							],
+							[
+								"+resize",
+								0.127871990204
+							],
+							[
+								"+blur",
+								0.239989042282
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"results": [
+							[
+								"Save/load",
+								0.0554149150848
+							],
+							[
+								"+transpose",
+								0.0778849124908
+							],
+							[
+								"+resize",
+								0.192498922348
+							],
+							[
+								"+blur",
+								0.455259084702
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-sse4",
+						"results": [
+							[
+								"Save/load",
+								0.0482649803162
+							],
+							[
+								"+transpose",
+								0.0564839839935
+							],
+							[
+								"+resize",
+								0.0453579425812
+							],
+							[
+								"+blur",
+								0.0561139583588
 							]
 						]
 					}

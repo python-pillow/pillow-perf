@@ -5,17 +5,18 @@ from __future__ import print_function, unicode_literals, absolute_import
 from io import BytesIO
 
 from .base import rpartial, root, FullCycleBaseCase
-from .pillow import Image, ImageFilter
+from .pillow import Image, ImageFilter, PillowTestCase
 
 
-class FullCycleCase(FullCycleBaseCase):
+class FullCycleCase(FullCycleBaseCase, PillowTestCase):
     def runner(self):
         im = Image.open(root('resources', self.filename))
         if self.level > 0:
             im = im.transpose(Image.ROTATE_270)
             if self.level > 1:
-                size = (int(im.width * 0.4 + 0.5), int(im.height * 0.4 + 0.5))
-                im = im.resize(size, Image.BICUBIC)
+                size = (int(im.size[0] * 0.4 + 0.5),
+                        int(im.size[1] * 0.4 + 0.5))
+                im = self.resize(im, size, Image.BICUBIC)
                 if self.level > 2:
                     im = im.filter(ImageFilter.GaussianBlur(4))
 

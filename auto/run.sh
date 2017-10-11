@@ -6,12 +6,12 @@ if [ ! -d ~/env/pillow-perf ]; then
   mkdir -p ~/env
   rm -rf ~/env/pillow-perf
   virtualenv ~/env/pillow-perf
-  ~/env/pillow-perf/bin/pip install -r ../testsuite/requirements.txt
-  ~/env/pillow-perf/bin/pip install opencv-python==3.3.0.10
-  ~/env/pillow-perf/bin/pip install pgmagick==0.6.7
 fi
 
 source ~/env/pillow-perf/bin/activate
+pip install -r ../testsuite/requirements.txt
+pip install opencv-python==3.3.0.10 pgmagick==0.6.7
+
 
 git clone https://github.com/uploadcare/pillow-simd.git Pillow || true
 
@@ -38,11 +38,11 @@ pushd Pillow
   }
 
   pillow_checkout 2.6.2
-  ../../testsuite/run.py scale filter -n5 "${@:2}"
+  ../../testsuite/run.py scale filter full_cycle -n5 "${@:2}"
   ../../testsuite/run.py load composition rotate_right "${@:2}"
   
   pillow_checkout 2.7.0
-  ../../testsuite/run.py scale blur -n5 "${@:2}"
+  ../../testsuite/run.py scale blur full_cycle -n5 "${@:2}"
   ../../testsuite/run.py convert rotate_right "${@:2}"
 
   pillow_checkout 3.3.3
@@ -84,20 +84,21 @@ pushd Pillow
   fi
 
   pillow_checkout v4.3.0.post0 -msse4
-  ../../testsuite/run.py scale blur convert composition filter "${@:2}"
-  MM ../../testsuite/run.py scale blur convert composition filter "${@:2}"
+  ../../testsuite/run.py scale blur full_cycle convert composition filter "${@:2}"
+  MM ../../testsuite/run.py scale blur full_cycle convert composition filter "${@:2}"
 
   if [ "$1" != "no" ]; then
     pillow_checkout v4.3.0.post0 -mavx2
-    ../../testsuite/run.py scale convert composition filter "${@:2}"
-    MM ../../testsuite/run.py scale convert composition filter "${@:2}"
+    ../../testsuite/run.py scale convert full_cycle composition filter "${@:2}"
+    MM ../../testsuite/run.py scale convert full_cycle composition filter "${@:2}"
   fi
 
-  ../../testsuite/run.py wand_scale -n5 "${@:2}"
+  ../../testsuite/run.py wand_scale wand_full_cycle -n5 "${@:2}"
   ../../testsuite/run.py wand_blur -n3 "${@:2}"
   ../../testsuite/run.py wand_load wand_convert wand_composition wand_rotate_right "${@:2}"
 
-  ../../testsuite/run.py cv2_scale cv2_blur -n5 "${@:2}"
+  ../../testsuite/run.py cv2_scale cv2_blur cv2_full_cycle -n5 "${@:2}"
   ../../testsuite/run.py cv2_load cv2_filter cv2_rotate_right "${@:2}"
 
+  ../../testsuite/run.py vips_full_cycle "${@:2}"
 popd

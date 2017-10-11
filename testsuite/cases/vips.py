@@ -5,7 +5,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 import os
 
 import pyvips
-from pyvips import Image
+from pyvips import Image, Interpolate
 
 
 # Make ImageMagick single threaded like other libraries are.

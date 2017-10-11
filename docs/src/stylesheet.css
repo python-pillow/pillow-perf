@@ -102,6 +102,15 @@ ul.select.-large {
         .selects-grid__cell > :first-child {
             margin-top: 0;
         }
+    .selects-grid__system {
+        min-width: 24%;
+    }
+    .selects-grid__competition {
+        min-width: 30%;
+    }
+    .selects-grid__chartset {
+        min-width: 20%;
+    }
 
 #switch-units {
     text-align: right;

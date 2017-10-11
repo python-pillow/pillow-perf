@@ -314,12 +314,13 @@
                         "pillow-2.0",
                         "pillow-2.7",
                         "pillow-4.3"
-                    ]
+                    ],
+                    'megapixels'
                 );
             </script>
         </p>
         <p>
-            Charts show median time (lower is better)
+            Charts show median performance in Megapixels/s (the lower the better)
             required for resizing the source 2560x1600 RGB image
             to one of the four destination sizes
             using one of the filters.
@@ -327,7 +328,7 @@
             <b>2 — 4 times</b> faster than PIL.
             Pillow 3.3 introduces fixed-point arithmetic
             for resampling which is even faster.
-            Pillow 3.4 has additional optimizations
+            Pillow 3.4 and 4.3 have additional optimizations
             for large target dimensions.
             In the end, current Pillow version is
             <b>up to 7 times</b> faster than the original PIL.
@@ -349,10 +350,12 @@
                     document.getElementById("chart-resample-simd"),
                     'resample-4k-rgb',
                     [
+                        "pillow-2.0",
                         "pillow-4.3",
                         "pillow-simd-4.3-sse4",
                         "pillow-simd-4.3-avx2"
-                    ]
+                    ],
+                    'megapixels'
                 );
             </script>
         </p>
@@ -401,7 +404,8 @@
             <canvas id="chart-blur" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
-                    document.getElementById("chart-blur"), 'blur-4k-rgb'
+                    document.getElementById("chart-blur"), 'blur-4k-rgb',
+                    null, 'megapixels'
                 );
             </script>
         </p>
@@ -435,7 +439,8 @@
             <canvas id="chart-transposition" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
-                    document.getElementById("chart-transposition"), 'transposition-4k-rgb'
+                    document.getElementById("chart-transposition"),
+                    'transposition-4k-rgb', null, 'megapixels'
                 );
             </script>
         </p>
@@ -459,7 +464,8 @@
             <canvas id="chart-conversion" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
-                    document.getElementById("chart-conversion"), 'conversion-4k-rgb'
+                    document.getElementById("chart-conversion"),
+                    'conversion-4k-rgb', null, 'megapixels'
                 );
             </script>
         </p>
@@ -479,7 +485,8 @@
             <canvas id="chart-composition" width="1100" height="300"></canvas>
             <script type="text/javascript">
                 partialCompetition(
-                    document.getElementById("chart-composition"), 'composition-4k-rgb'
+                    document.getElementById("chart-composition"),
+                    'composition-4k-rgb', null, 'megapixels'
                 );
             </script>
         </div>

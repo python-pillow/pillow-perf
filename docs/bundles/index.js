@@ -107,10 +107,14 @@
 	}
 	
 	
-	function partialCompetition(element, competitionName, presetName) {
+	function partialCompetition(element, competitionName, presetName, units) {
 	  var competitions = data.systems[0].competitions;
 	  var competitors = [];
 	  var i, competition, preset;
+	
+	  if ( ! units) {
+	    units = 'seconds'
+	  }
 	
 	  for (i = 0; i < competitions.length; i++) {
 	    if (competitions[i].name == competitionName) {
@@ -152,7 +156,7 @@
 	  return adapter.chartForCompetition(
 	    element,
 	    competition,
-	    unitsPresets.seconds
+	    unitsPresets[units]
 	  );
 	}
 	
@@ -13830,21 +13834,21 @@
 						"default": true
 					},
 					{
+						"name": "pillow-progress",
+						"title": "Pillow progress",
+						"set": [
+							"pillow-2.7",
+							"pillow-3.3",
+							"pillow-3.4",
+							"pillow-4.3"
+						]
+					},
+					{
 						"name": "pillow-sse4",
 						"title": "Pillow SIMD SSE4 progress",
 						"set": [
 							"pillow-simd-3.2-sse4",
 							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4"
-						]
-					},
-					{
-						"name": "pillow-milestones",
-						"title": "Pillow milestones",
-						"set": [
-							"pillow-2.0",
-							"pillow-2.7",
-							"pillow-3.4",
 							"pillow-simd-3.4-sse4"
 						]
 					},

@@ -54,10 +54,14 @@ var unitsPresets = {
 }
 
 
-function partialCompetition(element, competitionName, presetName) {
+function partialCompetition(element, competitionName, presetName, units) {
   var competitions = data.systems[0].competitions;
   var competitors = [];
   var i, competition, preset;
+
+  if ( ! units) {
+    units = 'seconds'
+  }
 
   for (i = 0; i < competitions.length; i++) {
     if (competitions[i].name == competitionName) {
@@ -99,7 +103,7 @@ function partialCompetition(element, competitionName, presetName) {
   return adapter.chartForCompetition(
     element,
     competition,
-    unitsPresets.seconds
+    unitsPresets[units]
   );
 }
 

@@ -107,10 +107,14 @@
 	}
 	
 	
-	function partialCompetition(element, competitionName, presetName) {
+	function partialCompetition(element, competitionName, presetName, units) {
 	  var competitions = data.systems[0].competitions;
 	  var competitors = [];
 	  var i, competition, preset;
+	
+	  if ( ! units) {
+	    units = 'seconds'
+	  }
 	
 	  for (i = 0; i < competitions.length; i++) {
 	    if (competitions[i].name == competitionName) {
@@ -152,7 +156,7 @@
 	  return adapter.chartForCompetition(
 	    element,
 	    competition,
-	    unitsPresets.seconds
+	    unitsPresets[units]
 	  );
 	}
 	
@@ -388,7 +392,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n\n#switch-units {\n    text-align: right;\n    position: relative;\n    top: -1em;\n}\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__system {\n        min-width: 24%;\n    }\n    .selects-grid__competition {\n        min-width: 30%;\n    }\n    .selects-grid__chartset {\n        min-width: 20%;\n    }\n\n#switch-units {\n    text-align: right;\n    position: relative;\n    top: -1em;\n}\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
@@ -13668,7 +13672,7 @@
 						"name": "imagemagick-6.8",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0942161083221
 							],
 							[
@@ -13689,7 +13693,7 @@
 						"name": "opencv-3.3",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.162626028061
 							],
 							[
@@ -13710,7 +13714,7 @@
 						"name": "vips-8.5",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0617001056671
 							],
 							[
@@ -13731,7 +13735,7 @@
 						"name": "pillow-2.0",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0615940093994
 							],
 							[
@@ -13752,7 +13756,7 @@
 						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0525288581848
 							],
 							[
@@ -13796,15 +13800,6 @@
 						]
 					},
 					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4"
-						]
-					},
-					{
 						"name": "pillow-3.2",
 						"title": "Pillow 3.2 versions",
 						"set": [
@@ -13826,8 +13821,26 @@
 						"set": [
 							"pillow-3.4",
 							"pillow-simd-3.4-sse4"
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"title": "Pillow 4.3 versions",
+						"set": [
+							"pillow-4.3",
+							"pillow-simd-4.3-sse4"
 						],
 						"default": true
+					},
+					{
+						"name": "pillow-progress",
+						"title": "Pillow progress",
+						"set": [
+							"pillow-2.7",
+							"pillow-3.3",
+							"pillow-3.4",
+							"pillow-4.3"
+						]
 					},
 					{
 						"name": "pillow-sse4",
@@ -13835,17 +13848,8 @@
 						"set": [
 							"pillow-simd-3.2-sse4",
 							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4"
-						]
-					},
-					{
-						"name": "pillow-milestones",
-						"title": "Pillow milestones",
-						"set": [
-							"pillow-2.0",
-							"pillow-2.7",
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
+							"pillow-simd-3.4-sse4",
+							"pillow-simd-4.3-sse4"
 						]
 					},
 					{
@@ -13854,7 +13858,7 @@
 						"set": [
 							"imagemagick-6.8",
 							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
+							"pillow-simd-4.3-sse4"
 						]
 					}
 				],
@@ -14512,6 +14516,63 @@
 				]
 			},
 			{
+				"name": "image-io-4k-rgb",
+				"competitors": [
+					{
+						"name": "imagemagick-6.8",
+						"results": [
+							[
+								"Jpeg load",
+								0.0298268795013
+							],
+							[
+								"Jpeg save",
+								0.0603041648865
+							]
+						]
+					},
+					{
+						"name": "opencv-3.3",
+						"results": [
+							[
+								"Jpeg load",
+								0.0555779933929
+							],
+							[
+								"Jpeg save",
+								0.108551979065
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"results": [
+							[
+								"Jpeg load",
+								0.029247045517
+							],
+							[
+								"Jpeg save",
+								0.0293481349945
+							]
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Jpeg load",
+								0.0236170291901
+							],
+							[
+								"Jpeg save",
+								0.0256819725037
+							]
+						]
+					}
+				]
+			},
+			{
 				"name": "blur-4k-rgb",
 				"competitors": [
 					{
@@ -14596,6 +14657,79 @@
 							[
 								"30px",
 								0.0787088871002
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "filter-4k-rgb",
+				"competitors": [
+					{
+						"name": "opencv-3.3",
+						"results": [
+							[
+								"Smooth",
+								0.0249660015106
+							],
+							[
+								"Sharpen",
+								0.024936914444
+							],
+							[
+								"Smooth More",
+								0.0642189979553
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"results": [
+							[
+								"Smooth",
+								0.13694190979
+							],
+							[
+								"Sharpen",
+								0.136662960052
+							],
+							[
+								"Smooth More",
+								0.328428030014
+							]
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Smooth",
+								0.0935339927673
+							],
+							[
+								"Sharpen",
+								0.0936760902405
+							],
+							[
+								"Smooth More",
+								0.226088047028
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-sse4",
+						"results": [
+							[
+								"Smooth",
+								0.0143530368805
+							],
+							[
+								"Sharpen",
+								0.0143151283264
+							],
+							[
+								"Smooth More",
+								0.0317339897156
 							]
 						]
 					}
@@ -14959,7 +15093,7 @@
 						"name": "imagemagick-6.8",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0905940532684
 							],
 							[
@@ -14980,7 +15114,7 @@
 						"name": "opencv-3.3",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.168015003204
 							],
 							[
@@ -15001,7 +15135,7 @@
 						"name": "vips-8.2",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0546247959137
 							],
 							[
@@ -15022,7 +15156,7 @@
 						"name": "pillow-2.0",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0581951141357
 							],
 							[
@@ -15043,7 +15177,7 @@
 						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0496520996094
 							],
 							[
@@ -16796,7 +16930,7 @@
 						"name": "imagemagick-6.8",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0835440158844
 							],
 							[
@@ -16817,7 +16951,7 @@
 						"name": "opencv-3.3",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.148349046707
 							],
 							[
@@ -16838,7 +16972,7 @@
 						"name": "vips-8.2",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0507049560547
 							],
 							[
@@ -16859,7 +16993,7 @@
 						"name": "pillow-2.0",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0554149150848
 							],
 							[
@@ -16880,7 +17014,7 @@
 						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0482649803162
 							],
 							[

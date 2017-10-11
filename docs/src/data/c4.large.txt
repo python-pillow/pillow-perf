@@ -29,11 +29,11 @@ Wand scale 2560×1600 RGB image
 ["5478x3424", "lzs", 1.3807349205]
 
 Wand full cycle 2560×1600 RGB image
-    Save/load           0.08354 s    49.03 Mpx/s
+    Load+save           0.08354 s    49.03 Mpx/s
     +transpose          0.11639 s    35.19 Mpx/s
     +resize             0.18572 s    22.05 Mpx/s
     +blur               0.31039 s    13.20 Mpx/s
-["Save/load", 0.0835440158844],
+["Load+save", 0.0835440158844],
 ["+transpose", 0.116394996643],
 ["+resize", 0.185719966888],
 ["+blur", 0.310394048691]
@@ -106,11 +106,11 @@ Cv2 blur 2560×1600 RGB image
 ["30px", 0.775735855103]
 
 Cv2 full cycle 2560×1600 RGB image
-    Save/load           0.14835 s    27.61 Mpx/s
+    Load+save           0.14835 s    27.61 Mpx/s
     +transpose          0.17685 s    23.16 Mpx/s
     +resize             0.12228 s    33.50 Mpx/s
     +blur               0.13278 s    30.85 Mpx/s
-["Save/load", 0.148349046707],
+["Load+save", 0.148349046707],
 ["+transpose", 0.176847934723],
 ["+resize", 0.122283935547],
 ["+blur", 0.132783174515]
@@ -151,11 +151,11 @@ version      Vips 8.2.2
 =========================
 
 Vips full cycle 2560×1600 RGB image
-    Save/load           0.05070 s    80.78 Mpx/s
+    Load+save           0.05070 s    80.78 Mpx/s
     +transpose          0.05771 s    70.97 Mpx/s
     +resize             0.12787 s    32.03 Mpx/s
     +blur               0.23999 s    17.07 Mpx/s
-["Save/load", 0.0507049560547],
+["Load+save", 0.0507049560547],
 ["+transpose", 0.0577130317688],
 ["+resize", 0.127871990204],
 ["+blur", 0.239989042282]
@@ -200,11 +200,11 @@ Filter 2560×1600 RGB image
 ["Smooth More", 0.271515130997]
 
 Full cycle 2560×1600 RGB image
-    Save/load           0.05541 s    73.92 Mpx/s
+    Load+save           0.05541 s    73.92 Mpx/s
     +transpose          0.07788 s    52.59 Mpx/s
     +resize             0.19250 s    21.28 Mpx/s
     +blur               0.45526 s     9.00 Mpx/s
-["Save/load", 0.0554149150848],
+["Load+save", 0.0554149150848],
 ["+transpose", 0.0778849124908],
 ["+resize", 0.192498922348],
 ["+blur", 0.455259084702]
@@ -275,11 +275,11 @@ Blur 2560×1600 RGB image
 ["30px", 0.20072388649]
 
 Full cycle 2560×1600 RGB image
-    Save/load           0.05460 s    75.02 Mpx/s
+    Load+save           0.05460 s    75.02 Mpx/s
     +transpose          0.07155 s    57.25 Mpx/s
     +resize             0.12588 s    32.54 Mpx/s
     +blur               0.15840 s    25.86 Mpx/s
-["Save/load", 0.0545971393585],
+["Load+save", 0.0545971393585],
 ["+transpose", 0.0715489387512],
 ["+resize", 0.125877141953],
 ["+blur", 0.158396959305]
@@ -786,11 +786,11 @@ Blur 2560×1600 RGB image
 ["30px", 0.0717711448669]
 
 Full cycle 2560×1600 RGB image
-    Save/load           0.04826 s    84.86 Mpx/s
+    Load+save           0.04826 s    84.86 Mpx/s
     +transpose          0.05648 s    72.52 Mpx/s
     +resize             0.04536 s    90.30 Mpx/s
     +blur               0.05611 s    72.99 Mpx/s
-["Save/load", 0.0482649803162],
+["Load+save", 0.0482649803162],
 ["+transpose", 0.0564839839935],
 ["+resize", 0.0453579425812],
 ["+blur", 0.0561139583588]
@@ -855,11 +855,11 @@ Blur 2560×1600 RGB image
 ["30px", 0.0710108280182]
 
 Full cycle 2560×1600 RGB image
-    Save/load           0.04801 s    85.31 Mpx/s
+    Load+save           0.04801 s    85.31 Mpx/s
     +transpose          0.05748 s    71.26 Mpx/s
     +resize             0.04673 s    87.66 Mpx/s
     +blur               0.05865 s    69.84 Mpx/s
-["Save/load", 0.0480148792267],
+["Load+save", 0.0480148792267],
 ["+transpose", 0.057480096817],
 ["+resize", 0.0467259883881],
 ["+blur", 0.0586497783661]
@@ -926,11 +926,11 @@ Convert 2560×1600 RGB image
 ["RGBA to RGBa", 0.0025908946991]
 
 Full cycle 2560×1600 RGB image
-    Save/load           0.04791 s    85.49 Mpx/s
+    Load+save           0.04791 s    85.49 Mpx/s
     +transpose          0.05620 s    72.89 Mpx/s
     +resize             0.04313 s    94.98 Mpx/s
     +blur               0.05290 s    77.43 Mpx/s
-["Save/load", 0.0479111671448],
+["Load+save", 0.0479111671448],
 ["+transpose", 0.0561950206757],
 ["+resize", 0.0431258678436],
 ["+blur", 0.0529010295868]
@@ -987,11 +987,11 @@ Convert 2560×1600 RGB image
 ["RGBA to RGBa", 0.0021960735321]
 
 Full cycle 2560×1600 RGB image
-    Save/load           0.04894 s    83.69 Mpx/s
+    Load+save           0.04894 s    83.69 Mpx/s
     +transpose          0.05807 s    70.54 Mpx/s
     +resize             0.04559 s    89.85 Mpx/s
     +blur               0.05567 s    73.57 Mpx/s
-["Save/load", 0.0489418506622],
+["Load+save", 0.0489418506622],
 ["+transpose", 0.0580651760101],
 ["+resize", 0.0455889701843],
 ["+blur", 0.0556740760803]

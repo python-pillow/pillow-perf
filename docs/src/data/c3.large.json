@@ -17,15 +17,6 @@
                     ]
                 },
                 {
-                    "name": "pillow-progress",
-                    "title": "Pillow progress",
-                    "set": [
-                        "pillow-2.7",
-                        "pillow-3.3",
-                        "pillow-3.4"
-                    ]
-                },
-                {
                     "name": "pillow-3.2",
                     "title": "Pillow 3.2 versions",
                     "set": [
@@ -47,8 +38,26 @@
                     "set": [
                         "pillow-3.4",
                         "pillow-simd-3.4-sse4"
+                    ]
+                },
+                {
+                    "name": "pillow-4.3",
+                    "title": "Pillow 4.3 versions",
+                    "set": [
+                        "pillow-4.3",
+                        "pillow-simd-4.3-sse4"
                     ],
                     "default": true
+                },
+                {
+                    "name": "pillow-progress",
+                    "title": "Pillow progress",
+                    "set": [
+                        "pillow-2.7",
+                        "pillow-3.3",
+                        "pillow-3.4",
+                        "pillow-4.3"
+                    ]
                 },
                 {
                     "name": "pillow-sse4",
@@ -56,17 +65,8 @@
                     "set": [
                         "pillow-simd-3.2-sse4",
                         "pillow-simd-3.3-sse4",
-                        "pillow-simd-3.4-sse4"
-                    ]
-                },
-                {
-                    "name": "pillow-milestones",
-                    "title": "Pillow milestones",
-                    "set": [
-                        "pillow-2.0",
-                        "pillow-2.7",
-                        "pillow-3.4",
-                        "pillow-simd-3.4-sse4"
+                        "pillow-simd-3.4-sse4",
+                        "pillow-simd-4.3-sse4"
                     ]
                 },
                 {
@@ -75,7 +75,7 @@
                     "set": [
                         "imagemagick-6.8",
                         "pillow-3.4",
-                        "pillow-simd-3.4-sse4"
+                        "pillow-simd-4.3-sse4"
                     ]
                 }
             ],
@@ -257,6 +257,39 @@
             ]
         },
         {
+            "name": "image-io-4k-rgb",
+            "competitors": [
+                {
+                    "name": "imagemagick-6.8",
+                    "results": [
+["Jpeg load", 0.0298268795013],
+["Jpeg save", 0.0603041648865]
+                    ]
+                },
+                {
+                    "name": "opencv-3.3",
+                    "results": [
+["Jpeg load", 0.0555779933929],
+["Jpeg save", 0.108551979065]
+                    ]
+                },
+                {
+                    "name": "pillow-2.0",
+                    "results": [
+["Jpeg load", 0.029247045517],
+["Jpeg save", 0.0293481349945]
+                    ]
+                },
+                {
+                    "name": "pillow-4.3",
+                    "results": [
+["Jpeg load", 0.0236170291901],
+["Jpeg save", 0.0256819725037]
+                    ]
+                }
+            ]
+        },
+        {
             "name": "blur-4k-rgb",
             "competitors": [
                 {
@@ -297,6 +330,43 @@
 ["1px", 0.0608439445496],
 ["10px", 0.0776238441467],
 ["30px", 0.0787088871002]
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "filter-4k-rgb",
+            "competitors": [
+                {
+                    "name": "opencv-3.3",
+                    "results": [
+["Smooth", 0.0249660015106],
+["Sharpen", 0.024936914444],
+["Smooth More", 0.0642189979553]
+                    ]
+                },
+                {
+                    "name": "pillow-2.0",
+                    "results": [
+["Smooth", 0.13694190979],
+["Sharpen", 0.136662960052],
+["Smooth More", 0.328428030014]
+                    ]
+                },
+                {
+                    "name": "pillow-4.3",
+                    "results": [
+["Smooth", 0.0935339927673],
+["Sharpen", 0.0936760902405],
+["Smooth More", 0.226088047028]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-4.3-sse4",
+                    "results": [
+["Smooth", 0.0143530368805],
+["Sharpen", 0.0143151283264],
+["Smooth More", 0.0317339897156]
                     ]
                 }
             ]
@@ -466,7 +536,7 @@
                 {
                     "name": "imagemagick-6.8",
                     "results": [
-["Save/load", 0.0905940532684],
+["Load+save", 0.0905940532684],
 ["+transpose", 0.12427687645],
 ["+resize", 0.204174041748],
 ["+blur", 0.346410036087]
@@ -475,7 +545,7 @@
                 {
                     "name": "opencv-3.3",
                     "results": [
-["Save/load", 0.168015003204],
+["Load+save", 0.168015003204],
 ["+transpose", 0.191325187683],
 ["+resize", 0.128175020218],
 ["+blur", 0.142982006073]
@@ -484,7 +554,7 @@
                 {
                     "name": "vips-8.2",
                     "results": [
-["Save/load", 0.0546247959137],
+["Load+save", 0.0546247959137],
 ["+transpose", 0.0633208751678],
 ["+resize", 0.141340017319],
 ["+blur", 0.277016878128]
@@ -493,7 +563,7 @@
                 {
                     "name": "pillow-2.0",
                     "results": [
-["Save/load", 0.0581951141357],
+["Load+save", 0.0581951141357],
 ["+transpose", 0.0800800323486],
 ["+resize", 0.211241006851],
 ["+blur", 0.501112937927]
@@ -502,7 +572,7 @@
                 {
                     "name": "pillow-simd-4.3-sse4",
                     "results": [
-["Save/load", 0.0496520996094],
+["Load+save", 0.0496520996094],
 ["+transpose", 0.0589730739594],
 ["+resize", 0.0482831001282],
 ["+blur", 0.0594210624695]

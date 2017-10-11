@@ -38,7 +38,7 @@ pushd Pillow
   }
 
   pillow_checkout 2.6.2
-  ../../testsuite/run.py scale filter -n5 "${@:2}"
+  ../../testsuite/run.py scale filter full_cycle -n5 "${@:2}"
   ../../testsuite/run.py load composition rotate_right "${@:2}"
   
   pillow_checkout 2.7.0

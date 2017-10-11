@@ -179,8 +179,8 @@
         </div>
         <div id="switch-units">
             Units:
-            <a href="#" class="pseudo selected" data-unit="seconds">seconds</a>
-            <a href="#" class="pseudo" data-unit="megapixels">megapixels/s</a>
+            <a href="#" class="pseudo" data-unit="seconds">seconds</a>
+            <a href="#" class="pseudo selected" data-unit="megapixels">megapixels/s</a>
             <a href="#" class="pseudo" data-unit="operations">operations/s</a>
         </div>
         <canvas id="chart-container" width="1100" height="400"></canvas>
@@ -298,7 +298,7 @@
                     [
                         "pillow-2.0",
                         "pillow-2.7",
-                        "pillow-3.4"
+                        "pillow-4.3"
                     ]
                 );
             </script>
@@ -323,7 +323,7 @@
             Pillow-SIMD resampling performance is significantly increased
             compared to Pillow.
             The latest Pillow-SIMD compiled with AVX2
-            is <b>3.5 — 6 times</b> faster than Pillow.
+            is <b>4 — 6 times</b> faster than Pillow.
             In sum, Pillow-SIMD resampling performance is
             <b>12 — 35 times</b> higher than the original PIL.
 
@@ -334,9 +334,9 @@
                     document.getElementById("chart-resample-simd"),
                     'resample-4k-rgb',
                     [
-                        "pillow-3.4",
-                        "pillow-simd-3.4-sse4",
-                        "pillow-simd-3.4-avx2"
+                        "pillow-4.3",
+                        "pillow-simd-4.3-sse4",
+                        "pillow-simd-4.3-avx2"
                     ]
                 );
             </script>

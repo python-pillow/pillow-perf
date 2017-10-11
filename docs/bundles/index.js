@@ -13800,15 +13800,6 @@
 						]
 					},
 					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4"
-						]
-					},
-					{
 						"name": "pillow-3.2",
 						"title": "Pillow 3.2 versions",
 						"set": [
@@ -13830,6 +13821,14 @@
 						"set": [
 							"pillow-3.4",
 							"pillow-simd-3.4-sse4"
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"title": "Pillow 4.3 versions",
+						"set": [
+							"pillow-4.3",
+							"pillow-simd-4.3-sse4"
 						],
 						"default": true
 					},
@@ -13849,7 +13848,8 @@
 						"set": [
 							"pillow-simd-3.2-sse4",
 							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4"
+							"pillow-simd-3.4-sse4",
+							"pillow-simd-4.3-sse4"
 						]
 					},
 					{
@@ -13858,7 +13858,7 @@
 						"set": [
 							"imagemagick-6.8",
 							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
+							"pillow-simd-4.3-sse4"
 						]
 					}
 				],
@@ -14516,6 +14516,63 @@
 				]
 			},
 			{
+				"name": "image-io-4k-rgb",
+				"competitors": [
+					{
+						"name": "imagemagick-6.8",
+						"results": [
+							[
+								"Jpeg load",
+								0.0298268795013
+							],
+							[
+								"Jpeg save",
+								0.0603041648865
+							]
+						]
+					},
+					{
+						"name": "opencv-3.3",
+						"results": [
+							[
+								"Jpeg load",
+								0.0555779933929
+							],
+							[
+								"Jpeg save",
+								0.108551979065
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"results": [
+							[
+								"Jpeg load",
+								0.029247045517
+							],
+							[
+								"Jpeg save",
+								0.0293481349945
+							]
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Jpeg load",
+								0.0236170291901
+							],
+							[
+								"Jpeg save",
+								0.0256819725037
+							]
+						]
+					}
+				]
+			},
+			{
 				"name": "blur-4k-rgb",
 				"competitors": [
 					{
@@ -14600,6 +14657,79 @@
 							[
 								"30px",
 								0.0787088871002
+							]
+						]
+					}
+				]
+			},
+			{
+				"name": "filter-4k-rgb",
+				"competitors": [
+					{
+						"name": "opencv-3.3",
+						"results": [
+							[
+								"Smooth",
+								0.0249660015106
+							],
+							[
+								"Sharpen",
+								0.024936914444
+							],
+							[
+								"Smooth More",
+								0.0642189979553
+							]
+						]
+					},
+					{
+						"name": "pillow-2.0",
+						"results": [
+							[
+								"Smooth",
+								0.13694190979
+							],
+							[
+								"Sharpen",
+								0.136662960052
+							],
+							[
+								"Smooth More",
+								0.328428030014
+							]
+						]
+					},
+					{
+						"name": "pillow-4.3",
+						"results": [
+							[
+								"Smooth",
+								0.0935339927673
+							],
+							[
+								"Sharpen",
+								0.0936760902405
+							],
+							[
+								"Smooth More",
+								0.226088047028
+							]
+						]
+					},
+					{
+						"name": "pillow-simd-4.3-sse4",
+						"results": [
+							[
+								"Smooth",
+								0.0143530368805
+							],
+							[
+								"Sharpen",
+								0.0143151283264
+							],
+							[
+								"Smooth More",
+								0.0317339897156
 							]
 						]
 					}

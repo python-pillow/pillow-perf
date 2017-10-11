@@ -168,3 +168,17 @@ class BaseSaveCase(BaseTestCase):
 
     def readable_args(self):
         return ["{} save".format(self.filetype.capitalize())]
+
+
+class FullCycleBaseCase(BaseTestCase):
+    def handle_args(self, level, name, filename, filetype):
+        self.level = level
+        self.name = name
+        self.filename = filename
+        self.filetype = filetype
+
+    def create_test_data(self):
+        return ()
+
+    def readable_args(self):
+        return [self.name]

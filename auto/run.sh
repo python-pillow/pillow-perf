@@ -8,6 +8,7 @@ if [ ! -d ~/env/pillow-perf ]; then
   virtualenv ~/env/pillow-perf
   ~/env/pillow-perf/bin/pip install -r ../testsuite/requirements.txt
   ~/env/pillow-perf/bin/pip install opencv-python==3.3.0.10
+  ~/env/pillow-perf/bin/pip install pgmagick==0.6.7
 fi
 
 source ~/env/pillow-perf/bin/activate

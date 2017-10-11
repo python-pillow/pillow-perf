@@ -25,7 +25,7 @@ class FullCycleCase(FullCycleBaseCase, PillowTestCase):
 
 
 cases = [
-    rpartial(FullCycleCase, 0, 'Save/load', 'pineapple.jpeg', 'JPEG'),
+    rpartial(FullCycleCase, 0, 'Load+save', 'pineapple.jpeg', 'JPEG'),
     rpartial(FullCycleCase, 1, '+transpose', 'pineapple.jpeg', 'JPEG'),
     rpartial(FullCycleCase, 2, '+resize', 'pineapple.jpeg', 'JPEG'),
     rpartial(FullCycleCase, 3, '+blur', 'pineapple.jpeg', 'JPEG'),

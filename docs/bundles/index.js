@@ -13668,7 +13668,7 @@
 						"name": "imagemagick-6.8",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0942161083221
 							],
 							[
@@ -13689,7 +13689,7 @@
 						"name": "opencv-3.3",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.162626028061
 							],
 							[
@@ -13710,7 +13710,7 @@
 						"name": "vips-8.5",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0617001056671
 							],
 							[
@@ -13731,7 +13731,7 @@
 						"name": "pillow-2.0",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0615940093994
 							],
 							[
@@ -13752,7 +13752,7 @@
 						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0525288581848
 							],
 							[
@@ -14959,7 +14959,7 @@
 						"name": "imagemagick-6.8",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0905940532684
 							],
 							[
@@ -14980,7 +14980,7 @@
 						"name": "opencv-3.3",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.168015003204
 							],
 							[
@@ -15001,7 +15001,7 @@
 						"name": "vips-8.2",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0546247959137
 							],
 							[
@@ -15022,7 +15022,7 @@
 						"name": "pillow-2.0",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0581951141357
 							],
 							[
@@ -15043,7 +15043,7 @@
 						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0496520996094
 							],
 							[
@@ -16796,7 +16796,7 @@
 						"name": "imagemagick-6.8",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0835440158844
 							],
 							[
@@ -16817,7 +16817,7 @@
 						"name": "opencv-3.3",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.148349046707
 							],
 							[
@@ -16838,7 +16838,7 @@
 						"name": "vips-8.2",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0507049560547
 							],
 							[
@@ -16859,7 +16859,7 @@
 						"name": "pillow-2.0",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0554149150848
 							],
 							[
@@ -16880,7 +16880,7 @@
 						"name": "pillow-simd-4.3-sse4",
 						"results": [
 							[
-								"Save/load",
+								"Load+save",
 								0.0482649803162
 							],
 							[

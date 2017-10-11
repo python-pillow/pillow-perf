@@ -90,7 +90,7 @@
             Skia is tested using
             <a href="https://gist.github.com/homm/6e048cb0dad135b6db63b924458730e8">
                 test files</a>.
-            Each test is run 21 times
+            Each test is run 11 times
             and the mean execution time is calculated.
     </section>
 
@@ -127,24 +127,39 @@
             <dd>
                 Very popular image manipulation library with bindings
                 for many languages. Extremely flexible.
+                In this benchmarks <a href="http://docs.wand-py.org/">
+                    Wand wrapper</a> is used.
                 <a href="http://www.imagemagick.org/">
                     homepage</a>
             </dd>
 
-            <dt id="library-skia">Skia</dt>
-            <dd>
-                Highly efficient 2D graphics library. It serves as the graphics
-                engine for Chrome and Chrome OS, Android, Firefox, and Firefox OS.
-                <a href="https://skia.org">homepage</a>
-            </dd>
             <dt id="library-opencv">OpenCV</dt>
             <dd>
                 OpenCV aims to support real-time computer vision.
                 Originally developed by Intel's research center,
                 it was later supported by Willow Garage
                 and is now maintained by Itseez.
-                <a href="http://opencv.org">homepage</a>
+                <a href="http://opencv.org/">homepage</a>
             </dd>
+            
+            <dt id="library-vips">VIPS</dt>
+            <dd>
+                libvips is a demand-driven, horizontally threaded
+                image processing library. Compared to similar libraries,
+                libvips runs quickly and uses little memory.
+                In this benchmarks <a href="https://jcupitt.github.io/pyvips/">
+                    pyvips wrapper</a> is used.
+                <a href="https://jcupitt.github.io/libvips/">homepage</a>
+            </dd>            
+            
+
+            <dt id="library-skia">Skia</dt>
+            <dd>
+                Highly efficient 2D graphics library. It serves as the graphics
+                engine for Chrome and Chrome OS, Android, Firefox, and Firefox OS.
+                <a href="https://skia.org/">homepage</a>
+            </dd>
+
             <dt id="library-ipp">IPP</dt>
             <dd>
                 Intel Integrated Performance Primitives.

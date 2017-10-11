@@ -14,7 +14,7 @@ class FullCycleCase(FullCycleBaseCase):
             if self.level > 1:
                 im = im.resize(0.4, kernel="cubic")
                 if self.level > 2:
-                    im = im.gaussblur(4, min_ampl=0.01)
+                    im = im.gaussblur(4, min_ampl=0.07)
 
         im.write_to_buffer('.'+self.filetype, Q=85)
         # im.write_to_file('../_out.{}.vips.png'.format(self.level))

@@ -6,7 +6,8 @@ var competitors_meta = {
   "opencv-3.3":           {"color": [240, 100, 60], "title": "OpenCV 3.3.0"},
   "skia-53":              {"color": [250, 100, 50], "title": "Skia 53 SSE2"},
   "ipp-2017":             {"color": [250, 100, 30], "title": "IPP 2017 AVX2"},
-  "vips-8.2":             {"color": [250, 100, 30], "title": "VIPS"},
+  "vips-8.2":             {"color": [250, 100, 30], "title": "VIPS 8.2"},
+  "vips-8.5":             {"color": [250, 100, 30], "title": "VIPS 8.5"},
 
   "pillow-2.0":           {"color": [10, 90, 50], "title": "PIL & Pillow 2.0 to 2.6"},
   

@@ -28,6 +28,16 @@ Wand scale 2560×1600 RGB image
 ["5478x3424", "bic", 1.19796705246],
 ["5478x3424", "lzs", 1.43192410469]
 
+Wand full cycle 2560×1600 RGB image
+    Save/load           0.09059 s    45.21 Mpx/s
+    +transpose          0.12428 s    32.96 Mpx/s
+    +resize             0.20417 s    20.06 Mpx/s
+    +blur               0.34641 s    11.82 Mpx/s
+["Save/load", 0.0905940532684],
+["+transpose", 0.12427687645],
+["+resize", 0.204174041748],
+["+blur", 0.346410036087]
+
 Wand blur 2560×1600 RGB image
     1px                 0.47570 s     8.61 Mpx/s
     10px                1.76497 s     2.32 Mpx/s
@@ -88,12 +98,22 @@ Cv2 scale 2560×1600 RGB image
 ["5478x3424", "lzs4", 0.4993019104]
 
 Cv2 blur 2560×1600 RGB image
-    1px                 0.03084 s   132.81 Mpx/s
-    10px                0.23131 s    17.71 Mpx/s
-    30px                0.75591 s     5.42 Mpx/s
-["1px", 0.0308411121368],
-["10px", 0.231313943863],
-["30px", 0.755908966064]
+    1px                 0.03477 s   117.82 Mpx/s
+    10px                0.26372 s    15.53 Mpx/s
+    30px                0.82197 s     4.98 Mpx/s
+["1px", 0.0347661972046],
+["10px", 0.263720989227],
+["30px", 0.821968078613]
+
+Cv2 full cycle 2560×1600 RGB image
+    Save/load           0.16802 s    24.38 Mpx/s
+    +transpose          0.19133 s    21.41 Mpx/s
+    +resize             0.12818 s    31.96 Mpx/s
+    +blur               0.14298 s    28.65 Mpx/s
+["Save/load", 0.168015003204],
+["+transpose", 0.191325187683],
+["+resize", 0.128175020218],
+["+blur", 0.142982006073]
 
 Cv2 load 2560×1600 RGB image
     Jpeg load           0.05558 s    73.70 Mpx/s
@@ -110,21 +130,35 @@ Cv2 filter 2560×1600 RGB image
 ["Smooth More", 0.0642189979553]
 
 Cv2 rotate right 2560×1600 RGB image
-    Flop                0.01065 s   384.75 Mpx/s
-    Flip                0.00156 s  2620.48 Mpx/s
-    Rotate 90           0.01294 s   316.66 Mpx/s
-    Rotate 180          0.01242 s   329.68 Mpx/s
-    Rotate 270          0.02282 s   179.50 Mpx/s
-    Transpose           0.01228 s   333.60 Mpx/s
-    Transverse          0.02313 s   177.05 Mpx/s
-["Flop", 0.010645866394],
-["Flip", 0.00156307220459],
-["Rotate 90", 0.0129351615906],
-["Rotate 180", 0.012423992157],
-["Rotate 270", 0.0228190422058],
-["Transpose", 0.0122780799866],
-["Transverse", 0.0231349468231]
+    Flop                0.01122 s   364.99 Mpx/s
+    Flip                0.00212 s  1934.89 Mpx/s
+    Rotate 90           0.01365 s   300.03 Mpx/s
+    Rotate 180          0.01168 s   350.60 Mpx/s
+    Rotate 270          0.02385 s   171.71 Mpx/s
+    Transpose           0.01697 s   241.35 Mpx/s
+    Transverse          0.02461 s   166.45 Mpx/s
+["Flop", 0.0112221240997],
+["Flip", 0.00211691856384],
+["Rotate 90", 0.0136520862579],
+["Rotate 180", 0.0116829872131],
+["Rotate 270", 0.0238540172577],
+["Transpose", 0.016970872879],
+["Transverse", 0.0246081352234]
 
+
+=========================
+version      Vips 8.2.2
+=========================
+
+Vips full cycle 2560×1600 RGB image
+    Save/load           0.05462 s    74.98 Mpx/s
+    +transpose          0.06332 s    64.69 Mpx/s
+    +resize             0.14134 s    28.98 Mpx/s
+    +blur               0.27702 s    14.79 Mpx/s
+["Save/load", 0.0546247959137],
+["+transpose", 0.0633208751678],
+["+resize", 0.141340017319],
+["+blur", 0.277016878128]
 
 =========================
 version      Pillow 2.6.2
@@ -163,6 +197,16 @@ Filter 2560×1600 RGB image
 ["Smooth", 0.13694190979],
 ["Sharpen", 0.136662960052],
 ["Smooth More", 0.328428030014]
+
+Full cycle 2560×1600 RGB image
+    Save/load           0.05820 s    70.38 Mpx/s
+    +transpose          0.08008 s    51.15 Mpx/s
+    +resize             0.21124 s    19.39 Mpx/s
+    +blur               0.50111 s     8.17 Mpx/s
+["Save/load", 0.0581951141357],
+["+transpose", 0.0800800323486],
+["+resize", 0.211241006851],
+["+blur", 0.501112937927]
 
 Load 2560×1600 RGB image
     Jpeg load           0.02925 s   140.05 Mpx/s
@@ -228,6 +272,16 @@ Blur 2560×1600 RGB image
 ["1px", 0.218554019928],
 ["10px", 0.216780900955],
 ["30px", 0.217438220978]
+
+Full cycle 2560×1600 RGB image
+    Save/load           0.05810 s    70.50 Mpx/s
+    +transpose          0.07260 s    56.42 Mpx/s
+    +resize             0.13291 s    30.82 Mpx/s
+    +blur               0.17252 s    23.74 Mpx/s
+["Save/load", 0.0580990314484],
+["+transpose", 0.0725979804993],
+["+resize", 0.132905960083],
+["+blur", 0.172517776489]
 
 Convert 2560×1600 RGB image
     RGB to L            0.00800 s   512.01 Mpx/s
@@ -629,6 +683,16 @@ Blur 2560×1600 RGB image
 ["10px", 0.0776238441467],
 ["30px", 0.0787088871002]
 
+Full cycle 2560×1600 RGB image
+    Save/load           0.04965 s    82.49 Mpx/s
+    +transpose          0.05897 s    69.46 Mpx/s
+    +resize             0.04828 s    84.83 Mpx/s
+    +blur               0.05942 s    68.93 Mpx/s
+["Save/load", 0.0496520996094],
+["+transpose", 0.0589730739594],
+["+resize", 0.0482831001282],
+["+blur", 0.0594210624695]
+
 Convert 2560×1600 RGB image
     RGB to L            0.00200 s  2044.98 Mpx/s
     RGBA to LA          0.00286 s  1433.69 Mpx/s
@@ -687,6 +751,16 @@ Blur 2560×1600 RGB image
 ["1px", 0.060779094696],
 ["10px", 0.0772740840912],
 ["30px", 0.0768160820007]
+
+Full cycle 2560×1600 RGB image
+    Save/load           0.05017 s    81.63 Mpx/s
+    +transpose          0.05840 s    70.14 Mpx/s
+    +resize             0.04840 s    84.63 Mpx/s
+    +blur               0.05969 s    68.62 Mpx/s
+["Save/load", 0.0501749515533],
+["+transpose", 0.0583958625793],
+["+resize", 0.0483961105347],
+["+blur", 0.0596930980682]
 
 Convert 2560×1600 RGB image
     RGB to L            0.00198 s  2069.86 Mpx/s

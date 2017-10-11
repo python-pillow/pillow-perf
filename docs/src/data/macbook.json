@@ -458,9 +458,9 @@
                 {
                     "name": "opencv-3.3",
                     "results": [
-["Smooth", 0.0248501300812],
-["Sharpen", 0.0248520374298],
-["Smooth More", 0.0674362182617]
+["Smooth", 0.0245690345764],
+["Sharpen", 0.0244669914246],
+["Smooth More", 0.062490940094]
                     ]
                 },
                 {
@@ -688,6 +688,56 @@
                     "name": "pillow-simd-4.3-avx2",
                     "results": [
 ["Composition", 0.00747108459473]
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "full-cycle-4k-rgb",
+            "competitors": [
+                {
+                    "name": "imagemagick-6.8",
+                    "results": [
+["Save/load", 0.0942161083221],
+["+transpose", 0.13577914238],
+["+resize", 0.224095106125],
+["+blur", 0.367381811142]
+                    ]
+                },
+                {
+                    "name": "opencv-3.3",
+                    "results": [
+["Save/load", 0.162626028061],
+["+transpose", 0.188227891922],
+["+resize", 0.128070116043],
+["+blur", 0.142071962357]
+                    ]
+                },
+                {
+                    "name": "vips-8.5",
+                    "results": [
+["Save/load", 0.0617001056671],
+["+transpose", 0.0694191455841],
+["+resize", 0.276304006577],
+["+blur", 0.405080080032]
+                    ]
+                },
+                {
+                    "name": "pillow-2.0",
+                    "results": [
+["Save/load", 0.0615940093994],
+["+transpose", 0.124579906464],
+["+resize", 0.266384840012],
+["+blur", 0.552519083023]
+                    ]
+                },
+                {
+                    "name": "pillow-simd-4.3-sse4",
+                    "results": [
+["Save/load", 0.0525288581848],
+["+transpose", 0.0609939098358],
+["+resize", 0.0500109195709],
+["+blur", 0.061830997467]
                     ]
                 }
             ]

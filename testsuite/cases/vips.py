@@ -8,7 +8,7 @@ import pyvips
 from pyvips import Image, Interpolate
 
 
-# Make ImageMagick single threaded like other libraries are.
+# Make VIPS single threaded like other libraries are.
 os.environ['VIPS_CONCURRENCY'] = '1'
 
 pyvips.cache_set_max(0)

@@ -9,12 +9,13 @@ from .vips import Image
 class LoadCase(BaseLoadCase):
     def runner(self):
         im = Image.new_from_file(root('resources', self.filename))
-        im.write_to_memory()
+        im.getpoint(0, 0)
 
 
 class SaveCase(BaseSaveCase):
     def create_test_data(self):
         im = Image.new_from_file(root('resources', self.filename))
+        im.getpoint(0, 0)
         return [im]
 
     def runner(self, im):

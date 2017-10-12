@@ -11,14 +11,17 @@ from .pillow import Image, ImageFilter, PillowTestCase
 class FullCycleCase(FullCycleBaseCase, PillowTestCase):
     def runner(self):
         im = Image.open(root('resources', self.filename))
+
         if self.level > 0:
             im = im.transpose(Image.ROTATE_270)
-            if self.level > 1:
-                size = (int(im.size[0] * 0.4 + 0.5),
-                        int(im.size[1] * 0.4 + 0.5))
-                im = self.resize(im, size, Image.BICUBIC)
-                if self.level > 2:
-                    im = im.filter(ImageFilter.GaussianBlur(4))
+
+        if self.level > 1:
+            size = (int(im.size[0] * 0.4 + 0.5),
+                    int(im.size[1] * 0.4 + 0.5))
+            im = self.resize(im, size, Image.BICUBIC)
+
+        if self.level > 2:
+            im = im.filter(ImageFilter.GaussianBlur(4))
 
         im.save(BytesIO(), format=self.filetype, quality=85)
         # im.save('../_out.{}.pillow.png'.format(self.level))

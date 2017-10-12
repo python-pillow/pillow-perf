@@ -12,8 +12,9 @@ class FullCycleCase(FullCycleBaseCase, VipsTestCase):
                                  autorotate=(self.level>0))
         if self.level > 1:
             im = self.resize(im, 0.4, kernel='cubic')
-            if self.level > 2:
-                im = im.gaussblur(4, min_ampl=0.07)
+
+        if self.level > 2:
+            im = im.gaussblur(4, min_ampl=0.07)
 
         im.write_to_buffer('.'+self.filetype, Q=85)
         # im.write_to_file('../_out.{}.vips.png'.format(self.level))

@@ -3,16 +3,16 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .base import rpartial, root, FullCycleBaseCase
-from .vips import Image, Interpolate
+from .vips import Image, VipsTestCase
 
 
-class FullCycleCase(FullCycleBaseCase):
+class FullCycleCase(FullCycleBaseCase, VipsTestCase):
     def runner(self):
         im = Image.new_from_file(root('resources', self.filename))
         if self.level > 0:
             im = im.rot90()
             if self.level > 1:
-                im = im.resize(0.4, interpolate=Interpolate.new("bicubic"))
+                im = self.resize(im, 0.4, kernel='cubic')
                 if self.level > 2:
                     im = im.gaussblur(4, min_ampl=0.07)
 

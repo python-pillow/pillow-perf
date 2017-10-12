@@ -27,6 +27,9 @@ class PillowTestCase(BaseTestCase):
 
     @classmethod
     def resize(cls, self, size, resample=Image.NEAREST):
+        """
+        This implementation uses convolution resampling on Pillow 2.6 and below.
+        """
         self.load()
 
         if self.size == size:

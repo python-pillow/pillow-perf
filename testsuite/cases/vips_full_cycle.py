@@ -8,13 +8,12 @@ from .vips import Image, VipsTestCase
 
 class FullCycleCase(FullCycleBaseCase, VipsTestCase):
     def runner(self):
-        im = Image.new_from_file(root('resources', self.filename))
-        if self.level > 0:
-            im = im.rot90()
-            if self.level > 1:
-                im = self.resize(im, 0.4, kernel='cubic')
-                if self.level > 2:
-                    im = im.gaussblur(4, min_ampl=0.07)
+        im = Image.new_from_file(root('resources', self.filename),
+                                 autorotate=(self.level>0))
+        if self.level > 1:
+            im = self.resize(im, 0.4, kernel='cubic')
+            if self.level > 2:
+                im = im.gaussblur(4, min_ampl=0.07)
 
         im.write_to_buffer('.'+self.filetype, Q=85)
         # im.write_to_file('../_out.{}.vips.png'.format(self.level))

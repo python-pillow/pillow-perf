@@ -151,14 +151,14 @@ version      Vips 8.2
 =========================
 
 Vips full cycle 2560×1600 RGB image
-    Load+save           0.06170 s    66.39 Mpx/s
-    +transpose          0.06942 s    59.00 Mpx/s
-    +resize             0.27630 s    14.82 Mpx/s
-    +blur               0.40508 s    10.11 Mpx/s
-["Load+save", 0.0617001056671],
-["+transpose", 0.0694191455841],
-["+resize", 0.276304006577],
-["+blur", 0.405080080032]
+    Load+save           0.06149 s    66.61 Mpx/s
+    +transpose          0.06924 s    59.16 Mpx/s
+    +resize             0.27397 s    14.95 Mpx/s
+    +blur               0.38319 s    10.69 Mpx/s
+["Load+save", 0.0614879131317],
+["+transpose", 0.0692400932312],
+["+resize", 0.273967027664],
+["+blur", 0.383193969727]
 
 
 =========================

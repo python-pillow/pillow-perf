@@ -5,7 +5,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 from io import BytesIO
 
 from .base import rpartial, root, FullCycleBaseCase
-from .pillow import Image, ImageFilter, PillowTestCase
+from .pillow import Image, PillowTestCase
 
 
 class FullCycleCase(FullCycleBaseCase, PillowTestCase):
@@ -21,7 +21,7 @@ class FullCycleCase(FullCycleBaseCase, PillowTestCase):
             im = self.resize(im, size, Image.BICUBIC)
 
         if self.level > 2:
-            im = im.filter(ImageFilter.GaussianBlur(4))
+            im = self.gaussian_blur(im, 4)
 
         im.save(BytesIO(), format=self.filetype, quality=85)
         # im.save('../_out.{}.pillow.png'.format(self.level))

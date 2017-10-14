@@ -100,5 +100,5 @@ pushd Pillow
   ../../testsuite/run.py cv2_scale cv2_blur cv2_full_cycle -n5 "${@:2}"
   ../../testsuite/run.py cv2_load cv2_filter cv2_rotate_right "${@:2}"
 
-  ../../testsuite/run.py vips_full_cycle "${@:2}"
+  ../../testsuite/run.py vips_load vips_full_cycle "${@:2}"
 popd

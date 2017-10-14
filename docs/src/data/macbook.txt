@@ -150,15 +150,21 @@ Cv2 rotate right 2560×1600 RGB image
 version      Vips 8.2
 =========================
 
+Vips load 2560×1600 RGB image
+    Jpeg load           0.03246 s   126.19 Mpx/s
+    Jpeg save           0.03088 s   132.65 Mpx/s
+["Jpeg load", 0.0324590206146],
+["Jpeg save", 0.0308780670166]
+
 Vips full cycle 2560×1600 RGB image
-    Load+save           0.06167 s    66.42 Mpx/s
-    +transpose          0.06943 s    58.99 Mpx/s
-    +resize             0.22061 s    18.57 Mpx/s
-    +blur               0.31247 s    13.11 Mpx/s
-["Load+save", 0.0616710186005],
-["+transpose", 0.0694320201874],
-["+resize", 0.220614910126],
-["+blur", 0.312470197678]
+    Load+save           0.06201 s    66.06 Mpx/s
+    +transpose          0.08122 s    50.43 Mpx/s
+    +resize             0.17138 s    23.90 Mpx/s
+    +blur               0.26338 s    15.55 Mpx/s
+["Load+save", 0.0620069503784],
+["+transpose", 0.0812201499939],
+["+resize", 0.171383857727],
+["+blur", 0.263382911682]
 
 
 =========================

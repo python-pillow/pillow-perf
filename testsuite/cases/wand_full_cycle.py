@@ -13,12 +13,14 @@ class FullCycleCase(FullCycleBaseCase, WandTestCase):
         with Image(filename=root('resources', self.filename)) as im:
             if self.level > 0:
                 im.rotate(degree=90.0)
-                if self.level > 1:
-                    size = (int(im.width * 0.4 + 0.5),
-                            int(im.height * 0.4 + 0.5))
-                    im.resize(size[0], size[1], 'catrom')
-                    if self.level > 2:
-                        self.blur(im, 2.5 * 4, 4)
+
+            if self.level > 1:
+                size = (int(im.width * 0.4 + 0.5),
+                        int(im.height * 0.4 + 0.5))
+                im.resize(size[0], size[1], 'catrom')
+
+            if self.level > 2:
+                self.blur(im, 2.5 * 4, 4)
 
             im.compression_quality = 85
             im.format = self.filetype

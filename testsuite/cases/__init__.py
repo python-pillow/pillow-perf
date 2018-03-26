@@ -7,7 +7,7 @@ from importlib import import_module
 
 def collect_test_suites():
     return [
-        "load", "convert", "composition", "rotate_right",
+        "load", "convert", "composition", "rotate_right", "lut",
         "scale", "blur", "filter", "allocate", "crop", "full_cycle",
 
         "wand_load", "wand_convert", "wand_composition",

@@ -38,7 +38,7 @@ class LutCase(PillowTestCase):
         im._new(im.im.color_lut_3d(self.to_mode, Image.LINEAR, *self.table))
 
     def readable_args(self):
-        return ["{}³ to {}D".format(self.table_size, self.channels)]
+        return ["{0}³ table to {1}D".format(self.table_size, self.channels)]
 
 
 cases = [

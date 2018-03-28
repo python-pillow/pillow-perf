@@ -22,8 +22,8 @@ script:
 
 after_success:
   - pwd
-  - travis_retry pip install pep8 pyflakes
-  - pep8 --statistics --count .
+  - travis_retry pip install pycodestyle pyflakes
+  - pycodestyle --statistics --count .
   - pyflakes . | tee >(wc -l)
 
 matrix:

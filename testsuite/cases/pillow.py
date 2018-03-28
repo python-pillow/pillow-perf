@@ -4,7 +4,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import math
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageOps
 
 from .base import BaseTestCase, root
 
@@ -62,6 +62,10 @@ class PillowTestCase(BaseTestCase):
         if self.mode == 'LA':
             return cls.gaussian_blur(self.convert('La'),
                                      radius, n).convert('LA')
+
+        if not hasattr(self.im, 'box_blur'):
+            # Pillow 2.6 used diffrent radius formula
+            return self._new(ImageOps.gaussian_blur(self, radius * 2.5))
 
         # http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf
         # [7] Box length.

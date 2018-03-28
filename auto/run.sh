@@ -25,7 +25,7 @@ pushd Pillow
     CFLAGS="$2" python ./setup.py develop > build.log 2>&1
     grep --color=always "error:" build.log && exit || true
     echo "========================="
-    grep "^version" build.log
+    echo "Pillow $1 $2"
     echo "========================="
   }
 

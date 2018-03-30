@@ -3,39 +3,26 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .base import rpartial
-from .pillow import PillowTestCase, Image
+from .pillow import PillowTestCase, Image, ImageFilter
+import time
 
 
 class LutCase(PillowTestCase):
-    def generate_unit_table(self, channels, size):
-        if isinstance(size, tuple):
-            size1D, size2D, size3D = size
-        else:
-            size1D, size2D, size3D = (size, size, size)
-
-        table = [
-            [
-                r / float(size1D-1),
-                g / float(size2D-1),
-                b / float(size3D-1),
-                r / float(size1D-1),
-            ][:channels]
-            for b in range(size3D)
-                for g in range(size2D)
-                    for r in range(size1D)
-        ]
-        return (
-            channels, size1D, size2D, size3D,
-            [item for sublist in table for item in sublist])
-
     def handle_args(self, channels, table_size):
         self.channels = channels
         self.table_size = table_size
-        self.to_mode = 'RGB' if channels == 3 else 'RGBA'
-        self.table = self.generate_unit_table(channels, table_size)
+        if channels == 3:
+            mode, callback = 'RGB', lambda r, g, b: (r, g, b)
+        elif channels == 4:
+            mode, callback = 'RGBA', lambda r, g, b: (r, g, b, r)
+        else:
+            raise ValueError("Channels should 3 or 4.")
+
+        self.lut = ImageFilter.Color3DLUT.generate(
+            table_size, callback, channels, mode)
 
     def runner(self, im):
-        im._new(im.im.color_lut_3d(self.to_mode, Image.LINEAR, *self.table))
+        im.filter(self.lut)
 
     def readable_args(self):
         return ["{0}³ table to {1}D".format(self.table_size, self.channels)]

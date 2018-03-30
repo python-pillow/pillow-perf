@@ -4,7 +4,6 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 from .base import rpartial
 from .pillow import PillowTestCase, Image, ImageFilter
-import time
 
 
 class LutCase(PillowTestCase):
@@ -29,10 +28,10 @@ class LutCase(PillowTestCase):
 
 
 cases = [
-    rpartial(LutCase, 3, 5),
-    rpartial(LutCase, 3, 17),
-    rpartial(LutCase, 3, 33),
-    rpartial(LutCase, 4, 5),
-    rpartial(LutCase, 4, 17),
-    rpartial(LutCase, 4, 33),
+    rpartial(LutCase, 3, 4),
+    rpartial(LutCase, 3, 16),
+    rpartial(LutCase, 3, 36),
+    rpartial(LutCase, 4, 4),
+    rpartial(LutCase, 4, 16),
+    rpartial(LutCase, 4, 36),
 ]

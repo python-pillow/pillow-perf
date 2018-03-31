@@ -22,5 +22,5 @@ class LutCase(PgmagickTestCase):
 cases = [
     rpartial(LutCase, 4, root("resources", "hald.2.png")),
     rpartial(LutCase, 16, root("resources", "hald.4.png")),
-    rpartial(LutCase, 36, root("resources", "hald.6.8.png")),
+    rpartial(LutCase, 36, root("resources", "hald.6.png")),
 ]

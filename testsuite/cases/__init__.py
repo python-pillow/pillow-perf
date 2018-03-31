@@ -14,7 +14,8 @@ def collect_test_suites():
         "wand_rotate_right", "wand_scale", "wand_blur", "wand_full_cycle",
 
         "pgmagick_load", "pgmagick_convert", "pgmagick_composition",
-        "pgmagick_rotate_right", "pgmagick_scale", "pgmagick_blur",
+        "pgmagick_rotate_right", "pgmagick_lut", "pgmagick_scale",
+        "pgmagick_blur",
 
         "vips_load", "vips_full_cycle",
 

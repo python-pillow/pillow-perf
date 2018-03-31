@@ -18,6 +18,7 @@ os.environ['MAGICK_THREAD_LIMIT'] = '1'
 library.MagickBlurImage.argtypes = [ctypes.c_void_p,
                                     ctypes.c_double,
                                     ctypes.c_double]
+library.MagickHaldClutImage.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
 
 
 class WandTestCase(BaseTestCase):
@@ -59,5 +60,12 @@ class WandTestCase(BaseTestCase):
             raise TypeError('sigma has to be a numbers.Real, not ' +
                             repr(sigma))
         r = library.MagickBlurImage(self.wand, radius, sigma)
+        if not r:
+            self.raise_exception()
+
+    @staticmethod
+    @manipulative
+    def hald_lut(self, hald_image):
+        r = library.MagickHaldClutImage(self.wand, hald_image.resource)
         if not r:
             self.raise_exception()

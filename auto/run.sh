@@ -10,7 +10,7 @@ fi
 
 source ~/env/pillow-perf/bin/activate
 pip install -r ../testsuite/requirements.txt
-pip install opencv-python==3.3.0.10 pgmagick==0.7.2
+pip install opencv-python==3.3.0.10 pgmagick==0.7.3
 
 
 git clone https://github.com/uploadcare/pillow-simd.git Pillow || true
@@ -96,8 +96,12 @@ pushd Pillow
   fi
 
   $RUN wand_scale wand_full_cycle -n5 "${@:2}"
-  $RUN wand_blur -n3 "${@:2}"
+  $RUN wand_blur wand_lut -n3 "${@:2}"
   $RUN wand_load wand_convert wand_composition wand_rotate_right "${@:2}"
+
+  $RUN pgmagick_scale pgmagick_lut -n5 "${@:2}"
+  $RUN pgmagick_blur -n3 "${@:2}"
+  $RUN pgmagick_load pgmagick_convert pgmagick_composition pgmagick_rotate_right "${@:2}"
 
   $RUN cv2_scale cv2_blur cv2_full_cycle -n5 "${@:2}"
   $RUN cv2_load cv2_filter cv2_rotate_right "${@:2}"

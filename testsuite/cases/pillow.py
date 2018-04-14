@@ -64,7 +64,7 @@ class PillowTestCase(BaseTestCase):
                                      radius, n).convert('LA')
 
         if not hasattr(self.im, 'box_blur'):
-            # Pillow 2.6 used diffrent radius formula
+            # Pillow 2.6 used different radius formula
             return self._new(ImageOps.gaussian_blur(self, radius * 2.5))
 
         # http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf

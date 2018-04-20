@@ -123,7 +123,7 @@ with the collected information and test output.
 
 # Docs
 
-The docs can be found on the [public page](https://python-pillow.github.io/pillow-perf/)
+The docs can be found on the [public page](http://python-pillow.org/pillow-perf/)
 with benchmark results and details.
 
 ### Build once

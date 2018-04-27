@@ -9,7 +9,7 @@ Performance tests divided into suites.
 * [Any Pillow version](https://pillow.readthedocs.io/en/latest/installation.html#basic-installation)
 * [ImageMagick dev package for Wand](http://docs.wand-py.org/en/0.4.4/#requirements)
 * OpenCV for Python, for example through
-[opencv-python](https://pypi.python.org/pypi/opencv-python) binary package
+[opencv-python](https://pypi.org/project/opencv-python/) binary package
 
 ### Install and run
 

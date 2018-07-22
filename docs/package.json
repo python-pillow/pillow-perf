@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "description": "Pillow performance ",
   "main": "Chart.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "autoprefixer-loader": "3.2.0",
-    "chart.js": "~2.3.0",
-    "css-loader": "1.0.0",
-    "expose-loader": "0.7.5",
-    "json-loader": "0.5.7",
-    "object-assign": "4.1.1",
-    "style-loader": "0.21.0",
-    "webpack": "3.12.0"
+    "chart.js": "^2.3.0",
+    "object-assign": "^4.1.1",
+    "autoprefixer": "^9.0.1",
+    "expose-loader": "^0.7.5",
+    "postcss-loader": "^2.1.6",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

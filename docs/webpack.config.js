@@ -3,24 +3,35 @@
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "./bundles/index.js",
+    filename: "index.js",
+    path: __dirname + "/bundles/",
   },
 
   devtool: "source-map",
+  mode: "development",
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader!autoprefixer-loader",
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
+        use: [
+          'style-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('autoprefixer'),
+              ]
+            }
+          },
+        ]
       },
       {
         test: require.resolve("./src/index.js"),
-        loader: "expose-loader?partialCompetition"
+        use: {
+          loader: "expose-loader",
+          options: "partialCompetition",
+        }
       }
     ],
     noParse: [

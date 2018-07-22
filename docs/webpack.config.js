@@ -16,11 +16,11 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loader: 'json',
+        loader: 'json-loader',
       },
       {
         test: require.resolve("./src/index.js"),
-        loader: "expose?partialCompetition"
+        loader: "expose-loader?partialCompetition"
       }
     ],
     noParse: [

@@ -6,14 +6,14 @@
   "dependencies": {
   },
   "devDependencies": {
-    "autoprefixer-loader": "~3.2.0",
+    "autoprefixer-loader": "3.2.0",
     "chart.js": "~2.3.0",
-    "css-loader": "~0.25.0",
-    "expose-loader": "~0.7.1",
-    "json-loader": "~0.5.4",
-    "object-assign": "~4.1.0",
-    "style-loader": "~0.13.1",
-    "webpack": "~1.13.2"
+    "css-loader": "1.0.0",
+    "expose-loader": "0.7.5",
+    "json-loader": "0.5.7",
+    "object-assign": "4.1.1",
+    "style-loader": "0.21.0",
+    "webpack": "1.15.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

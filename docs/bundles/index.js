@@ -42,20 +42,20 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["partialCompetition"] = __webpack_require__(1);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(2);
 	
-	var adapter = __webpack_require__(6);
-	var data = __webpack_require__(8);
-	var objectAssign = __webpack_require__(9);
+	var adapter = __webpack_require__(7);
+	var data = __webpack_require__(9);
+	var objectAssign = __webpack_require__(10);
 	
 	// Global chart instance. Should be destroyed every time.
 	var globalChart = null;
@@ -357,70 +357,92 @@
 	module.exports = partialCompetition;
 
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
-	// load the styles
 	var content = __webpack_require__(3);
+	
 	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(5)(content, {});
+	
+	var transform;
+	var insertInto;
+	
+	
+	
+	var options = {"hmr":true}
+	
+	options.transform = transform
+	options.insertInto = undefined;
+	
+	var update = __webpack_require__(5)(content, options);
+	
 	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
+	
 	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/autoprefixer-loader/index.js!./stylesheet.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/autoprefixer-loader/index.js!./stylesheet.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/autoprefixer-loader/index.js!./stylesheet.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/autoprefixer-loader/index.js!./stylesheet.css");
+	
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+	
+			var locals = (function(a, b) {
+				var key, idx = 0;
+	
+				for(key in a) {
+					if(!b || a[key] !== b[key]) return false;
+					idx++;
+				}
+	
+				for(key in b) idx--;
+	
+				return idx === 0;
+			}(content.locals, newContent.locals));
+	
+			if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+	
+			update(newContent);
+		});
+	
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(4)();
+	exports = module.exports = __webpack_require__(4)(false);
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__system {\n        min-width: 24%;\n    }\n    .selects-grid__competition {\n        min-width: 30%;\n    }\n    .selects-grid__chartset {\n        min-width: 20%;\n    }\n\n#switch-units {\n    text-align: right;\n    position: relative;\n    top: -1em;\n}\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
+	exports.push([module.id, "html {\n    padding: 0;\n    margin: 0;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-size: 14px;\n    line-height: 1.5;\n}\nbody {\n    min-width: 690px;\n    max-width: 1100px;\n    padding: 2%;\n    margin: 0 auto;\n}\n\nh1, h2, h3, h4 {\n    font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n    font-weight: 700;\n    margin-bottom: 0;\n}\nh1 {\n    font-size: 2.5em;\n}\nh2 {\n    font-size: 2em;\n}\nh3 {\n    font-size: 1.3em;\n}\nh4 {\n    color: #aaa;\n    margin-bottom: 0;\n    font-size: 1.1em;\n}\na {\n    color: #000095;\n}\na.pseudo {\n    text-decoration: none;\n    border-bottom: 1px dashed;\n}\na.pseudo.selected {\n    text-decoration: none;\n    border-bottom: none;\n    color: inherit;\n    font-weight: bold;\n}\nul, p {\n    margin-bottom: 0;\n}\n\ncode {\n    padding: 0 3px;\n    font-family: 'Inconsolata', monospace;\n    border-radius: 2px;\n    border: 1px solid #ececec;\n    background: #f8f8f8;\n}\n\nul.select {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n}\n    ul.select > li {}\n        ul.select > li> a {\n            text-decoration: none;\n        }\n        ul.select > li> a.selected {\n            color: inherit;\n            text-decoration: none;\n            font-weight: bold;\n            border-bottom: 0px;\n            cursor: default;\n        }\nul.select.-large {\n    font-size: 16px;\n}\n\n.selects-grid {\n    display: -ms-flexbox;\n    display: flex;\n    margin-top: 40px;\n}\n    .selects-grid__cell {\n        position: relative;\n        margin-right: 4%;\n        margin-bottom: 4%;\n    }\n    .selects-grid__cell:last-child {\n        margin-right: 0;\n    }\n        .selects-grid__cell::before {\n            content: \"\";\n            display: block;\n            position: absolute;\n            left: -14px;\n            right: -14px;\n            top: -14px;\n            bottom: -14px;\n            background: #f8f8f8;\n            z-index: -1;\n        }\n        .selects-grid__cell > :first-child {\n            margin-top: 0;\n        }\n    .selects-grid__system {\n        min-width: 24%;\n    }\n    .selects-grid__competition {\n        min-width: 30%;\n    }\n    .selects-grid__chartset {\n        min-width: 20%;\n    }\n\n#switch-units {\n    text-align: right;\n    position: relative;\n    top: -1em;\n}\n\n#select-preset {\n    float: left;\n    margin-right: 20px;\n}\n\nsection {\n    margin-top: 50px;\n}\n    section p {\n        max-width: 690px;\n    }\n.chart {\n    margin-top: 40px;\n    max-width: 860px;\n}\n\n.samples {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n    .samples figure {\n        margin: 1em 30px 0 0;\n    }\n    .samples figure:last-child {\n        margin-right: 0;\n    }\n    .samples figcaption {\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #666;\n        margin: 0;\n    }\n\ndl.libraries {\n    max-width: 690px;\n}\n    dl.libraries dt {\n        float: left;\n        margin-right: 10px;\n\n        font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n        font-weight: 700;\n        color: #333;\n        font-size: 16px;\n    }\n    dl.libraries dd {\n        margin: 0 0 12px 120px;\n    }\n    dl.libraries dd:after {\n        content: \"\";\n        display: block;\n        clear: left;\n    }\n", ""]);
 	
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
 		Author Tobias Koppers @sokra
 	*/
 	// css base code, injected by the css-loader
-	module.exports = function() {
+	module.exports = function(useSourceMap) {
 		var list = [];
 	
 		// return the list of modules as css string
 		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
+			return this.map(function (item) {
+				var content = cssWithMappingToString(item, useSourceMap);
 				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
+					return "@media " + item[2] + "{" + content + "}";
 				} else {
-					result.push(item[1]);
+					return content;
 				}
-			}
-			return result.join("");
+			}).join("");
 		};
 	
 		// import a list of modules into the list
@@ -451,189 +473,336 @@
 		};
 		return list;
 	};
+	
+	function cssWithMappingToString(item, useSourceMap) {
+		var content = item[1] || '';
+		var cssMapping = item[3];
+		if (!cssMapping) {
+			return content;
+		}
+	
+		if (useSourceMap && typeof btoa === 'function') {
+			var sourceMapping = toComment(cssMapping);
+			var sourceURLs = cssMapping.sources.map(function (source) {
+				return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+			});
+	
+			return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+		}
+	
+		return [content].join('\n');
+	}
+	
+	// Adapted from convert-source-map (MIT)
+	function toComment(sourceMap) {
+		// eslint-disable-next-line no-undef
+		var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+		var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+	
+		return '/*# ' + data + ' */';
+	}
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
 		Author Tobias Koppers @sokra
 	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
+	
+	var stylesInDom = {};
+	
+	var	memoize = function (fn) {
+		var memo;
+	
+		return function () {
+			if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+			return memo;
+		};
+	};
+	
+	var isOldIE = memoize(function () {
+		// Test for IE <= 9 as proposed by Browserhacks
+		// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+		// Tests for existence of standard globals is to allow style-loader
+		// to operate correctly into non-standard environments
+		// @see https://github.com/webpack-contrib/style-loader/issues/177
+		return window && document && document.all && !window.atob;
+	});
+	
+	var getTarget = function (target) {
+	  return document.querySelector(target);
+	};
+	
+	var getElement = (function (fn) {
+		var memo = {};
+	
+		return function(target) {
+	                // If passing function in options, then use it for resolve "head" element.
+	                // Useful for Shadow Root style i.e
+	                // {
+	                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+	                // }
+	                if (typeof target === 'function') {
+	                        return target();
+	                }
+	                if (typeof memo[target] === "undefined") {
+				var styleTarget = getTarget.call(this, target);
+				// Special case to return head of iframe instead of iframe itself
+				if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+					try {
+						// This will throw an exception if access to iframe is blocked
+						// due to cross-origin restrictions
+						styleTarget = styleTarget.contentDocument.head;
+					} catch(e) {
+						styleTarget = null;
+					}
+				}
+				memo[target] = styleTarget;
+			}
+			return memo[target]
+		};
+	})();
+	
+	var singleton = null;
+	var	singletonCounter = 0;
+	var	stylesInsertedAtTop = [];
+	
+	var	fixUrls = __webpack_require__(6);
 	
 	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		if (false) {
+			if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 		}
 	
 		options = options || {};
+	
+		options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+	
 		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+		if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
 	
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+		// By default, add <style> tags to the <head> element
+	        if (!options.insertInto) options.insertInto = "head";
 	
-		var styles = listToStyles(list);
+		// By default, add <style> tags to the bottom of the target
+		if (!options.insertAt) options.insertAt = "bottom";
+	
+		var styles = listToStyles(list, options);
+	
 		addStylesToDom(styles, options);
 	
-		return function update(newList) {
+		return function update (newList) {
 			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
+	
+			for (var i = 0; i < styles.length; i++) {
 				var item = styles[i];
 				var domStyle = stylesInDom[item.id];
+	
 				domStyle.refs--;
 				mayRemove.push(domStyle);
 			}
+	
 			if(newList) {
-				var newStyles = listToStyles(newList);
+				var newStyles = listToStyles(newList, options);
 				addStylesToDom(newStyles, options);
 			}
-			for(var i = 0; i < mayRemove.length; i++) {
+	
+			for (var i = 0; i < mayRemove.length; i++) {
 				var domStyle = mayRemove[i];
+	
 				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
+					for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+	
 					delete stylesInDom[domStyle.id];
 				}
 			}
 		};
-	}
+	};
 	
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
+	function addStylesToDom (styles, options) {
+		for (var i = 0; i < styles.length; i++) {
 			var item = styles[i];
 			var domStyle = stylesInDom[item.id];
+	
 			if(domStyle) {
 				domStyle.refs++;
+	
 				for(var j = 0; j < domStyle.parts.length; j++) {
 					domStyle.parts[j](item.parts[j]);
 				}
+	
 				for(; j < item.parts.length; j++) {
 					domStyle.parts.push(addStyle(item.parts[j], options));
 				}
 			} else {
 				var parts = [];
+	
 				for(var j = 0; j < item.parts.length; j++) {
 					parts.push(addStyle(item.parts[j], options));
 				}
+	
 				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
 			}
 		}
 	}
 	
-	function listToStyles(list) {
+	function listToStyles (list, options) {
 		var styles = [];
 		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
+	
+		for (var i = 0; i < list.length; i++) {
 			var item = list[i];
-			var id = item[0];
+			var id = options.base ? item[0] + options.base : item[0];
 			var css = item[1];
 			var media = item[2];
 			var sourceMap = item[3];
 			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
+	
+			if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+			else newStyles[id].parts.push(part);
 		}
+	
 		return styles;
 	}
 	
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+	function insertStyleElement (options, style) {
+		var target = getElement(options.insertInto)
+	
+		if (!target) {
+			throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+		}
+	
+		var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+	
 		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			if (!lastStyleElementInsertedAtTop) {
+				target.insertBefore(style, target.firstChild);
+			} else if (lastStyleElementInsertedAtTop.nextSibling) {
+				target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
 			} else {
-				head.appendChild(styleElement);
+				target.appendChild(style);
 			}
-			styleElementsInsertedAtTop.push(styleElement);
+			stylesInsertedAtTop.push(style);
 		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
+			target.appendChild(style);
+		} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+			var nextSibling = getElement(options.insertInto + " " + options.insertAt.before);
+			target.insertBefore(style, nextSibling);
 		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+			throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
 		}
 	}
 	
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+	function removeStyleElement (style) {
+		if (style.parentNode === null) return false;
+		style.parentNode.removeChild(style);
+	
+		var idx = stylesInsertedAtTop.indexOf(style);
 		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
+			stylesInsertedAtTop.splice(idx, 1);
 		}
 	}
 	
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
+	function createStyleElement (options) {
+		var style = document.createElement("style");
+	
+		if(options.attrs.type === undefined) {
+			options.attrs.type = "text/css";
+		}
+	
+		addAttrs(style, options.attrs);
+		insertStyleElement(options, style);
+	
+		return style;
 	}
 	
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
+	function createLinkElement (options) {
+		var link = document.createElement("link");
+	
+		if(options.attrs.type === undefined) {
+			options.attrs.type = "text/css";
+		}
+		options.attrs.rel = "stylesheet";
+	
+		addAttrs(link, options.attrs);
+		insertStyleElement(options, link);
+	
+		return link;
 	}
 	
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
+	function addAttrs (el, attrs) {
+		Object.keys(attrs).forEach(function (key) {
+			el.setAttribute(key, attrs[key]);
+		});
+	}
+	
+	function addStyle (obj, options) {
+		var style, update, remove, result;
+	
+		// If a transform function was defined, run it on the css
+		if (options.transform && obj.css) {
+		    result = options.transform(obj.css);
+	
+		    if (result) {
+		    	// If transform returns a value, use that instead of the original css.
+		    	// This allows running runtime transformations on the css.
+		    	obj.css = result;
+		    } else {
+		    	// If the transform function returns a falsy value, don't add this css.
+		    	// This allows conditional loading of css
+		    	return function() {
+		    		// noop
+		    	};
+		    }
+		}
 	
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
+	
+			style = singleton || (singleton = createStyleElement(options));
+	
+			update = applyToSingletonTag.bind(null, style, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+	
+		} else if (
+			obj.sourceMap &&
 			typeof URL === "function" &&
 			typeof URL.createObjectURL === "function" &&
 			typeof URL.revokeObjectURL === "function" &&
 			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
+			typeof btoa === "function"
+		) {
+			style = createLinkElement(options);
+			update = updateLink.bind(null, style, options);
+			remove = function () {
+				removeStyleElement(style);
+	
+				if(style.href) URL.revokeObjectURL(style.href);
 			};
 		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
+			style = createStyleElement(options);
+			update = applyToTag.bind(null, style);
+			remove = function () {
+				removeStyleElement(style);
 			};
 		}
 	
 		update(obj);
 	
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+		return function updateStyle (newObj) {
+			if (newObj) {
+				if (
+					newObj.css === obj.css &&
+					newObj.media === obj.media &&
+					newObj.sourceMap === obj.sourceMap
+				) {
 					return;
+				}
+	
 				update(obj = newObj);
 			} else {
 				remove();
@@ -646,70 +815,180 @@
 	
 		return function (index, replacement) {
 			textStore[index] = replacement;
+	
 			return textStore.filter(Boolean).join('\n');
 		};
 	})();
 	
-	function applyToSingletonTag(styleElement, index, remove, obj) {
+	function applyToSingletonTag (style, index, remove, obj) {
 		var css = remove ? "" : obj.css;
 	
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
+		if (style.styleSheet) {
+			style.styleSheet.cssText = replaceText(index, css);
 		} else {
 			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			var childNodes = style.childNodes;
+	
+			if (childNodes[index]) style.removeChild(childNodes[index]);
+	
 			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
+				style.insertBefore(cssNode, childNodes[index]);
 			} else {
-				styleElement.appendChild(cssNode);
+				style.appendChild(cssNode);
 			}
 		}
 	}
 	
-	function applyToTag(styleElement, obj) {
+	function applyToTag (style, obj) {
 		var css = obj.css;
 		var media = obj.media;
 	
 		if(media) {
-			styleElement.setAttribute("media", media)
+			style.setAttribute("media", media)
 		}
 	
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
+		if(style.styleSheet) {
+			style.styleSheet.cssText = css;
 		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
+			while(style.firstChild) {
+				style.removeChild(style.firstChild);
 			}
-			styleElement.appendChild(document.createTextNode(css));
+	
+			style.appendChild(document.createTextNode(css));
 		}
 	}
 	
-	function updateLink(linkElement, obj) {
+	function updateLink (link, options, obj) {
 		var css = obj.css;
 		var sourceMap = obj.sourceMap;
 	
-		if(sourceMap) {
+		/*
+			If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+			and there is no publicPath defined then lets turn convertToAbsoluteUrls
+			on by default.  Otherwise default to the convertToAbsoluteUrls option
+			directly
+		*/
+		var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+	
+		if (options.convertToAbsoluteUrls || autoFixUrls) {
+			css = fixUrls(css);
+		}
+	
+		if (sourceMap) {
 			// http://stackoverflow.com/a/26603875
 			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 		}
 	
 		var blob = new Blob([css], { type: "text/css" });
 	
-		var oldSrc = linkElement.href;
+		var oldSrc = link.href;
 	
-		linkElement.href = URL.createObjectURL(blob);
+		link.href = URL.createObjectURL(blob);
 	
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
+		if(oldSrc) URL.revokeObjectURL(oldSrc);
 	}
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-	var Chart = __webpack_require__(7);
+	
+	/**
+	 * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+	 * embed the css on the page. This breaks all relative urls because now they are relative to a
+	 * bundle instead of the current page.
+	 *
+	 * One solution is to only use full urls, but that may be impossible.
+	 *
+	 * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+	 *
+	 * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+	 *
+	 */
+	
+	module.exports = function (css) {
+	  // get current location
+	  var location = typeof window !== "undefined" && window.location;
+	
+	  if (!location) {
+	    throw new Error("fixUrls requires window.location");
+	  }
+	
+		// blank or null?
+		if (!css || typeof css !== "string") {
+		  return css;
+	  }
+	
+	  var baseUrl = location.protocol + "//" + location.host;
+	  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+	
+		// convert each url(...)
+		/*
+		This regular expression is just a way to recursively match brackets within
+		a string.
+	
+		 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+		   (  = Start a capturing group
+		     (?:  = Start a non-capturing group
+		         [^)(]  = Match anything that isn't a parentheses
+		         |  = OR
+		         \(  = Match a start parentheses
+		             (?:  = Start another non-capturing groups
+		                 [^)(]+  = Match anything that isn't a parentheses
+		                 |  = OR
+		                 \(  = Match a start parentheses
+		                     [^)(]*  = Match anything that isn't a parentheses
+		                 \)  = Match a end parentheses
+		             )  = End Group
+	              *\) = Match anything and then a close parens
+	          )  = Close non-capturing group
+	          *  = Match anything
+	       )  = Close capturing group
+		 \)  = Match a close parens
+	
+		 /gi  = Get all matches, not the first.  Be case insensitive.
+		 */
+		var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+			// strip quotes (if they exist)
+			var unquotedOrigUrl = origUrl
+				.trim()
+				.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+				.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+	
+			// already a full url? no change
+			if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+			  return fullMatch;
+			}
+	
+			// convert the url to a full url
+			var newUrl;
+	
+			if (unquotedOrigUrl.indexOf("//") === 0) {
+			  	//TODO: should we add protocol?
+				newUrl = unquotedOrigUrl;
+			} else if (unquotedOrigUrl.indexOf("/") === 0) {
+				// path should be relative to the base url
+				newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+			} else {
+				// path should be relative to current directory
+				newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+			}
+	
+			// send back the fixed url(...)
+			return "url(" + JSON.stringify(newUrl) + ")";
+		});
+	
+		// send back the fixed css
+		return fixedCss;
+	};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var Chart = __webpack_require__(8);
 	
 	Chart.defaults.global.defaultFontColor = 'black';
 	Chart.defaults.myBar = Chart.defaults.bar;
@@ -994,9 +1273,9 @@
 	};
 
 
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
 
 	/*!
 	 * Chart.js
@@ -11634,11 +11913,11 @@
 	},{"1":1}]},{},[7])(7)
 	});
 
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	var objectAssign = __webpack_require__(9);
+	var objectAssign = __webpack_require__(10);
 	
 	var competitors_meta = {
 	  "imagemagick-6.8":      {"color": [230, 100, 70], "title": "ImageMagick 6.8.9-9"},
@@ -11778,20 +12057,27 @@
 	
 	module.exports = {
 	  systems: [
-		  fillSystemWithMeta(__webpack_require__(10)),
 		  fillSystemWithMeta(__webpack_require__(11)),
 		  fillSystemWithMeta(__webpack_require__(12)),
 		  fillSystemWithMeta(__webpack_require__(13)),
+		  fillSystemWithMeta(__webpack_require__(14)),
 		],
 	};
 
 
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
 
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+	
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 	
@@ -11812,7 +12098,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 	
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -11841,7 +12127,7 @@
 			}
 	
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -11861,8 +12147,8 @@
 				}
 			}
 	
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -11875,6131 +12161,30 @@
 	};
 
 
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"title": "MacBook Pro late 2013",
-		"OS": "Ubuntu 16.04.2 LTS 64bit",
-		"CPU": "Intel Core i5-4258U @ 2.40GHz",
-		"competitions": [
-			{
-				"name": "resample-4k-rgb",
-				"presets": [
-					{
-						"name": "pillow-2.7",
-						"title": "Pillow 2.7 optimizations",
-						"set": [
-							"imagemagick-6.8",
-							"pillow-2.0",
-							"pillow-2.7"
-						]
-					},
-					{
-						"name": "pillow-3.2",
-						"title": "Pillow 3.2 versions",
-						"set": [
-							"pillow-2.7",
-							"pillow-simd-3.2-sse4",
-							"pillow-simd-3.2-avx2"
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"title": "Pillow 3.3 versions",
-						"set": [
-							"pillow-3.3",
-							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.3-avx2"
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"title": "Pillow 3.4 versions",
-						"set": [
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4",
-							"pillow-simd-3.4-avx2"
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"title": "Pillow 4.3 versions",
-						"set": [
-							"pillow-4.3",
-							"pillow-simd-4.3-sse4",
-							"pillow-simd-4.3-avx2"
-						],
-						"default": true
-					},
-					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4",
-							"pillow-4.3"
-						]
-					},
-					{
-						"name": "pillow-sse4",
-						"title": "Pillow SIMD SSE4 progress",
-						"set": [
-							"pillow-simd-3.2-sse4",
-							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4",
-							"pillow-simd-4.3-sse4"
-						]
-					},
-					{
-						"name": "pillow-avx2",
-						"title": "Pillow SIMD AVX2 progress",
-						"set": [
-							"pillow-simd-3.2-avx2",
-							"pillow-simd-3.3-avx2",
-							"pillow-simd-3.4-avx2",
-							"pillow-simd-4.3-avx2"
-						]
-					},
-					{
-						"name": "pillow-skia",
-						"title": "Pillow SIMD vs other libraries",
-						"set": [
-							"imagemagick-6.8",
-							"skia-53",
-							"ipp-2017",
-							"pillow-simd-4.3-avx2"
-						]
-					}
-				],
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0529129505157
-							],
-							[
-								"26x16",
-								"bic",
-								0.0960128307343
-							],
-							[
-								"26x16",
-								"lzs",
-								0.132063150406
-							],
-							[
-								"320x200",
-								"bil",
-								0.064110994339
-							],
-							[
-								"320x200",
-								"bic",
-								0.107908010483
-							],
-							[
-								"320x200",
-								"lzs",
-								0.156795978546
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.201743841171
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.260540962219
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.342908859253
-							],
-							[
-								"5478x3424",
-								"bil",
-								1.16393303871
-							],
-							[
-								"5478x3424",
-								"bic",
-								1.48267793655
-							],
-							[
-								"5478x3424",
-								"lzs",
-								1.73287415504
-							]
-						]
-					},
-					{
-						"name": "skia-53",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00567
-							],
-							[
-								"26x16",
-								"bic",
-								0.00995
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0149
-							],
-							[
-								"320x200",
-								"bil",
-								0.00893
-							],
-							[
-								"320x200",
-								"bic",
-								0.0164
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0248
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0363
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0616
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0768
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.179
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.26
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.38
-							]
-						]
-					},
-					{
-						"name": "ipp-2017",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.013738
-							],
-							[
-								"26x16",
-								"bic",
-								0.051685
-							],
-							[
-								"26x16",
-								"lzs",
-								0.127875
-							],
-							[
-								"320x200",
-								"bil",
-								0.008846
-							],
-							[
-								"320x200",
-								"bic",
-								0.019088
-							],
-							[
-								"320x200",
-								"lzs",
-								0.033027
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.015216
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.027968
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.045171
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.078446
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.10009
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.14899
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0769329071045
-							],
-							[
-								"26x16",
-								"bic",
-								0.191002130508
-							],
-							[
-								"26x16",
-								"lzs",
-								0.229811906815
-							],
-							[
-								"320x200",
-								"bil",
-								0.0767071247101
-							],
-							[
-								"320x200",
-								"bic",
-								0.113950014114
-							],
-							[
-								"320x200",
-								"lzs",
-								0.156592845917
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.276836872101
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.367781162262
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.424859046936
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.848302841187
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.834253072739
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.874810934067
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0196080207825
-							],
-							[
-								"26x16",
-								"bic",
-								0.0370500087738
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0585870742798
-							],
-							[
-								"320x200",
-								"bil",
-								0.0271689891815
-							],
-							[
-								"320x200",
-								"bic",
-								0.0496068000793
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0786080360413
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.109899044037
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.145758867264
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.186763048172
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.519978046417
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.597540855408
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.743381023407
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0116322040558
-							],
-							[
-								"26x16",
-								"bic",
-								0.0219140052795
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0365011692047
-							],
-							[
-								"320x200",
-								"bil",
-								0.0193581581116
-							],
-							[
-								"320x200",
-								"bic",
-								0.0316679477692
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0516860485077
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0798330307007
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.102365970612
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.137069940567
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.370501995087
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.535665035248
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.54900598526
-							]
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0114119052887
-							],
-							[
-								"26x16",
-								"bic",
-								0.0216760635376
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0363130569458
-							],
-							[
-								"320x200",
-								"bil",
-								0.0179119110107
-							],
-							[
-								"320x200",
-								"bic",
-								0.0300929546356
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0499069690704
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0573620796204
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0780868530273
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.109897851944
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.272500038147
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.348415136337
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.448719024658
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0114300251007
-							],
-							[
-								"26x16",
-								"bic",
-								0.0217528343201
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0363671779633
-							],
-							[
-								"320x200",
-								"bil",
-								0.0182819366455
-							],
-							[
-								"320x200",
-								"bic",
-								0.0301630496979
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0493528842926
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0493919849396
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0722198486328
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.102558135986
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.222870826721
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.300165176392
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.402721166611
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00936698913574
-							],
-							[
-								"26x16",
-								"bic",
-								0.018039226532
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0300970077515
-							],
-							[
-								"320x200",
-								"bil",
-								0.0101480484009
-							],
-							[
-								"320x200",
-								"bic",
-								0.0186750888824
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0324010848999
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0349571704865
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0481889247894
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0697379112244
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.139698028564
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.178141832352
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.248559951782
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00539994239807
-							],
-							[
-								"26x16",
-								"bic",
-								0.010223865509
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0163080692291
-							],
-							[
-								"320x200",
-								"bil",
-								0.00765299797058
-							],
-							[
-								"320x200",
-								"bic",
-								0.0125081539154
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0188930034637
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0372440814972
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0490498542786
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0554831027985
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.145534992218
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.186136960983
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.232789993286
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00732517242432
-							],
-							[
-								"26x16",
-								"bic",
-								0.0137600898743
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0245161056519
-							],
-							[
-								"320x200",
-								"bil",
-								0.00942802429199
-							],
-							[
-								"320x200",
-								"bic",
-								0.0168800354004
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0295231342316
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0351641178131
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0493199825287
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0689790248871
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.151170969009
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.192967891693
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.258556127548
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00424885749817
-							],
-							[
-								"26x16",
-								"bic",
-								0.00783491134644
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0121719837189
-							],
-							[
-								"320x200",
-								"bil",
-								0.00626802444458
-							],
-							[
-								"320x200",
-								"bic",
-								0.0101900100708
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0149168968201
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.028459072113
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0369050502777
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0404272079468
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.119127988815
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.145830869675
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.181549072266
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00294995307922
-							],
-							[
-								"26x16",
-								"bic",
-								0.0052649974823
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0121810436249
-							],
-							[
-								"320x200",
-								"bil",
-								0.00403094291687
-							],
-							[
-								"320x200",
-								"bic",
-								0.0068371295929
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0147640705109
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.01597905159
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0223109722137
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0313680171967
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0839910507202
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0979228019714
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.135879993439
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00229096412659
-							],
-							[
-								"26x16",
-								"bic",
-								0.00396919250488
-							],
-							[
-								"26x16",
-								"lzs",
-								0.00685596466064
-							],
-							[
-								"320x200",
-								"bil",
-								0.00339818000793
-							],
-							[
-								"320x200",
-								"bic",
-								0.00547313690186
-							],
-							[
-								"320x200",
-								"lzs",
-								0.00856184959412
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.013815164566
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0179288387299
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0233368873596
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0734539031982
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0839459896088
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.113842010498
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00276207923889
-							],
-							[
-								"26x16",
-								"bic",
-								0.0049090385437
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0117349624634
-							],
-							[
-								"320x200",
-								"bil",
-								0.00387191772461
-							],
-							[
-								"320x200",
-								"bic",
-								0.0064377784729
-							],
-							[
-								"320x200",
-								"lzs",
-								0.013974905014
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0132238864899
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.019681930542
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0285251140594
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.060427904129
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0806038379669
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.112867832184
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00320792198181
-							],
-							[
-								"26x16",
-								"bic",
-								0.00346088409424
-							],
-							[
-								"26x16",
-								"lzs",
-								0.00607204437256
-							],
-							[
-								"320x200",
-								"bil",
-								0.00288820266724
-							],
-							[
-								"320x200",
-								"bic",
-								0.00461316108704
-							],
-							[
-								"320x200",
-								"lzs",
-								0.00723099708557
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0110580921173
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0145819187164
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0198130607605
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0480790138245
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0624418258667
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.0827538967133
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "image-io-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Jpeg load",
-								0.0311908721924
-							],
-							[
-								"Jpeg save",
-								0.0618879795074
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Jpeg load",
-								0.0539820194244
-							],
-							[
-								"Jpeg save",
-								0.108695983887
-							]
-						]
-					},
-					{
-						"name": "vips-8.5",
-						"results": [
-							[
-								"Jpeg load",
-								0.0324590206146
-							],
-							[
-								"Jpeg save",
-								0.0308780670166
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Jpeg load",
-								0.0306849479675
-							],
-							[
-								"Jpeg save",
-								0.0306549072266
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Jpeg load",
-								0.0254900455475
-							],
-							[
-								"Jpeg save",
-								0.0267360210419
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "blur-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"1px",
-								0.656105041504
-							],
-							[
-								"10px",
-								1.86303400993
-							],
-							[
-								"30px",
-								4.44343113899
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"1px",
-								0.0353059768677
-							],
-							[
-								"10px",
-								0.262949943542
-							],
-							[
-								"30px",
-								1.58504390717
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"1px",
-								0.223924875259
-							],
-							[
-								"10px",
-								0.222409009933
-							],
-							[
-								"30px",
-								0.222086191177
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"1px",
-								0.104557037354
-							],
-							[
-								"10px",
-								0.102059841156
-							],
-							[
-								"30px",
-								0.101644992828
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"1px",
-								0.0666179656982
-							],
-							[
-								"10px",
-								0.0793640613556
-							],
-							[
-								"30px",
-								0.0791449546814
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "filter-4k-rgb",
-				"competitors": [
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Smooth",
-								0.0245690345764
-							],
-							[
-								"Sharpen",
-								0.0244669914246
-							],
-							[
-								"Smooth More",
-								0.062490940094
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Smooth",
-								0.130820989609
-							],
-							[
-								"Sharpen",
-								0.130776882172
-							],
-							[
-								"Smooth More",
-								0.29838013649
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Smooth",
-								0.0886549949646
-							],
-							[
-								"Sharpen",
-								0.0888941287994
-							],
-							[
-								"Smooth More",
-								0.22660779953
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Smooth",
-								0.0119800567627
-							],
-							[
-								"Sharpen",
-								0.0119948387146
-							],
-							[
-								"Smooth More",
-								0.0314910411835
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"Smooth",
-								0.00845384597778
-							],
-							[
-								"Sharpen",
-								0.00843715667725
-							],
-							[
-								"Smooth More",
-								0.0203850269318
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "transposition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Flop",
-								0.00605583190918
-							],
-							[
-								"Flip",
-								0.00676894187927
-							],
-							[
-								"Rotate 90",
-								0.0336730480194
-							],
-							[
-								"Rotate 180",
-								0.0203909873962
-							],
-							[
-								"Rotate 270",
-								0.0336048603058
-							],
-							[
-								"Transpose",
-								0.0644810199738
-							],
-							[
-								"Transverse",
-								0.0710818767548
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Flop",
-								0.00832390785217
-							],
-							[
-								"Flip",
-								0.00228190422058
-							],
-							[
-								"Rotate 90",
-								0.0225720405579
-							],
-							[
-								"Rotate 180",
-								0.0139601230621
-							],
-							[
-								"Rotate 270",
-								0.0288450717926
-							],
-							[
-								"Transpose",
-								0.0162138938904
-							],
-							[
-								"Transverse",
-								0.0343790054321
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Flop",
-								0.00833201408386
-							],
-							[
-								"Flip",
-								0.00456094741821
-							],
-							[
-								"Rotate 90",
-								0.0572891235352
-							],
-							[
-								"Rotate 180",
-								0.00787281990051
-							],
-							[
-								"Rotate 270",
-								0.0572850704193
-							],
-							[
-								"Transpose",
-								0.0649480819702
-							],
-							[
-								"Transverse",
-								0.0648920536041
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"Flop",
-								0.00864195823669
-							],
-							[
-								"Flip",
-								0.00468492507935
-							],
-							[
-								"Rotate 90",
-								0.0148239135742
-							],
-							[
-								"Rotate 180",
-								0.00871515274048
-							],
-							[
-								"Rotate 270",
-								0.0141389369965
-							],
-							[
-								"Transpose",
-								0.0142140388489
-							],
-							[
-								"Transverse",
-								0.0190758705139
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Flop",
-								0.00317478179932
-							],
-							[
-								"Flip",
-								0.0029559135437
-							],
-							[
-								"Rotate 90",
-								0.00843000411987
-							],
-							[
-								"Rotate 180",
-								0.00313019752502
-							],
-							[
-								"Rotate 270",
-								0.00809192657471
-							],
-							[
-								"Transpose",
-								0.00805807113647
-							],
-							[
-								"Transverse",
-								0.00849604606628
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "conversion-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"RGB to L",
-								0.0424041748047
-							],
-							[
-								"RGBA to LA",
-								0.0421109199524
-							],
-							[
-								"RGBa to RGBA",
-								null
-							],
-							[
-								"RGBA to RGBa",
-								null
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"RGB to L",
-								0.00703692436218
-							],
-							[
-								"RGBA to LA",
-								0.0125079154968
-							],
-							[
-								"RGBa to RGBA",
-								0.050595998764
-							],
-							[
-								"RGBA to RGBa",
-								0.0142481327057
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"RGB to L",
-								0.00701904296875
-							],
-							[
-								"RGBA to LA",
-								0.0109231472015
-							],
-							[
-								"RGBa to RGBA",
-								0.0329098701477
-							],
-							[
-								"RGBA to RGBa",
-								0.0135478973389
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"RGB to L",
-								0.00520610809326
-							],
-							[
-								"RGBA to LA",
-								0.00674986839294
-							],
-							[
-								"RGBa to RGBA",
-								0.0310211181641
-							],
-							[
-								"RGBA to RGBa",
-								0.0116629600525
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00695896148682
-							],
-							[
-								"RGBA to LA",
-								0.00996398925781
-							],
-							[
-								"RGBa to RGBA",
-								0.0315549373627
-							],
-							[
-								"RGBA to RGBa",
-								0.00533390045166
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-avx2",
-						"results": [
-							[
-								"RGB to L",
-								0.0079550743103
-							],
-							[
-								"RGBA to LA",
-								0.0105009078979
-							],
-							[
-								"RGBa to RGBA",
-								0.0176999568939
-							],
-							[
-								"RGBA to RGBa",
-								0.00541496276855
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00266098976135
-							],
-							[
-								"RGBA to LA",
-								0.00293397903442
-							],
-							[
-								"RGBa to RGBA",
-								0.004075050354
-							],
-							[
-								"RGBA to RGBa",
-								0.00347900390625
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"RGB to L",
-								0.00308299064636
-							],
-							[
-								"RGBA to LA",
-								0.00351405143738
-							],
-							[
-								"RGBa to RGBA",
-								0.00316405296326
-							],
-							[
-								"RGBA to RGBa",
-								0.00291609764099
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "composition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Composition",
-								0.127508878708
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Composition",
-								0.0331561565399
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Composition",
-								0.0302200317383
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.0125770568848
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-avx2",
-						"results": [
-							[
-								"Composition",
-								0.0103619098663
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.0104990005493
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"Composition",
-								0.00747108459473
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "full-cycle-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Load+save",
-								0.0942161083221
-							],
-							[
-								"+transpose",
-								0.13577914238
-							],
-							[
-								"+resize",
-								0.224095106125
-							],
-							[
-								"+blur",
-								0.367381811142
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Load+save",
-								0.162626028061
-							],
-							[
-								"+transpose",
-								0.188227891922
-							],
-							[
-								"+resize",
-								0.128070116043
-							],
-							[
-								"+blur",
-								0.142071962357
-							]
-						]
-					},
-					{
-						"name": "vips-8.5",
-						"results": [
-							[
-								"Load+save",
-								0.0620069503784
-							],
-							[
-								"+transpose",
-								0.0812201499939
-							],
-							[
-								"+resize",
-								0.171383857727
-							],
-							[
-								"+blur",
-								0.263382911682
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Load+save",
-								0.0615940093994
-							],
-							[
-								"+transpose",
-								0.124579906464
-							],
-							[
-								"+resize",
-								0.266384840012
-							],
-							[
-								"+blur",
-								0.552519083023
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Load+save",
-								0.0525288581848
-							],
-							[
-								"+transpose",
-								0.0609939098358
-							],
-							[
-								"+resize",
-								0.0500109195709
-							],
-							[
-								"+blur",
-								0.061830997467
-							]
-						]
-					}
-				]
-			}
-		]
-	};
-
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
-	module.exports = {
-		"title": "Amazon EC2 c3.large instance",
-		"OS": "Ubuntu 16.04.1 LTS 64bit",
-		"CPU": "Intel Xeon E5-2680 v2 @ 2.80GHz",
-		"competitions": [
-			{
-				"name": "resample-4k-rgb",
-				"presets": [
-					{
-						"name": "pillow-2.7",
-						"title": "Pillow 2.7 optimizations",
-						"set": [
-							"imagemagick-6.8",
-							"pillow-2.0",
-							"pillow-2.7"
-						]
-					},
-					{
-						"name": "pillow-3.2",
-						"title": "Pillow 3.2 versions",
-						"set": [
-							"pillow-2.7",
-							"pillow-simd-3.2-sse4"
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"title": "Pillow 3.3 versions",
-						"set": [
-							"pillow-3.3",
-							"pillow-simd-3.3-sse4"
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"title": "Pillow 3.4 versions",
-						"set": [
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"title": "Pillow 4.3 versions",
-						"set": [
-							"pillow-4.3",
-							"pillow-simd-4.3-sse4"
-						],
-						"default": true
-					},
-					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4",
-							"pillow-4.3"
-						]
-					},
-					{
-						"name": "pillow-sse4",
-						"title": "Pillow SIMD SSE4 progress",
-						"set": [
-							"pillow-simd-3.2-sse4",
-							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4",
-							"pillow-simd-4.3-sse4"
-						]
-					},
-					{
-						"name": "pillow-skia",
-						"title": "Pillow SIMD vs other libraries",
-						"set": [
-							"imagemagick-6.8",
-							"pillow-3.4",
-							"pillow-simd-4.3-sse4"
-						]
-					}
-				],
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.038516998291
-							],
-							[
-								"26x16",
-								"bic",
-								0.0707430839539
-							],
-							[
-								"26x16",
-								"lzs",
-								0.103451967239
-							],
-							[
-								"320x200",
-								"bil",
-								0.0519292354584
-							],
-							[
-								"320x200",
-								"bic",
-								0.0958008766174
-							],
-							[
-								"320x200",
-								"lzs",
-								0.140596151352
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.184494018555
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.243185997009
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.298787117004
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.935204029083
-							],
-							[
-								"5478x3424",
-								"bic",
-								1.19796705246
-							],
-							[
-								"5478x3424",
-								"lzs",
-								1.43192410469
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0779061317444
-							],
-							[
-								"26x16",
-								"bic",
-								0.148730039597
-							],
-							[
-								"26x16",
-								"lzs",
-								0.218998193741
-							],
-							[
-								"320x200",
-								"bil",
-								0.0473849773407
-							],
-							[
-								"320x200",
-								"bic",
-								0.0847930908203
-							],
-							[
-								"320x200",
-								"lzs",
-								0.133449077606
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.207448005676
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.271899223328
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.352518796921
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.731122970581
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.727171897888
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.733898162842
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0201530456543
-							],
-							[
-								"26x16",
-								"bic",
-								0.038822889328
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0613470077515
-							],
-							[
-								"320x200",
-								"bil",
-								0.0263679027557
-							],
-							[
-								"320x200",
-								"bic",
-								0.0483000278473
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0785810947418
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.106598854065
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.140636920929
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.18155002594
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.564475774765
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.704648971558
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.841820001602
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0123550891876
-							],
-							[
-								"26x16",
-								"bic",
-								0.023638010025
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0391390323639
-							],
-							[
-								"320x200",
-								"bil",
-								0.0187261104584
-							],
-							[
-								"320x200",
-								"bic",
-								0.0331339836121
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0530250072479
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0808589458466
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.102329969406
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.140424966812
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.384783983231
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.460886955261
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.572279930115
-							]
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0122730731964
-							],
-							[
-								"26x16",
-								"bic",
-								0.02357006073
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0389440059662
-							],
-							[
-								"320x200",
-								"bil",
-								0.0180549621582
-							],
-							[
-								"320x200",
-								"bic",
-								0.0313320159912
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0525510311127
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0579290390015
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0808770656586
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.116666078568
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.284916162491
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.366660833359
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.476808071136
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0121719837189
-							],
-							[
-								"26x16",
-								"bic",
-								0.0234198570251
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0387868881226
-							],
-							[
-								"320x200",
-								"bil",
-								0.0168271064758
-							],
-							[
-								"320x200",
-								"bic",
-								0.0303568840027
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0517518520355
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0503029823303
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0737659931183
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.109110116959
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.234965801239
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.323061943054
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.420929908752
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00852704048157
-							],
-							[
-								"26x16",
-								"bic",
-								0.0164229869843
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0285611152649
-							],
-							[
-								"320x200",
-								"bil",
-								0.010097026825
-							],
-							[
-								"320x200",
-								"bic",
-								0.0188999176025
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0329139232635
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0353538990021
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0499031543732
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0712859630585
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.148586988449
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.191066980362
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.261048078537
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0064799785614
-							],
-							[
-								"26x16",
-								"bic",
-								0.0122859477997
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0223021507263
-							],
-							[
-								"320x200",
-								"bil",
-								0.00798797607422
-							],
-							[
-								"320x200",
-								"bic",
-								0.0148241519928
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0266871452332
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0315418243408
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0440111160278
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0612330436707
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.143664121628
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.18106508255
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.244952917099
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00280499458313
-							],
-							[
-								"26x16",
-								"bic",
-								0.00533509254456
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0124409198761
-							],
-							[
-								"320x200",
-								"bil",
-								0.00382590293884
-							],
-							[
-								"320x200",
-								"bic",
-								0.00673723220825
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0147669315338
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0156791210175
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0217959880829
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0324568748474
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0939908027649
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.115989923477
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.147265911102
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00265693664551
-							],
-							[
-								"26x16",
-								"bic",
-								0.00510311126709
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0120139122009
-							],
-							[
-								"320x200",
-								"bil",
-								0.00348711013794
-							],
-							[
-								"320x200",
-								"bic",
-								0.00617098808289
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0141859054565
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0132360458374
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0189568996429
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0290610790253
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0658349990845
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0875010490417
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.119280815125
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "image-io-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Jpeg load",
-								0.0298268795013
-							],
-							[
-								"Jpeg save",
-								0.0603041648865
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Jpeg load",
-								0.0555779933929
-							],
-							[
-								"Jpeg save",
-								0.108551979065
-							]
-						]
-					},
-					{
-						"name": "vips-8.2",
-						"results": [
-							[
-								"Jpeg load",
-								0.0274970531464
-							],
-							[
-								"Jpeg save",
-								0.0269989967346
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Jpeg load",
-								0.029247045517
-							],
-							[
-								"Jpeg save",
-								0.0293481349945
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Jpeg load",
-								0.0236170291901
-							],
-							[
-								"Jpeg save",
-								0.0256819725037
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "blur-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"1px",
-								0.475697994232
-							],
-							[
-								"10px",
-								1.76497006416
-							],
-							[
-								"30px",
-								4.45855593681
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"1px",
-								0.0347661972046
-							],
-							[
-								"10px",
-								0.263720989227
-							],
-							[
-								"30px",
-								0.821968078613
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"1px",
-								0.218554019928
-							],
-							[
-								"10px",
-								0.216780900955
-							],
-							[
-								"30px",
-								0.217438220978
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"1px",
-								0.096822977066
-							],
-							[
-								"10px",
-								0.0948030948639
-							],
-							[
-								"30px",
-								0.0955410003662
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"1px",
-								0.0608439445496
-							],
-							[
-								"10px",
-								0.0776238441467
-							],
-							[
-								"30px",
-								0.0787088871002
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "filter-4k-rgb",
-				"competitors": [
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Smooth",
-								0.0249660015106
-							],
-							[
-								"Sharpen",
-								0.024936914444
-							],
-							[
-								"Smooth More",
-								0.0642189979553
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Smooth",
-								0.13694190979
-							],
-							[
-								"Sharpen",
-								0.136662960052
-							],
-							[
-								"Smooth More",
-								0.328428030014
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Smooth",
-								0.0935339927673
-							],
-							[
-								"Sharpen",
-								0.0936760902405
-							],
-							[
-								"Smooth More",
-								0.226088047028
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Smooth",
-								0.0143530368805
-							],
-							[
-								"Sharpen",
-								0.0143151283264
-							],
-							[
-								"Smooth More",
-								0.0317339897156
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "transposition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Flop",
-								0.00598287582397
-							],
-							[
-								"Flip",
-								0.00644898414612
-							],
-							[
-								"Rotate 90",
-								0.021341085434
-							],
-							[
-								"Rotate 180",
-								0.00751304626465
-							],
-							[
-								"Rotate 270",
-								0.0213251113892
-							],
-							[
-								"Transpose",
-								0.101666927338
-							],
-							[
-								"Transverse",
-								0.102748155594
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Flop",
-								0.0112221240997
-							],
-							[
-								"Flip",
-								0.00211691856384
-							],
-							[
-								"Rotate 90",
-								0.0136520862579
-							],
-							[
-								"Rotate 180",
-								0.0116829872131
-							],
-							[
-								"Rotate 270",
-								0.0238540172577
-							],
-							[
-								"Transpose",
-								0.016970872879
-							],
-							[
-								"Transverse",
-								0.0246081352234
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Flop",
-								0.00752711296082
-							],
-							[
-								"Flip",
-								0.00334310531616
-							],
-							[
-								"Rotate 90",
-								0.0163769721985
-							],
-							[
-								"Rotate 180",
-								0.007728099823
-							],
-							[
-								"Rotate 270",
-								0.0164330005646
-							],
-							[
-								"Transpose",
-								0.0247850418091
-							],
-							[
-								"Transverse",
-								0.0246970653534
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"Flop",
-								0.00761413574219
-							],
-							[
-								"Flip",
-								0.00358700752258
-							],
-							[
-								"Rotate 90",
-								0.0112950801849
-							],
-							[
-								"Rotate 180",
-								0.00842308998108
-							],
-							[
-								"Rotate 270",
-								0.010843038559
-							],
-							[
-								"Transpose",
-								0.0107159614563
-							],
-							[
-								"Transverse",
-								0.0156269073486
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Flop",
-								0.00310897827148
-							],
-							[
-								"Flip",
-								0.00286197662354
-							],
-							[
-								"Rotate 90",
-								0.00843906402588
-							],
-							[
-								"Rotate 180",
-								0.00298309326172
-							],
-							[
-								"Rotate 270",
-								0.00819301605225
-							],
-							[
-								"Transpose",
-								0.0080349445343
-							],
-							[
-								"Transverse",
-								0.00821304321289
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "conversion-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"RGB to L",
-								0.0497119426727
-							],
-							[
-								"RGBA to LA",
-								0.0495479106903
-							],
-							[
-								"RGBa to RGBA",
-								null
-							],
-							[
-								"RGBA to RGBa",
-								null
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"RGB to L",
-								0.00799989700317
-							],
-							[
-								"RGBA to LA",
-								0.0122609138489
-							],
-							[
-								"RGBa to RGBA",
-								0.0472319126129
-							],
-							[
-								"RGBA to RGBa",
-								0.0146961212158
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"RGB to L",
-								0.00788807868958
-							],
-							[
-								"RGBA to LA",
-								0.0100708007812
-							],
-							[
-								"RGBa to RGBA",
-								0.0301918983459
-							],
-							[
-								"RGBA to RGBa",
-								0.0133929252625
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"RGB to L",
-								0.00563311576843
-							],
-							[
-								"RGBA to LA",
-								0.00704503059387
-							],
-							[
-								"RGBa to RGBA",
-								0.0287079811096
-							],
-							[
-								"RGBA to RGBa",
-								0.0121819972992
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00784802436829
-							],
-							[
-								"RGBA to LA",
-								0.0100359916687
-							],
-							[
-								"RGBa to RGBA",
-								0.0289041996002
-							],
-							[
-								"RGBA to RGBa",
-								0.00464916229248
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00200295448303
-							],
-							[
-								"RGBA to LA",
-								0.00285696983337
-							],
-							[
-								"RGBa to RGBA",
-								0.00427889823914
-							],
-							[
-								"RGBA to RGBa",
-								0.00343704223633
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "composition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Composition",
-								0.13286113739
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Composition",
-								0.034795999527
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Composition",
-								0.0308628082275
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.0124659538269
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.0103778839111
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "full-cycle-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Load+save",
-								0.0905940532684
-							],
-							[
-								"+transpose",
-								0.12427687645
-							],
-							[
-								"+resize",
-								0.204174041748
-							],
-							[
-								"+blur",
-								0.346410036087
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Load+save",
-								0.168015003204
-							],
-							[
-								"+transpose",
-								0.191325187683
-							],
-							[
-								"+resize",
-								0.128175020218
-							],
-							[
-								"+blur",
-								0.142982006073
-							]
-						]
-					},
-					{
-						"name": "vips-8.2",
-						"results": [
-							[
-								"Load+save",
-								0.0545499324799
-							],
-							[
-								"+transpose",
-								0.0781109333038
-							],
-							[
-								"+resize",
-								0.153448820114
-							],
-							[
-								"+blur",
-								0.277933120728
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Load+save",
-								0.0581951141357
-							],
-							[
-								"+transpose",
-								0.0800800323486
-							],
-							[
-								"+resize",
-								0.211241006851
-							],
-							[
-								"+blur",
-								0.501112937927
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Load+save",
-								0.0496520996094
-							],
-							[
-								"+transpose",
-								0.0589730739594
-							],
-							[
-								"+resize",
-								0.0482831001282
-							],
-							[
-								"+blur",
-								0.0594210624695
-							]
-						]
-					}
-				]
-			}
-		]
-	};
+	module.exports = {"title":"MacBook Pro late 2013","OS":"Ubuntu 16.04.2 LTS 64bit","CPU":"Intel Core i5-4258U @ 2.40GHz","competitions":[{"name":"resample-4k-rgb","presets":[{"name":"pillow-2.7","title":"Pillow 2.7 optimizations","set":["imagemagick-6.8","pillow-2.0","pillow-2.7"]},{"name":"pillow-3.2","title":"Pillow 3.2 versions","set":["pillow-2.7","pillow-simd-3.2-sse4","pillow-simd-3.2-avx2"]},{"name":"pillow-3.3","title":"Pillow 3.3 versions","set":["pillow-3.3","pillow-simd-3.3-sse4","pillow-simd-3.3-avx2"]},{"name":"pillow-3.4","title":"Pillow 3.4 versions","set":["pillow-3.4","pillow-simd-3.4-sse4","pillow-simd-3.4-avx2"]},{"name":"pillow-4.3","title":"Pillow 4.3 versions","set":["pillow-4.3","pillow-simd-4.3-sse4","pillow-simd-4.3-avx2"],"default":true},{"name":"pillow-progress","title":"Pillow progress","set":["pillow-2.7","pillow-3.3","pillow-3.4","pillow-4.3"]},{"name":"pillow-sse4","title":"Pillow SIMD SSE4 progress","set":["pillow-simd-3.2-sse4","pillow-simd-3.3-sse4","pillow-simd-3.4-sse4","pillow-simd-4.3-sse4"]},{"name":"pillow-avx2","title":"Pillow SIMD AVX2 progress","set":["pillow-simd-3.2-avx2","pillow-simd-3.3-avx2","pillow-simd-3.4-avx2","pillow-simd-4.3-avx2"]},{"name":"pillow-skia","title":"Pillow SIMD vs other libraries","set":["imagemagick-6.8","skia-53","ipp-2017","pillow-simd-4.3-avx2"]}],"competitors":[{"name":"imagemagick-6.8","results":[["26x16","bil",0.0529129505157],["26x16","bic",0.0960128307343],["26x16","lzs",0.132063150406],["320x200","bil",0.064110994339],["320x200","bic",0.107908010483],["320x200","lzs",0.156795978546],["2048x1280","bil",0.201743841171],["2048x1280","bic",0.260540962219],["2048x1280","lzs",0.342908859253],["5478x3424","bil",1.16393303871],["5478x3424","bic",1.48267793655],["5478x3424","lzs",1.73287415504]]},{"name":"skia-53","results":[["26x16","bil",0.00567],["26x16","bic",0.00995],["26x16","lzs",0.0149],["320x200","bil",0.00893],["320x200","bic",0.0164],["320x200","lzs",0.0248],["2048x1280","bil",0.0363],["2048x1280","bic",0.0616],["2048x1280","lzs",0.0768],["5478x3424","bil",0.179],["5478x3424","bic",0.26],["5478x3424","lzs",0.38]]},{"name":"ipp-2017","results":[["26x16","bil",0.013738],["26x16","bic",0.051685],["26x16","lzs",0.127875],["320x200","bil",0.008846],["320x200","bic",0.019088],["320x200","lzs",0.033027],["2048x1280","bil",0.015216],["2048x1280","bic",0.027968],["2048x1280","lzs",0.045171],["5478x3424","bil",0.078446],["5478x3424","bic",0.10009],["5478x3424","lzs",0.14899]]},{"name":"pillow-2.0","results":[["26x16","bil",0.0769329071045],["26x16","bic",0.191002130508],["26x16","lzs",0.229811906815],["320x200","bil",0.0767071247101],["320x200","bic",0.113950014114],["320x200","lzs",0.156592845917],["2048x1280","bil",0.276836872101],["2048x1280","bic",0.367781162262],["2048x1280","lzs",0.424859046936],["5478x3424","bil",0.848302841187],["5478x3424","bic",0.834253072739],["5478x3424","lzs",0.874810934067]]},{"name":"pillow-2.7","results":[["26x16","bil",0.0196080207825],["26x16","bic",0.0370500087738],["26x16","lzs",0.0585870742798],["320x200","bil",0.0271689891815],["320x200","bic",0.0496068000793],["320x200","lzs",0.0786080360413],["2048x1280","bil",0.109899044037],["2048x1280","bic",0.145758867264],["2048x1280","lzs",0.186763048172],["5478x3424","bil",0.519978046417],["5478x3424","bic",0.597540855408],["5478x3424","lzs",0.743381023407]]},{"name":"pillow-3.3","results":[["26x16","bil",0.0116322040558],["26x16","bic",0.0219140052795],["26x16","lzs",0.0365011692047],["320x200","bil",0.0193581581116],["320x200","bic",0.0316679477692],["320x200","lzs",0.0516860485077],["2048x1280","bil",0.0798330307007],["2048x1280","bic",0.102365970612],["2048x1280","lzs",0.137069940567],["5478x3424","bil",0.370501995087],["5478x3424","bic",0.535665035248],["5478x3424","lzs",0.54900598526]]},{"name":"pillow-3.4","results":[["26x16","bil",0.0114119052887],["26x16","bic",0.0216760635376],["26x16","lzs",0.0363130569458],["320x200","bil",0.0179119110107],["320x200","bic",0.0300929546356],["320x200","lzs",0.0499069690704],["2048x1280","bil",0.0573620796204],["2048x1280","bic",0.0780868530273],["2048x1280","lzs",0.109897851944],["5478x3424","bil",0.272500038147],["5478x3424","bic",0.348415136337],["5478x3424","lzs",0.448719024658]]},{"name":"pillow-4.3","results":[["26x16","bil",0.0114300251007],["26x16","bic",0.0217528343201],["26x16","lzs",0.0363671779633],["320x200","bil",0.0182819366455],["320x200","bic",0.0301630496979],["320x200","lzs",0.0493528842926],["2048x1280","bil",0.0493919849396],["2048x1280","bic",0.0722198486328],["2048x1280","lzs",0.102558135986],["5478x3424","bil",0.222870826721],["5478x3424","bic",0.300165176392],["5478x3424","lzs",0.402721166611]]},{"name":"pillow-simd-3.2-sse4","results":[["26x16","bil",0.00936698913574],["26x16","bic",0.018039226532],["26x16","lzs",0.0300970077515],["320x200","bil",0.0101480484009],["320x200","bic",0.0186750888824],["320x200","lzs",0.0324010848999],["2048x1280","bil",0.0349571704865],["2048x1280","bic",0.0481889247894],["2048x1280","lzs",0.0697379112244],["5478x3424","bil",0.139698028564],["5478x3424","bic",0.178141832352],["5478x3424","lzs",0.248559951782]]},{"name":"pillow-simd-3.2-avx2","results":[["26x16","bil",0.00539994239807],["26x16","bic",0.010223865509],["26x16","lzs",0.0163080692291],["320x200","bil",0.00765299797058],["320x200","bic",0.0125081539154],["320x200","lzs",0.0188930034637],["2048x1280","bil",0.0372440814972],["2048x1280","bic",0.0490498542786],["2048x1280","lzs",0.0554831027985],["5478x3424","bil",0.145534992218],["5478x3424","bic",0.186136960983],["5478x3424","lzs",0.232789993286]]},{"name":"pillow-simd-3.3-sse4","results":[["26x16","bil",0.00732517242432],["26x16","bic",0.0137600898743],["26x16","lzs",0.0245161056519],["320x200","bil",0.00942802429199],["320x200","bic",0.0168800354004],["320x200","lzs",0.0295231342316],["2048x1280","bil",0.0351641178131],["2048x1280","bic",0.0493199825287],["2048x1280","lzs",0.0689790248871],["5478x3424","bil",0.151170969009],["5478x3424","bic",0.192967891693],["5478x3424","lzs",0.258556127548]]},{"name":"pillow-simd-3.3-avx2","results":[["26x16","bil",0.00424885749817],["26x16","bic",0.00783491134644],["26x16","lzs",0.0121719837189],["320x200","bil",0.00626802444458],["320x200","bic",0.0101900100708],["320x200","lzs",0.0149168968201],["2048x1280","bil",0.028459072113],["2048x1280","bic",0.0369050502777],["2048x1280","lzs",0.0404272079468],["5478x3424","bil",0.119127988815],["5478x3424","bic",0.145830869675],["5478x3424","lzs",0.181549072266]]},{"name":"pillow-simd-3.4-sse4","results":[["26x16","bil",0.00294995307922],["26x16","bic",0.0052649974823],["26x16","lzs",0.0121810436249],["320x200","bil",0.00403094291687],["320x200","bic",0.0068371295929],["320x200","lzs",0.0147640705109],["2048x1280","bil",0.01597905159],["2048x1280","bic",0.0223109722137],["2048x1280","lzs",0.0313680171967],["5478x3424","bil",0.0839910507202],["5478x3424","bic",0.0979228019714],["5478x3424","lzs",0.135879993439]]},{"name":"pillow-simd-3.4-avx2","results":[["26x16","bil",0.00229096412659],["26x16","bic",0.00396919250488],["26x16","lzs",0.00685596466064],["320x200","bil",0.00339818000793],["320x200","bic",0.00547313690186],["320x200","lzs",0.00856184959412],["2048x1280","bil",0.013815164566],["2048x1280","bic",0.0179288387299],["2048x1280","lzs",0.0233368873596],["5478x3424","bil",0.0734539031982],["5478x3424","bic",0.0839459896088],["5478x3424","lzs",0.113842010498]]},{"name":"pillow-simd-4.3-sse4","results":[["26x16","bil",0.00276207923889],["26x16","bic",0.0049090385437],["26x16","lzs",0.0117349624634],["320x200","bil",0.00387191772461],["320x200","bic",0.0064377784729],["320x200","lzs",0.013974905014],["2048x1280","bil",0.0132238864899],["2048x1280","bic",0.019681930542],["2048x1280","lzs",0.0285251140594],["5478x3424","bil",0.060427904129],["5478x3424","bic",0.0806038379669],["5478x3424","lzs",0.112867832184]]},{"name":"pillow-simd-4.3-avx2","results":[["26x16","bil",0.00320792198181],["26x16","bic",0.00346088409424],["26x16","lzs",0.00607204437256],["320x200","bil",0.00288820266724],["320x200","bic",0.00461316108704],["320x200","lzs",0.00723099708557],["2048x1280","bil",0.0110580921173],["2048x1280","bic",0.0145819187164],["2048x1280","lzs",0.0198130607605],["5478x3424","bil",0.0480790138245],["5478x3424","bic",0.0624418258667],["5478x3424","lzs",0.0827538967133]]}]},{"name":"image-io-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Jpeg load",0.0311908721924],["Jpeg save",0.0618879795074]]},{"name":"opencv-3.3","results":[["Jpeg load",0.0539820194244],["Jpeg save",0.108695983887]]},{"name":"vips-8.5","results":[["Jpeg load",0.0324590206146],["Jpeg save",0.0308780670166]]},{"name":"pillow-2.0","results":[["Jpeg load",0.0306849479675],["Jpeg save",0.0306549072266]]},{"name":"pillow-4.3","results":[["Jpeg load",0.0254900455475],["Jpeg save",0.0267360210419]]}]},{"name":"blur-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["1px",0.656105041504],["10px",1.86303400993],["30px",4.44343113899]]},{"name":"opencv-3.3","results":[["1px",0.0353059768677],["10px",0.262949943542],["30px",1.58504390717]]},{"name":"pillow-2.7","results":[["1px",0.223924875259],["10px",0.222409009933],["30px",0.222086191177]]},{"name":"pillow-simd-3.2-sse4","results":[["1px",0.104557037354],["10px",0.102059841156],["30px",0.101644992828]]},{"name":"pillow-simd-4.3-sse4","results":[["1px",0.0666179656982],["10px",0.0793640613556],["30px",0.0791449546814]]}]},{"name":"filter-4k-rgb","competitors":[{"name":"opencv-3.3","results":[["Smooth",0.0245690345764],["Sharpen",0.0244669914246],["Smooth More",0.062490940094]]},{"name":"pillow-2.0","results":[["Smooth",0.130820989609],["Sharpen",0.130776882172],["Smooth More",0.29838013649]]},{"name":"pillow-4.3","results":[["Smooth",0.0886549949646],["Sharpen",0.0888941287994],["Smooth More",0.22660779953]]},{"name":"pillow-simd-4.3-sse4","results":[["Smooth",0.0119800567627],["Sharpen",0.0119948387146],["Smooth More",0.0314910411835]]},{"name":"pillow-simd-4.3-avx2","results":[["Smooth",0.00845384597778],["Sharpen",0.00843715667725],["Smooth More",0.0203850269318]]}]},{"name":"transposition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Flop",0.00605583190918],["Flip",0.00676894187927],["Rotate 90",0.0336730480194],["Rotate 180",0.0203909873962],["Rotate 270",0.0336048603058],["Transpose",0.0644810199738],["Transverse",0.0710818767548]]},{"name":"opencv-3.3","results":[["Flop",0.00832390785217],["Flip",0.00228190422058],["Rotate 90",0.0225720405579],["Rotate 180",0.0139601230621],["Rotate 270",0.0288450717926],["Transpose",0.0162138938904],["Transverse",0.0343790054321]]},{"name":"pillow-2.0","results":[["Flop",0.00833201408386],["Flip",0.00456094741821],["Rotate 90",0.0572891235352],["Rotate 180",0.00787281990051],["Rotate 270",0.0572850704193],["Transpose",0.0649480819702],["Transverse",0.0648920536041]]},{"name":"pillow-2.7","results":[["Flop",0.00864195823669],["Flip",0.00468492507935],["Rotate 90",0.0148239135742],["Rotate 180",0.00871515274048],["Rotate 270",0.0141389369965],["Transpose",0.0142140388489],["Transverse",0.0190758705139]]},{"name":"pillow-4.3","results":[["Flop",0.00317478179932],["Flip",0.0029559135437],["Rotate 90",0.00843000411987],["Rotate 180",0.00313019752502],["Rotate 270",0.00809192657471],["Transpose",0.00805807113647],["Transverse",0.00849604606628]]}]},{"name":"conversion-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["RGB to L",0.0424041748047],["RGBA to LA",0.0421109199524],["RGBa to RGBA",null],["RGBA to RGBa",null]]},{"name":"pillow-2.7","results":[["RGB to L",0.00703692436218],["RGBA to LA",0.0125079154968],["RGBa to RGBA",0.050595998764],["RGBA to RGBa",0.0142481327057]]},{"name":"pillow-3.3","results":[["RGB to L",0.00701904296875],["RGBA to LA",0.0109231472015],["RGBa to RGBA",0.0329098701477],["RGBA to RGBa",0.0135478973389]]},{"name":"pillow-4.3","results":[["RGB to L",0.00520610809326],["RGBA to LA",0.00674986839294],["RGBa to RGBA",0.0310211181641],["RGBA to RGBa",0.0116629600525]]},{"name":"pillow-simd-3.3-sse4","results":[["RGB to L",0.00695896148682],["RGBA to LA",0.00996398925781],["RGBa to RGBA",0.0315549373627],["RGBA to RGBa",0.00533390045166]]},{"name":"pillow-simd-3.3-avx2","results":[["RGB to L",0.0079550743103],["RGBA to LA",0.0105009078979],["RGBa to RGBA",0.0176999568939],["RGBA to RGBa",0.00541496276855]]},{"name":"pillow-simd-4.3-sse4","results":[["RGB to L",0.00266098976135],["RGBA to LA",0.00293397903442],["RGBa to RGBA",0.004075050354],["RGBA to RGBa",0.00347900390625]]},{"name":"pillow-simd-4.3-avx2","results":[["RGB to L",0.00308299064636],["RGBA to LA",0.00351405143738],["RGBa to RGBA",0.00316405296326],["RGBA to RGBa",0.00291609764099]]}]},{"name":"composition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Composition",0.127508878708]]},{"name":"pillow-2.0","results":[["Composition",0.0331561565399]]},{"name":"pillow-4.3","results":[["Composition",0.0302200317383]]},{"name":"pillow-simd-3.3-sse4","results":[["Composition",0.0125770568848]]},{"name":"pillow-simd-3.3-avx2","results":[["Composition",0.0103619098663]]},{"name":"pillow-simd-4.3-sse4","results":[["Composition",0.0104990005493]]},{"name":"pillow-simd-4.3-avx2","results":[["Composition",0.00747108459473]]}]},{"name":"full-cycle-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Load+save",0.0942161083221],["+transpose",0.13577914238],["+resize",0.224095106125],["+blur",0.367381811142]]},{"name":"opencv-3.3","results":[["Load+save",0.162626028061],["+transpose",0.188227891922],["+resize",0.128070116043],["+blur",0.142071962357]]},{"name":"vips-8.5","results":[["Load+save",0.0620069503784],["+transpose",0.0812201499939],["+resize",0.171383857727],["+blur",0.263382911682]]},{"name":"pillow-2.0","results":[["Load+save",0.0615940093994],["+transpose",0.124579906464],["+resize",0.266384840012],["+blur",0.552519083023]]},{"name":"pillow-simd-4.3-sse4","results":[["Load+save",0.0525288581848],["+transpose",0.0609939098358],["+resize",0.0500109195709],["+blur",0.061830997467]]}]}]}
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
-	module.exports = {
-		"title": "Amazon EC2 c4.large instance",
-		"OS": "Ubuntu 16.04.1 LTS 64bit",
-		"CPU": "Intel Xeon E5-2666 v3 @ 2.90GHz",
-		"competitions": [
-			{
-				"name": "resample-4k-rgb",
-				"presets": [
-					{
-						"name": "pillow-2.7",
-						"title": "Pillow 2.7 optimizations",
-						"set": [
-							"imagemagick-6.8",
-							"pillow-2.0",
-							"pillow-2.7"
-						]
-					},
-					{
-						"name": "pillow-3.2",
-						"title": "Pillow 3.2 versions",
-						"set": [
-							"pillow-2.7",
-							"pillow-simd-3.2-sse4",
-							"pillow-simd-3.2-avx2"
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"title": "Pillow 3.3 versions",
-						"set": [
-							"pillow-3.3",
-							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.3-avx2"
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"title": "Pillow 3.4 versions",
-						"set": [
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4",
-							"pillow-simd-3.4-avx2"
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"title": "Pillow 4.3 versions",
-						"set": [
-							"pillow-4.3",
-							"pillow-simd-4.3-sse4",
-							"pillow-simd-4.3-avx2"
-						],
-						"default": true
-					},
-					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4",
-							"pillow-4.3"
-						]
-					},
-					{
-						"name": "pillow-sse4",
-						"title": "Pillow SIMD SSE4 progress",
-						"set": [
-							"pillow-simd-3.2-sse4",
-							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4",
-							"pillow-simd-4.3-sse4"
-						]
-					},
-					{
-						"name": "pillow-avx2",
-						"title": "Pillow SIMD AVX2 progress",
-						"set": [
-							"pillow-simd-3.2-avx2",
-							"pillow-simd-3.3-avx2",
-							"pillow-simd-3.4-avx2",
-							"pillow-simd-4.3-avx2"
-						]
-					},
-					{
-						"name": "pillow-skia",
-						"title": "Pillow SIMD vs other libraries",
-						"set": [
-							"imagemagick-6.8",
-							"skia-53",
-							"pillow-simd-4.3-avx2"
-						]
-					}
-				],
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0323040485382
-							],
-							[
-								"26x16",
-								"bic",
-								0.0581381320953
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0843899250031
-							],
-							[
-								"320x200",
-								"bil",
-								0.0461461544037
-							],
-							[
-								"320x200",
-								"bic",
-								0.0856890678406
-							],
-							[
-								"320x200",
-								"lzs",
-								0.127665996552
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.176301956177
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.224925041199
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.27676320076
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.908694028854
-							],
-							[
-								"5478x3424",
-								"bic",
-								1.17840504646
-							],
-							[
-								"5478x3424",
-								"lzs",
-								1.3807349205
-							]
-						]
-					},
-					{
-						"name": "skia-53",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00477
-							],
-							[
-								"26x16",
-								"bic",
-								0.0087
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0131
-							],
-							[
-								"320x200",
-								"bil",
-								0.00641
-							],
-							[
-								"320x200",
-								"bic",
-								0.0118
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0181
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0209
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0342
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0398
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0968
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.124
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.175
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0712270736694
-							],
-							[
-								"26x16",
-								"bic",
-								0.134505987167
-							],
-							[
-								"26x16",
-								"lzs",
-								0.195214033127
-							],
-							[
-								"320x200",
-								"bil",
-								0.040992975235
-							],
-							[
-								"320x200",
-								"bic",
-								0.0721440315247
-							],
-							[
-								"320x200",
-								"lzs",
-								0.107863903046
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.17693901062
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.237772941589
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.299470901489
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.623450994492
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.623461961746
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.628663063049
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.017422914505
-							],
-							[
-								"26x16",
-								"bic",
-								0.0334639549255
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0500259399414
-							],
-							[
-								"320x200",
-								"bil",
-								0.0242791175842
-							],
-							[
-								"320x200",
-								"bic",
-								0.0446469783783
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0676081180573
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0988898277283
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.130800962448
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.163455963135
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.524189949036
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.639679193497
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.763602972031
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0104360580444
-							],
-							[
-								"26x16",
-								"bic",
-								0.0198049545288
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0299651622772
-							],
-							[
-								"320x200",
-								"bil",
-								0.0176079273224
-							],
-							[
-								"320x200",
-								"bic",
-								0.0286979675293
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0429599285126
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0732929706573
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.094386100769
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.126538038254
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.352673053741
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.425844192505
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.521960020065
-							]
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0102698802948
-							],
-							[
-								"26x16",
-								"bic",
-								0.0196580886841
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0297801494598
-							],
-							[
-								"320x200",
-								"bil",
-								0.0165560245514
-							],
-							[
-								"320x200",
-								"bic",
-								0.0276069641113
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0407431125641
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0520069599152
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0730431079865
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.100332021713
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.265408992767
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.340518951416
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.428786993027
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0102760791779
-							],
-							[
-								"26x16",
-								"bic",
-								0.0196940898895
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0297751426697
-							],
-							[
-								"320x200",
-								"bil",
-								0.0167059898376
-							],
-							[
-								"320x200",
-								"bic",
-								0.027480840683
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0413911342621
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0445370674133
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.065948009491
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0950829982758
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.206713199615
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.289458990097
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.37376999855
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00784206390381
-							],
-							[
-								"26x16",
-								"bic",
-								0.0154209136963
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0238349437714
-							],
-							[
-								"320x200",
-								"bil",
-								0.0087559223175
-							],
-							[
-								"320x200",
-								"bic",
-								0.0165450572968
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0252950191498
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0311450958252
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0432379245758
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0577001571655
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.132560968399
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.167540073395
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.217993021011
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0042519569397
-							],
-							[
-								"26x16",
-								"bic",
-								0.00839519500732
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0135200023651
-							],
-							[
-								"320x200",
-								"bil",
-								0.00643014907837
-							],
-							[
-								"320x200",
-								"bic",
-								0.0110049247742
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0166828632355
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0320808887482
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0424139499664
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.04816198349
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.131987094879
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.169631004333
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.209919929504
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00642704963684
-							],
-							[
-								"26x16",
-								"bic",
-								0.012228012085
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0188481807709
-							],
-							[
-								"320x200",
-								"bil",
-								0.0081799030304
-							],
-							[
-								"320x200",
-								"bic",
-								0.0149829387665
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0228140354156
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0315201282501
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0438439846039
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0580928325653
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.144843101501
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.182046890259
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.233467102051
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00361490249634
-							],
-							[
-								"26x16",
-								"bic",
-								0.00702691078186
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0110650062561
-							],
-							[
-								"320x200",
-								"bil",
-								0.00590300559998
-							],
-							[
-								"320x200",
-								"bic",
-								0.00963497161865
-							],
-							[
-								"320x200",
-								"lzs",
-								0.0142061710358
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0261881351471
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0351939201355
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0385529994965
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.121922016144
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.15011715889
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.17990398407
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00236892700195
-							],
-							[
-								"26x16",
-								"bic",
-								0.00452303886414
-							],
-							[
-								"26x16",
-								"lzs",
-								0.00763702392578
-							],
-							[
-								"320x200",
-								"bil",
-								0.00326013565063
-							],
-							[
-								"320x200",
-								"bic",
-								0.00575399398804
-							],
-							[
-								"320x200",
-								"lzs",
-								0.00926685333252
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0136399269104
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0196919441223
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0244219303131
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0814290046692
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0977630615234
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.125102043152
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.0018138885498
-							],
-							[
-								"26x16",
-								"bic",
-								0.00345921516418
-							],
-							[
-								"26x16",
-								"lzs",
-								0.00615000724792
-							],
-							[
-								"320x200",
-								"bil",
-								0.00268507003784
-							],
-							[
-								"320x200",
-								"bic",
-								0.00455594062805
-							],
-							[
-								"320x200",
-								"lzs",
-								0.00738310813904
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0120389461517
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.015655040741
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0205700397491
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0816390514374
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0935850143433
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.109060049057
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00221109390259
-							],
-							[
-								"26x16",
-								"bic",
-								0.00419020652771
-							],
-							[
-								"26x16",
-								"lzs",
-								0.00726699829102
-							],
-							[
-								"320x200",
-								"bil",
-								0.00305986404419
-							],
-							[
-								"320x200",
-								"bic",
-								0.00530004501343
-							],
-							[
-								"320x200",
-								"lzs",
-								0.00857305526733
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.0117220878601
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0173978805542
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.022007226944
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0616409778595
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.0796511173248
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.101364850998
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.00155115127563
-							],
-							[
-								"26x16",
-								"bic",
-								0.0029308795929
-							],
-							[
-								"26x16",
-								"lzs",
-								0.00538802146912
-							],
-							[
-								"320x200",
-								"bil",
-								0.00223207473755
-							],
-							[
-								"320x200",
-								"bic",
-								0.00371813774109
-							],
-							[
-								"320x200",
-								"lzs",
-								0.00622797012329
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.00994086265564
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0129170417786
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.0171821117401
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.0518219470978
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.064563035965
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.0831959247589
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "image-io-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Jpeg load",
-								0.0275180339813
-							],
-							[
-								"Jpeg save",
-								0.0555469989777
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Jpeg load",
-								0.0487670898438
-							],
-							[
-								"Jpeg save",
-								0.099011182785
-							]
-						]
-					},
-					{
-						"name": "vips-8.2",
-						"results": [
-							[
-								"Jpeg load",
-								0.0237169265747
-							],
-							[
-								"Jpeg save",
-								0.0253179073334
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Jpeg load",
-								0.0265851020813
-							],
-							[
-								"Jpeg save",
-								0.0276491641998
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Jpeg load",
-								0.0226268768311
-							],
-							[
-								"Jpeg save",
-								0.0245869159698
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "blur-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"1px",
-								0.433434009552
-							],
-							[
-								"10px",
-								1.53608202934
-							],
-							[
-								"30px",
-								3.86354517937
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"1px",
-								0.0318949222565
-							],
-							[
-								"10px",
-								0.249096155167
-							],
-							[
-								"30px",
-								0.775735855103
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"1px",
-								0.203242063522
-							],
-							[
-								"10px",
-								0.203356027603
-							],
-							[
-								"30px",
-								0.20072388649
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"1px",
-								0.0954151153564
-							],
-							[
-								"10px",
-								0.0933260917664
-							],
-							[
-								"30px",
-								0.0932288169861
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"1px",
-								0.0602011680603
-							],
-							[
-								"10px",
-								0.0718328952789
-							],
-							[
-								"30px",
-								0.0717711448669
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "filter-4k-rgb",
-				"competitors": [
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Smooth",
-								0.0223259925842
-							],
-							[
-								"Sharpen",
-								0.0224139690399
-							],
-							[
-								"Smooth More",
-								0.0580770969391
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Smooth",
-								0.118627071381
-							],
-							[
-								"Sharpen",
-								0.118576049805
-							],
-							[
-								"Smooth More",
-								0.271515130997
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Smooth",
-								0.0801219940186
-							],
-							[
-								"Sharpen",
-								0.0802209377289
-							],
-							[
-								"Smooth More",
-								0.205267190933
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Smooth",
-								0.0110840797424
-							],
-							[
-								"Sharpen",
-								0.0112950801849
-							],
-							[
-								"Smooth More",
-								0.0285851955414
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"Smooth",
-								0.00778698921204
-							],
-							[
-								"Sharpen",
-								0.00780701637268
-							],
-							[
-								"Smooth More",
-								0.0184209346771
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "transposition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Flop",
-								0.00591206550598
-							],
-							[
-								"Flip",
-								0.00695395469666
-							],
-							[
-								"Rotate 90",
-								0.0207591056824
-							],
-							[
-								"Rotate 180",
-								0.00686407089233
-							],
-							[
-								"Rotate 270",
-								0.0207760334015
-							],
-							[
-								"Transpose",
-								0.11373090744
-							],
-							[
-								"Transverse",
-								0.114582061768
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Flop",
-								0.00935006141663
-							],
-							[
-								"Flip",
-								0.00165486335754
-							],
-							[
-								"Rotate 90",
-								0.0135560035706
-							],
-							[
-								"Rotate 180",
-								0.0116839408875
-							],
-							[
-								"Rotate 270",
-								0.0208261013031
-							],
-							[
-								"Transpose",
-								0.0184900760651
-							],
-							[
-								"Transverse",
-								0.0240840911865
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Flop",
-								0.00677704811096
-							],
-							[
-								"Flip",
-								0.00321984291077
-							],
-							[
-								"Rotate 90",
-								0.0181379318237
-							],
-							[
-								"Rotate 180",
-								0.00641298294067
-							],
-							[
-								"Rotate 270",
-								0.0172250270844
-							],
-							[
-								"Transpose",
-								0.0266320705414
-							],
-							[
-								"Transverse",
-								0.0265989303589
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"Flop",
-								0.00643491744995
-							],
-							[
-								"Flip",
-								0.00296998023987
-							],
-							[
-								"Rotate 90",
-								0.011547088623
-							],
-							[
-								"Rotate 180",
-								0.00641798973083
-							],
-							[
-								"Rotate 270",
-								0.0112781524658
-							],
-							[
-								"Transpose",
-								0.0108728408813
-							],
-							[
-								"Transverse",
-								0.0162189006805
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Flop",
-								0.00301098823547
-							],
-							[
-								"Flip",
-								0.00296401977539
-							],
-							[
-								"Rotate 90",
-								0.00851798057556
-							],
-							[
-								"Rotate 180",
-								0.0029399394989
-							],
-							[
-								"Rotate 270",
-								0.00836706161499
-							],
-							[
-								"Transpose",
-								0.00819897651672
-							],
-							[
-								"Transverse",
-								0.00833296775818
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "conversion-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"RGB to L",
-								0.0410380363464
-							],
-							[
-								"RGBA to LA",
-								0.0407710075378
-							],
-							[
-								"RGBa to RGBA",
-								null
-							],
-							[
-								"RGBA to RGBa",
-								null
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"RGB to L",
-								0.00603985786438
-							],
-							[
-								"RGBA to LA",
-								0.010596036911
-							],
-							[
-								"RGBa to RGBA",
-								0.0456490516663
-							],
-							[
-								"RGBA to RGBa",
-								0.0120949745178
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"RGB to L",
-								0.00607585906982
-							],
-							[
-								"RGBA to LA",
-								0.00838017463684
-							],
-							[
-								"RGBa to RGBA",
-								0.0293600559235
-							],
-							[
-								"RGBA to RGBa",
-								0.0119090080261
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"RGB to L",
-								0.00460386276245
-							],
-							[
-								"RGBA to LA",
-								0.00605797767639
-							],
-							[
-								"RGBa to RGBA",
-								0.0279710292816
-							],
-							[
-								"RGBA to RGBa",
-								0.0104460716248
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00602889060974
-							],
-							[
-								"RGBA to LA",
-								0.00825905799866
-							],
-							[
-								"RGBa to RGBA",
-								0.0280401706696
-							],
-							[
-								"RGBA to RGBa",
-								0.00403094291687
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-avx2",
-						"results": [
-							[
-								"RGB to L",
-								0.00602889060974
-							],
-							[
-								"RGBA to LA",
-								0.00837302207947
-							],
-							[
-								"RGBa to RGBA",
-								0.0134150981903
-							],
-							[
-								"RGBA to RGBa",
-								0.0037829875946
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00208592414856
-							],
-							[
-								"RGBA to LA",
-								0.00260305404663
-							],
-							[
-								"RGBa to RGBA",
-								0.00354385375977
-							],
-							[
-								"RGBA to RGBa",
-								0.00308418273926
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"RGB to L",
-								0.00196695327759
-							],
-							[
-								"RGBA to LA",
-								0.0026741027832
-							],
-							[
-								"RGBa to RGBA",
-								0.0027449131012
-							],
-							[
-								"RGBA to RGBa",
-								0.0025908946991
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "composition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Composition",
-								0.117036104202
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Composition",
-								0.0298759937286
-							]
-						]
-					},
-					{
-						"name": "pillow-4.3",
-						"results": [
-							[
-								"Composition",
-								0.0269358158112
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.0108211040497
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-avx2",
-						"results": [
-							[
-								"Composition",
-								0.00695610046387
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.00917077064514
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-avx2",
-						"results": [
-							[
-								"Composition",
-								0.00547289848328
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "full-cycle-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Load+save",
-								0.0835440158844
-							],
-							[
-								"+transpose",
-								0.116394996643
-							],
-							[
-								"+resize",
-								0.185719966888
-							],
-							[
-								"+blur",
-								0.310394048691
-							]
-						]
-					},
-					{
-						"name": "opencv-3.3",
-						"results": [
-							[
-								"Load+save",
-								0.148349046707
-							],
-							[
-								"+transpose",
-								0.176847934723
-							],
-							[
-								"+resize",
-								0.122283935547
-							],
-							[
-								"+blur",
-								0.132783174515
-							]
-						]
-					},
-					{
-						"name": "vips-8.2",
-						"results": [
-							[
-								"Load+save",
-								0.0510859489441
-							],
-							[
-								"+transpose",
-								0.0670499801636
-							],
-							[
-								"+resize",
-								0.134501934052
-							],
-							[
-								"+blur",
-								0.232701063156
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Load+save",
-								0.0554149150848
-							],
-							[
-								"+transpose",
-								0.0778849124908
-							],
-							[
-								"+resize",
-								0.192498922348
-							],
-							[
-								"+blur",
-								0.455259084702
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-4.3-sse4",
-						"results": [
-							[
-								"Load+save",
-								0.0482649803162
-							],
-							[
-								"+transpose",
-								0.0564839839935
-							],
-							[
-								"+resize",
-								0.0453579425812
-							],
-							[
-								"+blur",
-								0.0561139583588
-							]
-						]
-					}
-				]
-			}
-		]
-	};
+	module.exports = {"title":"Amazon EC2 c3.large instance","OS":"Ubuntu 16.04.1 LTS 64bit","CPU":"Intel Xeon E5-2680 v2 @ 2.80GHz","competitions":[{"name":"resample-4k-rgb","presets":[{"name":"pillow-2.7","title":"Pillow 2.7 optimizations","set":["imagemagick-6.8","pillow-2.0","pillow-2.7"]},{"name":"pillow-3.2","title":"Pillow 3.2 versions","set":["pillow-2.7","pillow-simd-3.2-sse4"]},{"name":"pillow-3.3","title":"Pillow 3.3 versions","set":["pillow-3.3","pillow-simd-3.3-sse4"]},{"name":"pillow-3.4","title":"Pillow 3.4 versions","set":["pillow-3.4","pillow-simd-3.4-sse4"]},{"name":"pillow-4.3","title":"Pillow 4.3 versions","set":["pillow-4.3","pillow-simd-4.3-sse4"],"default":true},{"name":"pillow-progress","title":"Pillow progress","set":["pillow-2.7","pillow-3.3","pillow-3.4","pillow-4.3"]},{"name":"pillow-sse4","title":"Pillow SIMD SSE4 progress","set":["pillow-simd-3.2-sse4","pillow-simd-3.3-sse4","pillow-simd-3.4-sse4","pillow-simd-4.3-sse4"]},{"name":"pillow-skia","title":"Pillow SIMD vs other libraries","set":["imagemagick-6.8","pillow-3.4","pillow-simd-4.3-sse4"]}],"competitors":[{"name":"imagemagick-6.8","results":[["26x16","bil",0.038516998291],["26x16","bic",0.0707430839539],["26x16","lzs",0.103451967239],["320x200","bil",0.0519292354584],["320x200","bic",0.0958008766174],["320x200","lzs",0.140596151352],["2048x1280","bil",0.184494018555],["2048x1280","bic",0.243185997009],["2048x1280","lzs",0.298787117004],["5478x3424","bil",0.935204029083],["5478x3424","bic",1.19796705246],["5478x3424","lzs",1.43192410469]]},{"name":"pillow-2.0","results":[["26x16","bil",0.0779061317444],["26x16","bic",0.148730039597],["26x16","lzs",0.218998193741],["320x200","bil",0.0473849773407],["320x200","bic",0.0847930908203],["320x200","lzs",0.133449077606],["2048x1280","bil",0.207448005676],["2048x1280","bic",0.271899223328],["2048x1280","lzs",0.352518796921],["5478x3424","bil",0.731122970581],["5478x3424","bic",0.727171897888],["5478x3424","lzs",0.733898162842]]},{"name":"pillow-2.7","results":[["26x16","bil",0.0201530456543],["26x16","bic",0.038822889328],["26x16","lzs",0.0613470077515],["320x200","bil",0.0263679027557],["320x200","bic",0.0483000278473],["320x200","lzs",0.0785810947418],["2048x1280","bil",0.106598854065],["2048x1280","bic",0.140636920929],["2048x1280","lzs",0.18155002594],["5478x3424","bil",0.564475774765],["5478x3424","bic",0.704648971558],["5478x3424","lzs",0.841820001602]]},{"name":"pillow-3.3","results":[["26x16","bil",0.0123550891876],["26x16","bic",0.023638010025],["26x16","lzs",0.0391390323639],["320x200","bil",0.0187261104584],["320x200","bic",0.0331339836121],["320x200","lzs",0.0530250072479],["2048x1280","bil",0.0808589458466],["2048x1280","bic",0.102329969406],["2048x1280","lzs",0.140424966812],["5478x3424","bil",0.384783983231],["5478x3424","bic",0.460886955261],["5478x3424","lzs",0.572279930115]]},{"name":"pillow-3.4","results":[["26x16","bil",0.0122730731964],["26x16","bic",0.02357006073],["26x16","lzs",0.0389440059662],["320x200","bil",0.0180549621582],["320x200","bic",0.0313320159912],["320x200","lzs",0.0525510311127],["2048x1280","bil",0.0579290390015],["2048x1280","bic",0.0808770656586],["2048x1280","lzs",0.116666078568],["5478x3424","bil",0.284916162491],["5478x3424","bic",0.366660833359],["5478x3424","lzs",0.476808071136]]},{"name":"pillow-4.3","results":[["26x16","bil",0.0121719837189],["26x16","bic",0.0234198570251],["26x16","lzs",0.0387868881226],["320x200","bil",0.0168271064758],["320x200","bic",0.0303568840027],["320x200","lzs",0.0517518520355],["2048x1280","bil",0.0503029823303],["2048x1280","bic",0.0737659931183],["2048x1280","lzs",0.109110116959],["5478x3424","bil",0.234965801239],["5478x3424","bic",0.323061943054],["5478x3424","lzs",0.420929908752]]},{"name":"pillow-simd-3.2-sse4","results":[["26x16","bil",0.00852704048157],["26x16","bic",0.0164229869843],["26x16","lzs",0.0285611152649],["320x200","bil",0.010097026825],["320x200","bic",0.0188999176025],["320x200","lzs",0.0329139232635],["2048x1280","bil",0.0353538990021],["2048x1280","bic",0.0499031543732],["2048x1280","lzs",0.0712859630585],["5478x3424","bil",0.148586988449],["5478x3424","bic",0.191066980362],["5478x3424","lzs",0.261048078537]]},{"name":"pillow-simd-3.3-sse4","results":[["26x16","bil",0.0064799785614],["26x16","bic",0.0122859477997],["26x16","lzs",0.0223021507263],["320x200","bil",0.00798797607422],["320x200","bic",0.0148241519928],["320x200","lzs",0.0266871452332],["2048x1280","bil",0.0315418243408],["2048x1280","bic",0.0440111160278],["2048x1280","lzs",0.0612330436707],["5478x3424","bil",0.143664121628],["5478x3424","bic",0.18106508255],["5478x3424","lzs",0.244952917099]]},{"name":"pillow-simd-3.4-sse4","results":[["26x16","bil",0.00280499458313],["26x16","bic",0.00533509254456],["26x16","lzs",0.0124409198761],["320x200","bil",0.00382590293884],["320x200","bic",0.00673723220825],["320x200","lzs",0.0147669315338],["2048x1280","bil",0.0156791210175],["2048x1280","bic",0.0217959880829],["2048x1280","lzs",0.0324568748474],["5478x3424","bil",0.0939908027649],["5478x3424","bic",0.115989923477],["5478x3424","lzs",0.147265911102]]},{"name":"pillow-simd-4.3-sse4","results":[["26x16","bil",0.00265693664551],["26x16","bic",0.00510311126709],["26x16","lzs",0.0120139122009],["320x200","bil",0.00348711013794],["320x200","bic",0.00617098808289],["320x200","lzs",0.0141859054565],["2048x1280","bil",0.0132360458374],["2048x1280","bic",0.0189568996429],["2048x1280","lzs",0.0290610790253],["5478x3424","bil",0.0658349990845],["5478x3424","bic",0.0875010490417],["5478x3424","lzs",0.119280815125]]}]},{"name":"image-io-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Jpeg load",0.0298268795013],["Jpeg save",0.0603041648865]]},{"name":"opencv-3.3","results":[["Jpeg load",0.0555779933929],["Jpeg save",0.108551979065]]},{"name":"vips-8.2","results":[["Jpeg load",0.0274970531464],["Jpeg save",0.0269989967346]]},{"name":"pillow-2.0","results":[["Jpeg load",0.029247045517],["Jpeg save",0.0293481349945]]},{"name":"pillow-4.3","results":[["Jpeg load",0.0236170291901],["Jpeg save",0.0256819725037]]}]},{"name":"blur-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["1px",0.475697994232],["10px",1.76497006416],["30px",4.45855593681]]},{"name":"opencv-3.3","results":[["1px",0.0347661972046],["10px",0.263720989227],["30px",0.821968078613]]},{"name":"pillow-2.7","results":[["1px",0.218554019928],["10px",0.216780900955],["30px",0.217438220978]]},{"name":"pillow-simd-3.2-sse4","results":[["1px",0.096822977066],["10px",0.0948030948639],["30px",0.0955410003662]]},{"name":"pillow-simd-4.3-sse4","results":[["1px",0.0608439445496],["10px",0.0776238441467],["30px",0.0787088871002]]}]},{"name":"filter-4k-rgb","competitors":[{"name":"opencv-3.3","results":[["Smooth",0.0249660015106],["Sharpen",0.024936914444],["Smooth More",0.0642189979553]]},{"name":"pillow-2.0","results":[["Smooth",0.13694190979],["Sharpen",0.136662960052],["Smooth More",0.328428030014]]},{"name":"pillow-4.3","results":[["Smooth",0.0935339927673],["Sharpen",0.0936760902405],["Smooth More",0.226088047028]]},{"name":"pillow-simd-4.3-sse4","results":[["Smooth",0.0143530368805],["Sharpen",0.0143151283264],["Smooth More",0.0317339897156]]}]},{"name":"transposition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Flop",0.00598287582397],["Flip",0.00644898414612],["Rotate 90",0.021341085434],["Rotate 180",0.00751304626465],["Rotate 270",0.0213251113892],["Transpose",0.101666927338],["Transverse",0.102748155594]]},{"name":"opencv-3.3","results":[["Flop",0.0112221240997],["Flip",0.00211691856384],["Rotate 90",0.0136520862579],["Rotate 180",0.0116829872131],["Rotate 270",0.0238540172577],["Transpose",0.016970872879],["Transverse",0.0246081352234]]},{"name":"pillow-2.0","results":[["Flop",0.00752711296082],["Flip",0.00334310531616],["Rotate 90",0.0163769721985],["Rotate 180",0.007728099823],["Rotate 270",0.0164330005646],["Transpose",0.0247850418091],["Transverse",0.0246970653534]]},{"name":"pillow-2.7","results":[["Flop",0.00761413574219],["Flip",0.00358700752258],["Rotate 90",0.0112950801849],["Rotate 180",0.00842308998108],["Rotate 270",0.010843038559],["Transpose",0.0107159614563],["Transverse",0.0156269073486]]},{"name":"pillow-4.3","results":[["Flop",0.00310897827148],["Flip",0.00286197662354],["Rotate 90",0.00843906402588],["Rotate 180",0.00298309326172],["Rotate 270",0.00819301605225],["Transpose",0.0080349445343],["Transverse",0.00821304321289]]}]},{"name":"conversion-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["RGB to L",0.0497119426727],["RGBA to LA",0.0495479106903],["RGBa to RGBA",null],["RGBA to RGBa",null]]},{"name":"pillow-2.7","results":[["RGB to L",0.00799989700317],["RGBA to LA",0.0122609138489],["RGBa to RGBA",0.0472319126129],["RGBA to RGBa",0.0146961212158]]},{"name":"pillow-3.3","results":[["RGB to L",0.00788807868958],["RGBA to LA",0.0100708007812],["RGBa to RGBA",0.0301918983459],["RGBA to RGBa",0.0133929252625]]},{"name":"pillow-4.3","results":[["RGB to L",0.00563311576843],["RGBA to LA",0.00704503059387],["RGBa to RGBA",0.0287079811096],["RGBA to RGBa",0.0121819972992]]},{"name":"pillow-simd-3.3-sse4","results":[["RGB to L",0.00784802436829],["RGBA to LA",0.0100359916687],["RGBa to RGBA",0.0289041996002],["RGBA to RGBa",0.00464916229248]]},{"name":"pillow-simd-4.3-sse4","results":[["RGB to L",0.00200295448303],["RGBA to LA",0.00285696983337],["RGBa to RGBA",0.00427889823914],["RGBA to RGBa",0.00343704223633]]}]},{"name":"composition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Composition",0.13286113739]]},{"name":"pillow-2.0","results":[["Composition",0.034795999527]]},{"name":"pillow-4.3","results":[["Composition",0.0308628082275]]},{"name":"pillow-simd-3.3-sse4","results":[["Composition",0.0124659538269]]},{"name":"pillow-simd-4.3-sse4","results":[["Composition",0.0103778839111]]}]},{"name":"full-cycle-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Load+save",0.0905940532684],["+transpose",0.12427687645],["+resize",0.204174041748],["+blur",0.346410036087]]},{"name":"opencv-3.3","results":[["Load+save",0.168015003204],["+transpose",0.191325187683],["+resize",0.128175020218],["+blur",0.142982006073]]},{"name":"vips-8.2","results":[["Load+save",0.0545499324799],["+transpose",0.0781109333038],["+resize",0.153448820114],["+blur",0.277933120728]]},{"name":"pillow-2.0","results":[["Load+save",0.0581951141357],["+transpose",0.0800800323486],["+resize",0.211241006851],["+blur",0.501112937927]]},{"name":"pillow-simd-4.3-sse4","results":[["Load+save",0.0496520996094],["+transpose",0.0589730739594],["+resize",0.0482831001282],["+blur",0.0594210624695]]}]}]}
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
-	module.exports = {
-		"title": "AMD A10 desktop",
-		"OS": "Arch Linux 64bit",
-		"CPU": "AMD A10-7800 @ 3.50GHz",
-		"competitions": [
-			{
-				"name": "resample-4k-rgb",
-				"presets": [
-					{
-						"name": "pillow-2.7",
-						"title": "Pillow 2.7 optimizations",
-						"set": [
-							"imagemagick-6.8",
-							"pillow-2.0",
-							"pillow-2.7"
-						]
-					},
-					{
-						"name": "pillow-progress",
-						"title": "Pillow progress",
-						"set": [
-							"pillow-2.7",
-							"pillow-3.3",
-							"pillow-3.4"
-						]
-					},
-					{
-						"name": "pillow-3.2",
-						"title": "Pillow 3.2 versions",
-						"set": [
-							"pillow-2.7",
-							"pillow-simd-3.2-sse4"
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"title": "Pillow 3.3 versions",
-						"set": [
-							"pillow-3.3",
-							"pillow-simd-3.3-sse4"
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"title": "Pillow 3.4 versions",
-						"set": [
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
-						],
-						"default": true
-					},
-					{
-						"name": "pillow-sse4",
-						"title": "Pillow SIMD SSE4 progress",
-						"set": [
-							"pillow-simd-3.2-sse4",
-							"pillow-simd-3.3-sse4",
-							"pillow-simd-3.4-sse4"
-						]
-					},
-					{
-						"name": "pillow-milestones",
-						"title": "Pillow milestones",
-						"set": [
-							"pillow-2.0",
-							"pillow-2.7",
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
-						]
-					},
-					{
-						"name": "pillow-skia",
-						"title": "Pillow SIMD vs other libraries",
-						"set": [
-							"imagemagick-6.8",
-							"pillow-3.4",
-							"pillow-simd-3.4-sse4"
-						]
-					}
-				],
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.1475377082824707
-							],
-							[
-								"26x16",
-								"bic",
-								0.28673672676086426
-							],
-							[
-								"26x16",
-								"lzs",
-								0.4221062660217285
-							],
-							[
-								"320x200",
-								"bil",
-								0.09093689918518066
-							],
-							[
-								"320x200",
-								"bic",
-								0.16100120544433594
-							],
-							[
-								"320x200",
-								"lzs",
-								0.28612589836120605
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.39835619926452637
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.61631178855896
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.7568397521972656
-							],
-							[
-								"5478x3424",
-								"bil",
-								1.4246742725372314
-							],
-							[
-								"5478x3424",
-								"bic",
-								1.844346523284912
-							],
-							[
-								"5478x3424",
-								"lzs",
-								3.1255810260772705
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.07345032691955566
-							],
-							[
-								"26x16",
-								"bic",
-								0.13161063194274902
-							],
-							[
-								"26x16",
-								"lzs",
-								0.19360113143920898
-							],
-							[
-								"320x200",
-								"bil",
-								0.11715483665466309
-							],
-							[
-								"320x200",
-								"bic",
-								0.1651756763458252
-							],
-							[
-								"320x200",
-								"lzs",
-								0.24839067459106445
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.5992233753204346
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.6920046806335449
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.8281862735748291
-							],
-							[
-								"5478x3424",
-								"bil",
-								1.851745367050171
-							],
-							[
-								"5478x3424",
-								"bic",
-								1.8511416912078857
-							],
-							[
-								"5478x3424",
-								"lzs",
-								1.8527441024780273
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.02433490753173828
-							],
-							[
-								"26x16",
-								"bic",
-								0.04636979103088379
-							],
-							[
-								"26x16",
-								"lzs",
-								0.06906366348266602
-							],
-							[
-								"320x200",
-								"bil",
-								0.03546714782714844
-							],
-							[
-								"320x200",
-								"bic",
-								0.060994625091552734
-							],
-							[
-								"320x200",
-								"lzs",
-								0.09536409378051758
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.17483973503112793
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.21518373489379883
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.29454636573791504
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.5893337726593018
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.7496342658996582
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.9016544818878174
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.017486572265625
-							],
-							[
-								"26x16",
-								"bic",
-								0.03349733352661133
-							],
-							[
-								"26x16",
-								"lzs",
-								0.0500640869140625
-							],
-							[
-								"320x200",
-								"bil",
-								0.0260922908782959
-							],
-							[
-								"320x200",
-								"bic",
-								0.04591536521911621
-							],
-							[
-								"320x200",
-								"lzs",
-								0.07138252258300781
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.09966278076171875
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.14061450958251953
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.19240021705627441
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.42652153968811035
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.5548462867736816
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.6946890354156494
-							]
-						]
-					},
-					{
-						"name": "pillow-3.4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.01776409149169922
-							],
-							[
-								"26x16",
-								"bic",
-								0.03406476974487305
-							],
-							[
-								"26x16",
-								"lzs",
-								0.05127906799316406
-							],
-							[
-								"320x200",
-								"bil",
-								0.023882150650024414
-							],
-							[
-								"320x200",
-								"bic",
-								0.04403400421142578
-							],
-							[
-								"320x200",
-								"lzs",
-								0.06888484954833984
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.06983709335327148
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.10818696022033691
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.15647315979003906
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.32455015182495117
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.44112181663513184
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.5701656341552734
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.012630939483642578
-							],
-							[
-								"26x16",
-								"bic",
-								0.02395486831665039
-							],
-							[
-								"26x16",
-								"lzs",
-								0.036397457122802734
-							],
-							[
-								"320x200",
-								"bil",
-								0.013612747192382812
-							],
-							[
-								"320x200",
-								"bic",
-								0.02578568458557129
-							],
-							[
-								"320x200",
-								"lzs",
-								0.040189266204833984
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.04983377456665039
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.0703742504119873
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.08494329452514648
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.20917749404907227
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.2634248733520508
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.33286046981811523
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.006674766540527344
-							],
-							[
-								"26x16",
-								"bic",
-								0.012168645858764648
-							],
-							[
-								"26x16",
-								"lzs",
-								0.018857717514038086
-							],
-							[
-								"320x200",
-								"bil",
-								0.009406566619873047
-							],
-							[
-								"320x200",
-								"bic",
-								0.015697717666625977
-							],
-							[
-								"320x200",
-								"lzs",
-								0.023853302001953125
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.039867401123046875
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.058283090591430664
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.06771445274353027
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.19344472885131836
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.2258603572845459
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.2826230525970459
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.4-sse4",
-						"results": [
-							[
-								"26x16",
-								"bil",
-								0.003892660140991211
-							],
-							[
-								"26x16",
-								"bic",
-								0.005215883255004883
-							],
-							[
-								"26x16",
-								"lzs",
-								0.009229660034179688
-							],
-							[
-								"320x200",
-								"bil",
-								0.005000591278076172
-							],
-							[
-								"320x200",
-								"bic",
-								0.007440328598022461
-							],
-							[
-								"320x200",
-								"lzs",
-								0.01191854476928711
-							],
-							[
-								"2048x1280",
-								"bil",
-								0.018242835998535156
-							],
-							[
-								"2048x1280",
-								"bic",
-								0.027240276336669922
-							],
-							[
-								"2048x1280",
-								"lzs",
-								0.03528094291687012
-							],
-							[
-								"5478x3424",
-								"bil",
-								0.09871602058410645
-							],
-							[
-								"5478x3424",
-								"bic",
-								0.14983057975769043
-							],
-							[
-								"5478x3424",
-								"lzs",
-								0.17478370666503906
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "blur-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"1px",
-								1.4722790718078613
-							],
-							[
-								"10px",
-								6.412798166275024
-							],
-							[
-								"30px",
-								16.75508689880371
-							]
-						]
-					},
-					{
-						"name": "opencv-3.1",
-						"results": [
-							[
-								"1px",
-								0.0305328369140625
-							],
-							[
-								"10px",
-								0.3293802738189697
-							],
-							[
-								"30px",
-								2.583698034286499
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"1px",
-								0.2780616283416748
-							],
-							[
-								"10px",
-								0.27820372581481934
-							],
-							[
-								"30px",
-								0.2780947685241699
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.2-sse4",
-						"results": [
-							[
-								"1px",
-								0.1379232406616211
-							],
-							[
-								"10px",
-								0.13574552536010742
-							],
-							[
-								"30px",
-								0.13111472129821777
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "transposition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Flop",
-								0.037609100341796875
-							],
-							[
-								"Flip",
-								0.032210588455200195
-							],
-							[
-								"Rotate 90",
-								0.07332444190979004
-							],
-							[
-								"Rotate 180",
-								0.034462690353393555
-							],
-							[
-								"Rotate 270",
-								0.07326245307922363
-							],
-							[
-								"Transpose",
-								0.12734055519104004
-							]
-						]
-					},
-					{
-						"name": "opencv-3.1",
-						"results": [
-							[
-								"Flop",
-								0.006331205368041992
-							],
-							[
-								"Flip",
-								0.0038042068481445312
-							],
-							[
-								"Rotate 90",
-								0.019902944564819336
-							],
-							[
-								"Rotate 180",
-								0.010146856307983398
-							],
-							[
-								"Rotate 270",
-								0.023146390914916992
-							],
-							[
-								"Transpose",
-								0.009321928024291992
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Flop",
-								0.009178876876831055
-							],
-							[
-								"Flip",
-								0.008565664291381836
-							],
-							[
-								"Rotate 90",
-								0.03155946731567383
-							],
-							[
-								"Rotate 180",
-								0.008916854858398438
-							],
-							[
-								"Rotate 270",
-								0.03277444839477539
-							],
-							[
-								"Transpose",
-								null
-							]
-						]
-					},
-					{
-						"name": "pillow-2.7",
-						"results": [
-							[
-								"Flop",
-								0.009444952011108398
-							],
-							[
-								"Flip",
-								0.008606433868408203
-							],
-							[
-								"Rotate 90",
-								0.026198148727416992
-							],
-							[
-								"Rotate 180",
-								0.009139299392700195
-							],
-							[
-								"Rotate 270",
-								0.02880072593688965
-							],
-							[
-								"Transpose",
-								0.028871774673461914
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "conversion-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"RGB to L",
-								0.09792542457580566
-							],
-							[
-								"RGBA to LA",
-								0.09791827201843262
-							],
-							[
-								"RGBa to RGBA",
-								null
-							],
-							[
-								"RGBA to RGBa",
-								null
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"RGB to L",
-								0.007297515869140625
-							],
-							[
-								"RGBA to LA",
-								0.011297225952148438
-							],
-							[
-								"RGBa to RGBA",
-								0.06744074821472168
-							],
-							[
-								"RGBA to RGBa",
-								0.011549711227416992
-							]
-						]
-					},
-					{
-						"name": "pillow-3.3",
-						"results": [
-							[
-								"RGB to L",
-								0.007328510284423828
-							],
-							[
-								"RGBA to LA",
-								0.011457681655883789
-							],
-							[
-								"RGBa to RGBA",
-								0.04703092575073242
-							],
-							[
-								"RGBA to RGBa",
-								0.01168203353881836
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"RGB to L",
-								0.00566411018371582
-							],
-							[
-								"RGBA to LA",
-								0.009404659271240234
-							],
-							[
-								"RGBa to RGBA",
-								0.04804039001464844
-							],
-							[
-								"RGBA to RGBa",
-								0.008875131607055664
-							]
-						]
-					}
-				]
-			},
-			{
-				"name": "composition-4k-rgb",
-				"competitors": [
-					{
-						"name": "imagemagick-6.8",
-						"results": [
-							[
-								"Composition",
-								0.234344482421875
-							]
-						]
-					},
-					{
-						"name": "pillow-2.0",
-						"results": [
-							[
-								"Composition",
-								0.04830813407897949
-							]
-						]
-					},
-					{
-						"name": "pillow-simd-3.3-sse4",
-						"results": [
-							[
-								"Composition",
-								0.02085590362548828
-							]
-						]
-					}
-				]
-			}
-		]
-	};
+	module.exports = {"title":"Amazon EC2 c4.large instance","OS":"Ubuntu 16.04.1 LTS 64bit","CPU":"Intel Xeon E5-2666 v3 @ 2.90GHz","competitions":[{"name":"resample-4k-rgb","presets":[{"name":"pillow-2.7","title":"Pillow 2.7 optimizations","set":["imagemagick-6.8","pillow-2.0","pillow-2.7"]},{"name":"pillow-3.2","title":"Pillow 3.2 versions","set":["pillow-2.7","pillow-simd-3.2-sse4","pillow-simd-3.2-avx2"]},{"name":"pillow-3.3","title":"Pillow 3.3 versions","set":["pillow-3.3","pillow-simd-3.3-sse4","pillow-simd-3.3-avx2"]},{"name":"pillow-3.4","title":"Pillow 3.4 versions","set":["pillow-3.4","pillow-simd-3.4-sse4","pillow-simd-3.4-avx2"]},{"name":"pillow-4.3","title":"Pillow 4.3 versions","set":["pillow-4.3","pillow-simd-4.3-sse4","pillow-simd-4.3-avx2"],"default":true},{"name":"pillow-progress","title":"Pillow progress","set":["pillow-2.7","pillow-3.3","pillow-3.4","pillow-4.3"]},{"name":"pillow-sse4","title":"Pillow SIMD SSE4 progress","set":["pillow-simd-3.2-sse4","pillow-simd-3.3-sse4","pillow-simd-3.4-sse4","pillow-simd-4.3-sse4"]},{"name":"pillow-avx2","title":"Pillow SIMD AVX2 progress","set":["pillow-simd-3.2-avx2","pillow-simd-3.3-avx2","pillow-simd-3.4-avx2","pillow-simd-4.3-avx2"]},{"name":"pillow-skia","title":"Pillow SIMD vs other libraries","set":["imagemagick-6.8","skia-53","pillow-simd-4.3-avx2"]}],"competitors":[{"name":"imagemagick-6.8","results":[["26x16","bil",0.0323040485382],["26x16","bic",0.0581381320953],["26x16","lzs",0.0843899250031],["320x200","bil",0.0461461544037],["320x200","bic",0.0856890678406],["320x200","lzs",0.127665996552],["2048x1280","bil",0.176301956177],["2048x1280","bic",0.224925041199],["2048x1280","lzs",0.27676320076],["5478x3424","bil",0.908694028854],["5478x3424","bic",1.17840504646],["5478x3424","lzs",1.3807349205]]},{"name":"skia-53","results":[["26x16","bil",0.00477],["26x16","bic",0.0087],["26x16","lzs",0.0131],["320x200","bil",0.00641],["320x200","bic",0.0118],["320x200","lzs",0.0181],["2048x1280","bil",0.0209],["2048x1280","bic",0.0342],["2048x1280","lzs",0.0398],["5478x3424","bil",0.0968],["5478x3424","bic",0.124],["5478x3424","lzs",0.175]]},{"name":"pillow-2.0","results":[["26x16","bil",0.0712270736694],["26x16","bic",0.134505987167],["26x16","lzs",0.195214033127],["320x200","bil",0.040992975235],["320x200","bic",0.0721440315247],["320x200","lzs",0.107863903046],["2048x1280","bil",0.17693901062],["2048x1280","bic",0.237772941589],["2048x1280","lzs",0.299470901489],["5478x3424","bil",0.623450994492],["5478x3424","bic",0.623461961746],["5478x3424","lzs",0.628663063049]]},{"name":"pillow-2.7","results":[["26x16","bil",0.017422914505],["26x16","bic",0.0334639549255],["26x16","lzs",0.0500259399414],["320x200","bil",0.0242791175842],["320x200","bic",0.0446469783783],["320x200","lzs",0.0676081180573],["2048x1280","bil",0.0988898277283],["2048x1280","bic",0.130800962448],["2048x1280","lzs",0.163455963135],["5478x3424","bil",0.524189949036],["5478x3424","bic",0.639679193497],["5478x3424","lzs",0.763602972031]]},{"name":"pillow-3.3","results":[["26x16","bil",0.0104360580444],["26x16","bic",0.0198049545288],["26x16","lzs",0.0299651622772],["320x200","bil",0.0176079273224],["320x200","bic",0.0286979675293],["320x200","lzs",0.0429599285126],["2048x1280","bil",0.0732929706573],["2048x1280","bic",0.094386100769],["2048x1280","lzs",0.126538038254],["5478x3424","bil",0.352673053741],["5478x3424","bic",0.425844192505],["5478x3424","lzs",0.521960020065]]},{"name":"pillow-3.4","results":[["26x16","bil",0.0102698802948],["26x16","bic",0.0196580886841],["26x16","lzs",0.0297801494598],["320x200","bil",0.0165560245514],["320x200","bic",0.0276069641113],["320x200","lzs",0.0407431125641],["2048x1280","bil",0.0520069599152],["2048x1280","bic",0.0730431079865],["2048x1280","lzs",0.100332021713],["5478x3424","bil",0.265408992767],["5478x3424","bic",0.340518951416],["5478x3424","lzs",0.428786993027]]},{"name":"pillow-4.3","results":[["26x16","bil",0.0102760791779],["26x16","bic",0.0196940898895],["26x16","lzs",0.0297751426697],["320x200","bil",0.0167059898376],["320x200","bic",0.027480840683],["320x200","lzs",0.0413911342621],["2048x1280","bil",0.0445370674133],["2048x1280","bic",0.065948009491],["2048x1280","lzs",0.0950829982758],["5478x3424","bil",0.206713199615],["5478x3424","bic",0.289458990097],["5478x3424","lzs",0.37376999855]]},{"name":"pillow-simd-3.2-sse4","results":[["26x16","bil",0.00784206390381],["26x16","bic",0.0154209136963],["26x16","lzs",0.0238349437714],["320x200","bil",0.0087559223175],["320x200","bic",0.0165450572968],["320x200","lzs",0.0252950191498],["2048x1280","bil",0.0311450958252],["2048x1280","bic",0.0432379245758],["2048x1280","lzs",0.0577001571655],["5478x3424","bil",0.132560968399],["5478x3424","bic",0.167540073395],["5478x3424","lzs",0.217993021011]]},{"name":"pillow-simd-3.2-avx2","results":[["26x16","bil",0.0042519569397],["26x16","bic",0.00839519500732],["26x16","lzs",0.0135200023651],["320x200","bil",0.00643014907837],["320x200","bic",0.0110049247742],["320x200","lzs",0.0166828632355],["2048x1280","bil",0.0320808887482],["2048x1280","bic",0.0424139499664],["2048x1280","lzs",0.04816198349],["5478x3424","bil",0.131987094879],["5478x3424","bic",0.169631004333],["5478x3424","lzs",0.209919929504]]},{"name":"pillow-simd-3.3-sse4","results":[["26x16","bil",0.00642704963684],["26x16","bic",0.012228012085],["26x16","lzs",0.0188481807709],["320x200","bil",0.0081799030304],["320x200","bic",0.0149829387665],["320x200","lzs",0.0228140354156],["2048x1280","bil",0.0315201282501],["2048x1280","bic",0.0438439846039],["2048x1280","lzs",0.0580928325653],["5478x3424","bil",0.144843101501],["5478x3424","bic",0.182046890259],["5478x3424","lzs",0.233467102051]]},{"name":"pillow-simd-3.3-avx2","results":[["26x16","bil",0.00361490249634],["26x16","bic",0.00702691078186],["26x16","lzs",0.0110650062561],["320x200","bil",0.00590300559998],["320x200","bic",0.00963497161865],["320x200","lzs",0.0142061710358],["2048x1280","bil",0.0261881351471],["2048x1280","bic",0.0351939201355],["2048x1280","lzs",0.0385529994965],["5478x3424","bil",0.121922016144],["5478x3424","bic",0.15011715889],["5478x3424","lzs",0.17990398407]]},{"name":"pillow-simd-3.4-sse4","results":[["26x16","bil",0.00236892700195],["26x16","bic",0.00452303886414],["26x16","lzs",0.00763702392578],["320x200","bil",0.00326013565063],["320x200","bic",0.00575399398804],["320x200","lzs",0.00926685333252],["2048x1280","bil",0.0136399269104],["2048x1280","bic",0.0196919441223],["2048x1280","lzs",0.0244219303131],["5478x3424","bil",0.0814290046692],["5478x3424","bic",0.0977630615234],["5478x3424","lzs",0.125102043152]]},{"name":"pillow-simd-3.4-avx2","results":[["26x16","bil",0.0018138885498],["26x16","bic",0.00345921516418],["26x16","lzs",0.00615000724792],["320x200","bil",0.00268507003784],["320x200","bic",0.00455594062805],["320x200","lzs",0.00738310813904],["2048x1280","bil",0.0120389461517],["2048x1280","bic",0.015655040741],["2048x1280","lzs",0.0205700397491],["5478x3424","bil",0.0816390514374],["5478x3424","bic",0.0935850143433],["5478x3424","lzs",0.109060049057]]},{"name":"pillow-simd-4.3-sse4","results":[["26x16","bil",0.00221109390259],["26x16","bic",0.00419020652771],["26x16","lzs",0.00726699829102],["320x200","bil",0.00305986404419],["320x200","bic",0.00530004501343],["320x200","lzs",0.00857305526733],["2048x1280","bil",0.0117220878601],["2048x1280","bic",0.0173978805542],["2048x1280","lzs",0.022007226944],["5478x3424","bil",0.0616409778595],["5478x3424","bic",0.0796511173248],["5478x3424","lzs",0.101364850998]]},{"name":"pillow-simd-4.3-avx2","results":[["26x16","bil",0.00155115127563],["26x16","bic",0.0029308795929],["26x16","lzs",0.00538802146912],["320x200","bil",0.00223207473755],["320x200","bic",0.00371813774109],["320x200","lzs",0.00622797012329],["2048x1280","bil",0.00994086265564],["2048x1280","bic",0.0129170417786],["2048x1280","lzs",0.0171821117401],["5478x3424","bil",0.0518219470978],["5478x3424","bic",0.064563035965],["5478x3424","lzs",0.0831959247589]]}]},{"name":"image-io-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Jpeg load",0.0275180339813],["Jpeg save",0.0555469989777]]},{"name":"opencv-3.3","results":[["Jpeg load",0.0487670898438],["Jpeg save",0.099011182785]]},{"name":"vips-8.2","results":[["Jpeg load",0.0237169265747],["Jpeg save",0.0253179073334]]},{"name":"pillow-2.0","results":[["Jpeg load",0.0265851020813],["Jpeg save",0.0276491641998]]},{"name":"pillow-4.3","results":[["Jpeg load",0.0226268768311],["Jpeg save",0.0245869159698]]}]},{"name":"blur-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["1px",0.433434009552],["10px",1.53608202934],["30px",3.86354517937]]},{"name":"opencv-3.3","results":[["1px",0.0318949222565],["10px",0.249096155167],["30px",0.775735855103]]},{"name":"pillow-2.7","results":[["1px",0.203242063522],["10px",0.203356027603],["30px",0.20072388649]]},{"name":"pillow-simd-3.2-sse4","results":[["1px",0.0954151153564],["10px",0.0933260917664],["30px",0.0932288169861]]},{"name":"pillow-simd-4.3-sse4","results":[["1px",0.0602011680603],["10px",0.0718328952789],["30px",0.0717711448669]]}]},{"name":"filter-4k-rgb","competitors":[{"name":"opencv-3.3","results":[["Smooth",0.0223259925842],["Sharpen",0.0224139690399],["Smooth More",0.0580770969391]]},{"name":"pillow-2.0","results":[["Smooth",0.118627071381],["Sharpen",0.118576049805],["Smooth More",0.271515130997]]},{"name":"pillow-4.3","results":[["Smooth",0.0801219940186],["Sharpen",0.0802209377289],["Smooth More",0.205267190933]]},{"name":"pillow-simd-4.3-sse4","results":[["Smooth",0.0110840797424],["Sharpen",0.0112950801849],["Smooth More",0.0285851955414]]},{"name":"pillow-simd-4.3-avx2","results":[["Smooth",0.00778698921204],["Sharpen",0.00780701637268],["Smooth More",0.0184209346771]]}]},{"name":"transposition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Flop",0.00591206550598],["Flip",0.00695395469666],["Rotate 90",0.0207591056824],["Rotate 180",0.00686407089233],["Rotate 270",0.0207760334015],["Transpose",0.11373090744],["Transverse",0.114582061768]]},{"name":"opencv-3.3","results":[["Flop",0.00935006141663],["Flip",0.00165486335754],["Rotate 90",0.0135560035706],["Rotate 180",0.0116839408875],["Rotate 270",0.0208261013031],["Transpose",0.0184900760651],["Transverse",0.0240840911865]]},{"name":"pillow-2.0","results":[["Flop",0.00677704811096],["Flip",0.00321984291077],["Rotate 90",0.0181379318237],["Rotate 180",0.00641298294067],["Rotate 270",0.0172250270844],["Transpose",0.0266320705414],["Transverse",0.0265989303589]]},{"name":"pillow-2.7","results":[["Flop",0.00643491744995],["Flip",0.00296998023987],["Rotate 90",0.011547088623],["Rotate 180",0.00641798973083],["Rotate 270",0.0112781524658],["Transpose",0.0108728408813],["Transverse",0.0162189006805]]},{"name":"pillow-4.3","results":[["Flop",0.00301098823547],["Flip",0.00296401977539],["Rotate 90",0.00851798057556],["Rotate 180",0.0029399394989],["Rotate 270",0.00836706161499],["Transpose",0.00819897651672],["Transverse",0.00833296775818]]}]},{"name":"conversion-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["RGB to L",0.0410380363464],["RGBA to LA",0.0407710075378],["RGBa to RGBA",null],["RGBA to RGBa",null]]},{"name":"pillow-2.7","results":[["RGB to L",0.00603985786438],["RGBA to LA",0.010596036911],["RGBa to RGBA",0.0456490516663],["RGBA to RGBa",0.0120949745178]]},{"name":"pillow-3.3","results":[["RGB to L",0.00607585906982],["RGBA to LA",0.00838017463684],["RGBa to RGBA",0.0293600559235],["RGBA to RGBa",0.0119090080261]]},{"name":"pillow-4.3","results":[["RGB to L",0.00460386276245],["RGBA to LA",0.00605797767639],["RGBa to RGBA",0.0279710292816],["RGBA to RGBa",0.0104460716248]]},{"name":"pillow-simd-3.3-sse4","results":[["RGB to L",0.00602889060974],["RGBA to LA",0.00825905799866],["RGBa to RGBA",0.0280401706696],["RGBA to RGBa",0.00403094291687]]},{"name":"pillow-simd-3.3-avx2","results":[["RGB to L",0.00602889060974],["RGBA to LA",0.00837302207947],["RGBa to RGBA",0.0134150981903],["RGBA to RGBa",0.0037829875946]]},{"name":"pillow-simd-4.3-sse4","results":[["RGB to L",0.00208592414856],["RGBA to LA",0.00260305404663],["RGBa to RGBA",0.00354385375977],["RGBA to RGBa",0.00308418273926]]},{"name":"pillow-simd-4.3-avx2","results":[["RGB to L",0.00196695327759],["RGBA to LA",0.0026741027832],["RGBa to RGBA",0.0027449131012],["RGBA to RGBa",0.0025908946991]]}]},{"name":"composition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Composition",0.117036104202]]},{"name":"pillow-2.0","results":[["Composition",0.0298759937286]]},{"name":"pillow-4.3","results":[["Composition",0.0269358158112]]},{"name":"pillow-simd-3.3-sse4","results":[["Composition",0.0108211040497]]},{"name":"pillow-simd-3.3-avx2","results":[["Composition",0.00695610046387]]},{"name":"pillow-simd-4.3-sse4","results":[["Composition",0.00917077064514]]},{"name":"pillow-simd-4.3-avx2","results":[["Composition",0.00547289848328]]}]},{"name":"full-cycle-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Load+save",0.0835440158844],["+transpose",0.116394996643],["+resize",0.185719966888],["+blur",0.310394048691]]},{"name":"opencv-3.3","results":[["Load+save",0.148349046707],["+transpose",0.176847934723],["+resize",0.122283935547],["+blur",0.132783174515]]},{"name":"vips-8.2","results":[["Load+save",0.0510859489441],["+transpose",0.0670499801636],["+resize",0.134501934052],["+blur",0.232701063156]]},{"name":"pillow-2.0","results":[["Load+save",0.0554149150848],["+transpose",0.0778849124908],["+resize",0.192498922348],["+blur",0.455259084702]]},{"name":"pillow-simd-4.3-sse4","results":[["Load+save",0.0482649803162],["+transpose",0.0564839839935],["+resize",0.0453579425812],["+blur",0.0561139583588]]}]}]}
 
-/***/ }
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+	module.exports = {"title":"AMD A10 desktop","OS":"Arch Linux 64bit","CPU":"AMD A10-7800 @ 3.50GHz","competitions":[{"name":"resample-4k-rgb","presets":[{"name":"pillow-2.7","title":"Pillow 2.7 optimizations","set":["imagemagick-6.8","pillow-2.0","pillow-2.7"]},{"name":"pillow-progress","title":"Pillow progress","set":["pillow-2.7","pillow-3.3","pillow-3.4"]},{"name":"pillow-3.2","title":"Pillow 3.2 versions","set":["pillow-2.7","pillow-simd-3.2-sse4"]},{"name":"pillow-3.3","title":"Pillow 3.3 versions","set":["pillow-3.3","pillow-simd-3.3-sse4"]},{"name":"pillow-3.4","title":"Pillow 3.4 versions","set":["pillow-3.4","pillow-simd-3.4-sse4"],"default":true},{"name":"pillow-sse4","title":"Pillow SIMD SSE4 progress","set":["pillow-simd-3.2-sse4","pillow-simd-3.3-sse4","pillow-simd-3.4-sse4"]},{"name":"pillow-milestones","title":"Pillow milestones","set":["pillow-2.0","pillow-2.7","pillow-3.4","pillow-simd-3.4-sse4"]},{"name":"pillow-skia","title":"Pillow SIMD vs other libraries","set":["imagemagick-6.8","pillow-3.4","pillow-simd-3.4-sse4"]}],"competitors":[{"name":"imagemagick-6.8","results":[["26x16","bil",0.1475377082824707],["26x16","bic",0.28673672676086426],["26x16","lzs",0.4221062660217285],["320x200","bil",0.09093689918518066],["320x200","bic",0.16100120544433594],["320x200","lzs",0.28612589836120605],["2048x1280","bil",0.39835619926452637],["2048x1280","bic",0.61631178855896],["2048x1280","lzs",0.7568397521972656],["5478x3424","bil",1.4246742725372314],["5478x3424","bic",1.844346523284912],["5478x3424","lzs",3.1255810260772705]]},{"name":"pillow-2.0","results":[["26x16","bil",0.07345032691955566],["26x16","bic",0.13161063194274902],["26x16","lzs",0.19360113143920898],["320x200","bil",0.11715483665466309],["320x200","bic",0.1651756763458252],["320x200","lzs",0.24839067459106445],["2048x1280","bil",0.5992233753204346],["2048x1280","bic",0.6920046806335449],["2048x1280","lzs",0.8281862735748291],["5478x3424","bil",1.851745367050171],["5478x3424","bic",1.8511416912078857],["5478x3424","lzs",1.8527441024780273]]},{"name":"pillow-2.7","results":[["26x16","bil",0.02433490753173828],["26x16","bic",0.04636979103088379],["26x16","lzs",0.06906366348266602],["320x200","bil",0.03546714782714844],["320x200","bic",0.060994625091552734],["320x200","lzs",0.09536409378051758],["2048x1280","bil",0.17483973503112793],["2048x1280","bic",0.21518373489379883],["2048x1280","lzs",0.29454636573791504],["5478x3424","bil",0.5893337726593018],["5478x3424","bic",0.7496342658996582],["5478x3424","lzs",0.9016544818878174]]},{"name":"pillow-3.3","results":[["26x16","bil",0.017486572265625],["26x16","bic",0.03349733352661133],["26x16","lzs",0.0500640869140625],["320x200","bil",0.0260922908782959],["320x200","bic",0.04591536521911621],["320x200","lzs",0.07138252258300781],["2048x1280","bil",0.09966278076171875],["2048x1280","bic",0.14061450958251953],["2048x1280","lzs",0.19240021705627441],["5478x3424","bil",0.42652153968811035],["5478x3424","bic",0.5548462867736816],["5478x3424","lzs",0.6946890354156494]]},{"name":"pillow-3.4","results":[["26x16","bil",0.01776409149169922],["26x16","bic",0.03406476974487305],["26x16","lzs",0.05127906799316406],["320x200","bil",0.023882150650024414],["320x200","bic",0.04403400421142578],["320x200","lzs",0.06888484954833984],["2048x1280","bil",0.06983709335327148],["2048x1280","bic",0.10818696022033691],["2048x1280","lzs",0.15647315979003906],["5478x3424","bil",0.32455015182495117],["5478x3424","bic",0.44112181663513184],["5478x3424","lzs",0.5701656341552734]]},{"name":"pillow-simd-3.2-sse4","results":[["26x16","bil",0.012630939483642578],["26x16","bic",0.02395486831665039],["26x16","lzs",0.036397457122802734],["320x200","bil",0.013612747192382812],["320x200","bic",0.02578568458557129],["320x200","lzs",0.040189266204833984],["2048x1280","bil",0.04983377456665039],["2048x1280","bic",0.0703742504119873],["2048x1280","lzs",0.08494329452514648],["5478x3424","bil",0.20917749404907227],["5478x3424","bic",0.2634248733520508],["5478x3424","lzs",0.33286046981811523]]},{"name":"pillow-simd-3.3-sse4","results":[["26x16","bil",0.006674766540527344],["26x16","bic",0.012168645858764648],["26x16","lzs",0.018857717514038086],["320x200","bil",0.009406566619873047],["320x200","bic",0.015697717666625977],["320x200","lzs",0.023853302001953125],["2048x1280","bil",0.039867401123046875],["2048x1280","bic",0.058283090591430664],["2048x1280","lzs",0.06771445274353027],["5478x3424","bil",0.19344472885131836],["5478x3424","bic",0.2258603572845459],["5478x3424","lzs",0.2826230525970459]]},{"name":"pillow-simd-3.4-sse4","results":[["26x16","bil",0.003892660140991211],["26x16","bic",0.005215883255004883],["26x16","lzs",0.009229660034179688],["320x200","bil",0.005000591278076172],["320x200","bic",0.007440328598022461],["320x200","lzs",0.01191854476928711],["2048x1280","bil",0.018242835998535156],["2048x1280","bic",0.027240276336669922],["2048x1280","lzs",0.03528094291687012],["5478x3424","bil",0.09871602058410645],["5478x3424","bic",0.14983057975769043],["5478x3424","lzs",0.17478370666503906]]}]},{"name":"blur-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["1px",1.4722790718078613],["10px",6.412798166275024],["30px",16.75508689880371]]},{"name":"opencv-3.1","results":[["1px",0.0305328369140625],["10px",0.3293802738189697],["30px",2.583698034286499]]},{"name":"pillow-2.7","results":[["1px",0.2780616283416748],["10px",0.27820372581481934],["30px",0.2780947685241699]]},{"name":"pillow-simd-3.2-sse4","results":[["1px",0.1379232406616211],["10px",0.13574552536010742],["30px",0.13111472129821777]]}]},{"name":"transposition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Flop",0.037609100341796875],["Flip",0.032210588455200195],["Rotate 90",0.07332444190979004],["Rotate 180",0.034462690353393555],["Rotate 270",0.07326245307922363],["Transpose",0.12734055519104004]]},{"name":"opencv-3.1","results":[["Flop",0.006331205368041992],["Flip",0.0038042068481445312],["Rotate 90",0.019902944564819336],["Rotate 180",0.010146856307983398],["Rotate 270",0.023146390914916992],["Transpose",0.009321928024291992]]},{"name":"pillow-2.0","results":[["Flop",0.009178876876831055],["Flip",0.008565664291381836],["Rotate 90",0.03155946731567383],["Rotate 180",0.008916854858398438],["Rotate 270",0.03277444839477539],["Transpose",null]]},{"name":"pillow-2.7","results":[["Flop",0.009444952011108398],["Flip",0.008606433868408203],["Rotate 90",0.026198148727416992],["Rotate 180",0.009139299392700195],["Rotate 270",0.02880072593688965],["Transpose",0.028871774673461914]]}]},{"name":"conversion-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["RGB to L",0.09792542457580566],["RGBA to LA",0.09791827201843262],["RGBa to RGBA",null],["RGBA to RGBa",null]]},{"name":"pillow-2.0","results":[["RGB to L",0.007297515869140625],["RGBA to LA",0.011297225952148438],["RGBa to RGBA",0.06744074821472168],["RGBA to RGBa",0.011549711227416992]]},{"name":"pillow-3.3","results":[["RGB to L",0.007328510284423828],["RGBA to LA",0.011457681655883789],["RGBa to RGBA",0.04703092575073242],["RGBA to RGBa",0.01168203353881836]]},{"name":"pillow-simd-3.3-sse4","results":[["RGB to L",0.00566411018371582],["RGBA to LA",0.009404659271240234],["RGBa to RGBA",0.04804039001464844],["RGBA to RGBa",0.008875131607055664]]}]},{"name":"composition-4k-rgb","competitors":[{"name":"imagemagick-6.8","results":[["Composition",0.234344482421875]]},{"name":"pillow-2.0","results":[["Composition",0.04830813407897949]]},{"name":"pillow-simd-3.3-sse4","results":[["Composition",0.02085590362548828]]}]}]}
+
+/***/ })
 /******/ ]);
 //# sourceMappingURL=index.js.map

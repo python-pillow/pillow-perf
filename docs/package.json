@@ -5,17 +5,20 @@
   "main": "Chart.js",
   "dependencies": {},
   "devDependencies": {
-    "chart.js": "^2.3.0",
-    "object-assign": "^4.1.1",
     "autoprefixer": "^9.0.1",
+    "chart.js": "^2.3.0",
     "expose-loader": "^0.7.5",
+    "object-assign": "^4.1.1",
     "postcss-loader": "^2.1.6",
     "style-loader": "^0.21.0",
     "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-command": "^0.4.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production",
+    "watch": "webpack -w --watch-poll",
+    "webpack": "webpack"
   },
   "repository": "https://github.com/python-pillow/pillow-perf",
   "author": "",

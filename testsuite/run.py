@@ -70,7 +70,7 @@ if __name__ == '__main__':
         for case in test_cases:
             test = case(args.size, args.mode)
             stats = run_test(test, args.runs, args.progress)
-            duration = stats[1]
+            duration = stats[1]  # Median value
 
             results.append((test.readable_args(), duration))
 

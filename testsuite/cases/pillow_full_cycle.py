@@ -33,4 +33,6 @@ cases = [
     rpartial(FullCycleCase, 0, 'Load+save', 'pineapple.1920.jpeg', 'JPEG'),
     rpartial(FullCycleCase, 1, '+resize', 'pineapple.1920.jpeg', 'JPEG'),
     rpartial(FullCycleCase, 2, '+sharp', 'pineapple.1920.jpeg', 'JPEG'),
+    # Extra turn for extra load with multitread tests
+    rpartial(FullCycleCase, 2, '+sharp', 'pineapple.1920.jpeg', 'JPEG'),
 ]

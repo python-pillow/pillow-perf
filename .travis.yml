@@ -1,11 +1,5 @@
+dist: xenial
 language: python
-
-python:
-  - pypy
-  - pypy3
-  - 3.6
-  - 2.7
-  - nightly
 
 install:
   - travis_retry pip install pillow
@@ -25,5 +19,13 @@ after_success:
 
 matrix:
   fast_finish: true
+  include:
+    - python: pypy
+      dist: trusty
+    - python: pypy3
+      dist: trusty
+    - python: 3.7
+    - python: 2.7
+    - python: nightly
   allow_failures:
     - python: nightly

@@ -67,7 +67,7 @@ class PillowTestCase(BaseTestCase):
             # Pillow 2.6 used different radius formula
             return self._new(ImageOps.gaussian_blur(self, radius * 2.5))
 
-        # http://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf
+        # https://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf
         # [7] Box length.
         L = math.sqrt(12.0 * float(radius) * radius / n + 1.0)
         # [11] Box radius.

@@ -10,7 +10,7 @@ fi
 
 source ~/env/pillow-perf/bin/activate
 pip install -r ../testsuite/requirements.txt
-pip install opencv-python==3.3.0.10 pgmagick==0.7.4
+pip install opencv-python==3.3.0.10 pgmagick==0.7.5
 
 
 git clone https://github.com/uploadcare/pillow-simd.git Pillow || true

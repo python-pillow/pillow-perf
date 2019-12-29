@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 from .base import rpartial
 from .pillow import PillowTestCase, Image, ImageFilter
 
@@ -24,7 +20,7 @@ class LutCase(PillowTestCase):
         im.filter(self.lut)
 
     def readable_args(self):
-        return ["{0}³ table to {1}D".format(self.table_size, self.channels)]
+        return ["{}³ table to {}D".format(self.table_size, self.channels)]
 
 
 cases = [

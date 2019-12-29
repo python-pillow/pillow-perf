@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 import os
 import ctypes
 import numbers
@@ -28,7 +24,7 @@ class WandTestCase(BaseTestCase):
 
     def __init__(self, *args, **kwargs):
         self._free_resources = []
-        super(WandTestCase, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def create_test_data(self):
         im = Image(filename=root('resources', 'color_circle.png'))

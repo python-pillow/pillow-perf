@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 from .base import rpartial, root
 from .pgmagick import Image, FilterTypes, Geometry, PgmagickTestCase
 
@@ -16,7 +12,7 @@ class LutCase(PgmagickTestCase):
         im.haldClut(self.hald_image)
 
     def readable_args(self):
-        return ["{0}³ table to 3D".format(self.table_size)]
+        return ["{}³ table to 3D".format(self.table_size)]
 
 
 cases = [

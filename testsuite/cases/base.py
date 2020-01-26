@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 import time
 import os.path
 
@@ -25,7 +21,7 @@ def rpartial(func, *args, **keywords):
     return newfunc
 
 
-class BaseTestCase(object):
+class BaseTestCase:
     def __init__(self, size, mode, *args, **kwargs):
         self.size = size
         self.mode = mode
@@ -55,7 +51,7 @@ class BaseTestCase(object):
         return " ".join(self.readable_args())
 
 
-class BaseScaleCase(object):
+class BaseScaleCase:
     def handle_args(self, scale, filter, hpass=True, vpass=True):
         self.scale = scale
         self.filter = filter
@@ -73,10 +69,10 @@ class BaseScaleCase(object):
         ]
 
     def readable_name(self):
-        return 'to ' + super(BaseScaleCase, self).readable_name()
+        return 'to ' + super().readable_name()
 
 
-class BaseConvertCase(object):
+class BaseConvertCase:
     def handle_args(self, mode, mode_to):
         self.mode = mode
         self.mode_to = mode_to
@@ -93,7 +89,7 @@ class BaseAllocateCase(BaseTestCase):
         return ['mode ' + self.mode]
 
 
-class BasePackCase(object):
+class BasePackCase:
     def handle_args(self, mode):
         self.mode = mode
 
@@ -101,7 +97,7 @@ class BasePackCase(object):
         return ["Pack to {}".format(self.mode)]
 
 
-class BaseUnpackCase(object):
+class BaseUnpackCase:
     def handle_args(self, mode):
         self.mode = mode
 
@@ -109,7 +105,7 @@ class BaseUnpackCase(object):
         return ["Unpack from {}".format(self.mode)]
 
 
-class BaseSplitCase(object):
+class BaseSplitCase:
     def handle_args(self, mode):
         self.mode = mode
 
@@ -117,7 +113,7 @@ class BaseSplitCase(object):
         return ["split {}".format(self.mode)]
 
 
-class BaseGetBandCase(object):
+class BaseGetBandCase:
     def handle_args(self, mode, band):
         self.mode = mode
         self.band = band
@@ -126,9 +122,9 @@ class BaseGetBandCase(object):
         return ["get {} of {}".format(self.mode[self.band], self.mode)]
 
 
-class BaseMergeCase(object):
+class BaseMergeCase:
     def create_test_data(self):
-        data = super(BaseMergeCase, self).create_test_data()
+        data = super().create_test_data()
         return [data[0].split()]
 
     def handle_args(self, mode):
@@ -138,7 +134,7 @@ class BaseMergeCase(object):
         return ["merge {}".format(self.mode)]
 
 
-class BaseCropCase(object):
+class BaseCropCase:
     def handle_args(self, scale):
         self.scale = scale
         width = int(round(scale[0] * self.size[0]))

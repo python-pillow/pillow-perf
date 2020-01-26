@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 from .base import rpartial, root
 from .wand import WandTestCase, Image
 
@@ -17,7 +13,7 @@ class LutCase(WandTestCase):
             self.hald_lut(im, self.hald_image)
 
     def readable_args(self):
-        return ["{0}³ table to 3D".format(self.table_size)]
+        return ["{}³ table to 3D".format(self.table_size)]
 
 
 cases = [

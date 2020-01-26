@@ -1,7 +1,3 @@
-# coding: utf-8
-
-from __future__ import print_function, unicode_literals, absolute_import
-
 from .base import (rpartial, BaseAllocateCase, BaseSplitCase, BasePackCase,
                    BaseGetBandCase, BaseMergeCase, BaseUnpackCase)
 from .pillow import Image, PillowTestCase
@@ -14,7 +10,7 @@ class AllocateCase(BaseAllocateCase):
 
 class UnpackCase(BaseUnpackCase, PillowTestCase):
     def create_test_data(self):
-        im = super(UnpackCase, self).create_test_data()[0]
+        im = super().create_test_data()[0]
         return [im, im.tobytes()]
 
     def runner(self, im, data):

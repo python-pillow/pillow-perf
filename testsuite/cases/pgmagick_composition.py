@@ -6,7 +6,7 @@ class CompositionCase(PgmagickTestCase):
     def create_test_data(self):
         im = Image(root('resources', 'color_circle.png').encode('utf-8'))
         im.filterType(FilterTypes.CatromFilter)
-        im.scale(Geometry(b"{}x{}!".format(self.size[0], self.size[1])))
+        im.scale(Geometry("{}x{}!".format(self.size[0], self.size[1])))
         return [im, Image(im)]
 
     def runner(self, first, second):

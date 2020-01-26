@@ -31,5 +31,5 @@ class PgmagickTestCase(BaseTestCase):
         else:
             raise ValueError('Unknown mode: {}'.format(self.mode))
         im.filterType(FilterTypes.CatromFilter)
-        im.zoom(Geometry(b"{}x{}!".format(self.size[0], self.size[1])))
+        im.zoom(Geometry("{}x{}!".format(self.size[0], self.size[1])))
         return [im]

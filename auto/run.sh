@@ -5,7 +5,8 @@ cd "$(dirname "$0")"
 if [ ! -d ~/env/pillow-perf ]; then
   mkdir -p ~/env
   rm -rf ~/env/pillow-perf
-  virtualenv ~/env/pillow-perf
+  python3 -m venv ~/env/pillow-perf
+  ~/env/pillow-perf/bin/pip install -U pip setuptools wheel
 fi
 
 source ~/env/pillow-perf/bin/activate

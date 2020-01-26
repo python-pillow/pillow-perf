@@ -2,12 +2,15 @@ var objectAssign = require('object-assign');
 
 var competitors_meta = {
   "imagemagick-6.8":      {"color": [230, 100, 70], "title": "ImageMagick 6.8.9-9"},
+  "imagemagick-6.9":      {"color": [230, 100, 70], "title": "ImageMagick 6.9.7-4"},
   "opencv-3.1":           {"color": [240, 100, 60], "title": "OpenCV 3.1.0"},
   "opencv-3.3":           {"color": [240, 100, 60], "title": "OpenCV 3.3.0"},
+  "opencv-4.1":           {"color": [240, 100, 60], "title": "OpenCV 4.1.2"},
   "skia-53":              {"color": [250, 100, 50], "title": "Skia 53 SSE2"},
   "ipp-2017":             {"color": [250, 100, 30], "title": "IPP 2017 AVX2"},
   "vips-8.2":             {"color": [250, 100, 30], "title": "VIPS 8.2"},
   "vips-8.5":             {"color": [250, 100, 30], "title": "VIPS 8.5"},
+  "vips-8.9":             {"color": [250, 100, 30], "title": "VIPS 8.9"},
 
   "pillow-2.0":           {"color": [10, 90, 50], "title": "PIL & Pillow 2.0 to 2.6"},
   
@@ -26,6 +29,10 @@ var competitors_meta = {
   "pillow-4.3":           {"color": [210, 90, 43], "title": "Pillow 4.3.0"},
   "pillow-simd-4.3-sse4": {"color": [210, 90, 75], "title": "Pillow SIMD 4.3.0 SSE4"},
   "pillow-simd-4.3-avx2": {"color": [210, 90, 60], "title": "Pillow SIMD 4.3.0 AVX2"},
+
+  "pillow-7.0":           {"color": [34, 90, 43], "title": "Pillow 7.0.0"},
+  "pillow-simd-7.0-sse4": {"color": [34, 90, 75], "title": "Pillow SIMD 7.0.0 SSE4"},
+  "pillow-simd-7.0-avx2": {"color": [34, 90, 60], "title": "Pillow SIMD 7.0.0 AVX2"},
 };
 
 var competitions_meta = {
@@ -106,6 +113,16 @@ var competitions_meta = {
       {"name": "result", "units": "s"}
     ],
   },
+  "3dlut-4k-rgb": {
+    "topic": "3dlut",
+    "title": "3D Color LUT 2560×1600 RGB image",
+    "preposition": ".",
+    "source": {"size": [2560, 1600]},
+    "columns": [
+      {"name": "params", "title": "Table size"},
+      {"name": "result", "units": "s"}
+    ],
+  },
   "full-cycle-4k-rgb": {
     "title": "Full opeations cycle, 2560×1600 RGB",
     "preposition": ".",
@@ -138,9 +155,9 @@ function fillSystemWithMeta(system) {
 
 module.exports = {
   systems: [
-	  fillSystemWithMeta(require("./macbook.json")),
-	  fillSystemWithMeta(require("./c3.large.json")),
 	  fillSystemWithMeta(require("./c4.large.json")),
+	  fillSystemWithMeta(require("./c3.large.json")),
+	  fillSystemWithMeta(require("./macbook.2019.json")),
 	  fillSystemWithMeta(require("./amd.a10.7800.json")),
 	],
 };

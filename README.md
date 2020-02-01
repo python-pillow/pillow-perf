@@ -137,7 +137,7 @@ $ npm run build
 ### Serve locally & rebuild
 
 ```bash
-$ python -m SimpleHTTPServer &
+$ python3 -m http.server &
 $ npm run watch
 ```
 

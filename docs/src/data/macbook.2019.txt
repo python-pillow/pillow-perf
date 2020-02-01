@@ -691,7 +691,7 @@ Cv2 rotate right 2560×1600 RGB image
 
 
 =========================
-VIPS 8.4
+VIPS 8.9
 =========================
 
 Vips load 2560×1600 RGB image

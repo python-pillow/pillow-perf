@@ -82,7 +82,7 @@ ul.select.-large {
 }
     .selects-grid__cell {
         position: relative;
-        margin-right: 4%;
+        margin-right: 6%;
         margin-bottom: 4%;
     }
     .selects-grid__cell:last-child {
@@ -98,6 +98,24 @@ ul.select.-large {
             bottom: -14px;
             background: #f8f8f8;
             z-index: -1;
+        }
+        .selects-grid__cell::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 100px;
+            background: #f8f8f8;
+            position: absolute;
+            top: 50%;
+            left: -141px;
+            z-index: -2;
+            margin-top: -50px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            box-shadow: 0px 3px 8px #ccc;
+        }
+        .selects-grid__cell:first-child::after {
+            content: none;
         }
         .selects-grid__cell > :first-child {
             margin-top: 0;

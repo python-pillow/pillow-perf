@@ -1,7 +1,7 @@
 {
     "title": "Amazon EC2 c5.large instance",
     "OS": "Ubuntu 18.04.3 LTS 64bit",
-    "CPU": "Intel Xeon Platinum 8124M @ 3.00GHz",
+    "CPU": "Intel Xeon 8124M @ 3.00GHz",
 
     "competitions": [
         {

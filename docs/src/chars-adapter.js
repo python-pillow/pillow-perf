@@ -175,6 +175,9 @@ function chartForCompetition(element, competition, units) {
           ticks: {beginAtZero: true},
         }],
         xAxes: [{
+          ticks: {
+            fontSize: 14,
+          },
           gridLines: {display: false},
         }],
       }

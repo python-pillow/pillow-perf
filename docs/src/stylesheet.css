@@ -2,7 +2,7 @@ html {
     padding: 0;
     margin: 0;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
 }
 body {
@@ -27,8 +27,8 @@ h3 {
     font-size: 1.3em;
 }
 h4 {
-    color: #aaa;
-    margin-bottom: 0;
+    color: #bbb;
+    margin-bottom: .5em;
     font-size: 1.1em;
 }
 a {
@@ -72,9 +72,6 @@ ul.select {
             border-bottom: 0px;
             cursor: default;
         }
-ul.select.-large {
-    font-size: 16px;
-}
 
 .selects-grid {
     display: flex;
@@ -82,7 +79,7 @@ ul.select.-large {
 }
     .selects-grid__cell {
         position: relative;
-        margin-right: 6%;
+        margin-right: 6.5%;
         margin-bottom: 4%;
     }
     .selects-grid__cell:last-child {
@@ -92,10 +89,10 @@ ul.select.-large {
             content: "";
             display: block;
             position: absolute;
-            left: -14px;
+            left: -20px;
             right: -14px;
             top: -14px;
-            bottom: -14px;
+            bottom: -20px;
             background: #f8f8f8;
             z-index: -1;
         }
@@ -107,7 +104,7 @@ ul.select.-large {
             background: #f8f8f8;
             position: absolute;
             top: 50%;
-            left: -141px;
+            left: -150px;
             z-index: -2;
             margin-top: -50px;
             -webkit-transform: rotate(45deg);
@@ -179,7 +176,6 @@ dl.libraries {
         font-family: 'Roboto Condensed', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
         font-weight: 700;
         color: #333;
-        font-size: 16px;
     }
     dl.libraries dd {
         margin: 0 0 12px 120px;

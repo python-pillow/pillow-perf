@@ -2,6 +2,7 @@
     "title": "Amazon EC2 m5a.large instance",
     "OS": "Ubuntu 18.04.3 LTS 64bit",
     "CPU": "AMD EPYC 7571 @ 2.10GHz",
+    "system_note": "The CPU supports AVX2 instructions<br>but they are absolutely useless<br>due to 128-bit execution units.",
 
     "competitions": [
         {

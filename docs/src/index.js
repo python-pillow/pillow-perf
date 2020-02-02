@@ -265,6 +265,9 @@ function populateSystems(systems) {
     if (globalSystem.CPU) {
       innerHTML += "<strong>CPU</strong> " + globalSystem.CPU + "<br>";
     }
+    if (globalSystem.system_note) {
+      innerHTML += "<br>" + globalSystem.system_note + "<br>";
+    }
     info.innerHTML = innerHTML;
   }
 

@@ -107,11 +107,12 @@ ul.select.-large {
             background: #f8f8f8;
             position: absolute;
             top: 50%;
-            left: -139px;
+            left: -141px;
             z-index: -2;
             margin-top: -50px;
             -webkit-transform: rotate(45deg);
             transform: rotate(45deg);
+            box-shadow: 0px 3px 8px #ccc;
         }
         .selects-grid__cell:first-child::after {
             content: none;

@@ -83,7 +83,7 @@ function partialCompetition(element, competitionName, presetName, units) {
         }
       }
       if ( ! preset) {
-        console.log('Preset ' + presetName + ' is not found.');
+        console.error('Preset ' + presetName + ' is not found.');
         return;
       }
     } else {
@@ -92,9 +92,14 @@ function partialCompetition(element, competitionName, presetName, units) {
 
     for (i = 0; i < competition.competitors.length; i++) {
       var competitor = competition.competitors[i];
-      if (preset.indexOf(competitor.name) > -1) {
+      var idx = preset.indexOf(competitor.name);
+      if (idx > -1) {
         competitors.push(competitor);
+        preset.splice(idx, 1);
       }
+    }
+    if (preset.length) {
+      console.warn("Following competitors are not found:", preset)
     }
 
     competition.competitors = competitors;

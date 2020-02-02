@@ -45,6 +45,22 @@ pushd Pillow
 
 
   # ============
+  # Pillow 2.6.2
+  # ============
+  pillow_checkout 2.6.2
+  $RUN scale blur filter full_cycle -n5 "${@:2}"
+  $RUN load convert composition rotate_right "${@:2}"
+
+
+  # ============
+  # Pillow 2.7.0
+  # ============
+  pillow_checkout 2.7.0
+  $RUN scale blur filter full_cycle -n5 "${@:2}"
+  $RUN load convert composition rotate_right "${@:2}"
+
+
+  # ============
   # Pillow 4.3.0
   # ============
   pillow_checkout 4.3.0

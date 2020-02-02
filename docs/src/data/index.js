@@ -155,9 +155,8 @@ function fillSystemWithMeta(system) {
 
 module.exports = {
   systems: [
-	  fillSystemWithMeta(require("./c4.large.json")),
-	  fillSystemWithMeta(require("./c3.large.json")),
-	  fillSystemWithMeta(require("./macbook.2019.json")),
+	  fillSystemWithMeta(require("./c5.large.json")),
 	  fillSystemWithMeta(require("./m5a.large.json")),
+	  fillSystemWithMeta(require("./macbook.2019.json")),
 	],
 };

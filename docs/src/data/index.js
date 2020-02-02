@@ -114,7 +114,6 @@ var competitions_meta = {
     ],
   },
   "3dlut-4k-rgb": {
-    "topic": "3dlut",
     "title": "3D Color LUT 2560×1600 RGB image",
     "preposition": ".",
     "source": {"size": [2560, 1600]},
@@ -140,23 +139,24 @@ function fillSystemWithMeta(system) {
   system = objectAssign({}, system);
 
   for (j = 0; j < system.competitions.length; j++) {
-  	var competition = system.competitions[j];
-  	system.competitions[j] = competition = objectAssign(
-  		{}, competitions_meta[competition.name], competition);
+    var competition = system.competitions[j];
+    system.competitions[j] = competition = objectAssign(
+      {}, competitions_meta[competition.name], competition);
 
-  	for (i = 0; i < competition.competitors.length; i++) {
-  		var competitor = competition.competitors[i];
-  		competition.competitors[i] = competitor = objectAssign(
-  			{}, competitors_meta[competitor.name], competitor);
-  	}
+    for (i = 0; i < competition.competitors.length; i++) {
+      var competitor = competition.competitors[i];
+      competition.competitors[i] = competitor = objectAssign(
+        {}, competitors_meta[competitor.name], competitor);
+    }
   }
   return system;
 }
 
 module.exports = {
   systems: [
-	  fillSystemWithMeta(require("./c5.large.json")),
-	  fillSystemWithMeta(require("./m5a.large.json")),
-	  fillSystemWithMeta(require("./macbook.2019.json")),
-	],
+    fillSystemWithMeta(require("./i5-4430.json")),
+    fillSystemWithMeta(require("./macbook.2019.json")),
+    fillSystemWithMeta(require("./c5.large.json")),
+    fillSystemWithMeta(require("./m5a.large.json")),
+  ],
 };

@@ -95,9 +95,6 @@ $ CC="ccache cc" ./run.sh # Speed up subsequent builds using CC cache
 
 ### Submit results
 
-We are concerned in tests on a AMD CPU with AVX2 (Zen microarchitecture)
-and on an Intel Skylake CPU.
-
 1. Before running any tests, please ensure that
 you have exited all browsers on the host machine,
 closed all audio players and stopped any backup systems.

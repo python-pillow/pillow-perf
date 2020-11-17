@@ -1,0 +1,52 @@
+name: Test
+
+on: [push, pull_request]
+
+env:
+  FORCE_COLOR: 1
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [
+            "pypy3",
+            "3.9",
+            # Dependencies aren't installing on Python 3.10
+            # because Wheel doesn't yet support it
+            # and GitHub Actions doesn't have allow_failures
+            # https://github.com/pypa/wheel/issues/354
+            # "3.10-dev",
+        ]
+        os: [ubuntu-16.04]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install wheel
+          pip install pillow
+          pip install -r testsuite/requirements.txt
+
+      - name: Test
+        shell: bash
+        run: |
+          cd testsuite
+          ./run.py --help
+          ./run.py -s 512x512 -n 1 --json  load convert composition rotate_right scale blur filter allocate crop full_cycle
+          ./run.py -s 512x512 -n 1 --json  wand_load wand_convert wand_scale wand_blur wand_composition wand_rotate_right wand_full_cycle
+
+      - name: Lint
+        shell: bash
+        run: |
+          pip install pycodestyle pyflakes
+          pycodestyle --statistics --count . || true
+          pyflakes . | tee >(wc -l) || true

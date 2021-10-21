@@ -20,7 +20,7 @@ jobs:
             # https://github.com/pypa/wheel/issues/354
             # "3.10-dev",
         ]
-        os: [ubuntu-16.04]
+        os: [ubuntu-18.04]
 
     steps:
       - uses: actions/checkout@v2

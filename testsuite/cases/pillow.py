@@ -77,7 +77,11 @@ class PillowTestCase(BaseTestCase):
         box_radius = li + a
 
         self.load()
-        return self._new(self.im.box_blur(box_radius, n))
+        try:
+            im = self.im.box_blur((box_radius, box_radius), n)
+        except TypeError:
+            im = self.im.box_blur(box_radius, n)
+        return self._new(im)
 
     @classmethod
     def getchannel(cls, self, channel):
